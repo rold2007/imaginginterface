@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using Emgu.CV;
-using Emgu.CV.UI;
-using Emgu.CV.Features2D;
-using Emgu.CV.Reflection;
-using Emgu.CV.Structure;
-using Emgu.CV.Util;
-using Emgu.Util;
-
-namespace ImagingInterface
+﻿namespace ImagingInterface
    {
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
+   using Emgu.CV;
+   using Emgu.CV.Structure;
+
    public partial class mainWindow : Form
       {
       public mainWindow()
