@@ -38,6 +38,7 @@
          this.maxAreaThresholdLabel = new System.Windows.Forms.Label();
          this.minAreaThresholdLabel = new System.Windows.Forms.Label();
          this.backgroundColorLabel = new System.Windows.Forms.Label();
+         this.blobAnalysisButton = new System.Windows.Forms.Button();
          ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).BeginInit();
@@ -106,6 +107,7 @@
          // 
          // splitContainer.Panel2
          // 
+         this.splitContainer.Panel2.Controls.Add(this.blobAnalysisButton);
          this.splitContainer.Panel2.Controls.Add(this.maxAreaThresholdLabel);
          this.splitContainer.Panel2.Controls.Add(this.maxAreaThresholdTrackBar);
          this.splitContainer.Panel2.Controls.Add(this.minAreaThresholdLabel);
@@ -145,6 +147,18 @@
          this.backgroundColorLabel.TabIndex = 4;
          this.backgroundColorLabel.Text = "Background color: 0";
          // 
+         // blobAnalysisButton
+         // 
+         this.blobAnalysisButton.AutoSize = true;
+         this.blobAnalysisButton.Enabled = false;
+         this.blobAnalysisButton.Location = new System.Drawing.Point(6, 230);
+         this.blobAnalysisButton.Name = "blobAnalysisButton";
+         this.blobAnalysisButton.Size = new System.Drawing.Size(94, 23);
+         this.blobAnalysisButton.TabIndex = 8;
+         this.blobAnalysisButton.Text = "Blob Analysis";
+         this.blobAnalysisButton.UseVisualStyleBackColor = true;
+         this.blobAnalysisButton.Click += new System.EventHandler(this.blobAnalysisButton_Click);
+         // 
          // mainWindow
          // 
          this.AllowDrop = true;
@@ -180,6 +194,7 @@
       private System.Windows.Forms.Label backgroundColorLabel;
       private System.Windows.Forms.Label maxAreaThresholdLabel;
       private System.Windows.Forms.TrackBar maxAreaThresholdTrackBar;
+      private System.Windows.Forms.Button blobAnalysisButton;
       }
    }
 
