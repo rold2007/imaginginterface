@@ -5,6 +5,7 @@
    using System.Windows.Forms;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using AForge.Imaging;
 
    public partial class mainWindow : Form
       {
@@ -108,6 +109,7 @@
          this.minAreaThresholdTrackBar.Enabled = true;
          this.maxAreaThresholdLabel.Enabled = true;
          this.maxAreaThresholdTrackBar.Enabled = true;
+         this.blobAnalysisButton.Enabled = true;
          this.maxAreaThresholdTrackBar.Minimum = 0;
 
          int imageSize = this.mainImageBox.Image.Size.Height * this.mainImageBox.Image.Size.Width;
@@ -135,6 +137,56 @@
       private void UpdateMaxAreaLabel()
          {
          this.maxAreaThresholdLabel.Text = "Max area threshold: " + this.maxAreaThresholdTrackBar.Value.ToString();
+         }
+
+      private void blobAnalysisButton_Click(object sender, EventArgs e)
+         {
+         BlobCounter blobCounter = new BlobCounter();
+
+         blobCounter.BackgroundThreshold = Color.FromArgb(this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value);
+         blobCounter.BlobsFilter = new BlobFilter(this.minAreaThresholdTrackBar.Value, this.maxAreaThresholdTrackBar.Value);
+         blobCounter.FilterBlobs = true;
+
+         blobCounter.ProcessImage(this.mainImageBox.Image.Bitmap);
+         }
+      }
+
+   public class BlobFilter : IBlobsFilter
+      {
+      public int MinAreaThreshold
+         {
+         get;
+         private set;
+         }
+      public int MaxAreaThreshold
+         {
+         get;
+         private set;
+         }
+
+      private BlobFilter()
+         {
+         }
+
+      public BlobFilter(int minAreaThreshold, int maxAreaThreshold)
+         : this()
+         {
+         this.MinAreaThreshold = minAreaThreshold;
+         this.MaxAreaThreshold = maxAreaThreshold;
+         }
+
+      public bool Check(Blob blob)
+         {
+         if (blob.Area < this.MinAreaThreshold)
+            {
+            return false;
+            }
+         else if (blob.Area > this.MaxAreaThreshold)
+            {
+            return false;
+            }
+
+         return true;
          }
       }
    }
