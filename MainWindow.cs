@@ -28,11 +28,11 @@
                   {
                   image = new Image<Rgb, UInt16>(fileName);
 
-                  this.mainImageBoxToolTip.SetToolTip(this.mainImageBox, fileName);
+                  this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, fileName);
                   }
                catch
                   {
-                  this.mainImageBoxToolTip.SetToolTip(this.mainImageBox, "Invalid file format: " + fileName);
+                  this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, "Invalid file format: " + fileName);
                   }
 
                if (this.mainImageBox.Image != null)
@@ -41,6 +41,8 @@
                   }
 
                this.mainImageBox.Image = image;
+
+               UpdateBlobAreaFilterRange();
                }
             }
          }
@@ -73,6 +75,66 @@
             }
 
          return false;
+         }
+
+      private void backgroundColorTrackBar_Scroll(object sender, EventArgs e)
+         {
+         this.backgroundColorLabel.Text = "Background color: " + this.backgroundColorTrackBar.Value.ToString();
+         }
+
+      private void minAreaThresholdTrackBar_ValueChanged(object sender, EventArgs e)
+         {
+         UpdateMinAreaLabel();
+
+         if (this.minAreaThresholdTrackBar.Value > this.maxAreaThresholdTrackBar.Value)
+            {
+            this.maxAreaThresholdTrackBar.Value = this.minAreaThresholdTrackBar.Value;
+            }
+         }
+
+      private void maxAreaThresholdTrackBar_ValueChanged(object sender, EventArgs e)
+         {
+         UpdateMaxAreaLabel();
+
+         if (this.maxAreaThresholdTrackBar.Value < this.minAreaThresholdTrackBar.Value)
+            {
+            this.minAreaThresholdTrackBar.Value = this.maxAreaThresholdTrackBar.Value;
+            }
+         }
+
+      private void UpdateBlobAreaFilterRange()
+         {
+         this.minAreaThresholdLabel.Enabled = true;
+         this.minAreaThresholdTrackBar.Enabled = true;
+         this.maxAreaThresholdLabel.Enabled = true;
+         this.maxAreaThresholdTrackBar.Enabled = true;
+         this.maxAreaThresholdTrackBar.Minimum = 0;
+
+         int imageSize = this.mainImageBox.Image.Size.Height * this.mainImageBox.Image.Size.Width;
+
+         this.minAreaThresholdTrackBar.Maximum = imageSize;
+         this.maxAreaThresholdTrackBar.Maximum = imageSize;
+
+         this.minAreaThresholdTrackBar.Value = 0;
+         this.maxAreaThresholdTrackBar.Value = imageSize;
+
+         this.minAreaThresholdTrackBar.LargeChange = (imageSize / 100) > 0 ? (imageSize / 100) : 1;
+         this.maxAreaThresholdTrackBar.LargeChange = (imageSize / 100) > 0 ? (imageSize / 100) : 1;
+         this.minAreaThresholdTrackBar.TickFrequency = (imageSize / 20) > 0 ? (imageSize / 20) : 1;
+         this.maxAreaThresholdTrackBar.TickFrequency = (imageSize / 20) > 0 ? (imageSize / 20) : 1;
+
+         UpdateMinAreaLabel();
+         UpdateMaxAreaLabel();
+         }
+
+      private void UpdateMinAreaLabel()
+         {
+         this.minAreaThresholdLabel.Text = "Min area threshold: " + this.minAreaThresholdTrackBar.Value.ToString();
+         }
+
+      private void UpdateMaxAreaLabel()
+         {
+         this.maxAreaThresholdLabel.Text = "Max area threshold: " + this.maxAreaThresholdTrackBar.Value.ToString();
          }
       }
    }
