@@ -34,18 +34,24 @@
          this.backgroundColorTrackBar = new System.Windows.Forms.TrackBar();
          this.maxAreaThresholdTrackBar = new System.Windows.Forms.TrackBar();
          this.minAreaThresholdTrackBar = new System.Windows.Forms.TrackBar();
-         this.splitContainer = new System.Windows.Forms.SplitContainer();
+         this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
+         this.blobListView = new System.Windows.Forms.ListView();
+         this.blobImageList = new System.Windows.Forms.ImageList(this.components);
+         this.blobAnalysisButton = new System.Windows.Forms.Button();
          this.maxAreaThresholdLabel = new System.Windows.Forms.Label();
          this.minAreaThresholdLabel = new System.Windows.Forms.Label();
          this.backgroundColorLabel = new System.Windows.Forms.Label();
-         this.blobAnalysisButton = new System.Windows.Forms.Button();
+         this.blobSplitContainer = new System.Windows.Forms.SplitContainer();
          ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.minAreaThresholdTrackBar)).BeginInit();
-         this.splitContainer.Panel1.SuspendLayout();
-         this.splitContainer.Panel2.SuspendLayout();
-         this.splitContainer.SuspendLayout();
+         this.mainSplitContainer.Panel1.SuspendLayout();
+         this.mainSplitContainer.Panel2.SuspendLayout();
+         this.mainSplitContainer.SuspendLayout();
+         this.blobSplitContainer.Panel1.SuspendLayout();
+         this.blobSplitContainer.Panel2.SuspendLayout();
+         this.blobSplitContainer.SuspendLayout();
          this.SuspendLayout();
          // 
          // mainImageBox
@@ -54,13 +60,13 @@
          this.mainImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom;
          this.mainImageBox.Location = new System.Drawing.Point(0, 0);
          this.mainImageBox.Name = "mainImageBox";
-         this.mainImageBox.Size = new System.Drawing.Size(455, 466);
+         this.mainImageBox.Size = new System.Drawing.Size(287, 466);
          this.mainImageBox.TabIndex = 0;
          this.mainImageBox.TabStop = false;
          // 
          // backgroundColorTrackBar
          // 
-         this.backgroundColorTrackBar.Location = new System.Drawing.Point(3, 51);
+         this.backgroundColorTrackBar.Location = new System.Drawing.Point(3, 19);
          this.backgroundColorTrackBar.Maximum = 254;
          this.backgroundColorTrackBar.Name = "backgroundColorTrackBar";
          this.backgroundColorTrackBar.Size = new System.Drawing.Size(163, 45);
@@ -72,7 +78,7 @@
          // maxAreaThresholdTrackBar
          // 
          this.maxAreaThresholdTrackBar.Enabled = false;
-         this.maxAreaThresholdTrackBar.Location = new System.Drawing.Point(3, 179);
+         this.maxAreaThresholdTrackBar.Location = new System.Drawing.Point(172, 83);
          this.maxAreaThresholdTrackBar.Maximum = 2147483647;
          this.maxAreaThresholdTrackBar.Minimum = 2147483547;
          this.maxAreaThresholdTrackBar.Name = "maxAreaThresholdTrackBar";
@@ -86,7 +92,7 @@
          // minAreaThresholdTrackBar
          // 
          this.minAreaThresholdTrackBar.Enabled = false;
-         this.minAreaThresholdTrackBar.Location = new System.Drawing.Point(3, 115);
+         this.minAreaThresholdTrackBar.Location = new System.Drawing.Point(172, 19);
          this.minAreaThresholdTrackBar.Maximum = 100;
          this.minAreaThresholdTrackBar.Name = "minAreaThresholdTrackBar";
          this.minAreaThresholdTrackBar.Size = new System.Drawing.Size(163, 45);
@@ -95,34 +101,60 @@
          this.imagingInterfaceToolTip.SetToolTip(this.minAreaThresholdTrackBar, "Filter blobs with area lower than min value");
          this.minAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.minAreaThresholdTrackBar_ValueChanged);
          // 
-         // splitContainer
+         // mainSplitContainer
          // 
-         this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.splitContainer.Location = new System.Drawing.Point(0, 0);
-         this.splitContainer.Name = "splitContainer";
+         this.mainSplitContainer.BackColor = System.Drawing.SystemColors.ControlText;
+         this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.mainSplitContainer.Location = new System.Drawing.Point(0, 0);
+         this.mainSplitContainer.Name = "mainSplitContainer";
          // 
-         // splitContainer.Panel1
+         // mainSplitContainer.Panel1
          // 
-         this.splitContainer.Panel1.Controls.Add(this.mainImageBox);
+         this.mainSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Control;
+         this.mainSplitContainer.Panel1.Controls.Add(this.mainImageBox);
          // 
-         // splitContainer.Panel2
+         // mainSplitContainer.Panel2
          // 
-         this.splitContainer.Panel2.Controls.Add(this.blobAnalysisButton);
-         this.splitContainer.Panel2.Controls.Add(this.maxAreaThresholdLabel);
-         this.splitContainer.Panel2.Controls.Add(this.maxAreaThresholdTrackBar);
-         this.splitContainer.Panel2.Controls.Add(this.minAreaThresholdLabel);
-         this.splitContainer.Panel2.Controls.Add(this.backgroundColorLabel);
-         this.splitContainer.Panel2.Controls.Add(this.minAreaThresholdTrackBar);
-         this.splitContainer.Panel2.Controls.Add(this.backgroundColorTrackBar);
-         this.splitContainer.Size = new System.Drawing.Size(637, 466);
-         this.splitContainer.SplitterDistance = 455;
-         this.splitContainer.TabIndex = 1;
+         this.mainSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
+         this.mainSplitContainer.Panel2.Controls.Add(this.blobSplitContainer);
+         this.mainSplitContainer.Size = new System.Drawing.Size(637, 466);
+         this.mainSplitContainer.SplitterDistance = 287;
+         this.mainSplitContainer.TabIndex = 1;
+         // 
+         // blobListView
+         // 
+         this.blobListView.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.blobListView.LargeImageList = this.blobImageList;
+         this.blobListView.Location = new System.Drawing.Point(0, 0);
+         this.blobListView.Name = "blobListView";
+         this.blobListView.Size = new System.Drawing.Size(346, 335);
+         this.blobListView.SmallImageList = this.blobImageList;
+         this.blobListView.TabIndex = 1;
+         this.blobListView.UseCompatibleStateImageBehavior = false;
+         // 
+         // blobImageList
+         // 
+         this.blobImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+         this.blobImageList.ImageSize = new System.Drawing.Size(64, 64);
+         this.blobImageList.TransparentColor = System.Drawing.Color.Transparent;
+         // 
+         // blobAnalysisButton
+         // 
+         this.blobAnalysisButton.AutoSize = true;
+         this.blobAnalysisButton.Enabled = false;
+         this.blobAnalysisButton.Location = new System.Drawing.Point(6, 70);
+         this.blobAnalysisButton.Name = "blobAnalysisButton";
+         this.blobAnalysisButton.Size = new System.Drawing.Size(94, 23);
+         this.blobAnalysisButton.TabIndex = 8;
+         this.blobAnalysisButton.Text = "Blob Analysis";
+         this.blobAnalysisButton.UseVisualStyleBackColor = true;
+         this.blobAnalysisButton.Click += new System.EventHandler(this.blobAnalysisButton_Click);
          // 
          // maxAreaThresholdLabel
          // 
          this.maxAreaThresholdLabel.AutoSize = true;
          this.maxAreaThresholdLabel.Enabled = false;
-         this.maxAreaThresholdLabel.Location = new System.Drawing.Point(3, 163);
+         this.maxAreaThresholdLabel.Location = new System.Drawing.Point(172, 67);
          this.maxAreaThresholdLabel.Name = "maxAreaThresholdLabel";
          this.maxAreaThresholdLabel.Size = new System.Drawing.Size(100, 13);
          this.maxAreaThresholdLabel.TabIndex = 7;
@@ -132,7 +164,7 @@
          // 
          this.minAreaThresholdLabel.AutoSize = true;
          this.minAreaThresholdLabel.Enabled = false;
-         this.minAreaThresholdLabel.Location = new System.Drawing.Point(3, 99);
+         this.minAreaThresholdLabel.Location = new System.Drawing.Point(172, 3);
          this.minAreaThresholdLabel.Name = "minAreaThresholdLabel";
          this.minAreaThresholdLabel.Size = new System.Drawing.Size(97, 13);
          this.minAreaThresholdLabel.TabIndex = 5;
@@ -141,23 +173,37 @@
          // backgroundColorLabel
          // 
          this.backgroundColorLabel.AutoSize = true;
-         this.backgroundColorLabel.Location = new System.Drawing.Point(3, 35);
+         this.backgroundColorLabel.Location = new System.Drawing.Point(3, 3);
          this.backgroundColorLabel.Name = "backgroundColorLabel";
          this.backgroundColorLabel.Size = new System.Drawing.Size(103, 13);
          this.backgroundColorLabel.TabIndex = 4;
          this.backgroundColorLabel.Text = "Background color: 0";
          // 
-         // blobAnalysisButton
+         // blobSplitContainer
          // 
-         this.blobAnalysisButton.AutoSize = true;
-         this.blobAnalysisButton.Enabled = false;
-         this.blobAnalysisButton.Location = new System.Drawing.Point(6, 230);
-         this.blobAnalysisButton.Name = "blobAnalysisButton";
-         this.blobAnalysisButton.Size = new System.Drawing.Size(94, 23);
-         this.blobAnalysisButton.TabIndex = 8;
-         this.blobAnalysisButton.Text = "Blob Analysis";
-         this.blobAnalysisButton.UseVisualStyleBackColor = true;
-         this.blobAnalysisButton.Click += new System.EventHandler(this.blobAnalysisButton_Click);
+         this.blobSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.blobSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+         this.blobSplitContainer.IsSplitterFixed = true;
+         this.blobSplitContainer.Location = new System.Drawing.Point(0, 0);
+         this.blobSplitContainer.Name = "blobSplitContainer";
+         this.blobSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+         // 
+         // blobSplitContainer.Panel1
+         // 
+         this.blobSplitContainer.Panel1.Controls.Add(this.blobListView);
+         // 
+         // blobSplitContainer.Panel2
+         // 
+         this.blobSplitContainer.Panel2.Controls.Add(this.blobAnalysisButton);
+         this.blobSplitContainer.Panel2.Controls.Add(this.backgroundColorTrackBar);
+         this.blobSplitContainer.Panel2.Controls.Add(this.maxAreaThresholdLabel);
+         this.blobSplitContainer.Panel2.Controls.Add(this.minAreaThresholdTrackBar);
+         this.blobSplitContainer.Panel2.Controls.Add(this.maxAreaThresholdTrackBar);
+         this.blobSplitContainer.Panel2.Controls.Add(this.backgroundColorLabel);
+         this.blobSplitContainer.Panel2.Controls.Add(this.minAreaThresholdLabel);
+         this.blobSplitContainer.Size = new System.Drawing.Size(346, 466);
+         this.blobSplitContainer.SplitterDistance = 335;
+         this.blobSplitContainer.TabIndex = 9;
          // 
          // mainWindow
          // 
@@ -165,7 +211,7 @@
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(637, 466);
-         this.Controls.Add(this.splitContainer);
+         this.Controls.Add(this.mainSplitContainer);
          this.Name = "mainWindow";
          this.Text = "ImagingInterface";
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -175,10 +221,13 @@
          ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.minAreaThresholdTrackBar)).EndInit();
-         this.splitContainer.Panel1.ResumeLayout(false);
-         this.splitContainer.Panel2.ResumeLayout(false);
-         this.splitContainer.Panel2.PerformLayout();
-         this.splitContainer.ResumeLayout(false);
+         this.mainSplitContainer.Panel1.ResumeLayout(false);
+         this.mainSplitContainer.Panel2.ResumeLayout(false);
+         this.mainSplitContainer.ResumeLayout(false);
+         this.blobSplitContainer.Panel1.ResumeLayout(false);
+         this.blobSplitContainer.Panel2.ResumeLayout(false);
+         this.blobSplitContainer.Panel2.PerformLayout();
+         this.blobSplitContainer.ResumeLayout(false);
          this.ResumeLayout(false);
 
          }
@@ -187,7 +236,7 @@
 
       private Emgu.CV.UI.ImageBox mainImageBox;
       private System.Windows.Forms.ToolTip imagingInterfaceToolTip;
-      private System.Windows.Forms.SplitContainer splitContainer;
+      private System.Windows.Forms.SplitContainer mainSplitContainer;
       private System.Windows.Forms.TrackBar minAreaThresholdTrackBar;
       private System.Windows.Forms.TrackBar backgroundColorTrackBar;
       private System.Windows.Forms.Label minAreaThresholdLabel;
@@ -195,6 +244,9 @@
       private System.Windows.Forms.Label maxAreaThresholdLabel;
       private System.Windows.Forms.TrackBar maxAreaThresholdTrackBar;
       private System.Windows.Forms.Button blobAnalysisButton;
+      private System.Windows.Forms.ListView blobListView;
+      private System.Windows.Forms.ImageList blobImageList;
+      private System.Windows.Forms.SplitContainer blobSplitContainer;
       }
    }
 
