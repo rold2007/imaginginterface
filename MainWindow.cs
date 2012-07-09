@@ -1,11 +1,13 @@
 ﻿namespace ImagingInterface
    {
    using System;
+   using System.Collections.Generic;
    using System.Drawing;
+   using System.Linq;
    using System.Windows.Forms;
+   using AForge.Imaging;
    using Emgu.CV;
    using Emgu.CV.Structure;
-   using AForge.Imaging;
 
    public partial class mainWindow : Form
       {
@@ -146,8 +148,59 @@
          blobCounter.BackgroundThreshold = Color.FromArgb(this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value);
          blobCounter.BlobsFilter = new BlobFilter(this.minAreaThresholdTrackBar.Value, this.maxAreaThresholdTrackBar.Value);
          blobCounter.FilterBlobs = true;
+         blobCounter.ObjectsOrder = ObjectsOrder.YX;
 
          blobCounter.ProcessImage(this.mainImageBox.Image.Bitmap);
+
+         this.blobImageList.Images.Clear();
+
+         Blob[] blobs = blobCounter.GetObjects(this.mainImageBox.Image.Bitmap, false);
+         this.blobListView.Groups.Clear();
+         int line = 1;
+         List<float> yPositions = new List<float>();
+         float maxHeightDifference = this.mainImageBox.Image.Size.Height / 10;
+
+         foreach (Blob blob in blobs)
+            {
+            this.blobImageList.Images.Add(blob.Image.ToManagedImage());
+
+            if (yPositions.Count == 0)
+               {
+               ListViewGroup listViewGroup = new ListViewGroup("Line " + line.ToString());
+
+               this.blobListView.Groups.Add(listViewGroup);
+               line++;
+
+               yPositions.Clear();
+               yPositions.Add(blob.CenterOfGravity.Y);
+               }
+            else
+               {
+               float average = yPositions.Average();
+
+               if (Math.Abs(blob.CenterOfGravity.Y - average) > maxHeightDifference)
+                  {
+                  ListViewGroup listViewGroup = new ListViewGroup("Line " + line.ToString());
+
+                  this.blobListView.Groups.Add(listViewGroup);
+                  line++;
+
+                  yPositions.Clear();
+                  yPositions.Add(blob.CenterOfGravity.Y);
+                  }
+               else
+                  {
+                  yPositions.Add(blob.CenterOfGravity.Y);
+                  }
+               }
+
+            ListViewItem listViewItem = new ListViewItem();
+
+            listViewItem.Group = this.blobListView.Groups[this.blobListView.Groups.Count - 1];
+            listViewItem.ImageIndex = this.blobImageList.Images.Count - 1;
+
+            this.blobListView.Items.Add(listViewItem);
+            }
          }
       }
 
