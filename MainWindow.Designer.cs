@@ -36,9 +36,9 @@
          this.minAreaThresholdTrackBar = new System.Windows.Forms.TrackBar();
          this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
          this.blobSplitContainer = new System.Windows.Forms.SplitContainer();
-         this.viewBlobCheckBox = new System.Windows.Forms.CheckBox();
          this.blobListView = new System.Windows.Forms.ListView();
          this.blobRectangleImageList = new System.Windows.Forms.ImageList(this.components);
+         this.viewBlobCheckBox = new System.Windows.Forms.CheckBox();
          this.whiteBackgroundCheckBox = new System.Windows.Forms.CheckBox();
          this.blobAnalysisButton = new System.Windows.Forms.Button();
          this.maxAreaThresholdLabel = new System.Windows.Forms.Label();
@@ -63,7 +63,7 @@
          this.mainImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom;
          this.mainImageBox.Location = new System.Drawing.Point(0, 0);
          this.mainImageBox.Name = "mainImageBox";
-         this.mainImageBox.Size = new System.Drawing.Size(231, 466);
+         this.mainImageBox.Size = new System.Drawing.Size(230, 466);
          this.mainImageBox.TabIndex = 0;
          this.mainImageBox.TabStop = false;
          // 
@@ -121,7 +121,7 @@
          this.mainSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
          this.mainSplitContainer.Panel2.Controls.Add(this.blobSplitContainer);
          this.mainSplitContainer.Size = new System.Drawing.Size(737, 466);
-         this.mainSplitContainer.SplitterDistance = 231;
+         this.mainSplitContainer.SplitterDistance = 230;
          this.mainSplitContainer.TabIndex = 1;
          // 
          // blobSplitContainer
@@ -148,9 +148,29 @@
          this.blobSplitContainer.Panel2.Controls.Add(this.maxAreaThresholdTrackBar);
          this.blobSplitContainer.Panel2.Controls.Add(this.backgroundColorLabel);
          this.blobSplitContainer.Panel2.Controls.Add(this.minAreaThresholdLabel);
-         this.blobSplitContainer.Size = new System.Drawing.Size(502, 466);
+         this.blobSplitContainer.Size = new System.Drawing.Size(503, 466);
          this.blobSplitContainer.SplitterDistance = 305;
          this.blobSplitContainer.TabIndex = 9;
+         // 
+         // blobListView
+         // 
+         this.blobListView.AllowDrop = true;
+         this.blobListView.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.blobListView.LargeImageList = this.blobRectangleImageList;
+         this.blobListView.Location = new System.Drawing.Point(0, 0);
+         this.blobListView.Name = "blobListView";
+         this.blobListView.Size = new System.Drawing.Size(503, 305);
+         this.blobListView.SmallImageList = this.blobRectangleImageList;
+         this.blobListView.TabIndex = 1;
+         this.imagingInterfaceToolTip.SetToolTip(this.blobListView, "Hit \'Del\' key to delete unwanted blobs.");
+         this.blobListView.UseCompatibleStateImageBehavior = false;
+         this.blobListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.blobListView_KeyUp);
+         // 
+         // blobRectangleImageList
+         // 
+         this.blobRectangleImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+         this.blobRectangleImageList.ImageSize = new System.Drawing.Size(64, 64);
+         this.blobRectangleImageList.TransparentColor = System.Drawing.Color.Transparent;
          // 
          // viewBlobCheckBox
          // 
@@ -162,23 +182,6 @@
          this.viewBlobCheckBox.Text = "View Blob";
          this.viewBlobCheckBox.UseVisualStyleBackColor = true;
          this.viewBlobCheckBox.CheckedChanged += new System.EventHandler(this.viewBlobCheckBox_CheckedChanged);
-         // 
-         // blobListView
-         // 
-         this.blobListView.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.blobListView.LargeImageList = this.blobRectangleImageList;
-         this.blobListView.Location = new System.Drawing.Point(0, 0);
-         this.blobListView.Name = "blobListView";
-         this.blobListView.Size = new System.Drawing.Size(502, 305);
-         this.blobListView.SmallImageList = this.blobRectangleImageList;
-         this.blobListView.TabIndex = 1;
-         this.blobListView.UseCompatibleStateImageBehavior = false;
-         // 
-         // blobRectangleImageList
-         // 
-         this.blobRectangleImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-         this.blobRectangleImageList.ImageSize = new System.Drawing.Size(64, 64);
-         this.blobRectangleImageList.TransparentColor = System.Drawing.Color.Transparent;
          // 
          // whiteBackgroundCheckBox
          // 
