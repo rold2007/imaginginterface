@@ -165,11 +165,12 @@
             blobCounter.ProcessImage(this.mainImageBox.Image.Bitmap);
             }
 
+         this.blobRectangleImageList.Images.Clear();
          this.blobImageList.Images.Clear();
          this.blobListView.Groups.Clear();
 
          Crop crop = new Crop(new Rectangle());
-         Blob[] blobs = blobCounter.GetObjectsInformation();
+         Blob[] blobs = blobCounter.GetObjects(this.mainImageBox.Image.Bitmap, false);
          int line = 1;
          List<float> yPositions = new List<float>();
          float maxHeightDifference = this.mainImageBox.Image.Size.Height / 10;
@@ -180,8 +181,10 @@
 
             using (Bitmap blobImage = crop.Apply(this.mainImageBox.Image.Bitmap))
                {
-               this.blobImageList.Images.Add(blobImage);
+               this.blobRectangleImageList.Images.Add(blobImage);
+               
                }
+            this.blobImageList.Images.Add(blob.Image.ToManagedImage());
 
             if (yPositions.Count == 0)
                {
@@ -216,9 +219,21 @@
             ListViewItem listViewItem = new ListViewItem();
 
             listViewItem.Group = this.blobListView.Groups[this.blobListView.Groups.Count - 1];
-            listViewItem.ImageIndex = this.blobImageList.Images.Count - 1;
+            listViewItem.ImageIndex = this.blobRectangleImageList.Images.Count - 1;
 
             this.blobListView.Items.Add(listViewItem);
+            }
+         }
+
+      private void viewBlobCheckBox_CheckedChanged(object sender, EventArgs e)
+         {
+         if(this.viewBlobCheckBox.Checked)
+            {
+            this.blobListView.LargeImageList = this.blobImageList;
+            }
+         else
+            {
+            this.blobListView.LargeImageList = this.blobRectangleImageList;
             }
          }
       }
