@@ -236,6 +236,19 @@
             this.blobListView.LargeImageList = this.blobRectangleImageList;
             }
          }
+
+      private void blobListView_KeyUp(object sender, KeyEventArgs e)
+         {
+         if (e.KeyCode == Keys.Delete)
+            {
+            ListView.SelectedListViewItemCollection selectedItem = this.blobListView.SelectedItems;
+
+            foreach (ListViewItem listViewItem in selectedItem)
+               {
+               listViewItem.Remove();
+               }
+            }
+         }
       }
 
    public class BlobFilter : IBlobsFilter
