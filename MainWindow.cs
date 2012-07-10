@@ -6,6 +6,7 @@
    using System.Linq;
    using System.Windows.Forms;
    using AForge.Imaging;
+   using AForge.Imaging.Filters;
    using Emgu.CV;
    using Emgu.CV.Structure;
 
@@ -150,19 +151,37 @@
          blobCounter.FilterBlobs = true;
          blobCounter.ObjectsOrder = ObjectsOrder.YX;
 
-         blobCounter.ProcessImage(this.mainImageBox.Image.Bitmap);
+         if (this.whiteBackgroundCheckBox.Checked)
+            {
+            Invert invert = new Invert();
+
+            using (System.Drawing.Bitmap processImage = invert.Apply(this.mainImageBox.Image.Bitmap))
+               {
+               blobCounter.ProcessImage(processImage);
+               }
+            }
+         else
+            {
+            blobCounter.ProcessImage(this.mainImageBox.Image.Bitmap);
+            }
 
          this.blobImageList.Images.Clear();
-
-         Blob[] blobs = blobCounter.GetObjects(this.mainImageBox.Image.Bitmap, false);
          this.blobListView.Groups.Clear();
+
+         Crop crop = new Crop(new Rectangle());
+         Blob[] blobs = blobCounter.GetObjectsInformation();
          int line = 1;
          List<float> yPositions = new List<float>();
          float maxHeightDifference = this.mainImageBox.Image.Size.Height / 10;
 
          foreach (Blob blob in blobs)
             {
-            this.blobImageList.Images.Add(blob.Image.ToManagedImage());
+            crop.Rectangle = blob.Rectangle;
+
+            using (Bitmap blobImage = crop.Apply(this.mainImageBox.Image.Bitmap))
+               {
+               this.blobImageList.Images.Add(blobImage);
+               }
 
             if (yPositions.Count == 0)
                {
