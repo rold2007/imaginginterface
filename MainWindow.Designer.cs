@@ -1,6 +1,6 @@
 ﻿namespace ImagingInterface
    {
-   partial class mainWindow
+   public partial class MainWindow
       {
       /// <summary>
       /// Required designer variable.
@@ -17,6 +17,7 @@
             {
             components.Dispose();
             }
+
          base.Dispose(disposing);
          }
 
@@ -76,7 +77,7 @@
          this.backgroundColorTrackBar.TabIndex = 0;
          this.backgroundColorTrackBar.TickFrequency = 20;
          this.imagingInterfaceToolTip.SetToolTip(this.backgroundColorTrackBar, "Blob background color threshold");
-         this.backgroundColorTrackBar.Scroll += new System.EventHandler(this.backgroundColorTrackBar_Scroll);
+         this.backgroundColorTrackBar.Scroll += new System.EventHandler(this.BackgroundColorTrackBar_Scroll);
          // 
          // maxAreaThresholdTrackBar
          // 
@@ -90,7 +91,7 @@
          this.maxAreaThresholdTrackBar.TickFrequency = 5;
          this.imagingInterfaceToolTip.SetToolTip(this.maxAreaThresholdTrackBar, "Filter blobs with area higher than max value");
          this.maxAreaThresholdTrackBar.Value = 2147483647;
-         this.maxAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.maxAreaThresholdTrackBar_ValueChanged);
+         this.maxAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.MaxAreaThresholdTrackBar_ValueChanged);
          // 
          // minAreaThresholdTrackBar
          // 
@@ -102,7 +103,7 @@
          this.minAreaThresholdTrackBar.TabIndex = 1;
          this.minAreaThresholdTrackBar.TickFrequency = 5;
          this.imagingInterfaceToolTip.SetToolTip(this.minAreaThresholdTrackBar, "Filter blobs with area lower than min value");
-         this.minAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.minAreaThresholdTrackBar_ValueChanged);
+         this.minAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.MinAreaThresholdTrackBar_ValueChanged);
          // 
          // blobListView
          // 
@@ -116,7 +117,7 @@
          this.blobListView.TabIndex = 1;
          this.imagingInterfaceToolTip.SetToolTip(this.blobListView, "Hit \'Del\' to delete unwanted blobs.\r\nHit \'M\' to merge blobs.");
          this.blobListView.UseCompatibleStateImageBehavior = false;
-         this.blobListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.blobListView_KeyUp);
+         this.blobListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BlobListView_KeyUp);
          // 
          // blobRectangleImageList
          // 
@@ -181,7 +182,7 @@
          this.viewBlobCheckBox.TabIndex = 2;
          this.viewBlobCheckBox.Text = "View Blob";
          this.viewBlobCheckBox.UseVisualStyleBackColor = true;
-         this.viewBlobCheckBox.CheckedChanged += new System.EventHandler(this.viewBlobCheckBox_CheckedChanged);
+         this.viewBlobCheckBox.CheckedChanged += new System.EventHandler(this.ViewBlobCheckBox_CheckedChanged);
          // 
          // whiteBackgroundCheckBox
          // 
@@ -203,7 +204,7 @@
          this.blobAnalysisButton.TabIndex = 8;
          this.blobAnalysisButton.Text = "Blob Analysis";
          this.blobAnalysisButton.UseVisualStyleBackColor = true;
-         this.blobAnalysisButton.Click += new System.EventHandler(this.blobAnalysisButton_Click);
+         this.blobAnalysisButton.Click += new System.EventHandler(this.BlobAnalysisButton_Click);
          // 
          // maxAreaThresholdLabel
          // 
@@ -240,18 +241,18 @@
          this.blobImageList.ImageSize = new System.Drawing.Size(64, 64);
          this.blobImageList.TransparentColor = System.Drawing.Color.Transparent;
          // 
-         // mainWindow
+         // MainWindow
          // 
          this.AllowDrop = true;
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(737, 466);
          this.Controls.Add(this.mainSplitContainer);
-         this.Name = "mainWindow";
+         this.Name = "MainWindow";
          this.Text = "ImagingInterface";
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-         this.DragDrop += new System.Windows.Forms.DragEventHandler(this.mainWindow_DragDrop);
-         this.DragEnter += new System.Windows.Forms.DragEventHandler(this.mainWindow_DragEnter);
+         this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragDrop);
+         this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragEnter);
          ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).EndInit();
@@ -287,4 +288,3 @@
       private System.Windows.Forms.ImageList blobImageList;
       }
    }
-
