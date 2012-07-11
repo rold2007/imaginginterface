@@ -12,6 +12,17 @@
 
    public partial class mainWindow : Form
       {
+      private Dictionary<ListViewItem, Blob> BlobResults
+         {
+         get;
+         set;
+         }
+      private BlobCounter BlobCounter
+         {
+         get;
+         set;
+         }
+
       public mainWindow()
          {
          InitializeComponent();
@@ -144,12 +155,12 @@
 
       private void blobAnalysisButton_Click(object sender, EventArgs e)
          {
-         BlobCounter blobCounter = new BlobCounter();
+         this.BlobCounter = new BlobCounter();
 
-         blobCounter.BackgroundThreshold = Color.FromArgb(this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value);
-         blobCounter.BlobsFilter = new BlobFilter(this.minAreaThresholdTrackBar.Value, this.maxAreaThresholdTrackBar.Value);
-         blobCounter.FilterBlobs = true;
-         blobCounter.ObjectsOrder = ObjectsOrder.YX;
+         this.BlobCounter.BackgroundThreshold = Color.FromArgb(this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value, this.backgroundColorTrackBar.Value);
+         this.BlobCounter.BlobsFilter = new BlobFilter(this.minAreaThresholdTrackBar.Value, this.maxAreaThresholdTrackBar.Value);
+         this.BlobCounter.FilterBlobs = true;
+         this.BlobCounter.ObjectsOrder = ObjectsOrder.YX;
 
          if (this.whiteBackgroundCheckBox.Checked)
             {
@@ -157,12 +168,12 @@
 
             using (System.Drawing.Bitmap processImage = invert.Apply(this.mainImageBox.Image.Bitmap))
                {
-               blobCounter.ProcessImage(processImage);
+               this.BlobCounter.ProcessImage(processImage);
                }
             }
          else
             {
-            blobCounter.ProcessImage(this.mainImageBox.Image.Bitmap);
+            this.BlobCounter.ProcessImage(this.mainImageBox.Image.Bitmap);
             }
 
          this.blobRectangleImageList.Images.Clear();
@@ -170,7 +181,8 @@
          this.blobListView.Groups.Clear();
 
          Crop crop = new Crop(new Rectangle());
-         Blob[] blobs = blobCounter.GetObjects(this.mainImageBox.Image.Bitmap, false);
+         Blob[] blobs = this.BlobCounter.GetObjects(this.mainImageBox.Image.Bitmap, false);
+         this.BlobResults = new Dictionary<ListViewItem, Blob>(blobs.Length);
          int line = 1;
          List<float> yPositions = new List<float>();
          float maxHeightDifference = this.mainImageBox.Image.Size.Height / 10;
@@ -182,13 +194,15 @@
             using (Bitmap blobImage = crop.Apply(this.mainImageBox.Image.Bitmap))
                {
                this.blobRectangleImageList.Images.Add(blobImage);
-               
                }
+
             this.blobImageList.Images.Add(blob.Image.ToManagedImage());
 
             if (yPositions.Count == 0)
                {
                ListViewGroup listViewGroup = new ListViewGroup("Line " + line.ToString());
+
+               listViewGroup.Name = "Line " + line.ToString();
 
                this.blobListView.Groups.Add(listViewGroup);
                line++;
@@ -203,6 +217,8 @@
                if (Math.Abs(blob.CenterOfGravity.Y - average) > maxHeightDifference)
                   {
                   ListViewGroup listViewGroup = new ListViewGroup("Line " + line.ToString());
+
+                  listViewGroup.Name = "Line " + line.ToString();
 
                   this.blobListView.Groups.Add(listViewGroup);
                   line++;
@@ -222,12 +238,13 @@
             listViewItem.ImageIndex = this.blobRectangleImageList.Images.Count - 1;
 
             this.blobListView.Items.Add(listViewItem);
+            this.BlobResults.Add(listViewItem, blob);
             }
          }
 
       private void viewBlobCheckBox_CheckedChanged(object sender, EventArgs e)
          {
-         if(this.viewBlobCheckBox.Checked)
+         if (this.viewBlobCheckBox.Checked)
             {
             this.blobListView.LargeImageList = this.blobImageList;
             }
@@ -239,14 +256,109 @@
 
       private void blobListView_KeyUp(object sender, KeyEventArgs e)
          {
-         if (e.KeyCode == Keys.Delete)
+         switch (e.KeyCode)
             {
-            ListView.SelectedListViewItemCollection selectedItem = this.blobListView.SelectedItems;
+            case Keys.Delete:
+               foreach (ListViewItem listViewItem in this.blobListView.SelectedItems)
+                  {
+                  listViewItem.Remove();
+                  }
+               break;
 
-            foreach (ListViewItem listViewItem in selectedItem)
-               {
-               listViewItem.Remove();
-               }
+            case Keys.M:
+               ListView.SelectedListViewItemCollection selectedItems = this.blobListView.SelectedItems;
+
+               if (selectedItems.Count >= 2)
+                  {
+                  //int MinX = int.MaxValue;
+                  //int MinY = int.MaxValue;
+                  //int MaxX = int.MinValue;
+                  //int MaxY = int.MinValue;
+                  Rectangle newBlobRectangle = new Rectangle();
+
+                  foreach (ListViewItem selectedItem in selectedItems)
+                     {
+                     Blob blob = this.BlobResults[selectedItem];
+
+                     if (newBlobRectangle.IsEmpty)
+                        {
+                        newBlobRectangle = blob.Rectangle;
+                        }
+                     else
+                        {
+                        newBlobRectangle = Rectangle.Union(newBlobRectangle, blob.Rectangle);
+                        }
+
+                     /*
+                  if (blob.Rectangle..Top.X < MinX)
+                     {
+                     MinX = blob.Rectangle.Top.X;
+                     }
+
+                  if (blob.Rectangle.Top.Y < MinY)
+                     {
+                     MinY = blob.Rectangle.Top.Y;
+                     }
+
+                  if (blob.CenterOfGravity.X > MaxX)
+                     {
+                     MaxX = blob.CenterOfGravity.X;
+                     }
+
+                  if (blob.CenterOfGravity.Y > MaxY)
+                     {
+                     MaxY = blob.CenterOfGravity.Y;
+                     }
+                     */
+                     selectedItem.Remove();
+                     this.BlobResults.Remove(selectedItem);
+                     }
+
+                  int MaxId = int.MinValue;
+
+                  foreach (Blob blob in this.BlobResults.Values)
+                     {
+                     if (MaxId < blob.ID)
+                        {
+                        MaxId = blob.ID;
+                        }
+                     }
+
+                  Blob mergedBlob = new Blob(MaxId + 1, newBlobRectangle);                  
+                  Crop crop = new Crop(mergedBlob.Rectangle);
+
+                  // Watch out, we're using the main image which could have changed meanwhile
+                  this.BlobCounter.ExtractBlobsImage(this.mainImageBox.Image.Bitmap, mergedBlob, false);
+
+                  using (Bitmap mergedBlobImage = crop.Apply(this.mainImageBox.Image.Bitmap))
+                     {
+                     this.blobRectangleImageList.Images.Add(mergedBlobImage);
+                     }
+
+                  this.blobImageList.Images.Add(mergedBlob.Image.ToManagedImage());
+
+                  ListViewGroup listViewGroup = this.blobListView.Groups["Merged"];
+
+                  if(listViewGroup == null)
+                     {
+                     listViewGroup = new ListViewGroup("Merged");
+                     listViewGroup.Name = "Merged";
+
+                     this.blobListView.Groups.Add(listViewGroup);
+                     }
+
+                  ListViewItem listViewItem = new ListViewItem();
+
+                  listViewItem.Group = listViewGroup;
+                  listViewItem.ImageIndex = this.blobRectangleImageList.Images.Count - 1;
+
+                  this.blobListView.Items.Add(listViewItem);
+                  this.BlobResults.Add(listViewItem, mergedBlob);
+                  }
+               break;
+
+            default:
+               break;
             }
          }
       }
