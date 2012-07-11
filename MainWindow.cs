@@ -10,25 +10,26 @@
    using Emgu.CV;
    using Emgu.CV.Structure;
 
-   public partial class mainWindow : Form
+   public partial class MainWindow : Form
       {
+      public MainWindow()
+         {
+         this.InitializeComponent();
+         }
+
       private Dictionary<ListViewItem, Blob> BlobResults
          {
          get;
          set;
          }
+
       private BlobCounter BlobCounter
          {
          get;
          set;
          }
 
-      public mainWindow()
-         {
-         InitializeComponent();
-         }
-
-      private void mainWindow_DragDrop(object sender, DragEventArgs e)
+      private void MainWindow_DragDrop(object sender, DragEventArgs e)
          {
          if (this.DragEventValid(e))
             {
@@ -37,11 +38,11 @@
             if (data != null)
                {
                string fileName = data[0];
-               Image<Rgb, UInt16> image = null;
+               Image<Rgb, ushort> image = null;
 
                try
                   {
-                  image = new Image<Rgb, UInt16>(fileName);
+                  image = new Image<Rgb, ushort>(fileName);
 
                   this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, fileName);
                   }
@@ -49,22 +50,24 @@
                   {
                   this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, "Invalid file format: " + fileName);
                   }
-
-               if (this.mainImageBox.Image != null)
+               finally
                   {
-                  this.mainImageBox.Image.Dispose();
+                  if (this.mainImageBox.Image != null)
+                     {
+                     this.mainImageBox.Image.Dispose();
+                     }
+
+                  this.mainImageBox.Image = image;
+
+                  this.UpdateBlobAreaFilterRange();
                   }
-
-               this.mainImageBox.Image = image;
-
-               UpdateBlobAreaFilterRange();
                }
             }
          }
 
-      private void mainWindow_DragEnter(object sender, DragEventArgs e)
+      private void MainWindow_DragEnter(object sender, DragEventArgs e)
          {
-         if (DragEventValid(e))
+         if (this.DragEventValid(e))
             {
             e.Effect = DragDropEffects.Copy;
             }
@@ -92,14 +95,14 @@
          return false;
          }
 
-      private void backgroundColorTrackBar_Scroll(object sender, EventArgs e)
+      private void BackgroundColorTrackBar_Scroll(object sender, EventArgs e)
          {
          this.backgroundColorLabel.Text = "Background color: " + this.backgroundColorTrackBar.Value.ToString();
          }
 
-      private void minAreaThresholdTrackBar_ValueChanged(object sender, EventArgs e)
+      private void MinAreaThresholdTrackBar_ValueChanged(object sender, EventArgs e)
          {
-         UpdateMinAreaLabel();
+         this.UpdateMinAreaLabel();
 
          if (this.minAreaThresholdTrackBar.Value > this.maxAreaThresholdTrackBar.Value)
             {
@@ -107,9 +110,9 @@
             }
          }
 
-      private void maxAreaThresholdTrackBar_ValueChanged(object sender, EventArgs e)
+      private void MaxAreaThresholdTrackBar_ValueChanged(object sender, EventArgs e)
          {
-         UpdateMaxAreaLabel();
+         this.UpdateMaxAreaLabel();
 
          if (this.maxAreaThresholdTrackBar.Value < this.minAreaThresholdTrackBar.Value)
             {
@@ -139,8 +142,8 @@
          this.minAreaThresholdTrackBar.TickFrequency = (imageSize / 20) > 0 ? (imageSize / 20) : 1;
          this.maxAreaThresholdTrackBar.TickFrequency = (imageSize / 20) > 0 ? (imageSize / 20) : 1;
 
-         UpdateMinAreaLabel();
-         UpdateMaxAreaLabel();
+         this.UpdateMinAreaLabel();
+         this.UpdateMaxAreaLabel();
          }
 
       private void UpdateMinAreaLabel()
@@ -153,7 +156,7 @@
          this.maxAreaThresholdLabel.Text = "Max area threshold: " + this.maxAreaThresholdTrackBar.Value.ToString();
          }
 
-      private void blobAnalysisButton_Click(object sender, EventArgs e)
+      private void BlobAnalysisButton_Click(object sender, EventArgs e)
          {
          this.BlobCounter = new BlobCounter();
 
@@ -184,7 +187,7 @@
          Blob[] blobs = this.BlobCounter.GetObjects(this.mainImageBox.Image.Bitmap, false);
          this.BlobResults = new Dictionary<ListViewItem, Blob>(blobs.Length);
          int line = 1;
-         List<float> yPositions = new List<float>();
+         List<float> positionsY = new List<float>();
          float maxHeightDifference = this.mainImageBox.Image.Size.Height / 10;
 
          foreach (Blob blob in blobs)
@@ -198,7 +201,7 @@
 
             this.blobImageList.Images.Add(blob.Image.ToManagedImage());
 
-            if (yPositions.Count == 0)
+            if (positionsY.Count == 0)
                {
                ListViewGroup listViewGroup = new ListViewGroup("Line " + line.ToString());
 
@@ -207,12 +210,12 @@
                this.blobListView.Groups.Add(listViewGroup);
                line++;
 
-               yPositions.Clear();
-               yPositions.Add(blob.CenterOfGravity.Y);
+               positionsY.Clear();
+               positionsY.Add(blob.CenterOfGravity.Y);
                }
             else
                {
-               float average = yPositions.Average();
+               float average = positionsY.Average();
 
                if (Math.Abs(blob.CenterOfGravity.Y - average) > maxHeightDifference)
                   {
@@ -223,12 +226,12 @@
                   this.blobListView.Groups.Add(listViewGroup);
                   line++;
 
-                  yPositions.Clear();
-                  yPositions.Add(blob.CenterOfGravity.Y);
+                  positionsY.Clear();
+                  positionsY.Add(blob.CenterOfGravity.Y);
                   }
                else
                   {
-                  yPositions.Add(blob.CenterOfGravity.Y);
+                  positionsY.Add(blob.CenterOfGravity.Y);
                   }
                }
 
@@ -242,7 +245,7 @@
             }
          }
 
-      private void viewBlobCheckBox_CheckedChanged(object sender, EventArgs e)
+      private void ViewBlobCheckBox_CheckedChanged(object sender, EventArgs e)
          {
          if (this.viewBlobCheckBox.Checked)
             {
@@ -254,7 +257,7 @@
             }
          }
 
-      private void blobListView_KeyUp(object sender, KeyEventArgs e)
+      private void BlobListView_KeyUp(object sender, KeyEventArgs e)
          {
          switch (e.KeyCode)
             {
@@ -263,6 +266,7 @@
                   {
                   listViewItem.Remove();
                   }
+
                break;
 
             case Keys.M:
@@ -270,10 +274,6 @@
 
                if (selectedItems.Count >= 2)
                   {
-                  //int MinX = int.MaxValue;
-                  //int MinY = int.MaxValue;
-                  //int MaxX = int.MinValue;
-                  //int MaxY = int.MinValue;
                   Rectangle newBlobRectangle = new Rectangle();
 
                   foreach (ListViewItem selectedItem in selectedItems)
@@ -289,42 +289,21 @@
                         newBlobRectangle = Rectangle.Union(newBlobRectangle, blob.Rectangle);
                         }
 
-                     /*
-                  if (blob.Rectangle..Top.X < MinX)
-                     {
-                     MinX = blob.Rectangle.Top.X;
-                     }
-
-                  if (blob.Rectangle.Top.Y < MinY)
-                     {
-                     MinY = blob.Rectangle.Top.Y;
-                     }
-
-                  if (blob.CenterOfGravity.X > MaxX)
-                     {
-                     MaxX = blob.CenterOfGravity.X;
-                     }
-
-                  if (blob.CenterOfGravity.Y > MaxY)
-                     {
-                     MaxY = blob.CenterOfGravity.Y;
-                     }
-                     */
                      selectedItem.Remove();
                      this.BlobResults.Remove(selectedItem);
                      }
 
-                  int MaxId = int.MinValue;
+                  int maxId = int.MinValue;
 
                   foreach (Blob blob in this.BlobResults.Values)
                      {
-                     if (MaxId < blob.ID)
+                     if (maxId < blob.ID)
                         {
-                        MaxId = blob.ID;
+                        maxId = blob.ID;
                         }
                      }
 
-                  Blob mergedBlob = new Blob(MaxId + 1, newBlobRectangle);                  
+                  Blob mergedBlob = new Blob(maxId + 1, newBlobRectangle);
                   Crop crop = new Crop(mergedBlob.Rectangle);
 
                   // Watch out, we're using the main image which could have changed meanwhile
@@ -339,7 +318,7 @@
 
                   ListViewGroup listViewGroup = this.blobListView.Groups["Merged"];
 
-                  if(listViewGroup == null)
+                  if (listViewGroup == null)
                      {
                      listViewGroup = new ListViewGroup("Merged");
                      listViewGroup.Name = "Merged";
@@ -355,50 +334,12 @@
                   this.blobListView.Items.Add(listViewItem);
                   this.BlobResults.Add(listViewItem, mergedBlob);
                   }
+
                break;
 
             default:
                break;
             }
-         }
-      }
-
-   public class BlobFilter : IBlobsFilter
-      {
-      public int MinAreaThreshold
-         {
-         get;
-         private set;
-         }
-      public int MaxAreaThreshold
-         {
-         get;
-         private set;
-         }
-
-      private BlobFilter()
-         {
-         }
-
-      public BlobFilter(int minAreaThreshold, int maxAreaThreshold)
-         : this()
-         {
-         this.MinAreaThreshold = minAreaThreshold;
-         this.MaxAreaThreshold = maxAreaThreshold;
-         }
-
-      public bool Check(Blob blob)
-         {
-         if (blob.Area < this.MinAreaThreshold)
-            {
-            return false;
-            }
-         else if (blob.Area > this.MaxAreaThreshold)
-            {
-            return false;
-            }
-
-         return true;
          }
       }
    }
