@@ -34,10 +34,10 @@
          this.backgroundColorTrackBar = new System.Windows.Forms.TrackBar();
          this.maxAreaThresholdTrackBar = new System.Windows.Forms.TrackBar();
          this.minAreaThresholdTrackBar = new System.Windows.Forms.TrackBar();
-         this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-         this.blobSplitContainer = new System.Windows.Forms.SplitContainer();
          this.blobListView = new System.Windows.Forms.ListView();
          this.blobRectangleImageList = new System.Windows.Forms.ImageList(this.components);
+         this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
+         this.blobSplitContainer = new System.Windows.Forms.SplitContainer();
          this.viewBlobCheckBox = new System.Windows.Forms.CheckBox();
          this.whiteBackgroundCheckBox = new System.Windows.Forms.CheckBox();
          this.blobAnalysisButton = new System.Windows.Forms.Button();
@@ -104,6 +104,26 @@
          this.imagingInterfaceToolTip.SetToolTip(this.minAreaThresholdTrackBar, "Filter blobs with area lower than min value");
          this.minAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.minAreaThresholdTrackBar_ValueChanged);
          // 
+         // blobListView
+         // 
+         this.blobListView.AllowDrop = true;
+         this.blobListView.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.blobListView.LargeImageList = this.blobRectangleImageList;
+         this.blobListView.Location = new System.Drawing.Point(0, 0);
+         this.blobListView.Name = "blobListView";
+         this.blobListView.Size = new System.Drawing.Size(503, 305);
+         this.blobListView.SmallImageList = this.blobRectangleImageList;
+         this.blobListView.TabIndex = 1;
+         this.imagingInterfaceToolTip.SetToolTip(this.blobListView, "Hit \'Del\' to delete unwanted blobs.\r\nHit \'M\' to merge blobs.");
+         this.blobListView.UseCompatibleStateImageBehavior = false;
+         this.blobListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.blobListView_KeyUp);
+         // 
+         // blobRectangleImageList
+         // 
+         this.blobRectangleImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+         this.blobRectangleImageList.ImageSize = new System.Drawing.Size(64, 64);
+         this.blobRectangleImageList.TransparentColor = System.Drawing.Color.Transparent;
+         // 
          // mainSplitContainer
          // 
          this.mainSplitContainer.BackColor = System.Drawing.SystemColors.ControlText;
@@ -151,26 +171,6 @@
          this.blobSplitContainer.Size = new System.Drawing.Size(503, 466);
          this.blobSplitContainer.SplitterDistance = 305;
          this.blobSplitContainer.TabIndex = 9;
-         // 
-         // blobListView
-         // 
-         this.blobListView.AllowDrop = true;
-         this.blobListView.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.blobListView.LargeImageList = this.blobRectangleImageList;
-         this.blobListView.Location = new System.Drawing.Point(0, 0);
-         this.blobListView.Name = "blobListView";
-         this.blobListView.Size = new System.Drawing.Size(503, 305);
-         this.blobListView.SmallImageList = this.blobRectangleImageList;
-         this.blobListView.TabIndex = 1;
-         this.imagingInterfaceToolTip.SetToolTip(this.blobListView, "Hit \'Del\' key to delete unwanted blobs.");
-         this.blobListView.UseCompatibleStateImageBehavior = false;
-         this.blobListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.blobListView_KeyUp);
-         // 
-         // blobRectangleImageList
-         // 
-         this.blobRectangleImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-         this.blobRectangleImageList.ImageSize = new System.Drawing.Size(64, 64);
-         this.blobRectangleImageList.TransparentColor = System.Drawing.Color.Transparent;
          // 
          // viewBlobCheckBox
          // 
