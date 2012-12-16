@@ -5,3 +5,4 @@ ImagingInterface.ncrunchsolution.user
 ImagingInterface.csproj.user
 ImagingInterface.suo
 StyleCop.Cache
+*.suo
