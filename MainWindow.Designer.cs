@@ -46,6 +46,9 @@
          this.backgroundColorLabel = new System.Windows.Forms.Label();
          this.minAreaThresholdLabel = new System.Windows.Forms.Label();
          this.blobImageList = new System.Windows.Forms.ImageList(this.components);
+         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+         this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).BeginInit();
@@ -56,6 +59,7 @@
          this.blobSplitContainer.Panel1.SuspendLayout();
          this.blobSplitContainer.Panel2.SuspendLayout();
          this.blobSplitContainer.SuspendLayout();
+         this.menuStrip1.SuspendLayout();
          this.SuspendLayout();
          // 
          // mainImageBox
@@ -64,7 +68,7 @@
          this.mainImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom;
          this.mainImageBox.Location = new System.Drawing.Point(0, 0);
          this.mainImageBox.Name = "mainImageBox";
-         this.mainImageBox.Size = new System.Drawing.Size(230, 466);
+         this.mainImageBox.Size = new System.Drawing.Size(230, 442);
          this.mainImageBox.TabIndex = 0;
          this.mainImageBox.TabStop = false;
          // 
@@ -112,7 +116,7 @@
          this.blobListView.LargeImageList = this.blobRectangleImageList;
          this.blobListView.Location = new System.Drawing.Point(0, 0);
          this.blobListView.Name = "blobListView";
-         this.blobListView.Size = new System.Drawing.Size(503, 305);
+         this.blobListView.Size = new System.Drawing.Size(503, 281);
          this.blobListView.SmallImageList = this.blobRectangleImageList;
          this.blobListView.TabIndex = 1;
          this.imagingInterfaceToolTip.SetToolTip(this.blobListView, "Hit \'Del\' to delete unwanted blobs.\r\nHit \'M\' to merge blobs.");
@@ -129,7 +133,7 @@
          // 
          this.mainSplitContainer.BackColor = System.Drawing.SystemColors.ControlText;
          this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.mainSplitContainer.Location = new System.Drawing.Point(0, 0);
+         this.mainSplitContainer.Location = new System.Drawing.Point(0, 24);
          this.mainSplitContainer.Name = "mainSplitContainer";
          // 
          // mainSplitContainer.Panel1
@@ -141,7 +145,7 @@
          // 
          this.mainSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
          this.mainSplitContainer.Panel2.Controls.Add(this.blobSplitContainer);
-         this.mainSplitContainer.Size = new System.Drawing.Size(737, 466);
+         this.mainSplitContainer.Size = new System.Drawing.Size(737, 442);
          this.mainSplitContainer.SplitterDistance = 230;
          this.mainSplitContainer.TabIndex = 1;
          // 
@@ -169,8 +173,8 @@
          this.blobSplitContainer.Panel2.Controls.Add(this.maxAreaThresholdTrackBar);
          this.blobSplitContainer.Panel2.Controls.Add(this.backgroundColorLabel);
          this.blobSplitContainer.Panel2.Controls.Add(this.minAreaThresholdLabel);
-         this.blobSplitContainer.Size = new System.Drawing.Size(503, 466);
-         this.blobSplitContainer.SplitterDistance = 305;
+         this.blobSplitContainer.Size = new System.Drawing.Size(503, 442);
+         this.blobSplitContainer.SplitterDistance = 281;
          this.blobSplitContainer.TabIndex = 9;
          // 
          // viewBlobCheckBox
@@ -241,6 +245,31 @@
          this.blobImageList.ImageSize = new System.Drawing.Size(64, 64);
          this.blobImageList.TransparentColor = System.Drawing.Color.Transparent;
          // 
+         // menuStrip1
+         // 
+         this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem});
+         this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+         this.menuStrip1.Name = "menuStrip1";
+         this.menuStrip1.Size = new System.Drawing.Size(737, 24);
+         this.menuStrip1.TabIndex = 2;
+         this.menuStrip1.Text = "mainMenuStrip";
+         // 
+         // helpToolStripMenuItem
+         // 
+         this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+         this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+         this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+         this.helpToolStripMenuItem.Text = "Help";
+         // 
+         // aboutToolStripMenuItem
+         // 
+         this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+         this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+         this.aboutToolStripMenuItem.Text = "About...";
+         this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+         // 
          // MainWindow
          // 
          this.AllowDrop = true;
@@ -248,6 +277,8 @@
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(737, 466);
          this.Controls.Add(this.mainSplitContainer);
+         this.Controls.Add(this.menuStrip1);
+         this.MainMenuStrip = this.menuStrip1;
          this.Name = "MainWindow";
          this.Text = "ImagingInterface";
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -264,7 +295,10 @@
          this.blobSplitContainer.Panel2.ResumeLayout(false);
          this.blobSplitContainer.Panel2.PerformLayout();
          this.blobSplitContainer.ResumeLayout(false);
+         this.menuStrip1.ResumeLayout(false);
+         this.menuStrip1.PerformLayout();
          this.ResumeLayout(false);
+         this.PerformLayout();
 
          }
 
@@ -286,5 +320,8 @@
       private System.Windows.Forms.CheckBox whiteBackgroundCheckBox;
       private System.Windows.Forms.CheckBox viewBlobCheckBox;
       private System.Windows.Forms.ImageList blobImageList;
+      private System.Windows.Forms.MenuStrip menuStrip1;
+      private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
       }
    }
