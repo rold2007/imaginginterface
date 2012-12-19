@@ -348,5 +348,21 @@
 
          aboutBox.ShowDialog(this);
          }
+
+      private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+         {
+         Application.Exit();
+         }
+
+      private void openToolStripMenuItem_Click(object sender, EventArgs e)
+         {
+         OpenFileDialog openFileDialog = new OpenFileDialog();
+
+         DialogResult dialogResult = openFileDialog.ShowDialog(this);
+
+         if (dialogResult == DialogResult.OK)
+            {
+            }
+         }
       }
    }
