@@ -38,30 +38,35 @@
             if (data != null)
                {
                string fileName = data[0];
-               Image<Rgb, ushort> image = null;
-
-               try
-                  {
-                  image = new Image<Rgb, ushort>(fileName);
-
-                  this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, fileName);
-                  }
-               catch
-                  {
-                  this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, "Invalid file format: " + fileName);
-                  }
-               finally
-                  {
-                  if (this.mainImageBox.Image != null)
-                     {
-                     this.mainImageBox.Image.Dispose();
-                     }
-
-                  this.mainImageBox.Image = image;
-
-                  this.UpdateBlobAreaFilterRange();
-                  }
+               OpenFile(fileName);
                }
+            }
+         }
+
+      private void OpenFile(string fileName)
+         {
+         Image<Rgb, ushort> image = null;
+
+         try
+            {
+            image = new Image<Rgb, ushort>(fileName);
+
+            this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, fileName);
+            }
+         catch
+            {
+            this.imagingInterfaceToolTip.SetToolTip(this.mainImageBox, "Invalid file format: " + fileName);
+            }
+         finally
+            {
+            if (this.mainImageBox.Image != null)
+               {
+               this.mainImageBox.Image.Dispose();
+               }
+
+            this.mainImageBox.Image = image;
+
+            this.UpdateBlobAreaFilterRange();
             }
          }
 
@@ -362,6 +367,10 @@
 
          if (dialogResult == DialogResult.OK)
             {
+            foreach (string fileName in openFileDialog.FileNames)
+               {
+               this.OpenFile(fileName);
+               }
             }
          }
       }
