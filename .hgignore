@@ -1,8 +1,8 @@
 syntax: glob
 bin/
 obj/
-ImagingInterface.ncrunchsolution.user
-ImagingInterface.csproj.user
-ImagingInterface.suo
 StyleCop.Cache
 *.suo
+*.opensdf
+*.user
+*.sdf
