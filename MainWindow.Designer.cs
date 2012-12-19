@@ -46,9 +46,12 @@
          this.backgroundColorLabel = new System.Windows.Forms.Label();
          this.minAreaThresholdLabel = new System.Windows.Forms.Label();
          this.blobImageList = new System.Windows.Forms.ImageList(this.components);
-         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+         this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
          this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).BeginInit();
@@ -59,7 +62,7 @@
          this.blobSplitContainer.Panel1.SuspendLayout();
          this.blobSplitContainer.Panel2.SuspendLayout();
          this.blobSplitContainer.SuspendLayout();
-         this.menuStrip1.SuspendLayout();
+         this.mainMenuStrip.SuspendLayout();
          this.SuspendLayout();
          // 
          // mainImageBox
@@ -245,15 +248,16 @@
          this.blobImageList.ImageSize = new System.Drawing.Size(64, 64);
          this.blobImageList.TransparentColor = System.Drawing.Color.Transparent;
          // 
-         // menuStrip1
+         // mainMenuStrip
          // 
-         this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+         this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
-         this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-         this.menuStrip1.Name = "menuStrip1";
-         this.menuStrip1.Size = new System.Drawing.Size(737, 24);
-         this.menuStrip1.TabIndex = 2;
-         this.menuStrip1.Text = "mainMenuStrip";
+         this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
+         this.mainMenuStrip.Name = "mainMenuStrip";
+         this.mainMenuStrip.Size = new System.Drawing.Size(737, 24);
+         this.mainMenuStrip.TabIndex = 2;
+         this.mainMenuStrip.Text = "mainMenuStrip";
          // 
          // helpToolStripMenuItem
          // 
@@ -270,6 +274,31 @@
          this.aboutToolStripMenuItem.Text = "About...";
          this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
          // 
+         // fileToolStripMenuItem
+         // 
+         this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.exitToolStripMenuItem});
+         this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+         this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+         this.fileToolStripMenuItem.Text = "File";
+         // 
+         // openToolStripMenuItem
+         // 
+         this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+         this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+         this.openToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+         this.openToolStripMenuItem.Text = "Open...";
+         this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+         // 
+         // exitToolStripMenuItem
+         // 
+         this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+         this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+         this.exitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+         this.exitToolStripMenuItem.Text = "Exit";
+         this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+         // 
          // MainWindow
          // 
          this.AllowDrop = true;
@@ -277,8 +306,8 @@
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(737, 466);
          this.Controls.Add(this.mainSplitContainer);
-         this.Controls.Add(this.menuStrip1);
-         this.MainMenuStrip = this.menuStrip1;
+         this.Controls.Add(this.mainMenuStrip);
+         this.MainMenuStrip = this.mainMenuStrip;
          this.Name = "MainWindow";
          this.Text = "ImagingInterface";
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -295,8 +324,8 @@
          this.blobSplitContainer.Panel2.ResumeLayout(false);
          this.blobSplitContainer.Panel2.PerformLayout();
          this.blobSplitContainer.ResumeLayout(false);
-         this.menuStrip1.ResumeLayout(false);
-         this.menuStrip1.PerformLayout();
+         this.mainMenuStrip.ResumeLayout(false);
+         this.mainMenuStrip.PerformLayout();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -320,8 +349,11 @@
       private System.Windows.Forms.CheckBox whiteBackgroundCheckBox;
       private System.Windows.Forms.CheckBox viewBlobCheckBox;
       private System.Windows.Forms.ImageList blobImageList;
-      private System.Windows.Forms.MenuStrip menuStrip1;
+      private System.Windows.Forms.MenuStrip mainMenuStrip;
       private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
       }
    }
