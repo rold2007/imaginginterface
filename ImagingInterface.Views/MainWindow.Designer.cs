@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface
+﻿namespace ImagingInterface.Views
    {
    public partial class MainWindow
       {
@@ -47,18 +47,20 @@
          this.minAreaThresholdLabel = new System.Windows.Forms.Label();
          this.blobImageList = new System.Windows.Forms.ImageList(this.components);
          this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
-         this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.minAreaThresholdTrackBar)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
          this.mainSplitContainer.Panel1.SuspendLayout();
          this.mainSplitContainer.Panel2.SuspendLayout();
          this.mainSplitContainer.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.blobSplitContainer)).BeginInit();
          this.blobSplitContainer.Panel1.SuspendLayout();
          this.blobSplitContainer.Panel2.SuspendLayout();
          this.blobSplitContainer.SuspendLayout();
@@ -259,21 +261,6 @@
          this.mainMenuStrip.TabIndex = 2;
          this.mainMenuStrip.Text = "mainMenuStrip";
          // 
-         // helpToolStripMenuItem
-         // 
-         this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-         this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-         this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-         this.helpToolStripMenuItem.Text = "Help";
-         // 
-         // aboutToolStripMenuItem
-         // 
-         this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-         this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-         this.aboutToolStripMenuItem.Text = "About...";
-         this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-         // 
          // fileToolStripMenuItem
          // 
          this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -299,6 +286,21 @@
          this.exitToolStripMenuItem.Text = "Exit";
          this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
          // 
+         // helpToolStripMenuItem
+         // 
+         this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+         this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+         this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+         this.helpToolStripMenuItem.Text = "Help";
+         // 
+         // aboutToolStripMenuItem
+         // 
+         this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+         this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+         this.aboutToolStripMenuItem.Text = "About...";
+         this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+         // 
          // MainWindow
          // 
          this.AllowDrop = true;
@@ -319,10 +321,12 @@
          ((System.ComponentModel.ISupportInitialize)(this.minAreaThresholdTrackBar)).EndInit();
          this.mainSplitContainer.Panel1.ResumeLayout(false);
          this.mainSplitContainer.Panel2.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
          this.mainSplitContainer.ResumeLayout(false);
          this.blobSplitContainer.Panel1.ResumeLayout(false);
          this.blobSplitContainer.Panel2.ResumeLayout(false);
          this.blobSplitContainer.Panel2.PerformLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.blobSplitContainer)).EndInit();
          this.blobSplitContainer.ResumeLayout(false);
          this.mainMenuStrip.ResumeLayout(false);
          this.mainMenuStrip.PerformLayout();

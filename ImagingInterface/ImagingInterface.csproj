@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BCADAB9C-63D4-4A71-ADA1-98BE02EA9D33}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{E18FBAF0-A857-4D30-8C19-2D6E153FE796}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImagingInterface.Views</RootNamespace>
-    <AssemblyName>ImagingInterface.Views</AssemblyName>
+    <RootNamespace>ImagingInterface</RootNamespace>
+    <AssemblyName>ImagingInterface</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,24 +31,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AForge">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\AForge.NET\Release\AForge.dll</HintPath>
+    <Reference Include="CommonServiceLocator.SimpleInjectorAdapter, Version=1.6.0.12319, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\CommonServiceLocator\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
     </Reference>
-    <Reference Include="AForge.Imaging">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\AForge.NET\IPLab\bin\AForge.Imaging.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\CommonServiceLocator\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.CV.dll</HintPath>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\SimpleInjector.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.UI">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.CV.UI.dll</HintPath>
+    <Reference Include="SimpleInjector.Extensions">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\Extensions\SimpleInjector.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.Util">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.Util.dll</HintPath>
+    <Reference Include="SimpleInjector.Packaging">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\Extensions\SimpleInjector.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,35 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BlobFilter.cs" />
-    <Compile Include="ImageView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ImageView.Designer.cs">
-      <DependentUpon>ImageView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImageView.resx">
-      <DependentUpon>ImageView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow.resx">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -114,16 +86,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
+      <Project>{fa7dbe95-8bd7-4169-82b2-8884cc31d6d0}</Project>
+      <Name>ImagingInterface.Controllers.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">
+      <Project>{b8c42917-287b-4b21-afe9-9a121163adb2}</Project>
+      <Name>ImagingInterface.Controllers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
       <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
       <Name>ImagingInterface.Models.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImagingInterface.Models\ImagingInterface.Models.csproj">
+      <Project>{46aac50e-53d2-40b6-a216-e2d0154f3ba2}</Project>
+      <Name>ImagingInterface.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
       <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
       <Name>ImagingInterface.Views.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImagingInterface.Views\ImagingInterface.Views.csproj">
+      <Project>{bcadab9c-63d4-4a71-ada1-98be02ea9d33}</Project>
+      <Name>ImagingInterface.Views</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
