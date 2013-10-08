@@ -12,8 +12,7 @@
       IImage Image
          {
          get;
+         set;
          }
-
-      void LoadFile(string filename);
       }
    }
