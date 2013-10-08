@@ -276,7 +276,7 @@
          this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
          this.openToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
          this.openToolStripMenuItem.Text = "Open...";
-         this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+         this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
          // 
          // exitToolStripMenuItem
          // 
@@ -284,7 +284,7 @@
          this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
          this.exitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
          this.exitToolStripMenuItem.Text = "Exit";
-         this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+         this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
          // 
          // helpToolStripMenuItem
          // 
@@ -299,7 +299,7 @@
          this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
          this.aboutToolStripMenuItem.Text = "About...";
-         this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+         this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
          // 
          // MainWindow
          // 

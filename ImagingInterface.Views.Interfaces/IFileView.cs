@@ -9,7 +9,7 @@
 
    public interface IFileView
       {
-      event Action FileOpen;
+      event EventHandler FileOpen;
 
       string[] OpenFile();
       }

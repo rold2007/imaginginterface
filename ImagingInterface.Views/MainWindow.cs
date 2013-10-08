@@ -14,18 +14,18 @@
 
    public partial class MainWindow : Form, IFileView, IImageViewManager
       {
-      public event Action FileOpen;
-
       private static bool checkSingleton = false;
 
       public MainWindow()
          {
-         System.Diagnostics.Debug.Assert(MainWindow.checkSingleton == false);
+         Debug.Assert(MainWindow.checkSingleton == false, "A singleton shoudn't be constructed twice.");
 
          MainWindow.checkSingleton = true;
 
          this.InitializeComponent();
          }
+
+      public event EventHandler FileOpen;
 
       private Dictionary<ListViewItem, Blob> BlobResults
          {
@@ -69,7 +69,8 @@
             if (data != null)
                {
                string fileName = data[0];
-               OpenFile(fileName);
+
+               this.OpenFile(fileName);
                }
             }
          }
@@ -378,23 +379,23 @@
             }
          }
 
-      private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+      private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
          {
          AboutBox aboutBox = new AboutBox();
 
          aboutBox.ShowDialog(this);
          }
 
-      private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+      private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
          {
          Application.Exit();
          }
 
-      private void openToolStripMenuItem_Click(object sender, EventArgs e)
+      private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
          {
          if (this.FileOpen != null)
             {
-            this.FileOpen();
+            this.FileOpen(this, EventArgs.Empty);
             }
          }
       }

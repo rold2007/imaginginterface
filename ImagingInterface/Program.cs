@@ -1,19 +1,14 @@
 ﻿namespace ImagingInterface.Views
    {
    using System;
-   using System.Collections.Generic;
-   using System.Diagnostics;
-   using System.Linq;
-   using System.Threading.Tasks;
    using System.Windows.Forms;
    using CommonServiceLocator.SimpleInjectorAdapter;
-   using SimpleInjector;
-   using SimpleInjector.Extensions;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
    using Microsoft.Practices.ServiceLocation;
+   using SimpleInjector;
 
-   static class Program
+   public static class Program
       {
       private static SimpleInjectorServiceLocatorAdapter simpleInjectorServiceLocatorAdapter;
 
@@ -21,7 +16,7 @@
       /// The main entry point for the application.
       /// </summary>
       [STAThread]
-      static void Main()
+      public static void Main()
          {
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);

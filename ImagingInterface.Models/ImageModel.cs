@@ -10,14 +10,14 @@
 
    public class ImageModel : IImageModel
       {
+      public ImageModel()
+         {
+         }
+
       public IImage Image
          {
          get;
          private set;
-         }
-
-      public ImageModel()
-         {
          }
 
       public void LoadFile(string filename)

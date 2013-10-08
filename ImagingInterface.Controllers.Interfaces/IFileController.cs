@@ -8,6 +8,6 @@
 
    public interface IFileController
       {
-      void FileOpen();
+      void FileOpen(object sender, EventArgs e);
       }
    }

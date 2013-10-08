@@ -1,14 +1,8 @@
 ﻿namespace ImagingInterface.Controllers
    {
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
-   using System.Diagnostics;
 
    public class FileController : IFileController
       {
@@ -21,7 +15,7 @@
          this.fileView.FileOpen += this.FileOpen;
          }
 
-      public void FileOpen()
+      public void FileOpen(object sender, EventArgs e)
          {
          string[] files = this.fileView.OpenFile();
 
