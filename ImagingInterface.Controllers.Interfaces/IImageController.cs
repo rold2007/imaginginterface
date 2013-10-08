@@ -9,6 +9,7 @@
    public interface IImageController
       {
       void LoadFile(string file);
+
       void Show();
       }
    }
