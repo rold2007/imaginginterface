@@ -45,10 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
-      <Project>{fa7dbe95-8bd7-4169-82b2-8884cc31d6d0}</Project>
-      <Name>ImagingInterface.Controllers.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
       <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
       <Name>ImagingInterface.Models.Interfaces</Name>
