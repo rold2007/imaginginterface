@@ -1,5 +1,7 @@
 ﻿namespace ImagingInterface.Controllers
    {
+   using Emgu.CV;
+   using Emgu.CV.Structure;
    using ImagingInterface.Models;
    using ImagingInterface.Views;
 
@@ -14,9 +16,9 @@
          this.imageModel = imageModel;
          }
 
-      public void LoadFile(string file)
+      public void LoadFile(string filename)
          {
-         this.imageModel.LoadFile(file);
+         this.imageModel.Image = new Image<Bgra, byte>(filename);
          }
 
       public void Show()

@@ -17,12 +17,7 @@
       public IImage Image
          {
          get;
-         private set;
-         }
-
-      public void LoadFile(string filename)
-         {
-         this.Image = new Image<Bgra, byte>(filename);
+         set;
          }
       }
    }
