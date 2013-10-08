@@ -34,20 +34,19 @@
   <ItemGroup>
     <Reference Include="CommonServiceLocator.SimpleInjectorAdapter, Version=1.6.0.12319, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\CommonServiceLocator\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v2.3.5\NET40\CommonServiceLocator\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\CommonServiceLocator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v2.3.5\NET40\CommonServiceLocator\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=1.6.0.12319, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v2.3.5\NET40\SimpleInjector.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector.Extensions">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\Extensions\SimpleInjector.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector.Packaging">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v1.6.1\NET40\Extensions\SimpleInjector.Packaging.dll</HintPath>
+    <Reference Include="SimpleInjector.Packaging, Version=1.6.0.12319, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\SimpleInjector Runtime Library v2.3.5\NET40\Extensions\SimpleInjector.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
