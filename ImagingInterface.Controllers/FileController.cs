@@ -15,17 +15,20 @@
          this.fileView.FileOpen += this.FileOpen;
          }
 
-      public void FileOpen(object sender, EventArgs e)
+      private void FileOpen(object sender, EventArgs e)
          {
          string[] files = this.fileView.OpenFile();
 
-         foreach (string file in files)
+         if (files != null && files.Length != 0)
             {
-            IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
+            foreach (string file in files)
+               {
+               IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
 
-            imageController.LoadFile(file);
+               imageController.LoadFile(file);
 
-            imageController.Show();
+               imageController.Show();
+               }
             }
          }
       }

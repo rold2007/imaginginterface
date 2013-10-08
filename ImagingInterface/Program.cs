@@ -1,13 +1,15 @@
-﻿namespace ImagingInterface.Views
+﻿namespace ImagingInterface
    {
    using System;
    using System.Windows.Forms;
    using CommonServiceLocator.SimpleInjectorAdapter;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
+   using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using SimpleInjector;
 
+   // ncrunch: no coverage start
    public static class Program
       {
       private static SimpleInjectorServiceLocatorAdapter simpleInjectorServiceLocatorAdapter;

@@ -43,16 +43,9 @@
          {
          OpenFileDialog openFileDialog = new OpenFileDialog();
 
-         DialogResult dialogResult = openFileDialog.ShowDialog(/*this.mainWindow*/);
+         DialogResult dialogResult = openFileDialog.ShowDialog();
 
-         if (dialogResult == DialogResult.OK)
-            {
-            return openFileDialog.FileNames;
-            }
-         else
-            {
-            return null;
-            }
+         return openFileDialog.FileNames;
          }
 
       public void AddImageView(IImageModel imageModel)
