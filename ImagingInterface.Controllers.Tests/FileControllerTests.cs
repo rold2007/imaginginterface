@@ -72,7 +72,7 @@
 
                this.fileView.TriggerOpenFileEvent();
 
-               Assert.IsTrue(this.imageView.ImageShown);
+               Assert.IsFalse(this.imageView.ImageShown, "The image should not be loaded when Files is null.");
                }
             }
          finally
