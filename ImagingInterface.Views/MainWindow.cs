@@ -1,7 +1,8 @@
-﻿namespace ImagingInterface
+﻿namespace ImagingInterface.Views
    {
    using System;
    using System.Collections.Generic;
+   using System.Diagnostics;
    using System.Drawing;
    using System.Linq;
    using System.Windows.Forms;
@@ -9,11 +10,20 @@
    using AForge.Imaging.Filters;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImagingInterface.Models;
 
-   public partial class MainWindow : Form
+   public partial class MainWindow : Form, IFileView, IImageViewManager
       {
+      public event Action FileOpen;
+
+      private static bool checkSingleton = false;
+
       public MainWindow()
          {
+         System.Diagnostics.Debug.Assert(MainWindow.checkSingleton == false);
+
+         MainWindow.checkSingleton = true;
+
          this.InitializeComponent();
          }
 
@@ -27,6 +37,27 @@
          {
          get;
          set;
+         }
+
+      public string[] OpenFile()
+         {
+         OpenFileDialog openFileDialog = new OpenFileDialog();
+
+         DialogResult dialogResult = openFileDialog.ShowDialog(/*this.mainWindow*/);
+
+         if (dialogResult == DialogResult.OK)
+            {
+            return openFileDialog.FileNames;
+            }
+         else
+            {
+            return null;
+            }
+         }
+
+      public void AddImageView(IImageModel imageModel)
+         {
+         this.mainImageBox.Image = imageModel.Image;
          }
 
       private void MainWindow_DragDrop(object sender, DragEventArgs e)
@@ -361,16 +392,9 @@
 
       private void openToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         OpenFileDialog openFileDialog = new OpenFileDialog();
-
-         DialogResult dialogResult = openFileDialog.ShowDialog(this);
-
-         if (dialogResult == DialogResult.OK)
+         if (this.FileOpen != null)
             {
-            foreach (string fileName in openFileDialog.FileNames)
-               {
-               this.OpenFile(fileName);
-               }
+            this.FileOpen();
             }
          }
       }
