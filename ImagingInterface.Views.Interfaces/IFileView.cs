@@ -10,8 +10,11 @@
    public interface IFileView
       {
       event EventHandler FileOpen;
+
       event EventHandler FileClose;
+      
       event EventHandler FileCloseAll;
+      
       event EventHandler<DragDropEventArgs> DragDropFile;
 
       string[] OpenFile();

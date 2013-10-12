@@ -8,15 +8,15 @@
 
    public class DragDropEventArgs : EventArgs
       {
+      public DragDropEventArgs(string[] data)
+         {
+         this.Data = data;
+         }
+
       public string[] Data
          {
          get;
          set;
-         }
-
-      public DragDropEventArgs(string[] data)
-         {
-         this.Data = data;
          }
       }
    }

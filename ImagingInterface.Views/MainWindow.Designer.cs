@@ -70,9 +70,9 @@
          this.mainSplitContainer.Size = new System.Drawing.Size(737, 442);
          this.mainSplitContainer.SplitterDistance = 524;
          this.mainSplitContainer.TabIndex = 1;
-         this.mainSplitContainer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainSplitContainer_MouseDown);
-         this.mainSplitContainer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainSplitContainer_MouseMove);
-         this.mainSplitContainer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainSplitContainer_MouseUp);
+         this.mainSplitContainer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainSplitContainer_MouseDown);
+         this.mainSplitContainer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainSplitContainer_MouseMove);
+         this.mainSplitContainer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainSplitContainer_MouseUp);
          // 
          // imagesTabControl
          // 
@@ -83,7 +83,7 @@
          this.imagesTabControl.SelectedIndex = 0;
          this.imagesTabControl.Size = new System.Drawing.Size(524, 442);
          this.imagesTabControl.TabIndex = 0;
-         this.imagesTabControl.SizeChanged += new System.EventHandler(this.imagesTabControl_SizeChanged);
+         this.imagesTabControl.SizeChanged += new System.EventHandler(this.ImagesTabControl_SizeChanged);
          // 
          // splitContainer
          // 
@@ -140,7 +140,7 @@
          this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
          this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
          this.closeAllToolStripMenuItem.Text = "Close All";
-         this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
+         this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItem_Click);
          // 
          // exitToolStripMenuItem
          // 
