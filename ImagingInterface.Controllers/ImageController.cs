@@ -8,6 +8,12 @@
 
    public class ImageController : IImageController
       {
+      public ImageController(IImageView imageView, IImageModel imageModel)
+         {
+         this.ImageView = imageView;
+         this.ImageModel = imageModel;
+         }
+
       public IImageModel ImageModel
          {
          get;
@@ -18,12 +24,6 @@
          {
          get;
          private set;
-         }
-
-      public ImageController(IImageView imageView, IImageModel imageModel)
-         {
-         this.ImageView = imageView;
-         this.ImageModel = imageModel;
          }
 
       public void LoadFile(string filename)

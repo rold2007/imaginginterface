@@ -10,7 +10,9 @@
    public interface IImageViewManagerController
       {
       void AddImage(IImageController imageController);
+
       IImageController GetActiveImage();
+      
       void RemoveImage(IImageController imageController);
       }
    }

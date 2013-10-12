@@ -12,7 +12,6 @@
 
    public abstract class ControllersBaseTests
       {
-      protected Container container;
       private SimpleInjectorServiceLocatorAdapter simpleInjectorServiceLocatorAdapter;
 
       public ControllersBaseTests()
@@ -20,12 +19,18 @@
          ServiceLocator.SetLocatorProvider(this.GetServiceLocator);
          }
 
+      protected Container Container
+         {
+         get;
+         private set;
+         }
+
       [SetUp]
       protected void Bootstrap()
          {
-         this.container = new Container();
+         this.Container = new Container();
 
-         this.simpleInjectorServiceLocatorAdapter = new SimpleInjectorServiceLocatorAdapter(container);
+         this.simpleInjectorServiceLocatorAdapter = new SimpleInjectorServiceLocatorAdapter(Container);
          }
 
       private IServiceLocator GetServiceLocator()

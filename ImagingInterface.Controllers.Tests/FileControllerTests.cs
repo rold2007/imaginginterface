@@ -11,8 +11,8 @@
    using ImagingInterface.Models;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
-   using NUnit.Framework;
    using Microsoft.Practices.ServiceLocation;
+   using NUnit.Framework;
 
    [TestFixture]
    public class FileControllerTests : ControllersBaseTests
@@ -28,12 +28,12 @@
          this.imageView = new ImageView();
          this.imageViewManager = new ImageViewManager();
 
-         this.container.RegisterSingle<IFileView>(this.fileView);
-         this.container.RegisterSingle<IImageView>(this.imageView);
-         this.container.RegisterSingle<IImageViewManager>(this.imageViewManager);
-         this.container.Register<IImageController, ImageController>();
-         this.container.Register<IImageModel, ImageModel>();
-         this.container.Register<IImageViewManagerController, ImageViewManagerController>();
+         this.Container.RegisterSingle<IFileView>(this.fileView);
+         this.Container.RegisterSingle<IImageView>(this.imageView);
+         this.Container.RegisterSingle<IImageViewManager>(this.imageViewManager);
+         this.Container.Register<IImageController, ImageController>();
+         this.Container.Register<IImageModel, ImageModel>();
+         this.Container.Register<IImageViewManagerController, ImageViewManagerController>();
          }
 
       [Test]
@@ -91,12 +91,19 @@
 
       private class FileView : IFileView
          {
-         public string[] Files;
-
          public event EventHandler FileOpen;
+
          public event EventHandler FileClose;
+         
          public event EventHandler FileCloseAll;
+         
          public event EventHandler<DragDropEventArgs> DragDropFile;
+
+         public string[] Files
+            {
+            get;
+            set;
+            }
 
          public EventHandler OpenFileEventHandler()
             {

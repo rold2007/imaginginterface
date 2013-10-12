@@ -11,7 +11,9 @@
    public interface IImageViewManager
       {
       void AddImageView(IImageView imageView, IImageModel imageModel);
+
       IImageView GetActiveImage();
+      
       void RemoveImageView(IImageView imageView);
       }
    }

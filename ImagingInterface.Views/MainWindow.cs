@@ -30,8 +30,11 @@
          }
 
       public event EventHandler FileOpen;
+
       public event EventHandler FileClose;
+      
       public event EventHandler FileCloseAll;
+      
       public event EventHandler<DragDropEventArgs> DragDropFile;
 
       public string[] OpenFile()
@@ -169,7 +172,7 @@
             }
          }
 
-      private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
+      private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
          {
          if (this.FileCloseAll != null)
             {
@@ -186,7 +189,7 @@
          imageViewControl.Size = size;
          }
 
-      private void imagesTabControl_SizeChanged(object sender, EventArgs e)
+      private void ImagesTabControl_SizeChanged(object sender, EventArgs e)
          {
          if (this.imagesTabControl.TabCount != 0 && this.imagesTabControl.SelectedTab != null)
             {
@@ -195,7 +198,7 @@
          }
 
       // Based on http://stackoverflow.com/questions/6521731/refresh-the-panels-of-a-splitcontainer-as-the-splitter-moves
-      private void mainSplitContainer_MouseDown(object sender, MouseEventArgs e)
+      private void MainSplitContainer_MouseDown(object sender, MouseEventArgs e)
          {
          SplitContainer splitContainer = (SplitContainer)sender;
 
@@ -204,7 +207,7 @@
          }
 
       // Based on http://stackoverflow.com/questions/6521731/refresh-the-panels-of-a-splitcontainer-as-the-splitter-moves
-      private void mainSplitContainer_MouseUp(object sender, MouseEventArgs e)
+      private void MainSplitContainer_MouseUp(object sender, MouseEventArgs e)
          {
          SplitContainer splitContainer = (SplitContainer)sender;
 
@@ -213,7 +216,7 @@
          }
 
       // Based on http://stackoverflow.com/questions/6521731/refresh-the-panels-of-a-splitcontainer-as-the-splitter-moves
-      private void mainSplitContainer_MouseMove(object sender, MouseEventArgs e)
+      private void MainSplitContainer_MouseMove(object sender, MouseEventArgs e)
          {
          SplitContainer splitContainer = (SplitContainer)sender;
 
@@ -241,10 +244,10 @@
                      Trace.WriteLine(string.Format("Out X: {0} Distance {1}", e.X, splitContainer.SplitterDistance));
                      }
                   }
-               // If it isn't aligned vertically then it must be
-               // horizontal
                else
                   {
+                  Debug.Assert(splitContainer.Orientation.Equals(Orientation.Horizontal), "If it isn't aligned vertically then it must be horizontal");
+
                   // Only move the splitter if the mouse is within
                   // the appropriate bounds
                   if (e.Y > 0 && e.Y < splitContainer.Height)
@@ -254,8 +257,6 @@
                      }
                   }
                }
-            // If a button other than left is pressed or no button
-            // at all
             else
                {
                // This allows the splitter to be moved normally again
