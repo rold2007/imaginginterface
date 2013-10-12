@@ -9,6 +9,7 @@
 
    public interface IImageView
       {
-      void Show(IImageModel imageModel);
+      void AssignImage(IImageModel imageModel);
+      void Close();
       }
    }

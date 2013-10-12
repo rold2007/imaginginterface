@@ -35,20 +35,22 @@
          // 
          // imageBox
          // 
-         this.imageBox.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.imageBox.BackColor = System.Drawing.SystemColors.Control;
          this.imageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom;
          this.imageBox.Location = new System.Drawing.Point(0, 0);
          this.imageBox.Name = "imageBox";
-         this.imageBox.Size = new System.Drawing.Size(150, 150);
-         this.imageBox.TabIndex = 2;
+         this.imageBox.Size = new System.Drawing.Size(375, 375);
+         this.imageBox.TabIndex = 3;
          this.imageBox.TabStop = false;
          // 
          // ImageView
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.AutoScroll = true;
          this.Controls.Add(this.imageBox);
          this.Name = "ImageView";
+         this.Size = new System.Drawing.Size(116, 116);
          ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
          this.ResumeLayout(false);
 

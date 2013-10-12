@@ -19,9 +19,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{7BD3B155-BB73-40E0-8F9B-1CEED7DEA5FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagingInterface.Views.Interfaces", "ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj", "{7B65E2D3-CC7F-44A7-B569-94B40DC97FF2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FA7DBE95-8BD7-4169-82B2-8884CC31D6D0} = {FA7DBE95-8BD7-4169-82B2-8884CC31D6D0}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagingInterface.Models", "ImagingInterface.Models\ImagingInterface.Models.csproj", "{46AAC50E-53D2-40B6-A216-E2D0154F3BA2}"
 EndProject

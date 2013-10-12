@@ -14,6 +14,12 @@
          {
          }
 
+      public string DisplayName
+         {
+         get;
+         set;
+         }
+
       public IImage Image
          {
          get;

@@ -30,109 +30,26 @@
       private void InitializeComponent()
          {
          this.components = new System.ComponentModel.Container();
-         this.mainImageBox = new Emgu.CV.UI.ImageBox();
          this.imagingInterfaceToolTip = new System.Windows.Forms.ToolTip(this.components);
-         this.backgroundColorTrackBar = new System.Windows.Forms.TrackBar();
-         this.maxAreaThresholdTrackBar = new System.Windows.Forms.TrackBar();
-         this.minAreaThresholdTrackBar = new System.Windows.Forms.TrackBar();
-         this.blobListView = new System.Windows.Forms.ListView();
-         this.blobRectangleImageList = new System.Windows.Forms.ImageList(this.components);
          this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-         this.blobSplitContainer = new System.Windows.Forms.SplitContainer();
-         this.viewBlobCheckBox = new System.Windows.Forms.CheckBox();
-         this.whiteBackgroundCheckBox = new System.Windows.Forms.CheckBox();
-         this.blobAnalysisButton = new System.Windows.Forms.Button();
-         this.maxAreaThresholdLabel = new System.Windows.Forms.Label();
-         this.backgroundColorLabel = new System.Windows.Forms.Label();
-         this.minAreaThresholdLabel = new System.Windows.Forms.Label();
-         this.blobImageList = new System.Windows.Forms.ImageList(this.components);
+         this.imagesTabControl = new System.Windows.Forms.TabControl();
+         this.splitContainer = new System.Windows.Forms.SplitContainer();
          this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
          this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.minAreaThresholdTrackBar)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
          this.mainSplitContainer.Panel1.SuspendLayout();
          this.mainSplitContainer.Panel2.SuspendLayout();
          this.mainSplitContainer.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.blobSplitContainer)).BeginInit();
-         this.blobSplitContainer.Panel1.SuspendLayout();
-         this.blobSplitContainer.Panel2.SuspendLayout();
-         this.blobSplitContainer.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+         this.splitContainer.SuspendLayout();
          this.mainMenuStrip.SuspendLayout();
          this.SuspendLayout();
-         // 
-         // mainImageBox
-         // 
-         this.mainImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.mainImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom;
-         this.mainImageBox.Location = new System.Drawing.Point(0, 0);
-         this.mainImageBox.Name = "mainImageBox";
-         this.mainImageBox.Size = new System.Drawing.Size(230, 442);
-         this.mainImageBox.TabIndex = 0;
-         this.mainImageBox.TabStop = false;
-         // 
-         // backgroundColorTrackBar
-         // 
-         this.backgroundColorTrackBar.Location = new System.Drawing.Point(3, 19);
-         this.backgroundColorTrackBar.Maximum = 254;
-         this.backgroundColorTrackBar.Name = "backgroundColorTrackBar";
-         this.backgroundColorTrackBar.Size = new System.Drawing.Size(163, 45);
-         this.backgroundColorTrackBar.TabIndex = 0;
-         this.backgroundColorTrackBar.TickFrequency = 20;
-         this.imagingInterfaceToolTip.SetToolTip(this.backgroundColorTrackBar, "Blob background color threshold");
-         this.backgroundColorTrackBar.Scroll += new System.EventHandler(this.BackgroundColorTrackBar_Scroll);
-         // 
-         // maxAreaThresholdTrackBar
-         // 
-         this.maxAreaThresholdTrackBar.Enabled = false;
-         this.maxAreaThresholdTrackBar.Location = new System.Drawing.Point(172, 83);
-         this.maxAreaThresholdTrackBar.Maximum = 2147483647;
-         this.maxAreaThresholdTrackBar.Minimum = 2147483547;
-         this.maxAreaThresholdTrackBar.Name = "maxAreaThresholdTrackBar";
-         this.maxAreaThresholdTrackBar.Size = new System.Drawing.Size(263, 45);
-         this.maxAreaThresholdTrackBar.TabIndex = 2;
-         this.maxAreaThresholdTrackBar.TickFrequency = 5;
-         this.imagingInterfaceToolTip.SetToolTip(this.maxAreaThresholdTrackBar, "Filter blobs with area higher than max value");
-         this.maxAreaThresholdTrackBar.Value = 2147483647;
-         this.maxAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.MaxAreaThresholdTrackBar_ValueChanged);
-         // 
-         // minAreaThresholdTrackBar
-         // 
-         this.minAreaThresholdTrackBar.Enabled = false;
-         this.minAreaThresholdTrackBar.Location = new System.Drawing.Point(172, 19);
-         this.minAreaThresholdTrackBar.Maximum = 100;
-         this.minAreaThresholdTrackBar.Name = "minAreaThresholdTrackBar";
-         this.minAreaThresholdTrackBar.Size = new System.Drawing.Size(263, 45);
-         this.minAreaThresholdTrackBar.TabIndex = 1;
-         this.minAreaThresholdTrackBar.TickFrequency = 5;
-         this.imagingInterfaceToolTip.SetToolTip(this.minAreaThresholdTrackBar, "Filter blobs with area lower than min value");
-         this.minAreaThresholdTrackBar.ValueChanged += new System.EventHandler(this.MinAreaThresholdTrackBar_ValueChanged);
-         // 
-         // blobListView
-         // 
-         this.blobListView.AllowDrop = true;
-         this.blobListView.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.blobListView.LargeImageList = this.blobRectangleImageList;
-         this.blobListView.Location = new System.Drawing.Point(0, 0);
-         this.blobListView.Name = "blobListView";
-         this.blobListView.Size = new System.Drawing.Size(503, 281);
-         this.blobListView.SmallImageList = this.blobRectangleImageList;
-         this.blobListView.TabIndex = 1;
-         this.imagingInterfaceToolTip.SetToolTip(this.blobListView, "Hit \'Del\' to delete unwanted blobs.\r\nHit \'M\' to merge blobs.");
-         this.blobListView.UseCompatibleStateImageBehavior = false;
-         this.blobListView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BlobListView_KeyUp);
-         // 
-         // blobRectangleImageList
-         // 
-         this.blobRectangleImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-         this.blobRectangleImageList.ImageSize = new System.Drawing.Size(64, 64);
-         this.blobRectangleImageList.TransparentColor = System.Drawing.Color.Transparent;
          // 
          // mainSplitContainer
          // 
@@ -144,111 +61,41 @@
          // mainSplitContainer.Panel1
          // 
          this.mainSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Control;
-         this.mainSplitContainer.Panel1.Controls.Add(this.mainImageBox);
+         this.mainSplitContainer.Panel1.Controls.Add(this.imagesTabControl);
          // 
          // mainSplitContainer.Panel2
          // 
          this.mainSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
-         this.mainSplitContainer.Panel2.Controls.Add(this.blobSplitContainer);
+         this.mainSplitContainer.Panel2.Controls.Add(this.splitContainer);
          this.mainSplitContainer.Size = new System.Drawing.Size(737, 442);
-         this.mainSplitContainer.SplitterDistance = 230;
+         this.mainSplitContainer.SplitterDistance = 524;
          this.mainSplitContainer.TabIndex = 1;
+         this.mainSplitContainer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainSplitContainer_MouseDown);
+         this.mainSplitContainer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainSplitContainer_MouseMove);
+         this.mainSplitContainer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainSplitContainer_MouseUp);
          // 
-         // blobSplitContainer
+         // imagesTabControl
          // 
-         this.blobSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.blobSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-         this.blobSplitContainer.IsSplitterFixed = true;
-         this.blobSplitContainer.Location = new System.Drawing.Point(0, 0);
-         this.blobSplitContainer.Name = "blobSplitContainer";
-         this.blobSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+         this.imagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.imagesTabControl.ItemSize = new System.Drawing.Size(0, 18);
+         this.imagesTabControl.Location = new System.Drawing.Point(0, 0);
+         this.imagesTabControl.Name = "imagesTabControl";
+         this.imagesTabControl.SelectedIndex = 0;
+         this.imagesTabControl.Size = new System.Drawing.Size(524, 442);
+         this.imagesTabControl.TabIndex = 0;
+         this.imagesTabControl.SizeChanged += new System.EventHandler(this.imagesTabControl_SizeChanged);
          // 
-         // blobSplitContainer.Panel1
+         // splitContainer
          // 
-         this.blobSplitContainer.Panel1.Controls.Add(this.blobListView);
-         // 
-         // blobSplitContainer.Panel2
-         // 
-         this.blobSplitContainer.Panel2.Controls.Add(this.viewBlobCheckBox);
-         this.blobSplitContainer.Panel2.Controls.Add(this.whiteBackgroundCheckBox);
-         this.blobSplitContainer.Panel2.Controls.Add(this.blobAnalysisButton);
-         this.blobSplitContainer.Panel2.Controls.Add(this.backgroundColorTrackBar);
-         this.blobSplitContainer.Panel2.Controls.Add(this.maxAreaThresholdLabel);
-         this.blobSplitContainer.Panel2.Controls.Add(this.minAreaThresholdTrackBar);
-         this.blobSplitContainer.Panel2.Controls.Add(this.maxAreaThresholdTrackBar);
-         this.blobSplitContainer.Panel2.Controls.Add(this.backgroundColorLabel);
-         this.blobSplitContainer.Panel2.Controls.Add(this.minAreaThresholdLabel);
-         this.blobSplitContainer.Size = new System.Drawing.Size(503, 442);
-         this.blobSplitContainer.SplitterDistance = 281;
-         this.blobSplitContainer.TabIndex = 9;
-         // 
-         // viewBlobCheckBox
-         // 
-         this.viewBlobCheckBox.AutoSize = true;
-         this.viewBlobCheckBox.Location = new System.Drawing.Point(6, 76);
-         this.viewBlobCheckBox.Name = "viewBlobCheckBox";
-         this.viewBlobCheckBox.Size = new System.Drawing.Size(73, 17);
-         this.viewBlobCheckBox.TabIndex = 2;
-         this.viewBlobCheckBox.Text = "View Blob";
-         this.viewBlobCheckBox.UseVisualStyleBackColor = true;
-         this.viewBlobCheckBox.CheckedChanged += new System.EventHandler(this.ViewBlobCheckBox_CheckedChanged);
-         // 
-         // whiteBackgroundCheckBox
-         // 
-         this.whiteBackgroundCheckBox.AutoSize = true;
-         this.whiteBackgroundCheckBox.Location = new System.Drawing.Point(6, 99);
-         this.whiteBackgroundCheckBox.Name = "whiteBackgroundCheckBox";
-         this.whiteBackgroundCheckBox.Size = new System.Drawing.Size(115, 17);
-         this.whiteBackgroundCheckBox.TabIndex = 9;
-         this.whiteBackgroundCheckBox.Text = "White Background";
-         this.whiteBackgroundCheckBox.UseVisualStyleBackColor = true;
-         // 
-         // blobAnalysisButton
-         // 
-         this.blobAnalysisButton.AutoSize = true;
-         this.blobAnalysisButton.Enabled = false;
-         this.blobAnalysisButton.Location = new System.Drawing.Point(6, 122);
-         this.blobAnalysisButton.Name = "blobAnalysisButton";
-         this.blobAnalysisButton.Size = new System.Drawing.Size(94, 23);
-         this.blobAnalysisButton.TabIndex = 8;
-         this.blobAnalysisButton.Text = "Blob Analysis";
-         this.blobAnalysisButton.UseVisualStyleBackColor = true;
-         this.blobAnalysisButton.Click += new System.EventHandler(this.BlobAnalysisButton_Click);
-         // 
-         // maxAreaThresholdLabel
-         // 
-         this.maxAreaThresholdLabel.AutoSize = true;
-         this.maxAreaThresholdLabel.Enabled = false;
-         this.maxAreaThresholdLabel.Location = new System.Drawing.Point(172, 67);
-         this.maxAreaThresholdLabel.Name = "maxAreaThresholdLabel";
-         this.maxAreaThresholdLabel.Size = new System.Drawing.Size(100, 13);
-         this.maxAreaThresholdLabel.TabIndex = 7;
-         this.maxAreaThresholdLabel.Text = "Max area threshold:";
-         // 
-         // backgroundColorLabel
-         // 
-         this.backgroundColorLabel.AutoSize = true;
-         this.backgroundColorLabel.Location = new System.Drawing.Point(3, 3);
-         this.backgroundColorLabel.Name = "backgroundColorLabel";
-         this.backgroundColorLabel.Size = new System.Drawing.Size(103, 13);
-         this.backgroundColorLabel.TabIndex = 4;
-         this.backgroundColorLabel.Text = "Background color: 0";
-         // 
-         // minAreaThresholdLabel
-         // 
-         this.minAreaThresholdLabel.AutoSize = true;
-         this.minAreaThresholdLabel.Enabled = false;
-         this.minAreaThresholdLabel.Location = new System.Drawing.Point(172, 3);
-         this.minAreaThresholdLabel.Name = "minAreaThresholdLabel";
-         this.minAreaThresholdLabel.Size = new System.Drawing.Size(97, 13);
-         this.minAreaThresholdLabel.TabIndex = 5;
-         this.minAreaThresholdLabel.Text = "Min area threshold:";
-         // 
-         // blobImageList
-         // 
-         this.blobImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-         this.blobImageList.ImageSize = new System.Drawing.Size(64, 64);
-         this.blobImageList.TransparentColor = System.Drawing.Color.Transparent;
+         this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+         this.splitContainer.IsSplitterFixed = true;
+         this.splitContainer.Location = new System.Drawing.Point(0, 0);
+         this.splitContainer.Name = "splitContainer";
+         this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+         this.splitContainer.Size = new System.Drawing.Size(209, 442);
+         this.splitContainer.SplitterDistance = 281;
+         this.splitContainer.TabIndex = 9;
          // 
          // mainMenuStrip
          // 
@@ -265,6 +112,8 @@
          // 
          this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.closeToolStripMenuItem,
+            this.closeAllToolStripMenuItem,
             this.exitToolStripMenuItem});
          this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
          this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -277,6 +126,21 @@
          this.openToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
          this.openToolStripMenuItem.Text = "Open...";
          this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
+         // 
+         // closeToolStripMenuItem
+         // 
+         this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+         this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
+         this.closeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+         this.closeToolStripMenuItem.Text = "Close";
+         this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
+         // 
+         // closeAllToolStripMenuItem
+         // 
+         this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
+         this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+         this.closeAllToolStripMenuItem.Text = "Close All";
+         this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
          // 
          // exitToolStripMenuItem
          // 
@@ -315,19 +179,12 @@
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
          this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragDrop);
          this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragEnter);
-         ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.backgroundColorTrackBar)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.maxAreaThresholdTrackBar)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.minAreaThresholdTrackBar)).EndInit();
          this.mainSplitContainer.Panel1.ResumeLayout(false);
          this.mainSplitContainer.Panel2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
          this.mainSplitContainer.ResumeLayout(false);
-         this.blobSplitContainer.Panel1.ResumeLayout(false);
-         this.blobSplitContainer.Panel2.ResumeLayout(false);
-         this.blobSplitContainer.Panel2.PerformLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.blobSplitContainer)).EndInit();
-         this.blobSplitContainer.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+         this.splitContainer.ResumeLayout(false);
          this.mainMenuStrip.ResumeLayout(false);
          this.mainMenuStrip.PerformLayout();
          this.ResumeLayout(false);
@@ -337,27 +194,17 @@
 
       #endregion
 
-      private Emgu.CV.UI.ImageBox mainImageBox;
       private System.Windows.Forms.ToolTip imagingInterfaceToolTip;
       private System.Windows.Forms.SplitContainer mainSplitContainer;
-      private System.Windows.Forms.TrackBar minAreaThresholdTrackBar;
-      private System.Windows.Forms.TrackBar backgroundColorTrackBar;
-      private System.Windows.Forms.Label minAreaThresholdLabel;
-      private System.Windows.Forms.Label backgroundColorLabel;
-      private System.Windows.Forms.Label maxAreaThresholdLabel;
-      private System.Windows.Forms.TrackBar maxAreaThresholdTrackBar;
-      private System.Windows.Forms.Button blobAnalysisButton;
-      private System.Windows.Forms.ListView blobListView;
-      private System.Windows.Forms.ImageList blobRectangleImageList;
-      private System.Windows.Forms.SplitContainer blobSplitContainer;
-      private System.Windows.Forms.CheckBox whiteBackgroundCheckBox;
-      private System.Windows.Forms.CheckBox viewBlobCheckBox;
-      private System.Windows.Forms.ImageList blobImageList;
+      private System.Windows.Forms.SplitContainer splitContainer;
       private System.Windows.Forms.MenuStrip mainMenuStrip;
       private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+      private System.Windows.Forms.TabControl imagesTabControl;
+      private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
       }
    }

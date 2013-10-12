@@ -1,22 +1,29 @@
 ﻿namespace ImagingInterface.Views
    {
    using System.Windows.Forms;
+   using Emgu.CV.UI;
    using ImagingInterface.Models;
 
    public partial class ImageView : UserControl, IImageView
       {
-      private readonly IImageViewManager imageViewManager;
-
-      public ImageView(IImageViewManager imageViewManager)
+      public ImageView(ImageBox imageBox)
          {
          this.InitializeComponent();
-         
-         this.imageViewManager = imageViewManager;
          }
 
-      public void Show(IImageModel imageModel)
+      public void AssignImage(IImageModel imageModel)
          {
-         this.imageViewManager.AddImageView(imageModel);
+         this.imageBox.Image = imageModel.Image;
+
+         if (imageModel.Image != null)
+            {
+            this.imageBox.Size = imageModel.Image.Size;
+            }
+         }
+
+      public void Close()
+         {
+         this.Dispose();
          }
       }
    }
