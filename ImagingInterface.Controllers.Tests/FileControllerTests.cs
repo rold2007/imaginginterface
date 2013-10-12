@@ -10,6 +10,7 @@
    using Emgu.CV.Structure;
    using ImagingInterface.Models;
    using ImagingInterface.Views;
+   using ImagingInterface.Views.EventArguments;
    using NUnit.Framework;
    using Microsoft.Practices.ServiceLocation;
 
@@ -18,17 +19,21 @@
       {
       private FileView fileView;
       private ImageView imageView;
+      private ImageViewManager imageViewManager;
 
       [SetUp]
-      public void Bootstrap()
+      public void SetUp()
          {
          this.fileView = new FileView();
          this.imageView = new ImageView();
+         this.imageViewManager = new ImageViewManager();
 
          this.container.RegisterSingle<IFileView>(this.fileView);
          this.container.RegisterSingle<IImageView>(this.imageView);
+         this.container.RegisterSingle<IImageViewManager>(this.imageViewManager);
          this.container.Register<IImageController, ImageController>();
          this.container.Register<IImageModel, ImageModel>();
+         this.container.Register<IImageViewManagerController, ImageViewManagerController>();
          }
 
       [Test]
@@ -89,6 +94,9 @@
          public string[] Files;
 
          public event EventHandler FileOpen;
+         public event EventHandler FileClose;
+         public event EventHandler FileCloseAll;
+         public event EventHandler<DragDropEventArgs> DragDropFile;
 
          public EventHandler OpenFileEventHandler()
             {
@@ -116,9 +124,31 @@
             set;
             }
 
-         public void Show(IImageModel imageModel)
+         public void AssignImage(IImageModel imageModel)
             {
             this.ImageShown = true;
+            }
+
+         public void Close()
+            {
+            }
+         }
+
+      private class ImageViewManager : IImageViewManager
+         {
+         private IImageView activeImageView;
+
+         public void AddImageView(IImageView imageView, IImageModel imageModel)
+            {
+            }
+
+         public IImageView GetActiveImage()
+            {
+            return this.activeImageView;
+            }
+
+         public void RemoveImageView(IImageView imageView)
+            {
             }
          }
       }

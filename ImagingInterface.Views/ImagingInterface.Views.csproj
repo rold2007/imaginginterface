@@ -35,12 +35,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AForge">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\AForge.NET\Release\AForge.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Imaging">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\AForge.NET\IPLab\bin\AForge.Imaging.dll</HintPath>
-    </Reference>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.CV.dll</HintPath>
     </Reference>
@@ -68,7 +62,6 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="BlobFilter.cs" />
     <Compile Include="ImageView.cs">
       <SubType>UserControl</SubType>
     </Compile>

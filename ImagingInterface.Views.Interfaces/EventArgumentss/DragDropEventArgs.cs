@@ -1,24 +1,22 @@
-﻿namespace ImagingInterface.Models
+﻿namespace ImagingInterface.Views.EventArguments
    {
    using System;
    using System.Collections.Generic;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using Emgu.CV;
 
-   public interface IImageModel
+   public class DragDropEventArgs : EventArgs
       {
-      string DisplayName
+      public string[] Data
          {
          get;
          set;
          }
 
-      IImage Image
+      public DragDropEventArgs(string[] data)
          {
-         get;
-         set;
+         this.Data = data;
          }
       }
    }

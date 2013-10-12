@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="FileController.cs" />
     <Compile Include="ImageController.cs" />
+    <Compile Include="ImageViewManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

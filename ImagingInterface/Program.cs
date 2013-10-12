@@ -9,7 +9,6 @@
    using Microsoft.Practices.ServiceLocation;
    using SimpleInjector;
 
-   // ncrunch: no coverage start
    public static class Program
       {
       private static SimpleInjectorServiceLocatorAdapter simpleInjectorServiceLocatorAdapter;
@@ -35,12 +34,14 @@
          ServiceLocator.SetLocatorProvider(Program.GetServiceLocator);
          MainWindow mainWindow = new MainWindow();
          FileController fileController = new FileController(mainWindow);
+         ImageViewManagerController imageViewManagerController = new ImageViewManagerController(mainWindow);
 
          // Need to register singleton instances for all things pertaining MainWindow
          container.RegisterSingle<MainWindow>(mainWindow);
          container.RegisterSingle<IFileView>(mainWindow);
          container.RegisterSingle<IImageViewManager>(mainWindow);
          container.RegisterSingle<IFileController>(fileController);
+         container.RegisterSingle<IImageViewManagerController>(imageViewManagerController);
 
          // Views
          container.Register<IImageView, ImageView>();
