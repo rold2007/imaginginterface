@@ -18,22 +18,22 @@
    public class FileControllerTests : ControllersBaseTests
       {
       private FileView fileView;
-      private ImageView imageView;
       private ImageViewManager imageViewManager;
+      private ImageViewManagerController imageViewManagerController;
 
       [SetUp]
       public void SetUp()
          {
          this.fileView = new FileView();
-         this.imageView = new ImageView();
          this.imageViewManager = new ImageViewManager();
+         this.imageViewManagerController = new ImageViewManagerController(this.imageViewManager);
 
          this.Container.RegisterSingle<IFileView>(this.fileView);
-         this.Container.RegisterSingle<IImageView>(this.imageView);
          this.Container.RegisterSingle<IImageViewManager>(this.imageViewManager);
+         this.Container.RegisterSingle<IImageViewManagerController>(this.imageViewManagerController);
          this.Container.Register<IImageController, ImageController>();
+         this.Container.Register<IImageView, ImageView>();
          this.Container.Register<IImageModel, ImageModel>();
-         this.Container.Register<IImageViewManagerController, ImageViewManagerController>();
          }
 
       [Test]
@@ -63,21 +63,145 @@
 
                this.fileView.Files = new string[1] { tempFileName };
 
-               Assert.IsFalse(this.imageView.ImageShown);
+               Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
 
                this.fileView.TriggerOpenFileEvent();
-               
-               Assert.IsTrue(this.imageView.ImageShown);
 
-               this.imageView.ImageShown = false;
+               Assert.IsNotNull(this.imageViewManagerController.GetActiveImageController());
+
+               this.fileView.TriggerCloseFileEvent();
 
                this.fileView.Files = null;
 
-               Assert.IsFalse(this.imageView.ImageShown);
+               this.fileView.TriggerOpenFileEvent();
+
+               Assert.IsNull(this.imageViewManagerController.GetActiveImageController(), "The image should not be loaded when Files is null.");
+               }
+            }
+         finally
+            {
+            if (!string.IsNullOrEmpty(tempFileName))
+               {
+               File.Delete(tempFileName);
+               }
+            }
+         }
+
+      [Test]
+      public void FileClose()
+         {
+         FileController fileController = new FileController(this.fileView);
+
+         string tempFileName = string.Empty;
+
+         try
+            {
+            tempFileName = Path.GetRandomFileName() + ".png";
+
+            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
+               {
+               image.Save(tempFileName);
+
+               this.fileView.Files = new string[2] { tempFileName, tempFileName };
+
+               // Make sure closing without any open file doesn't crash
+               this.fileView.TriggerCloseFileEvent();
 
                this.fileView.TriggerOpenFileEvent();
 
-               Assert.IsFalse(this.imageView.ImageShown, "The image should not be loaded when Files is null.");
+               IImageController activeImageControllerToClose = this.imageViewManagerController.GetActiveImageController();
+
+               // CloseFile should close the active image controller
+               this.fileView.TriggerCloseFileEvent();
+
+               // Make sure there is still an active image controller
+               Assert.IsNotNull(this.imageViewManagerController.GetActiveImageController());
+
+               // Make sure the previously active image controller isn't active anymore
+               Assert.AreNotSame(activeImageControllerToClose, this.imageViewManagerController.GetActiveImageController());
+
+               // Close the remaining image controller
+               this.fileView.TriggerCloseFileEvent();
+
+               // There should be no more open image controller
+               Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
+               }
+            }
+         finally
+            {
+            if (!string.IsNullOrEmpty(tempFileName))
+               {
+               File.Delete(tempFileName);
+               }
+            }
+         }
+
+      [Test]
+      public void FileCloseAll()
+         {
+         FileController fileController = new FileController(this.fileView);
+
+         string tempFileName = string.Empty;
+
+         try
+            {
+            tempFileName = Path.GetRandomFileName() + ".png";
+
+            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
+               {
+               image.Save(tempFileName);
+
+               this.fileView.Files = new string[2] { tempFileName, tempFileName };
+
+               // Make sure closing without any open file doesn't crash
+               this.fileView.TriggerCloseAllFileEvent();
+
+               this.fileView.TriggerOpenFileEvent();
+
+               Assert.IsNotNull(this.imageViewManagerController.GetActiveImageController());
+
+               this.fileView.TriggerCloseAllFileEvent();
+
+               Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
+               }
+            }
+         finally
+            {
+            if (!string.IsNullOrEmpty(tempFileName))
+               {
+               File.Delete(tempFileName);
+               }
+            }
+         }
+
+      [Test]
+      public void DragDrop()
+         {
+         FileController fileController = new FileController(this.fileView);
+
+         string tempFileName = string.Empty;
+
+         try
+            {
+            tempFileName = Path.GetRandomFileName() + ".png";
+
+            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
+               {
+               image.Save(tempFileName);
+
+               this.fileView.Files = new string[1] { tempFileName };
+
+               Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
+
+               this.fileView.TriggerDragDropFileEvent(this.fileView.Files);
+
+               Assert.IsNotNull(this.imageViewManagerController.GetActiveImageController());
+
+               this.fileView.TriggerCloseFileEvent();
+
+               this.fileView.TriggerDragDropFileEvent(null);
+
+               Assert.IsNull(this.imageViewManagerController.GetActiveImageController(), "The image should not be loaded when Files is null.");
                }
             }
          finally
@@ -117,6 +241,27 @@
             this.FileOpen(null, EventArgs.Empty);
             }
 
+         public void TriggerCloseFileEvent()
+            {
+            Assert.IsNotNull(this.FileClose);
+
+            this.FileClose(null, EventArgs.Empty);
+            }
+
+         public void TriggerCloseAllFileEvent()
+            {
+            Assert.IsNotNull(this.FileCloseAll);
+
+            this.FileCloseAll(null, EventArgs.Empty);
+            }
+
+         public void TriggerDragDropFileEvent(string[] files)
+            {
+            Assert.IsNotNull(this.DragDropFile);
+
+            this.DragDropFile(null, new DragDropEventArgs(files));
+            }
+
          public string[] OpenFile()
             {
             return this.Files;
@@ -125,15 +270,8 @@
 
       private class ImageView : IImageView
          {
-         public bool ImageShown
+         public void AssignImageModel(IImageModel imageModel)
             {
-            get;
-            set;
-            }
-
-         public void AssignImage(IImageModel imageModel)
-            {
-            this.ImageShown = true;
             }
 
          public void Close()
@@ -143,19 +281,33 @@
 
       private class ImageViewManager : IImageViewManager
          {
-         private IImageView activeImageView;
+         private List<IImageView> allImageViews;
+
+         public ImageViewManager()
+            {
+            this.allImageViews = new List<IImageView>();
+            }
 
          public void AddImageView(IImageView imageView, IImageModel imageModel)
             {
+            this.allImageViews.Add(imageView);
             }
 
-         public IImageView GetActiveImage()
+         public IImageView GetActiveImageView()
             {
-            return this.activeImageView;
+            if (this.allImageViews.Count == 0)
+               {
+               return null;
+               }
+            else
+               {
+               return this.allImageViews[0];
+               }
             }
 
          public void RemoveImageView(IImageView imageView)
             {
+            this.allImageViews.Remove(imageView);
             }
          }
       }

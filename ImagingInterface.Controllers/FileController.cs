@@ -31,7 +31,7 @@
 
                imageController.LoadFile(file);
 
-               imageController.Show();
+               imageController.Add();
                }
             }
          }
@@ -39,11 +39,11 @@
       private void FileClose(object sender, EventArgs e)
          {
          IImageViewManagerController imageViewManagerController = ServiceLocator.Current.GetInstance<IImageViewManagerController>();
-         IImageController activeImageController = imageViewManagerController.GetActiveImage();
+         IImageController activeImageController = imageViewManagerController.GetActiveImageController();
 
          if (activeImageController != null)
             {
-            activeImageController.Close();
+            activeImageController.Remove();
             }
          }
 
@@ -52,13 +52,13 @@
          IImageViewManagerController imageViewManagerController = ServiceLocator.Current.GetInstance<IImageViewManagerController>();
          IImageController activeImageController;
 
-         activeImageController = imageViewManagerController.GetActiveImage();
+         activeImageController = imageViewManagerController.GetActiveImageController();
 
          while (activeImageController != null)
             {
-            activeImageController.Close();
+            activeImageController.Remove();
 
-            activeImageController = imageViewManagerController.GetActiveImage();
+            activeImageController = imageViewManagerController.GetActiveImageController();
             }
 
          GC.Collect();
@@ -66,13 +66,16 @@
 
       private void DragDropFile(object sender, DragDropEventArgs e)
          {
-         foreach (string file in e.Data)
+         if (e.Data != null)
             {
-            IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
+            foreach (string file in e.Data)
+               {
+               IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
 
-            imageController.LoadFile(file);
+               imageController.LoadFile(file);
 
-            imageController.Show();
+               imageController.Add();
+               }
             }
          }
       }

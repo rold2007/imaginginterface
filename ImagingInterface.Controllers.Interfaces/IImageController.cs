@@ -22,8 +22,8 @@
 
       void LoadFile(string file);
 
-      void Show();
+      void Add();
 
-      void Close();
+      void Remove();
       }
    }

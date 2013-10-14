@@ -12,7 +12,7 @@
       {
       void AddImageView(IImageView imageView, IImageModel imageModel);
 
-      IImageView GetActiveImage();
+      IImageView GetActiveImageView();
       
       void RemoveImageView(IImageView imageView);
       }
