@@ -32,9 +32,9 @@
       public event EventHandler FileOpen;
 
       public event EventHandler FileClose;
-      
+
       public event EventHandler FileCloseAll;
-      
+
       public event EventHandler<DragDropEventArgs> DragDropFile;
 
       public string[] OpenFile()
@@ -73,7 +73,7 @@
          this.imagesTabControl.Controls.Add(tabPage);
          }
 
-      public IImageView GetActiveImage()
+      public IImageView GetActiveImageView()
          {
          if (this.imagesTabControl.SelectedTab != null)
             {
@@ -102,14 +102,11 @@
          {
          if (this.DragEventValid(e))
             {
-            string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
-
-            if (data != null)
+            if (this.DragDropFile != null)
                {
-               if (this.DragDropFile != null)
-                  {
-                  this.DragDropFile(sender, new DragDropEventArgs(data));
-                  }
+               string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+               this.DragDropFile(sender, new DragDropEventArgs(data));
                }
             }
          }

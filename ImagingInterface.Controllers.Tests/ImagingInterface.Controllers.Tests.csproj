@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="ControllersBaseTests.cs" />
     <Compile Include="FileControllerTests.cs" />
+    <Compile Include="ImageControllerTests.cs" />
+    <Compile Include="ImageViewManagerControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

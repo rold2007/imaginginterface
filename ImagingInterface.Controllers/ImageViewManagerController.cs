@@ -20,16 +20,15 @@
          this.imageControllers = new Dictionary<IImageView, IImageController>();
          }
 
-      public void AddImage(IImageController imageController)
+      public void AddImageController(IImageController imageController)
          {
          this.imageViewManager.AddImageView(imageController.ImageView, imageController.ImageModel);
          this.imageControllers.Add(imageController.ImageView, imageController);
          }
 
-      public IImageController GetActiveImage()
+      public IImageController GetActiveImageController()
          {
-         IImageViewManager imageViewManager = ServiceLocator.Current.GetInstance<IImageViewManager>();
-         IImageView activeImageView = imageViewManager.GetActiveImage();
+         IImageView activeImageView = this.imageViewManager.GetActiveImageView();
 
          if (activeImageView != null)
             {
@@ -41,7 +40,7 @@
             }
          }
 
-      public void RemoveImage(IImageController imageController)
+      public void RemoveImageController(IImageController imageController)
          {
          this.imageViewManager.RemoveImageView(imageController.ImageView);
          this.imageControllers.Remove(imageController.ImageView);

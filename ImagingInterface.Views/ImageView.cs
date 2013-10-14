@@ -11,7 +11,7 @@
          this.InitializeComponent();
          }
 
-      public void AssignImage(IImageModel imageModel)
+      public void AssignImageModel(IImageModel imageModel)
          {
          this.imageBox.Image = imageModel.Image;
 
