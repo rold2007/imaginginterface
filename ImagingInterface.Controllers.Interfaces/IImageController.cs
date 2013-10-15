@@ -20,7 +20,7 @@
          get;
          }
 
-      void LoadFile(string file);
+      bool LoadFile(string file);
 
       void Add();
 

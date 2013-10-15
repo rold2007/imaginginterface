@@ -29,9 +29,10 @@
                {
                IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
 
-               imageController.LoadFile(file);
-
-               imageController.Add();
+               if (imageController.LoadFile(file))
+                  {
+                  imageController.Add();
+                  }
                }
             }
          }
@@ -72,9 +73,10 @@
                {
                IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
 
-               imageController.LoadFile(file);
-
-               imageController.Add();
+               if (imageController.LoadFile(file))
+                  {
+                  imageController.Add();
+                  }
                }
             }
          }
