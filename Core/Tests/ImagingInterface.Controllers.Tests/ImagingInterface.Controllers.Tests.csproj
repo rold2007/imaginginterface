@@ -30,29 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonServiceLocator.SimpleInjectorAdapter, Version=2.3.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
+    <Reference Include="CommonServiceLocator.SimpleInjectorAdapter">
+      <HintPath>..\..\..\Libs\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\Emgu.CV.dll</HintPath>
+    <Reference Include="Emgu.CV">
+      <HintPath>..\..\..\Libs\Emgu.CV.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.Util, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\Emgu.Util.dll</HintPath>
+    <Reference Include="Emgu.Util">
+      <HintPath>..\..\..\Libs\Emgu.Util.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\Libs\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector, Version=2.3.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\..\..\Libs\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,23 +65,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
+    <ProjectReference Include="..\..\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
       <Project>{fa7dbe95-8bd7-4169-82b2-8884cc31d6d0}</Project>
       <Name>ImagingInterface.Controllers.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">
+    <ProjectReference Include="..\..\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">
       <Project>{b8c42917-287b-4b21-afe9-9a121163adb2}</Project>
       <Name>ImagingInterface.Controllers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
+    <ProjectReference Include="..\..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
       <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
       <Name>ImagingInterface.Models.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Models\ImagingInterface.Models.csproj">
+    <ProjectReference Include="..\..\ImagingInterface.Models\ImagingInterface.Models.csproj">
       <Project>{46aac50e-53d2-40b6-a216-e2d0154f3ba2}</Project>
       <Name>ImagingInterface.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
+    <ProjectReference Include="..\..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
       <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
       <Name>ImagingInterface.Views.Interfaces</Name>
     </ProjectReference>
