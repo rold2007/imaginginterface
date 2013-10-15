@@ -41,13 +41,23 @@
          GC.SuppressFinalize(this);
          }
 
-      public void LoadFile(string filename)
+      public bool LoadFile(string filename)
          {
+         try
+            {
+            this.ImageModel.Image = new Image<Bgra, byte>(filename);
+            }
+         catch(ArgumentException)
+            {
+            return false;
+            }
+
          this.imageControllerClosed = false;
 
          this.ImageModel.DisplayName = filename;
-         this.ImageModel.Image = new Image<Bgra, byte>(filename);
          this.ImageView.AssignImageModel(this.ImageModel);
+
+         return true;
          }
 
       public void Add()

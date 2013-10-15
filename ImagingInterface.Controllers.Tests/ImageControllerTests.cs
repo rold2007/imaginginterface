@@ -61,14 +61,48 @@
 
                using (ImageController imageController = new ImageController(imageView, imageModel))
                   {
-                  imageController.LoadFile(tempFileName);
+                  bool loadResult = imageController.LoadFile(tempFileName);
 
+                  Assert.IsTrue(loadResult);
                   Assert.IsNotNullOrEmpty(imageModel.DisplayName);
                   Assert.IsNotNull(imageModel.Image);
                   Assert.AreSame(imageModel, imageView.AssignedImageModel);
                   }
 
                Assert.IsNull(imageModel.Image);
+               }
+            }
+         finally
+            {
+            if (!string.IsNullOrEmpty(tempFileName))
+               {
+               File.Delete(tempFileName);
+               }
+            }
+         }
+
+      [Test]
+      public void LoadFileInvalid()
+         {
+         ImageView imageView = new ImageView();
+         ImageModel imageModel = new ImageModel();
+         string tempFileName = string.Empty;
+
+         try
+            {
+            tempFileName = Path.GetTempFileName();
+
+            Assert.IsNullOrEmpty(imageModel.DisplayName);
+            Assert.IsNull(imageModel.Image);
+
+            using (ImageController imageController = new ImageController(imageView, imageModel))
+               {
+               bool loadResult = imageController.LoadFile(tempFileName);
+
+               Assert.IsFalse(loadResult);
+               Assert.IsNullOrEmpty(imageModel.DisplayName);
+               Assert.IsNull(imageModel.Image);
+               Assert.IsNull(imageView.AssignedImageModel);
                }
             }
          finally
