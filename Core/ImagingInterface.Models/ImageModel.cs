@@ -20,7 +20,7 @@
          set;
          }
 
-      public IImage Image
+      public Image<Bgra, byte> Image
          {
          get;
          set;

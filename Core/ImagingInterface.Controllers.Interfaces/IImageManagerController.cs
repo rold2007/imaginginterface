@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Controllers;
 
-   public interface IImageViewManagerController
+   public interface IImageManagerController
       {
       void AddImageController(IImageController imageController);
 

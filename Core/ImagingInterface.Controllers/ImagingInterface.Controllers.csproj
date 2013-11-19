@@ -36,7 +36,8 @@
     <Reference Include="Emgu.Util">
       <HintPath>..\..\Libs\Emgu.Util.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -51,7 +52,9 @@
   <ItemGroup>
     <Compile Include="FileController.cs" />
     <Compile Include="ImageController.cs" />
-    <Compile Include="ImageViewManagerController.cs" />
+    <Compile Include="ImageManagerController.cs" />
+    <Compile Include="PluginOperationController.cs" />
+    <Compile Include="PluginManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +65,10 @@
     <ProjectReference Include="..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
       <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
       <Name>ImagingInterface.Models.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
+      <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
+      <Name>ImagingInterface.Plugins.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
       <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>

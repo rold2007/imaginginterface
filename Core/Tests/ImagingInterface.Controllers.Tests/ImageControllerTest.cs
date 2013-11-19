@@ -8,26 +8,26 @@
    using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
-   using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
    [TestFixture]
-   public class ImageControllerTests : ControllersBaseTests
+   public class ImageControllerTest : ControllersBaseTest
       {
       private ImageViewManager imageViewManager;
-      private ImageViewManagerController imageViewManagerController;
+      private ImageManagerController imageViewManagerController;
 
       [SetUp]
       public void SetUp()
          {
          this.imageViewManager = new ImageViewManager();
-         this.imageViewManagerController = new ImageViewManagerController(this.imageViewManager);
+         this.imageViewManagerController = new ImageManagerController(this.imageViewManager);
 
-         this.Container.RegisterSingle<IImageViewManager>(this.imageViewManager);
-         this.Container.RegisterSingle<IImageViewManagerController>(this.imageViewManagerController);
+         this.Container.RegisterSingle<IImageManagerView>(this.imageViewManager);
+         this.Container.RegisterSingle<IImageManagerController>(this.imageViewManagerController);
          }
 
       [Test]
@@ -35,7 +35,7 @@
          {
          ImageView imageView = new ImageView();
          ImageModel imageModel = new ImageModel();
-         ImageController imageController = new ImageController(imageView, imageModel);
+         ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator);
 
          Assert.AreSame(imageView, imageController.ImageView);
          Assert.AreSame(imageModel, imageController.ImageModel);
@@ -59,9 +59,9 @@
                Assert.IsNullOrEmpty(imageModel.DisplayName);
                Assert.IsNull(imageModel.Image);
 
-               using (ImageController imageController = new ImageController(imageView, imageModel))
+               using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
                   {
-                  bool loadResult = imageController.LoadFile(tempFileName);
+                  bool loadResult = imageController.LoadImage(tempFileName);
 
                   Assert.IsTrue(loadResult);
                   Assert.IsNotNullOrEmpty(imageModel.DisplayName);
@@ -95,9 +95,9 @@
             Assert.IsNullOrEmpty(imageModel.DisplayName);
             Assert.IsNull(imageModel.Image);
 
-            using (ImageController imageController = new ImageController(imageView, imageModel))
+            using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
                {
-               bool loadResult = imageController.LoadFile(tempFileName);
+               bool loadResult = imageController.LoadImage(tempFileName);
 
                Assert.IsFalse(loadResult);
                Assert.IsNullOrEmpty(imageModel.DisplayName);
@@ -120,7 +120,7 @@
          ImageView imageView = new ImageView();
          ImageModel imageModel = new ImageModel();
 
-         using (ImageController imageController = new ImageController(imageView, imageModel))
+         using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
             {
             Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
 
@@ -136,7 +136,7 @@
          ImageView imageView = new ImageView();
          ImageModel imageModel = new ImageModel();
 
-         using (ImageController imageController = new ImageController(imageView, imageModel))
+         using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
             {
             // Make sure we can call Close() right away without crashing
             imageController.Remove();
@@ -146,56 +146,6 @@
             imageController.Remove();
 
             Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
-            }
-         }
-
-      private class ImageView : IImageView
-         {
-         public IImageModel AssignedImageModel
-            {
-            get;
-            private set;
-            }
-
-         public void AssignImageModel(IImageModel imageModel)
-            {
-            this.AssignedImageModel = imageModel;
-            }
-
-         public void Close()
-            {
-            }
-         }
-
-      private class ImageViewManager : IImageViewManager
-         {
-         private List<IImageView> allImageViews;
-
-         public ImageViewManager()
-            {
-            this.allImageViews = new List<IImageView>();
-            }
-
-         public void AddImageView(IImageView imageView, IImageModel imageModel)
-            {
-            this.allImageViews.Add(imageView);
-            }
-
-         public IImageView GetActiveImageView()
-            {
-            if (this.allImageViews.Count == 0)
-               {
-               return null;
-               }
-            else
-               {
-               return this.allImageViews[0];
-               }
-            }
-
-         public void RemoveImageView(IImageView imageView)
-            {
-            this.allImageViews.Remove(imageView);
             }
          }
       }

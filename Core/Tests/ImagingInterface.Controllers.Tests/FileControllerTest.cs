@@ -11,29 +11,25 @@
    using ImagingInterface.Models;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
-   using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
    [TestFixture]
-   public class FileControllerTests : ControllersBaseTests
+   public class FileControllerTest : ControllersBaseTest
       {
       private FileView fileView;
       private ImageViewManager imageViewManager;
-      private ImageViewManagerController imageViewManagerController;
+      private ImageManagerController imageViewManagerController;
 
       [SetUp]
       public void SetUp()
          {
          this.fileView = new FileView();
          this.imageViewManager = new ImageViewManager();
-         this.imageViewManagerController = new ImageViewManagerController(this.imageViewManager);
+         this.imageViewManagerController = new ImageManagerController(this.imageViewManager);
 
          this.Container.RegisterSingle<IFileView>(this.fileView);
-         this.Container.RegisterSingle<IImageViewManager>(this.imageViewManager);
-         this.Container.RegisterSingle<IImageViewManagerController>(this.imageViewManagerController);
-         this.Container.Register<IImageController, ImageController>();
-         this.Container.Register<IImageView, ImageView>();
-         this.Container.Register<IImageModel, ImageModel>();
+         this.Container.RegisterSingle<IImageManagerView>(this.imageViewManager);
+         this.Container.RegisterSingle<IImageManagerController>(this.imageViewManagerController);
          }
 
       [Test]
@@ -41,7 +37,7 @@
          {
          Assert.IsNull(this.fileView.OpenFileEventHandler());
 
-         FileController fileController = new FileController(this.fileView);
+         FileController fileController = new FileController(this.fileView, this.ServiceLocator);
 
          Assert.IsNotNull(this.fileView.OpenFileEventHandler());
          }
@@ -49,7 +45,7 @@
       [Test]
       public void FileOpen()
          {
-         FileController fileController = new FileController(this.fileView);
+         FileController fileController = new FileController(this.fileView, this.ServiceLocator);
 
          string tempFileName = string.Empty;
 
@@ -90,7 +86,7 @@
       [Test]
       public void FileClose()
          {
-         FileController fileController = new FileController(this.fileView);
+         FileController fileController = new FileController(this.fileView, this.ServiceLocator);
 
          string tempFileName = string.Empty;
 
@@ -139,7 +135,7 @@
       [Test]
       public void FileCloseAll()
          {
-         FileController fileController = new FileController(this.fileView);
+         FileController fileController = new FileController(this.fileView, this.ServiceLocator);
 
          string tempFileName = string.Empty;
 
@@ -177,7 +173,7 @@
       [Test]
       public void DragDrop()
          {
-         FileController fileController = new FileController(this.fileView);
+         FileController fileController = new FileController(this.fileView, this.ServiceLocator);
 
          string tempFileName = string.Empty;
 
@@ -279,7 +275,7 @@
             }
          }
 
-      private class ImageViewManager : IImageViewManager
+      private class ImageViewManager : IImageManagerView
          {
          private List<IImageView> allImageViews;
 

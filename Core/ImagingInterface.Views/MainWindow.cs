@@ -9,16 +9,20 @@
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Views.EventArguments;
 
-   public partial class MainWindow : Form, IFileView, IImageViewManager
+   public partial class MainWindow : Form, IFileView, IImageManagerView, IPluginOperationsView, IPluginManagerView
       {
       private static bool checkSingleton = false;
       private Dictionary<IImageView, TabPage> imageViewTabPage;
       private Dictionary<IImageView, ToolTip> imageViewToolTip;
+      private Dictionary<IRawPluginView, TabPage> pluginViewTabPage;
+      private Dictionary<IRawPluginView, ToolTip> pluginViewToolTip;
 
       public MainWindow()
          {
+         // This help detect misconfiguration in IoC
          Debug.Assert(MainWindow.checkSingleton == false, "A singleton shoudn't be constructed twice.");
 
          MainWindow.checkSingleton = true;
@@ -27,6 +31,8 @@
 
          this.imageViewTabPage = new Dictionary<IImageView, TabPage>();
          this.imageViewToolTip = new Dictionary<IImageView, ToolTip>();
+         this.pluginViewTabPage = new Dictionary<IRawPluginView, TabPage>();
+         this.pluginViewToolTip = new Dictionary<IRawPluginView, ToolTip>();
          }
 
       public event EventHandler FileOpen;
@@ -36,6 +42,8 @@
       public event EventHandler FileCloseAll;
 
       public event EventHandler<DragDropEventArgs> DragDropFile;
+
+      public event EventHandler<PluginCreateEventArgs> PluginCreate;
 
       public string[] OpenFile()
          {
@@ -68,7 +76,7 @@
 
          tabPage.Size = tabPageSize;
 
-         this.UpdateTabPageProperties(imageView);
+         this.UpdateImageTabPageProperties(imageView);
 
          this.imagesTabControl.Controls.Add(tabPage);
          }
@@ -96,6 +104,78 @@
 
          tabPage.Dispose();
          toolTip.Dispose();
+         }
+
+      public void AddPlugin(string name)
+         {
+         ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(name);
+
+         toolStripMenuItem.Name = name;
+         toolStripMenuItem.Click += this.PluginClick;
+
+         this.pluginsToolStripMenuItem.DropDownItems.Add(toolStripMenuItem);
+         }
+
+      public void AddPluginView(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel)
+         {
+         TabPage tabPage = new TabPage(rawPluginModel.DisplayName);
+         ToolTip toolTip = new ToolTip();
+
+         this.pluginViewTabPage.Add(rawPluginView, tabPage);
+         this.pluginViewToolTip.Add(rawPluginView, toolTip);
+
+         // Attach a new ToolTip because there's no way to detach a global (form) ToolTip
+         // when closing the plugin
+         toolTip.SetToolTip(tabPage, rawPluginModel.DisplayName);
+
+         Control pluginViewControl = rawPluginView as Control;
+
+         tabPage.Controls.Add(pluginViewControl);
+
+         Size tabPageSize = this.pluginsTabControl.DisplayRectangle.Size;
+
+         tabPageSize.Height -= this.pluginsTabControl.ItemSize.Height;
+
+         tabPage.Size = tabPageSize;
+
+         this.UpdatePluginTabPageProperties(rawPluginView);
+
+         this.pluginsTabControl.Controls.Add(tabPage);
+         }
+
+      public IRawPluginView GetActivePluginView()
+         {
+         if (this.pluginsTabControl.SelectedTab != null)
+            {
+            return this.pluginsTabControl.SelectedTab.Controls[0] as IRawPluginView;
+            }
+         else
+            {
+            return null;
+            }
+         }
+
+      public void RemovePluginView(IRawPluginView rawPluginView)
+         {
+         TabPage tabPage = this.pluginViewTabPage[rawPluginView];
+         ToolTip toolTip = this.pluginViewToolTip[rawPluginView];
+
+         this.pluginsTabControl.Controls.Remove(tabPage);
+         this.pluginViewTabPage.Remove(rawPluginView);
+         this.pluginViewToolTip.Remove(rawPluginView);
+
+         tabPage.Dispose();
+         toolTip.Dispose();
+         }
+
+      private void PluginClick(object sender, EventArgs e)
+         {
+         if (this.PluginCreate != null)
+            {
+            ToolStripMenuItem toolStripMenuItem = sender as ToolStripMenuItem;
+
+            this.PluginCreate(sender, new PluginCreateEventArgs(toolStripMenuItem.Name));
+            }
          }
 
       private void MainWindow_DragDrop(object sender, DragEventArgs e)
@@ -177,7 +257,7 @@
             }
          }
 
-      private void UpdateTabPageProperties(IImageView imageView)
+      private void UpdateImageTabPageProperties(IImageView imageView)
          {
          TabPage tabPage = this.imageViewTabPage[imageView];
          Size size = tabPage.ClientSize;
@@ -186,11 +266,28 @@
          imageViewControl.Size = size;
          }
 
+      private void UpdatePluginTabPageProperties(IRawPluginView pluginView)
+         {
+         TabPage tabPage = this.pluginViewTabPage[pluginView];
+         Size size = tabPage.ClientSize;
+         Control imageViewControl = pluginView as Control;
+
+         imageViewControl.Size = size;
+         }
+
       private void ImagesTabControl_SizeChanged(object sender, EventArgs e)
          {
          if (this.imagesTabControl.TabCount != 0 && this.imagesTabControl.SelectedTab != null)
             {
-            this.UpdateTabPageProperties(this.imagesTabControl.SelectedTab.Controls[0] as IImageView);
+            this.UpdateImageTabPageProperties(this.imagesTabControl.SelectedTab.Controls[0] as IImageView);
+            }
+         }
+
+      private void PluginsTabControl_SizeChanged(object sender, EventArgs e)
+         {
+         if (this.pluginsTabControl.TabCount != 0 && this.pluginsTabControl.SelectedTab != null)
+            {
+            this.UpdateImageTabPageProperties(this.pluginsTabControl.SelectedTab.Controls[0] as IImageView);
             }
          }
 

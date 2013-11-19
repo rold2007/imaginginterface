@@ -9,12 +9,12 @@
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
 
-   public class ImageViewManagerController : IImageViewManagerController
+   public class ImageManagerController : IImageManagerController
       {
-      private IImageViewManager imageViewManager;
+      private IImageManagerView imageViewManager;
       private Dictionary<IImageView, IImageController> imageControllers;
 
-      public ImageViewManagerController(IImageViewManager imageViewManager)
+      public ImageManagerController(IImageManagerView imageViewManager)
          {
          this.imageViewManager = imageViewManager;
          this.imageControllers = new Dictionary<IImageView, IImageController>();

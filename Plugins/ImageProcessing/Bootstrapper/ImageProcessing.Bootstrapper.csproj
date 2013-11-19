@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{022856E4-7DCC-41A1-93FE-CCED10D1EBA3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImageProcessing.Bootstrapper</RootNamespace>
+    <AssemblyName>ImageProcessing.Bootstrapper</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\SimpleInjector.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Packaging">
+      <HintPath>..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\SimpleInjector.Packaging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ImageProcessingPackageWindowsForms.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj">
+      <Project>{0f3237a4-3da2-40cc-924f-d2431376e3ba}</Project>
+      <Name>ImageProcessing.Controllers.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Controllers\ImageProcessing.Controllers.csproj">
+      <Project>{34bce76c-484c-487d-8d6b-d3b475974183}</Project>
+      <Name>ImageProcessing.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
+      <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
+      <Name>ImageProcessing.Models.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Models\ImageProcessing.Models.csproj">
+      <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
+      <Name>ImageProcessing.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj">
+      <Project>{deee4845-897d-41f4-925d-4720f6f1f986}</Project>
+      <Name>ImageProcessing.Views.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Views\ImageProcessing.Views.csproj">
+      <Project>{e6a8dafd-32b2-46f9-9750-a95c3dd225c7}</Project>
+      <Name>ImageProcessing.Views</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\BootStrapper\ImagingInterface.BootStrapper.csproj">
+      <Project>{fc9ca67d-6ea2-46af-807a-c25b9259065a}</Project>
+      <Name>ImagingInterface.BootStrapper</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
+      <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
+      <Name>ImagingInterface.Plugins.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"
+copy "$(TargetDir)*.dll" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

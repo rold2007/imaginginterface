@@ -8,10 +8,12 @@
    public class FileController : IFileController
       {
       private readonly IFileView fileView;
+      private IServiceLocator serviceLocator;
 
-      public FileController(IFileView fileView)
+      public FileController(IFileView fileView, IServiceLocator serviceLocator)
          {
          this.fileView = fileView;
+         this.serviceLocator = serviceLocator;
 
          this.fileView.FileOpen += this.FileOpen;
          this.fileView.FileClose += this.FileClose;
@@ -27,9 +29,9 @@
             {
             foreach (string file in files)
                {
-               IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
+               IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
 
-               if (imageController.LoadFile(file))
+               if (imageController.LoadImage(file))
                   {
                   imageController.Add();
                   }
@@ -39,7 +41,7 @@
 
       private void FileClose(object sender, EventArgs e)
          {
-         IImageViewManagerController imageViewManagerController = ServiceLocator.Current.GetInstance<IImageViewManagerController>();
+         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
          IImageController activeImageController = imageViewManagerController.GetActiveImageController();
 
          if (activeImageController != null)
@@ -50,7 +52,7 @@
 
       private void FileCloseAll(object sender, EventArgs e)
          {
-         IImageViewManagerController imageViewManagerController = ServiceLocator.Current.GetInstance<IImageViewManagerController>();
+         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
          IImageController activeImageController;
 
          activeImageController = imageViewManagerController.GetActiveImageController();
@@ -71,9 +73,9 @@
             {
             foreach (string file in e.Data)
                {
-               IImageController imageController = ServiceLocator.Current.GetInstance<IImageController>();
+               IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
 
-               if (imageController.LoadFile(file))
+               if (imageController.LoadImage(file))
                   {
                   imageController.Add();
                   }

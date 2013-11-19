@@ -15,28 +15,20 @@
    using NUnit.Framework;
 
    [TestFixture]
-   public class ImageViewManagerControllerTest : ControllersBaseTests
+   public class ImageManagerControllerTest : ControllersBaseTest
       {
-      [SetUp]
-      public void SetUp()
-         {
-         this.Container.Register<IImageView, ImageView>();
-         this.Container.Register<IImageController, ImageController>();
-         this.Container.Register<IImageModel, ImageModel>();
-         }
-
       [Test]
       public void Constructor()
          {
          ImageViewManager imageViewManager = new ImageViewManager();
-         ImageViewManagerController imageViewManagerController = new ImageViewManagerController(imageViewManager);
+         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
          }
 
       [Test]
       public void AddImageController()
          {
          ImageViewManager imageViewManager = new ImageViewManager();
-         ImageViewManagerController imageViewManagerController = new ImageViewManagerController(imageViewManager);
+         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
          Assert.IsNull(imageViewManager.GetActiveImageView());
@@ -52,7 +44,7 @@
       public void GetActiveImageController()
          {
          ImageViewManager imageViewManager = new ImageViewManager();
-         ImageViewManagerController imageViewManagerController = new ImageViewManagerController(imageViewManager);
+         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
          Assert.IsNull(imageViewManagerController.GetActiveImageController());
@@ -70,7 +62,7 @@
       public void RemoveImageController()
          {
          ImageViewManager imageViewManager = new ImageViewManager();
-         ImageViewManagerController imageViewManagerController = new ImageViewManagerController(imageViewManager);
+         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
          imageViewManagerController.AddImageController(imageController);
@@ -102,7 +94,7 @@
             }
          }
 
-      private class ImageViewManager : IImageViewManager
+      private class ImageViewManager : IImageManagerView
          {
          private List<IImageView> allImageViews;
 
