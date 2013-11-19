@@ -33,21 +33,20 @@
          this.imagingInterfaceToolTip = new System.Windows.Forms.ToolTip(this.components);
          this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
          this.imagesTabControl = new System.Windows.Forms.TabControl();
-         this.splitContainer = new System.Windows.Forms.SplitContainer();
          this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
          this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.pluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.pluginsTabControl = new System.Windows.Forms.TabControl();
          ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
          this.mainSplitContainer.Panel1.SuspendLayout();
          this.mainSplitContainer.Panel2.SuspendLayout();
          this.mainSplitContainer.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
-         this.splitContainer.SuspendLayout();
          this.mainMenuStrip.SuspendLayout();
          this.SuspendLayout();
          // 
@@ -66,7 +65,7 @@
          // mainSplitContainer.Panel2
          // 
          this.mainSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
-         this.mainSplitContainer.Panel2.Controls.Add(this.splitContainer);
+         this.mainSplitContainer.Panel2.Controls.Add(this.pluginsTabControl);
          this.mainSplitContainer.Size = new System.Drawing.Size(737, 442);
          this.mainSplitContainer.SplitterDistance = 524;
          this.mainSplitContainer.TabIndex = 1;
@@ -85,22 +84,11 @@
          this.imagesTabControl.TabIndex = 0;
          this.imagesTabControl.SizeChanged += new System.EventHandler(this.ImagesTabControl_SizeChanged);
          // 
-         // splitContainer
-         // 
-         this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-         this.splitContainer.IsSplitterFixed = true;
-         this.splitContainer.Location = new System.Drawing.Point(0, 0);
-         this.splitContainer.Name = "splitContainer";
-         this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
-         this.splitContainer.Size = new System.Drawing.Size(209, 442);
-         this.splitContainer.SplitterDistance = 281;
-         this.splitContainer.TabIndex = 9;
-         // 
          // mainMenuStrip
          // 
          this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.pluginsToolStripMenuItem,
             this.helpToolStripMenuItem});
          this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
          this.mainMenuStrip.Name = "mainMenuStrip";
@@ -150,6 +138,12 @@
          this.exitToolStripMenuItem.Text = "Exit";
          this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
          // 
+         // pluginsToolStripMenuItem
+         // 
+         this.pluginsToolStripMenuItem.Name = "pluginsToolStripMenuItem";
+         this.pluginsToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+         this.pluginsToolStripMenuItem.Text = "Plugins";
+         // 
          // helpToolStripMenuItem
          // 
          this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -164,6 +158,16 @@
          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
          this.aboutToolStripMenuItem.Text = "About...";
          this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+         // 
+         // pluginsTabControl
+         // 
+         this.pluginsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.pluginsTabControl.Location = new System.Drawing.Point(0, 0);
+         this.pluginsTabControl.Name = "pluginsTabControl";
+         this.pluginsTabControl.SelectedIndex = 0;
+         this.pluginsTabControl.Size = new System.Drawing.Size(209, 442);
+         this.pluginsTabControl.TabIndex = 0;
+         this.pluginsTabControl.SizeChanged += new System.EventHandler(this.PluginsTabControl_SizeChanged);
          // 
          // MainWindow
          // 
@@ -183,8 +187,6 @@
          this.mainSplitContainer.Panel2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
          this.mainSplitContainer.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
-         this.splitContainer.ResumeLayout(false);
          this.mainMenuStrip.ResumeLayout(false);
          this.mainMenuStrip.PerformLayout();
          this.ResumeLayout(false);
@@ -196,7 +198,6 @@
 
       private System.Windows.Forms.ToolTip imagingInterfaceToolTip;
       private System.Windows.Forms.SplitContainer mainSplitContainer;
-      private System.Windows.Forms.SplitContainer splitContainer;
       private System.Windows.Forms.MenuStrip mainMenuStrip;
       private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -206,5 +207,7 @@
       private System.Windows.Forms.TabControl imagesTabControl;
       private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem pluginsToolStripMenuItem;
+      private System.Windows.Forms.TabControl pluginsTabControl;
       }
    }

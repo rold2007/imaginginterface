@@ -6,7 +6,7 @@
 
    public partial class ImageView : UserControl, IImageView
       {
-      public ImageView(ImageBox imageBox)
+      public ImageView()
          {
          this.InitializeComponent();
          }

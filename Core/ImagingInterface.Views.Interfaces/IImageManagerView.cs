@@ -8,7 +8,7 @@
    using System.Windows.Forms;
    using ImagingInterface.Models;
 
-   public interface IImageViewManager
+   public interface IImageManagerView
       {
       void AddImageView(IImageView imageView, IImageModel imageModel);
 

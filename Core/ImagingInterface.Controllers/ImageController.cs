@@ -9,13 +9,15 @@
 
    public class ImageController : IImageController, IDisposable
       {
+      private IServiceLocator serviceLocator;
       private bool imageControllerShown = false;
       private bool imageControllerClosed = true;
-      
-      public ImageController(IImageView imageView, IImageModel imageModel)
+
+      public ImageController(IImageView imageView, IImageModel imageModel, IServiceLocator serviceLocator)
          {
          this.ImageView = imageView;
          this.ImageModel = imageModel;
+         this.serviceLocator = serviceLocator;
          }
 
       ~ImageController()
@@ -35,19 +37,39 @@
          private set;
          }
 
+      public Image<Bgra, byte> Image
+         {
+         get
+            {
+            return this.ImageModel.Image;
+            }
+         }
+
       public void Dispose()
          {
          this.Dispose(true);
          GC.SuppressFinalize(this);
          }
 
-      public bool LoadFile(string filename)
+      public bool LoadImage(Image<Bgra, byte> image, string displayName)
+         {
+         this.ImageModel.Image = image;
+
+         this.imageControllerClosed = false;
+
+         this.ImageModel.DisplayName = displayName;
+         this.ImageView.AssignImageModel(this.ImageModel);
+
+         return true;
+         }
+
+      public bool LoadImage(string filename)
          {
          try
             {
             this.ImageModel.Image = new Image<Bgra, byte>(filename);
             }
-         catch(ArgumentException)
+         catch (ArgumentException)
             {
             return false;
             }
@@ -60,9 +82,14 @@
          return true;
          }
 
+      public void UpdateImage()
+         {
+         this.ImageView.AssignImageModel(this.ImageModel);
+         }
+
       public void Add()
          {
-         IImageViewManagerController imageViewManagerController = ServiceLocator.Current.GetInstance<IImageViewManagerController>();
+         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 
          imageViewManagerController.AddImageController(this);
 
@@ -105,7 +132,7 @@
          {
          if (this.imageControllerShown)
             {
-            IImageViewManagerController imageViewManagerController = ServiceLocator.Current.GetInstance<IImageViewManagerController>();
+            IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 
             imageViewManagerController.RemoveImageController(this);
             }
