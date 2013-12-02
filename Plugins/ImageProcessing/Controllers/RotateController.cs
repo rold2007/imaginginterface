@@ -17,7 +17,7 @@
 
    public class RotateController : IRotateController
       {
-      private static string rotateDisplayName = "Rotate";
+      private static readonly string RotateDisplayName = "Rotate";
       private IRotateView rotateView;
       private IRotateModel rotateModel;
       private IImageManagerController imageManagerController;
@@ -28,7 +28,7 @@
          this.rotateModel = rotateModel;
          this.imageManagerController = imageManagerController;
 
-         this.rotateModel.DisplayName = rotateDisplayName;
+         this.rotateModel.DisplayName = RotateDisplayName;
 
          this.rotateView.Rotate += this.RotateView_Rotate;
          }

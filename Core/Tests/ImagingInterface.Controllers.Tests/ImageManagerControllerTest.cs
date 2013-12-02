@@ -20,31 +20,31 @@
       [Test]
       public void Constructor()
          {
-         ImageViewManager imageViewManager = new ImageViewManager();
-         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
+         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
+
+         Assert.IsNotNull(imageViewManagerController);
          }
 
       [Test]
       public void AddImageController()
          {
-         ImageViewManager imageViewManager = new ImageViewManager();
-         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
+         IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
+         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
-         Assert.IsNull(imageViewManager.GetActiveImageView());
+         Assert.IsNull(imageManagerView.GetActiveImageView());
          Assert.IsNull(imageViewManagerController.GetActiveImageController());
 
          imageViewManagerController.AddImageController(imageController);
 
-         Assert.AreSame(imageController.ImageView, imageViewManager.GetActiveImageView());
+         Assert.AreSame(imageController.ImageView, imageManagerView.GetActiveImageView());
          Assert.AreSame(imageController, imageViewManagerController.GetActiveImageController());
          }
 
       [Test]
       public void GetActiveImageController()
          {
-         ImageViewManager imageViewManager = new ImageViewManager();
-         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
+         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
          Assert.IsNull(imageViewManagerController.GetActiveImageController());
@@ -61,69 +61,19 @@
       [Test]
       public void RemoveImageController()
          {
-         ImageViewManager imageViewManager = new ImageViewManager();
-         ImageManagerController imageViewManagerController = new ImageManagerController(imageViewManager);
+         IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
+         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
          imageViewManagerController.AddImageController(imageController);
 
-         Assert.AreSame(imageController.ImageView, imageViewManager.GetActiveImageView());
+         Assert.AreSame(imageController.ImageView, imageManagerView.GetActiveImageView());
          Assert.AreSame(imageController, imageViewManagerController.GetActiveImageController());
 
          imageViewManagerController.RemoveImageController(imageController);
 
-         Assert.IsNull(imageViewManager.GetActiveImageView());
+         Assert.IsNull(imageManagerView.GetActiveImageView());
          Assert.IsNull(imageViewManagerController.GetActiveImageController());
-         }
-
-      private class ImageView : IImageView
-         {
-         public IImageModel AssignedImageModel
-            {
-            get;
-            private set;
-            }
-
-         public void AssignImageModel(IImageModel imageModel)
-            {
-            this.AssignedImageModel = imageModel;
-            }
-
-         public void Close()
-            {
-            }
-         }
-
-      private class ImageViewManager : IImageManagerView
-         {
-         private List<IImageView> allImageViews;
-
-         public ImageViewManager()
-            {
-            this.allImageViews = new List<IImageView>();
-            }
-
-         public void AddImageView(IImageView imageView, IImageModel imageModel)
-            {
-            this.allImageViews.Add(imageView);
-            }
-
-         public IImageView GetActiveImageView()
-            {
-            if (this.allImageViews.Count == 0)
-               {
-               return null;
-               }
-            else
-               {
-               return this.allImageViews[0];
-               }
-            }
-
-         public void RemoveImageView(IImageView imageView)
-            {
-            this.allImageViews.Remove(imageView);
-            }
          }
       }
    }

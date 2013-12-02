@@ -67,6 +67,7 @@
     <Compile Include="Views\ImageManagerView.cs" />
     <Compile Include="Views\ImageView.cs" />
     <Compile Include="Views\InvertView.cs" />
+    <Compile Include="Views\MainView.cs" />
     <Compile Include="Views\RotateView.cs" />
   </ItemGroup>
   <ItemGroup>

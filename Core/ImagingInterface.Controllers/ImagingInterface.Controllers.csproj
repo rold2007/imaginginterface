@@ -53,6 +53,7 @@
     <Compile Include="FileController.cs" />
     <Compile Include="ImageController.cs" />
     <Compile Include="ImageManagerController.cs" />
+    <Compile Include="MainController.cs" />
     <Compile Include="PluginOperationController.cs" />
     <Compile Include="PluginManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -47,12 +47,14 @@
          this.Container.RegisterSingle<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
+         this.Container.RegisterSingle<IMainView, MainView>();
          this.Container.RegisterSingle<IImageManagerView, ImageManagerView>();
          this.Container.Register<IInvertView, InvertView>();
          this.Container.Register<IRotateView, RotateView>();
          this.Container.Register<IImageView, ImageView>();
 
          // Controllers
+         this.Container.RegisterSingle<IMainController, MainController>();
          this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
          this.Container.Register<IInvertController, InvertController>();
          this.Container.Register<IRotateController, RotateController>();

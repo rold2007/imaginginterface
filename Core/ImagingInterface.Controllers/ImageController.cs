@@ -53,7 +53,8 @@
 
       public bool LoadImage(Image<Bgra, byte> image, string displayName)
          {
-         this.ImageModel.Image = image;
+         // Clone the input image so that the internal image memory management stays inside this class
+         this.ImageModel.Image = image.Clone();
 
          this.imageControllerClosed = false;
 
@@ -102,16 +103,9 @@
 
          if (!this.imageControllerClosed)
             {
-            IImage image = this.ImageModel.Image;
-
-            this.ImageModel.Image = null;
-            this.ImageView.AssignImageModel(this.ImageModel);
-
-            image.Dispose();
-
+            this.ImageView.AssignImageModel(null);
             this.ImageView.Close();
-            this.ImageView = null;
-            this.ImageModel = null;
+
             this.imageControllerClosed = true;
             }
          }

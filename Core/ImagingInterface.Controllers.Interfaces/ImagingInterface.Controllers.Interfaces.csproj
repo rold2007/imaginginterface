@@ -51,6 +51,7 @@
     <Compile Include="IFileController.cs" />
     <Compile Include="IImageController.cs" />
     <Compile Include="IImageManagerController.cs" />
+    <Compile Include="IMainController.cs" />
     <Compile Include="IPluginOperationController.cs" />
     <Compile Include="IPluginManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

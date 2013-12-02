@@ -45,11 +45,17 @@
          this.Container.RegisterSingle<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
+         this.Container.RegisterSingle<IMainView, MainView>();
+         this.Container.RegisterSingle<IFileView, FileView>();
+         this.Container.RegisterSingle<IImageManagerView, ImageManagerView>();
          this.Container.RegisterSingle<IPluginOperationsView, PluginOperationsView>();
          this.Container.RegisterSingle<IPluginManagerView, PluginManagerView>();
          this.Container.Register<IImageView, ImageView>();
 
          // Controllers
+         this.Container.RegisterSingle<IMainController, MainController>();
+         this.Container.RegisterSingle<IFileController, FileController>();
+         this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
          this.Container.RegisterSingle<IPluginOperationController, PluginOperationController>();
          this.Container.RegisterSingle<IPluginManagerController, PluginManagerController>();
          this.Container.Register<IImageController, ImageController>();

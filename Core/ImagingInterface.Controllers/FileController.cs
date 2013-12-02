@@ -47,6 +47,7 @@
          if (activeImageController != null)
             {
             activeImageController.Remove();
+            (activeImageController as IDisposable).Dispose();
             }
          }
 
@@ -60,6 +61,7 @@
          while (activeImageController != null)
             {
             activeImageController.Remove();
+            (activeImageController as IDisposable).Dispose();
 
             activeImageController = imageViewManagerController.GetActiveImageController();
             }

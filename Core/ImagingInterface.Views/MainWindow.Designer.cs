@@ -32,7 +32,7 @@
          this.components = new System.ComponentModel.Container();
          this.imagingInterfaceToolTip = new System.Windows.Forms.ToolTip(this.components);
          this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-         this.imagesTabControl = new System.Windows.Forms.TabControl();
+         this.pluginsTabControl = new System.Windows.Forms.TabControl();
          this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
          this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,9 +42,7 @@
          this.pluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.pluginsTabControl = new System.Windows.Forms.TabControl();
          ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
-         this.mainSplitContainer.Panel1.SuspendLayout();
          this.mainSplitContainer.Panel2.SuspendLayout();
          this.mainSplitContainer.SuspendLayout();
          this.mainMenuStrip.SuspendLayout();
@@ -60,7 +58,6 @@
          // mainSplitContainer.Panel1
          // 
          this.mainSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Control;
-         this.mainSplitContainer.Panel1.Controls.Add(this.imagesTabControl);
          // 
          // mainSplitContainer.Panel2
          // 
@@ -73,16 +70,15 @@
          this.mainSplitContainer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainSplitContainer_MouseMove);
          this.mainSplitContainer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainSplitContainer_MouseUp);
          // 
-         // imagesTabControl
+         // pluginsTabControl
          // 
-         this.imagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.imagesTabControl.ItemSize = new System.Drawing.Size(0, 18);
-         this.imagesTabControl.Location = new System.Drawing.Point(0, 0);
-         this.imagesTabControl.Name = "imagesTabControl";
-         this.imagesTabControl.SelectedIndex = 0;
-         this.imagesTabControl.Size = new System.Drawing.Size(524, 442);
-         this.imagesTabControl.TabIndex = 0;
-         this.imagesTabControl.SizeChanged += new System.EventHandler(this.ImagesTabControl_SizeChanged);
+         this.pluginsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.pluginsTabControl.Location = new System.Drawing.Point(0, 0);
+         this.pluginsTabControl.Name = "pluginsTabControl";
+         this.pluginsTabControl.SelectedIndex = 0;
+         this.pluginsTabControl.Size = new System.Drawing.Size(209, 442);
+         this.pluginsTabControl.TabIndex = 0;
+         this.pluginsTabControl.SizeChanged += new System.EventHandler(this.PluginsTabControl_SizeChanged);
          // 
          // mainMenuStrip
          // 
@@ -159,16 +155,6 @@
          this.aboutToolStripMenuItem.Text = "About...";
          this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
          // 
-         // pluginsTabControl
-         // 
-         this.pluginsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.pluginsTabControl.Location = new System.Drawing.Point(0, 0);
-         this.pluginsTabControl.Name = "pluginsTabControl";
-         this.pluginsTabControl.SelectedIndex = 0;
-         this.pluginsTabControl.Size = new System.Drawing.Size(209, 442);
-         this.pluginsTabControl.TabIndex = 0;
-         this.pluginsTabControl.SizeChanged += new System.EventHandler(this.PluginsTabControl_SizeChanged);
-         // 
          // MainWindow
          // 
          this.AllowDrop = true;
@@ -183,7 +169,6 @@
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
          this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragDrop);
          this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragEnter);
-         this.mainSplitContainer.Panel1.ResumeLayout(false);
          this.mainSplitContainer.Panel2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
          this.mainSplitContainer.ResumeLayout(false);
@@ -204,7 +189,6 @@
       private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-      private System.Windows.Forms.TabControl imagesTabControl;
       private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem pluginsToolStripMenuItem;
