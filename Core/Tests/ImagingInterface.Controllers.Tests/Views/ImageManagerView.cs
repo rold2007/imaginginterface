@@ -8,11 +8,11 @@
    using ImagingInterface.Models;
    using ImagingInterface.Views;
 
-   public class ImageViewManager : IImageManagerView
+   public class ImageManagerView : IImageManagerView
       {
       private List<IImageView> allImageViews;
 
-      public ImageViewManager()
+      public ImageManagerView()
          {
          this.allImageViews = new List<IImageView>();
          }

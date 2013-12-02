@@ -17,35 +17,33 @@
    [TestFixture]
    public class ImageControllerTest : ControllersBaseTest
       {
-      private ImageViewManager imageViewManager;
-      private ImageManagerController imageViewManagerController;
-
-      [SetUp]
-      public void SetUp()
-         {
-         this.imageViewManager = new ImageViewManager();
-         this.imageViewManagerController = new ImageManagerController(this.imageViewManager);
-
-         this.Container.RegisterSingle<IImageManagerView>(this.imageViewManager);
-         this.Container.RegisterSingle<IImageManagerController>(this.imageViewManagerController);
-         }
-
       [Test]
       public void Constructor()
          {
-         ImageView imageView = new ImageView();
-         ImageModel imageModel = new ImageModel();
-         ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator);
+         this.Container.RegisterSingle<IImageView, ImageView>();
+         this.Container.RegisterSingle<IImageModel, ImageModel>();
 
-         Assert.AreSame(imageView, imageController.ImageView);
-         Assert.AreSame(imageModel, imageController.ImageModel);
+         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+
+         Assert.AreSame(this.ServiceLocator.GetInstance<IImageView>(), imageController.ImageView);
+         Assert.AreSame(this.ServiceLocator.GetInstance<IImageModel>(), imageController.ImageModel);
+
+         imageController = null;
+
+         // Force wait on ImageController finalizer. This may not always work.
+         // It was only added for code coverage purpose, skip it if it becomes annoying
+         GC.Collect();
+         GC.WaitForPendingFinalizers();
          }
 
       [Test]
       public void LoadFile()
          {
-         ImageView imageView = new ImageView();
-         ImageModel imageModel = new ImageModel();
+         this.Container.RegisterSingle<IImageView, ImageView>();
+         this.Container.RegisterSingle<IImageModel, ImageModel>();
+
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
          string tempFileName = string.Empty;
 
          try
@@ -59,7 +57,7 @@
                Assert.IsNullOrEmpty(imageModel.DisplayName);
                Assert.IsNull(imageModel.Image);
 
-               using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
+               using (ImageController imageController = this.Container.GetInstance<ImageController>())
                   {
                   bool loadResult = imageController.LoadImage(tempFileName);
 
@@ -69,6 +67,7 @@
                   Assert.AreSame(imageModel, imageView.AssignedImageModel);
                   }
 
+               // imageModel.Image is set to null when imageController is disposed of.
                Assert.IsNull(imageModel.Image);
                }
             }
@@ -95,15 +94,14 @@
             Assert.IsNullOrEmpty(imageModel.DisplayName);
             Assert.IsNull(imageModel.Image);
 
-            using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
-               {
-               bool loadResult = imageController.LoadImage(tempFileName);
+            IImageController imageController = this.Container.GetInstance<IImageController>();
 
-               Assert.IsFalse(loadResult);
-               Assert.IsNullOrEmpty(imageModel.DisplayName);
-               Assert.IsNull(imageModel.Image);
-               Assert.IsNull(imageView.AssignedImageModel);
-               }
+            bool loadResult = imageController.LoadImage(tempFileName);
+
+            Assert.IsFalse(loadResult);
+            Assert.IsNullOrEmpty(imageModel.DisplayName);
+            Assert.IsNull(imageModel.Image);
+            Assert.IsNull(imageView.AssignedImageModel);
             }
          finally
             {
@@ -117,36 +115,32 @@
       [Test]
       public void Add()
          {
-         ImageView imageView = new ImageView();
-         ImageModel imageModel = new ImageModel();
+         IImageManagerController imageManagerController = this.Container.GetInstance<IImageManagerController>();
 
-         using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
-            {
-            Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
+         IImageController imageController = this.Container.GetInstance<IImageController>();
 
-            imageController.Add();
+         Assert.IsNull(imageManagerController.GetActiveImageController());
 
-            Assert.AreSame(imageController, this.imageViewManagerController.GetActiveImageController());
-            }
+         imageController.Add();
+
+         Assert.AreSame(imageController, imageManagerController.GetActiveImageController());
          }
 
       [Test]
       public void Remove()
          {
-         ImageView imageView = new ImageView();
-         ImageModel imageModel = new ImageModel();
+         IImageManagerController imageManagerController = this.Container.GetInstance<IImageManagerController>();
 
-         using (ImageController imageController = new ImageController(imageView, imageModel, this.ServiceLocator))
-            {
-            // Make sure we can call Close() right away without crashing
-            imageController.Remove();
+         IImageController imageController = this.Container.GetInstance<IImageController>();
 
-            imageController.Add();
+         // Make sure we can call Close() right away without crashing
+         imageController.Remove();
 
-            imageController.Remove();
+         imageController.Add();
 
-            Assert.IsNull(this.imageViewManagerController.GetActiveImageController());
-            }
+         imageController.Remove();
+
+         Assert.IsNull(imageManagerController.GetActiveImageController());
          }
       }
    }

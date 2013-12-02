@@ -69,8 +69,10 @@
     <Compile Include="Mocks\PluginModel2.cs" />
     <Compile Include="PluginOperationControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\FileView.cs" />
     <Compile Include="Views\ImageView.cs" />
-    <Compile Include="Views\ImageViewManager.cs" />
+    <Compile Include="Views\ImageManagerView.cs" />
+    <Compile Include="Views\MainView.cs" />
     <Compile Include="Views\PluginManagerView.cs" />
     <Compile Include="Views\PluginOperationsView.cs" />
   </ItemGroup>

@@ -20,7 +20,7 @@
 
    public class InvertController : IInvertController
       {
-      private static string invertDisplayName = "Invert";
+      private static readonly string InvertDisplayName = "Invert";
       private IInvertView invertView;
       private IInvertModel invertModel;
       private IImageManagerController imageManagerController;
@@ -31,7 +31,7 @@
          this.invertModel = invertModel;
          this.imageManagerController = imageManagerController;
 
-         this.invertModel.DisplayName = InvertController.invertDisplayName;
+         this.invertModel.DisplayName = InvertController.InvertDisplayName;
 
          this.invertView.Invert += this.InvertView_Invert;
          }

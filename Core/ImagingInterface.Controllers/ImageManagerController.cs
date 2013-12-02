@@ -14,10 +14,12 @@
       private IImageManagerView imageViewManager;
       private Dictionary<IImageView, IImageController> imageControllers;
 
-      public ImageManagerController(IImageManagerView imageViewManager)
+      public ImageManagerController(IImageManagerView imageViewManager, IMainController mainController)
          {
          this.imageViewManager = imageViewManager;
          this.imageControllers = new Dictionary<IImageView, IImageController>();
+
+         mainController.AddImageManagerView(this.imageViewManager);
          }
 
       public void AddImageController(IImageController imageController)

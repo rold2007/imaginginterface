@@ -17,7 +17,7 @@
 
    public static class Program
       {
-      private static string pluginsRootFolderName = "Plugins";
+      private static readonly string PluginsRootFolderName = "Plugins";
 
       private static List<string> pluginFolders = new List<string>();
       private static List<string> pluginLibraries = new List<string>();
@@ -44,7 +44,7 @@
 
       private static void InitializePluginFolders()
          {
-         string pluginRootFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Program.pluginsRootFolderName);
+         string pluginRootFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Program.PluginsRootFolderName);
          IEnumerable<string> pluginFolders = System.IO.Directory.EnumerateDirectories(pluginRootFolder, "*", System.IO.SearchOption.AllDirectories);
 
          foreach (string pluginFolder in pluginFolders)
@@ -95,19 +95,20 @@
          // Views
          // Need to register singleton instances for all things pertaining MainWindow
          container.RegisterSingle<MainWindow>();
+         container.RegisterSingle<ImageManagerView>();
+         container.RegisterSingle<IMainView>(Program.GetMainWindow);
          container.RegisterSingle<IFileView>(Program.GetMainWindow);
-         container.RegisterSingle<IImageManagerView>(Program.GetMainWindow);
+         container.RegisterSingle<IImageManagerView>(Program.GetImageManagerView);
          container.RegisterSingle<IPluginOperationsView>(Program.GetMainWindow);
          container.RegisterSingle<IPluginManagerView>(Program.GetMainWindow);
+         container.Register<IImageView, ImageView>();
 
+         // Controllers
+         container.RegisterSingle<IMainController, MainController>();
          container.RegisterSingle<IFileController, FileController>();
          container.RegisterSingle<IImageManagerController, ImageManagerController>();
          container.RegisterSingle<IPluginOperationController, PluginOperationController>();
          container.RegisterSingle<IPluginManagerController, PluginManagerController>();
-
-         container.Register<IImageView, ImageView>();
-
-         // Controllers
          container.Register<IImageController, ImageController>();
 
          // Models
@@ -151,6 +152,11 @@
       private static MainWindow GetMainWindow()
          {
          return Program.serviceLocator.GetInstance<MainWindow>();
+         }
+
+      private static ImageManagerView GetImageManagerView()
+         {
+         return Program.serviceLocator.GetInstance<ImageManagerView>();
          }
 
       private static bool TypeValid(Type currentType, Type validationType)

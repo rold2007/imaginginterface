@@ -45,6 +45,7 @@
     <Compile Include="IFileView.cs" />
     <Compile Include="IImageView.cs" />
     <Compile Include="IImageManagerView.cs" />
+    <Compile Include="IMainView.cs" />
     <Compile Include="IPluginManagerView.cs" />
     <Compile Include="IPluginOperationsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
