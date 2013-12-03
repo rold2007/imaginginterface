@@ -111,36 +111,5 @@
                }
             }
          }
-
-      [Test]
-      public void Add()
-         {
-         IImageManagerController imageManagerController = this.Container.GetInstance<IImageManagerController>();
-
-         IImageController imageController = this.Container.GetInstance<IImageController>();
-
-         Assert.IsNull(imageManagerController.GetActiveImageController());
-
-         imageController.Add();
-
-         Assert.AreSame(imageController, imageManagerController.GetActiveImageController());
-         }
-
-      [Test]
-      public void Remove()
-         {
-         IImageManagerController imageManagerController = this.Container.GetInstance<IImageManagerController>();
-
-         IImageController imageController = this.Container.GetInstance<IImageController>();
-
-         // Make sure we can call Close() right away without crashing
-         imageController.Remove();
-
-         imageController.Add();
-
-         imageController.Remove();
-
-         Assert.IsNull(imageManagerController.GetActiveImageController());
-         }
       }
    }
