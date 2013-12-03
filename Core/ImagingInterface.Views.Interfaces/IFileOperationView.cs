@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Views.EventArguments;
 
-   public interface IFileView
+   public interface IFileOperationView
       {
       event EventHandler FileOpen;
 

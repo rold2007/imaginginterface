@@ -5,25 +5,25 @@
    using ImagingInterface.Views.EventArguments;
    using Microsoft.Practices.ServiceLocation;
 
-   public class FileController : IFileController
+   public class FileOperationController : IFileOperationController
       {
-      private readonly IFileView fileView;
+      private readonly IFileOperationView fileOperationView;
       private IServiceLocator serviceLocator;
 
-      public FileController(IFileView fileView, IServiceLocator serviceLocator)
+      public FileOperationController(IFileOperationView fileOperationView, IServiceLocator serviceLocator)
          {
-         this.fileView = fileView;
+         this.fileOperationView = fileOperationView;
          this.serviceLocator = serviceLocator;
 
-         this.fileView.FileOpen += this.FileOpen;
-         this.fileView.FileClose += this.FileClose;
-         this.fileView.FileCloseAll += this.FileCloseAll;
-         this.fileView.DragDropFile += this.DragDropFile;
+         this.fileOperationView.FileOpen += this.FileOpen;
+         this.fileOperationView.FileClose += this.FileClose;
+         this.fileOperationView.FileCloseAll += this.FileCloseAll;
+         this.fileOperationView.DragDropFile += this.DragDropFile;
          }
 
       private void FileOpen(object sender, EventArgs e)
          {
-         string[] files = this.fileView.OpenFile();
+         string[] files = this.fileOperationView.OpenFile();
 
          if (files != null && files.Length != 0)
             {

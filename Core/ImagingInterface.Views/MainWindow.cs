@@ -12,7 +12,7 @@
    using ImagingInterface.Plugins;
    using ImagingInterface.Views.EventArguments;
 
-   public partial class MainWindow : Form, IMainView, IFileView, IPluginOperationsView
+   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationsView
       {
       private static bool checkSingleton = false;
 

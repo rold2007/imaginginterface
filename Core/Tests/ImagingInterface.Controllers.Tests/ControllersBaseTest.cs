@@ -46,7 +46,7 @@
 
          // Views
          this.Container.RegisterSingle<IMainView, MainView>();
-         this.Container.RegisterSingle<IFileView, FileView>();
+         this.Container.RegisterSingle<IFileOperationView, FileOperationView>();
          this.Container.RegisterSingle<IImageManagerView, ImageManagerView>();
          this.Container.RegisterSingle<IPluginOperationsView, PluginOperationsView>();
          this.Container.RegisterSingle<IPluginManagerView, PluginManagerView>();
@@ -54,7 +54,7 @@
 
          // Controllers
          this.Container.RegisterSingle<IMainController, MainController>();
-         this.Container.RegisterSingle<IFileController, FileController>();
+         this.Container.RegisterSingle<IFileOperationController, FileOperationController>();
          this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
          this.Container.RegisterSingle<IPluginOperationController, PluginOperationController>();
          this.Container.RegisterSingle<IPluginManagerController, PluginManagerController>();

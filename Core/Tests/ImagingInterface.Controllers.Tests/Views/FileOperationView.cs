@@ -10,7 +10,7 @@
    using ImagingInterface.Views.EventArguments;
    using NUnit.Framework;
 
-   public class FileView : IFileView
+   public class FileOperationView : IFileOperationView
       {
       public event EventHandler FileOpen;
 
