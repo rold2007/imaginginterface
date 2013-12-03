@@ -97,7 +97,7 @@
          container.RegisterSingle<MainWindow>();
          container.RegisterSingle<ImageManagerView>();
          container.RegisterSingle<IMainView>(Program.GetMainWindow);
-         container.RegisterSingle<IFileView>(Program.GetMainWindow);
+         container.RegisterSingle<IFileOperationView>(Program.GetMainWindow);
          container.RegisterSingle<IImageManagerView>(Program.GetImageManagerView);
          container.RegisterSingle<IPluginOperationsView>(Program.GetMainWindow);
          container.RegisterSingle<IPluginManagerView>(Program.GetPluginManagerView);
@@ -105,7 +105,7 @@
 
          // Controllers
          container.RegisterSingle<IMainController, MainController>();
-         container.RegisterSingle<IFileController, FileController>();
+         container.RegisterSingle<IFileOperationController, FileOperationController>();
          container.RegisterSingle<IImageManagerController, ImageManagerController>();
          container.RegisterSingle<IPluginOperationController, PluginOperationController>();
          container.RegisterSingle<IPluginManagerController, PluginManagerController>();
