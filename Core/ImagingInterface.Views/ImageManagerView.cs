@@ -19,8 +19,8 @@
    public partial class ImageManagerView : UserControl, IImageManagerView
       {
       private static bool checkSingleton = false;
-      private Dictionary<IImageView, TabPage> imageViewTabPage;
-      private Dictionary<IImageView, ToolTip> imageViewToolTip;
+      private Dictionary<IRawImageView, TabPage> rawImageViewTabPage;
+      private Dictionary<IRawImageView, ToolTip> rawImageViewToolTip;
 
       public ImageManagerView()
          {
@@ -30,26 +30,26 @@
          ImageManagerView.checkSingleton = true;
 
          this.InitializeComponent();
-         
-         this.imageViewTabPage = new Dictionary<IImageView, TabPage>();
-         this.imageViewToolTip = new Dictionary<IImageView, ToolTip>();
+
+         this.rawImageViewTabPage = new Dictionary<IRawImageView, TabPage>();
+         this.rawImageViewToolTip = new Dictionary<IRawImageView, ToolTip>();
 
          this.Dock = DockStyle.Fill;
          }
 
-      public void AddImageView(IImageView imageView, IImageModel imageModel)
+      public void AddImageView(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
-         TabPage tabPage = new TabPage(imageModel.DisplayName);
+         TabPage tabPage = new TabPage(rawImageModel.DisplayName);
          ToolTip toolTip = new ToolTip();
 
-         this.imageViewTabPage.Add(imageView, tabPage);
-         this.imageViewToolTip.Add(imageView, toolTip);
+         this.rawImageViewTabPage.Add(rawImageView, tabPage);
+         this.rawImageViewToolTip.Add(rawImageView, toolTip);
 
          // Attach a new ToolTip because there's no way to detach a global (form) ToolTip
          // when closing the image
-         toolTip.SetToolTip(tabPage, imageModel.DisplayName);
+         toolTip.SetToolTip(tabPage, rawImageModel.DisplayName);
 
-         Control imageViewControl = imageView as Control;
+         Control imageViewControl = rawImageView as Control;
 
          tabPage.Controls.Add(imageViewControl);
 
@@ -59,16 +59,16 @@
 
          tabPage.Size = tabPageSize;
 
-         this.UpdateImageTabPageProperties(imageView);
+         this.UpdateImageTabPageProperties(rawImageView);
 
          this.imagesTabControl.Controls.Add(tabPage);
          }
 
-      public IImageView GetActiveImageView()
+      public IRawImageView GetActiveImageView()
          {
          if (this.imagesTabControl.SelectedTab != null)
             {
-            return this.imagesTabControl.SelectedTab.Controls[0] as IImageView;
+            return this.imagesTabControl.SelectedTab.Controls[0] as IRawImageView;
             }
          else
             {
@@ -76,24 +76,24 @@
             }
          }
 
-      public void RemoveImageView(IImageView imageView)
+      public void RemoveImageView(IRawImageView rawImageView)
          {
-         TabPage tabPage = this.imageViewTabPage[imageView];
-         ToolTip toolTip = this.imageViewToolTip[imageView];
+         TabPage tabPage = this.rawImageViewTabPage[rawImageView];
+         ToolTip toolTip = this.rawImageViewToolTip[rawImageView];
 
          this.imagesTabControl.Controls.Remove(tabPage);
-         this.imageViewTabPage.Remove(imageView);
-         this.imageViewToolTip.Remove(imageView);
+         this.rawImageViewTabPage.Remove(rawImageView);
+         this.rawImageViewToolTip.Remove(rawImageView);
 
          tabPage.Dispose();
          toolTip.Dispose();
          }
 
-      private void UpdateImageTabPageProperties(IImageView imageView)
+      private void UpdateImageTabPageProperties(IRawImageView rawImageView)
          {
-         TabPage tabPage = this.imageViewTabPage[imageView];
+         TabPage tabPage = this.rawImageViewTabPage[rawImageView];
          Size size = tabPage.ClientSize;
-         Control imageViewControl = imageView as Control;
+         Control imageViewControl = rawImageView as Control;
 
          imageViewControl.Size = size;
          }

@@ -12,29 +12,29 @@
    public class ImageManagerController : IImageManagerController
       {
       private IImageManagerView imageManagerView;
-      private Dictionary<IImageView, IImageController> imageControllers;
+      private Dictionary<IRawImageView, IImageController> imageControllers;
 
       public ImageManagerController(IImageManagerView imageManagerView, IMainController mainController)
          {
          this.imageManagerView = imageManagerView;
-         this.imageControllers = new Dictionary<IImageView, IImageController>();
+         this.imageControllers = new Dictionary<IRawImageView, IImageController>();
 
          mainController.AddImageManagerView(this.imageManagerView);
          }
 
-      public void AddImageController(IImageController imageController)
+      public void AddImageController(IImageController imageController, IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
-         this.imageManagerView.AddImageView(imageController.ImageView, imageController.ImageModel);
-         this.imageControllers.Add(imageController.ImageView, imageController);
+         this.imageManagerView.AddImageView(rawImageView, rawImageModel);
+         this.imageControllers.Add(rawImageView, imageController);
          }
 
       public IImageController GetActiveImageController()
          {
-         IImageView activeImageView = this.imageManagerView.GetActiveImageView();
+         IRawImageView activeRawImageView = this.imageManagerView.GetActiveImageView();
 
-         if (activeImageView != null)
+         if (activeRawImageView != null)
             {
-            return this.imageControllers[activeImageView];
+            return this.imageControllers[activeRawImageView];
             }
          else
             {
@@ -42,10 +42,10 @@
             }
          }
 
-      public void RemoveImageController(IImageController imageController)
+      public void RemoveImageController(IRawImageView rawImageView)
          {
-         this.imageManagerView.RemoveImageView(imageController.ImageView);
-         this.imageControllers.Remove(imageController.ImageView);
+         this.imageManagerView.RemoveImageView(rawImageView);
+         this.imageControllers.Remove(rawImageView);
          }
       }
    }

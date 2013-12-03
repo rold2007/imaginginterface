@@ -56,7 +56,7 @@
          using (Image<Bgra, byte> image = new Image<Bgra, byte>(1, 1))
             {
             imageController.LoadImage(image, string.Empty);
-            imageManagerController.AddImageController(imageController);
+            imageController.Add();
 
             ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
 

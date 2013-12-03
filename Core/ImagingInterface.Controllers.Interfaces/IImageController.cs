@@ -12,16 +12,6 @@
 
    public interface IImageController
       {
-      IImageView ImageView
-         {
-         get;
-         }
-
-      IImageModel ImageModel
-         {
-         get;
-         }
-
       Image<Bgra, byte> Image
          {
          get;
@@ -32,6 +22,8 @@
       bool LoadImage(string file);
 
       void UpdateImage();
+
+      void Add();
 
       void Close();
       }
