@@ -100,7 +100,7 @@
          container.RegisterSingle<IFileView>(Program.GetMainWindow);
          container.RegisterSingle<IImageManagerView>(Program.GetImageManagerView);
          container.RegisterSingle<IPluginOperationsView>(Program.GetMainWindow);
-         container.RegisterSingle<IPluginManagerView>(Program.GetMainWindow);
+         container.RegisterSingle<IPluginManagerView>(Program.GetPluginManagerView);
          container.Register<IImageView, ImageView>();
 
          // Controllers
@@ -157,6 +157,11 @@
       private static ImageManagerView GetImageManagerView()
          {
          return Program.serviceLocator.GetInstance<ImageManagerView>();
+         }
+
+      private static PluginManagerView GetPluginManagerView()
+         {
+         return Program.serviceLocator.GetInstance<PluginManagerView>();
          }
 
       private static bool TypeValid(Type currentType, Type validationType)

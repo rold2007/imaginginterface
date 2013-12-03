@@ -12,9 +12,11 @@
       {
       private IPluginManagerView pluginManagerView;
 
-      public PluginManagerController(IPluginManagerView pluginManagerView)
+      public PluginManagerController(IPluginManagerView pluginManagerView, IMainController mainController)
          {
          this.pluginManagerView = pluginManagerView;
+
+         mainController.AddPluginManagerView(this.pluginManagerView);
          }
 
       public void Add(IPluginController pluginController)

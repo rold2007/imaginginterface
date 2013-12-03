@@ -11,26 +11,26 @@
 
    public class ImageManagerController : IImageManagerController
       {
-      private IImageManagerView imageViewManager;
+      private IImageManagerView imageManagerView;
       private Dictionary<IImageView, IImageController> imageControllers;
 
-      public ImageManagerController(IImageManagerView imageViewManager, IMainController mainController)
+      public ImageManagerController(IImageManagerView imageManagerView, IMainController mainController)
          {
-         this.imageViewManager = imageViewManager;
+         this.imageManagerView = imageManagerView;
          this.imageControllers = new Dictionary<IImageView, IImageController>();
 
-         mainController.AddImageManagerView(this.imageViewManager);
+         mainController.AddImageManagerView(this.imageManagerView);
          }
 
       public void AddImageController(IImageController imageController)
          {
-         this.imageViewManager.AddImageView(imageController.ImageView, imageController.ImageModel);
+         this.imageManagerView.AddImageView(imageController.ImageView, imageController.ImageModel);
          this.imageControllers.Add(imageController.ImageView, imageController);
          }
 
       public IImageController GetActiveImageController()
          {
-         IImageView activeImageView = this.imageViewManager.GetActiveImageView();
+         IImageView activeImageView = this.imageManagerView.GetActiveImageView();
 
          if (activeImageView != null)
             {
@@ -44,7 +44,7 @@
 
       public void RemoveImageController(IImageController imageController)
          {
-         this.imageViewManager.RemoveImageView(imageController.ImageView);
+         this.imageManagerView.RemoveImageView(imageController.ImageView);
          this.imageControllers.Remove(imageController.ImageView);
          }
       }
