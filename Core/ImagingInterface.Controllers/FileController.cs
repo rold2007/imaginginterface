@@ -33,7 +33,13 @@
 
                if (imageController.LoadImage(file))
                   {
-                  imageController.Add();
+                  IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+
+                  imageViewManagerController.AddImageController(imageController);
+                  }
+               else
+                  {
+                  imageController.Close();
                   }
                }
             }
@@ -46,8 +52,8 @@
 
          if (activeImageController != null)
             {
-            activeImageController.Remove();
-            (activeImageController as IDisposable).Dispose();
+            imageViewManagerController.RemoveImageController(activeImageController);
+            activeImageController.Close();
             }
          }
 
@@ -60,8 +66,8 @@
 
          while (activeImageController != null)
             {
-            activeImageController.Remove();
-            (activeImageController as IDisposable).Dispose();
+            imageViewManagerController.RemoveImageController(activeImageController);
+            activeImageController.Close();
 
             activeImageController = imageViewManagerController.GetActiveImageController();
             }
@@ -79,7 +85,13 @@
 
                if (imageController.LoadImage(file))
                   {
-                  imageController.Add();
+                  IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+
+                  imageViewManagerController.AddImageController(imageController);
+                  }
+               else
+                  {
+                  imageController.Close();
                   }
                }
             }

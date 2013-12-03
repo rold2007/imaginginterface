@@ -33,8 +33,6 @@
 
       void UpdateImage();
 
-      void Add();
-
-      void Remove();
+      void Close();
       }
    }

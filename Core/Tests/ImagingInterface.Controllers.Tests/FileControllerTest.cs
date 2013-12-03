@@ -49,7 +49,7 @@
                fileView.Files = new string[1] { tempFileName };
 
                Assert.IsNull(imageViewManagerController.GetActiveImageController());
-               
+
                fileView.TriggerOpenFileEvent();
 
                Assert.IsNotNull(imageViewManagerController.GetActiveImageController());
@@ -59,6 +59,12 @@
                fileView.TriggerOpenFileEvent();
 
                Assert.IsNull(imageViewManagerController.GetActiveImageController(), "The image should not be loaded when Files is null.");
+
+               fileView.Files = new string[1] { "Dummy" };
+
+               fileView.TriggerOpenFileEvent();
+
+               Assert.IsNull(imageViewManagerController.GetActiveImageController(), "The image should not be loaded when Files is invalid.");
                }
             }
          finally
@@ -191,6 +197,10 @@
                fileView.TriggerDragDropFileEvent(null);
 
                Assert.IsNull(imageManagerController.GetActiveImageController(), "The image should not be loaded when Files is null.");
+
+               fileView.TriggerDragDropFileEvent(new string[] { "Dummy" });
+
+               Assert.IsNull(imageManagerController.GetActiveImageController(), "The image should not be loaded when Files is invalid.");
                }
             }
          finally

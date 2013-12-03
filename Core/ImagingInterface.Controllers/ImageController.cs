@@ -10,8 +10,6 @@
    public class ImageController : IImageController, IDisposable
       {
       private IServiceLocator serviceLocator;
-      private bool imageControllerShown = false;
-      private bool imageControllerClosed = true;
 
       public ImageController(IImageView imageView, IImageModel imageModel, IServiceLocator serviceLocator)
          {
@@ -56,8 +54,6 @@
          // Clone the input image so that the internal image memory management stays inside this class
          this.ImageModel.Image = image.Clone();
 
-         this.imageControllerClosed = false;
-
          this.ImageModel.DisplayName = displayName;
          this.ImageView.AssignImageModel(this.ImageModel);
 
@@ -75,8 +71,6 @@
             return false;
             }
 
-         this.imageControllerClosed = false;
-
          this.ImageModel.DisplayName = filename;
          this.ImageView.AssignImageModel(this.ImageModel);
 
@@ -88,26 +82,9 @@
          this.ImageView.AssignImageModel(this.ImageModel);
          }
 
-      public void Add()
+      public void Close()
          {
-         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-
-         imageViewManagerController.AddImageController(this);
-
-         this.imageControllerShown = true;
-         }
-
-      public void Remove()
-         {
-         this.Hide();
-
-         if (!this.imageControllerClosed)
-            {
-            this.ImageView.AssignImageModel(null);
-            this.ImageView.Close();
-
-            this.imageControllerClosed = true;
-            }
+         this.Dispose();
          }
 
       protected virtual void Dispose(bool disposing)
@@ -119,16 +96,6 @@
                this.ImageModel.Image.Dispose();
                this.ImageModel.Image = null;
                }
-            }
-         }
-
-      private void Hide()
-         {
-         if (this.imageControllerShown)
-            {
-            IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-
-            imageViewManagerController.RemoveImageController(this);
             }
          }
       }
