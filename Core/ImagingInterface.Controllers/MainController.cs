@@ -20,5 +20,10 @@
          {
          this.mainView.AddImageManagerView(imageManagerView);
          }
+
+      public void AddPluginManagerView(IPluginManagerView pluginManagerView)
+         {
+         this.mainView.AddPluginManagerView(pluginManagerView);
+         }
       }
    }

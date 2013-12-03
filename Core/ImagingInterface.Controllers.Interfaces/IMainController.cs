@@ -10,5 +10,7 @@
    public interface IMainController
       {
       void AddImageManagerView(IImageManagerView imageManagerView);
+
+      void AddPluginManagerView(IPluginManagerView pluginManagerView);
       }
    }

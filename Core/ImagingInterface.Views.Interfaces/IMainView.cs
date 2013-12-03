@@ -9,5 +9,7 @@
    public interface IMainView
       {
       void AddImageManagerView(IImageManagerView imageManagerView);
+
+      void AddPluginManagerView(IPluginManagerView pluginManagerView);
       }
    }

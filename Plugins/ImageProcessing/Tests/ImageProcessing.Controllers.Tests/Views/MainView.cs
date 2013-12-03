@@ -12,5 +12,9 @@
       public void AddImageManagerView(IImageManagerView imageManagerView)
          {
          }
+
+      public void AddPluginManagerView(IPluginManagerView pluginManagerView)
+         {
+         }
       }
    }
