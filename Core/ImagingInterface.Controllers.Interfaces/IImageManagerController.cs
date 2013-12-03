@@ -6,13 +6,15 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Controllers;
+   using ImagingInterface.Models;
+   using ImagingInterface.Views;
 
    public interface IImageManagerController
       {
-      void AddImageController(IImageController imageController);
+      void AddImageController(IImageController imageController, IRawImageView rawImageView, IRawImageModel rawImageModel);
 
       IImageController GetActiveImageController();
       
-      void RemoveImageController(IImageController imageController);
+      void RemoveImageController(IRawImageView rawImageView);
       }
    }

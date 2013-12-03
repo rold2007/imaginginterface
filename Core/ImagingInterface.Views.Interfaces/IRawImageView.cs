@@ -5,12 +5,8 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Models;
 
-   public interface IImageView : IRawImageView
+   public interface IRawImageView
       {
-      void AssignImageModel(IImageModel imageModel);
-
-      void Close();
       }
    }

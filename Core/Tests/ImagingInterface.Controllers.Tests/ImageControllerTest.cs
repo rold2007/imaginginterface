@@ -20,20 +20,7 @@
       [Test]
       public void Constructor()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
-
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
-
-         Assert.AreSame(this.ServiceLocator.GetInstance<IImageView>(), imageController.ImageView);
-         Assert.AreSame(this.ServiceLocator.GetInstance<IImageModel>(), imageController.ImageModel);
-
-         imageController = null;
-
-         // Force wait on ImageController finalizer. This may not always work.
-         // It was only added for code coverage purpose, skip it if it becomes annoying
-         GC.Collect();
-         GC.WaitForPendingFinalizers();
          }
 
       [Test]

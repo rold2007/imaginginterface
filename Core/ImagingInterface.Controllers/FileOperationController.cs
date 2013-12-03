@@ -33,9 +33,7 @@
 
                if (imageController.LoadImage(file))
                   {
-                  IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-
-                  imageViewManagerController.AddImageController(imageController);
+                  imageController.Add();
                   }
                else
                   {
@@ -52,7 +50,6 @@
 
          if (activeImageController != null)
             {
-            imageViewManagerController.RemoveImageController(activeImageController);
             activeImageController.Close();
             }
          }
@@ -66,7 +63,6 @@
 
          while (activeImageController != null)
             {
-            imageViewManagerController.RemoveImageController(activeImageController);
             activeImageController.Close();
 
             activeImageController = imageViewManagerController.GetActiveImageController();
@@ -85,9 +81,7 @@
 
                if (imageController.LoadImage(file))
                   {
-                  IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-
-                  imageViewManagerController.AddImageController(imageController);
+                  imageController.Add();
                   }
                else
                   {

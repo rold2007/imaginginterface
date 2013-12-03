@@ -5,12 +5,10 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
 
-   public interface IImageModel : IRawImageModel
+   public interface IRawImageModel
       {
-      Image<Bgra, byte> Image
+      string DisplayName
          {
          get;
          set;

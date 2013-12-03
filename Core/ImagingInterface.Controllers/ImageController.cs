@@ -18,10 +18,12 @@
          this.serviceLocator = serviceLocator;
          }
 
+      // ncrunch: no coverage start
       ~ImageController()
          {
          this.Dispose(false);
          }
+      //// ncrunch: no coverage end
 
       public IImageModel ImageModel
          {
@@ -82,8 +84,19 @@
          this.ImageView.AssignImageModel(this.ImageModel);
          }
 
+      public void Add()
+         {
+         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+
+         imageViewManagerController.AddImageController(this, this.ImageView, this.ImageModel);
+         }
+
       public void Close()
          {
+         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+
+         imageViewManagerController.RemoveImageController(this.ImageView);
+
          this.Dispose();
          }
 

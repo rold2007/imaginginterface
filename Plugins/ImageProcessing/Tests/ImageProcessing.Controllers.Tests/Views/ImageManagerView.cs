@@ -10,23 +10,23 @@
 
    public class ImageManagerView : IImageManagerView
       {
-      private IImageView activeImageView;
+      private IRawImageView activeRawImageView;
 
-      public void AddImageView(IImageView imageView, IImageModel imageModel)
+      public void AddImageView(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
-         this.activeImageView = imageView;
+         this.activeRawImageView = rawImageView;
          }
 
-      public IImageView GetActiveImageView()
+      public IRawImageView GetActiveImageView()
          {
-         return this.activeImageView;
+         return this.activeRawImageView;
          }
 
-      public void RemoveImageView(IImageView imageView)
+      public void RemoveImageView(IRawImageView rawImageView)
          {
-         if (imageView == this.activeImageView)
+         if (rawImageView == this.activeRawImageView)
             {
-            this.activeImageView = null;
+            this.activeRawImageView = null;
             }
          }
       }

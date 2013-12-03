@@ -10,33 +10,33 @@
 
    public class ImageManagerView : IImageManagerView
       {
-      private List<IImageView> allImageViews;
+      private List<IRawImageView> allRawImageViews;
 
       public ImageManagerView()
          {
-         this.allImageViews = new List<IImageView>();
+         this.allRawImageViews = new List<IRawImageView>();
          }
 
-      public void AddImageView(IImageView imageView, IImageModel imageModel)
+      public void AddImageView(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
-         this.allImageViews.Add(imageView);
+         this.allRawImageViews.Add(rawImageView);
          }
 
-      public IImageView GetActiveImageView()
+      public IRawImageView GetActiveImageView()
          {
-         if (this.allImageViews.Count == 0)
+         if (this.allRawImageViews.Count == 0)
             {
             return null;
             }
          else
             {
-            return this.allImageViews[0];
+            return this.allRawImageViews[0];
             }
          }
 
-      public void RemoveImageView(IImageView imageView)
+      public void RemoveImageView(IRawImageView rawImageView)
          {
-         this.allImageViews.Remove(imageView);
+         this.allRawImageViews.Remove(rawImageView);
          }
       }
    }
