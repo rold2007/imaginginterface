@@ -14,6 +14,7 @@
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using SimpleInjector;
+   using SimpleInjector.Diagnostics;
 
    public static class Program
       {
@@ -147,6 +148,13 @@
 
          // Verify will also create thw MainWindow and the ApplicationController
          container.Verify();
+
+         DiagnosticResult[] diagnosticResults = Analyzer.Analyze(container);
+
+         if (diagnosticResults.Length != 0)
+            {
+            throw new InvalidOperationException("IoC container was not initialized properly.");
+            }
          }
 
       private static MainWindow GetMainWindow()
