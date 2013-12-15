@@ -12,7 +12,7 @@
    using ImagingInterface.Plugins;
    using ImagingInterface.Views.EventArguments;
 
-   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationsView
+   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationsView, IHelpOperationView
       {
       private static bool checkSingleton = false;
 
@@ -35,6 +35,8 @@
       public event EventHandler<DragDropEventArgs> DragDropFile;
 
       public event EventHandler<PluginCreateEventArgs> PluginCreate;
+
+      public event EventHandler HelpAbout;
 
       public string[] OpenFile()
          {
@@ -120,9 +122,10 @@
 
       private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         AboutBox aboutBox = new AboutBox();
-
-         aboutBox.ShowDialog(this);
+         if (this.HelpAbout != null)
+            {
+            this.HelpAbout(this, EventArgs.Empty);
+            }
          }
 
       private void ExitToolStripMenuItem_Click(object sender, EventArgs e)

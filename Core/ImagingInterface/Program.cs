@@ -102,6 +102,8 @@
          container.RegisterSingle<IImageManagerView>(Program.GetImageManagerView);
          container.RegisterSingle<IPluginOperationsView>(Program.GetMainWindow);
          container.RegisterSingle<IPluginManagerView>(Program.GetPluginManagerView);
+         container.RegisterSingle<IHelpOperationView>(Program.GetMainWindow);
+         container.RegisterSingle<IAboutBoxView, AboutBoxView>();
          container.Register<IImageView, ImageView>();
 
          // Controllers
@@ -110,9 +112,12 @@
          container.RegisterSingle<IImageManagerController, ImageManagerController>();
          container.RegisterSingle<IPluginOperationController, PluginOperationController>();
          container.RegisterSingle<IPluginManagerController, PluginManagerController>();
+         container.RegisterSingle<IHelpOperationController, HelpOperationController>();
+         container.RegisterSingle<IAboutBoxController, AboutBoxController>();
          container.Register<IImageController, ImageController>();
 
          // Models
+         container.RegisterSingle<IAboutBoxModel, AboutBoxModel>();
          container.Register<IImageModel, ImageModel>();
 
          List<Type> packageWindowsFormsTypes = new List<Type>();

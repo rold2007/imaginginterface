@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAboutBoxController.cs" />
     <Compile Include="IFileOperationController.cs" />
+    <Compile Include="IHelpOperationController.cs" />
     <Compile Include="IImageController.cs" />
     <Compile Include="IImageManagerController.cs" />
     <Compile Include="IMainController.cs" />
