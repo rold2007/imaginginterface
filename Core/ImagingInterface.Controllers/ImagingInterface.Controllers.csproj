@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBoxController.cs" />
     <Compile Include="FileOperationController.cs" />
+    <Compile Include="HelpOperationController.cs" />
     <Compile Include="ImageController.cs" />
     <Compile Include="ImageManagerController.cs" />
     <Compile Include="MainController.cs" />

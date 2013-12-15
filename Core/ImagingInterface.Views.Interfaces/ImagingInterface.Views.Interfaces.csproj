@@ -42,7 +42,9 @@
   <ItemGroup>
     <Compile Include="EventArguments\DragDropEventArgs.cs" />
     <Compile Include="EventArguments\PluginCreateEventArgs.cs" />
+    <Compile Include="IAboutBoxView.cs" />
     <Compile Include="IFileOperationView.cs" />
+    <Compile Include="IHelpOperationView.cs" />
     <Compile Include="IImageView.cs" />
     <Compile Include="IImageManagerView.cs" />
     <Compile Include="IMainView.cs" />

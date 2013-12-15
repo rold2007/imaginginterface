@@ -59,8 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBoxControllerTest.cs" />
     <Compile Include="ControllersBaseTest.cs" />
     <Compile Include="FileOperationControllerTest.cs" />
+    <Compile Include="HelpOperationControllerTest.cs" />
     <Compile Include="ImageControllerTest.cs" />
     <Compile Include="ImageManagerControllerTest.cs" />
     <Compile Include="Mocks\PluginController1.cs" />
@@ -69,7 +71,9 @@
     <Compile Include="Mocks\PluginModel2.cs" />
     <Compile Include="PluginOperationControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\AboutBoxView.cs" />
     <Compile Include="Views\FileOperationView.cs" />
+    <Compile Include="Views\HelpOperationView.cs" />
     <Compile Include="Views\ImageView.cs" />
     <Compile Include="Views\ImageManagerView.cs" />
     <Compile Include="Views\MainView.cs" />
