@@ -5,8 +5,6 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
 
    public class ImageModel : IImageModel
       {
@@ -20,10 +18,18 @@
          set;
          }
 
-      public Image<Bgra, byte> Image
+      public byte[,,] ImageData
          {
          get;
          set;
+         }
+
+      public System.Drawing.Size Size
+         {
+         get
+            {
+            return new System.Drawing.Size(this.ImageData.GetLength(1), this.ImageData.GetLength(0));
+            }
          }
       }
    }

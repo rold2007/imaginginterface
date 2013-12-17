@@ -10,8 +10,6 @@
    using System.Text;
    using System.Threading.Tasks;
    using System.Windows.Forms;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views.EventArguments;

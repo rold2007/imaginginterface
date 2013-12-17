@@ -53,9 +53,9 @@
 
          Assert.IsNotNull(rotateView);
 
-         using (Image<Bgra, byte> image = new Image<Bgra, byte>(1, 1))
+         using (Image<Rgb, byte> image = new Image<Rgb, byte>(1, 1))
             {
-            imageController.LoadImage(image, string.Empty);
+            imageController.LoadImage(image.Data, string.Empty);
             imageController.Add();
 
             ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
