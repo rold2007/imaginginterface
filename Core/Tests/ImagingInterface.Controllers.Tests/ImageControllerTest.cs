@@ -42,20 +42,21 @@
                image.Save(tempFileName);
 
                Assert.IsNullOrEmpty(imageModel.DisplayName);
-               Assert.IsNull(imageModel.Image);
+               Assert.IsNull(imageModel.ImageData);
 
-               using (ImageController imageController = this.Container.GetInstance<ImageController>())
-                  {
-                  bool loadResult = imageController.LoadImage(tempFileName);
+               ImageController imageController = this.Container.GetInstance<ImageController>();
 
-                  Assert.IsTrue(loadResult);
-                  Assert.IsNotNullOrEmpty(imageModel.DisplayName);
-                  Assert.IsNotNull(imageModel.Image);
-                  Assert.AreSame(imageModel, imageView.AssignedImageModel);
-                  }
+               bool loadResult = imageController.LoadImage(tempFileName);
 
-               // imageModel.Image is set to null when imageController is disposed of.
-               Assert.IsNull(imageModel.Image);
+               Assert.IsTrue(loadResult);
+               Assert.IsNotNullOrEmpty(imageModel.DisplayName);
+               Assert.IsNotNull(imageModel.ImageData);
+               Assert.AreSame(imageModel, imageView.AssignedImageModel);
+
+               imageController.Close();
+
+               // imageModel.Image is set to null when imageController is closed
+               Assert.IsNull(imageModel.ImageData);
                }
             }
          finally
@@ -79,7 +80,7 @@
             tempFileName = Path.GetTempFileName();
 
             Assert.IsNullOrEmpty(imageModel.DisplayName);
-            Assert.IsNull(imageModel.Image);
+            Assert.IsNull(imageModel.ImageData);
 
             IImageController imageController = this.Container.GetInstance<IImageController>();
 
@@ -87,7 +88,7 @@
 
             Assert.IsFalse(loadResult);
             Assert.IsNullOrEmpty(imageModel.DisplayName);
-            Assert.IsNull(imageModel.Image);
+            Assert.IsNull(imageModel.ImageData);
             Assert.IsNull(imageView.AssignedImageModel);
             }
          finally

@@ -53,12 +53,10 @@
          {
          IImageController imageController = this.imageManagerController.GetActiveImageController();
 
-         using (Image<Bgr, byte> convertedImage = imageController.Image.Convert<Bgr, byte>(), rotatedImage = convertedImage.Rotate(90.0, new Bgr()))
+         using (Image<Rgb, byte> convertedImage = new Image<Rgb, byte>(imageController.ImageData), rotatedImage = convertedImage.Rotate(90.0, new Rgb()))
             {
-            imageController.Image.ConvertFrom<Bgr, byte>(rotatedImage);
+            imageController.UpdateImageData(rotatedImage.Data);
             }
-
-         imageController.UpdateImage();
          }
       }
    }

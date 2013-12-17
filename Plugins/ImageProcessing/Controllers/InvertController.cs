@@ -58,16 +58,14 @@
 
          if (imageController != null)
             {
-            if (imageController.Image != null)
+            if (imageController.ImageData != null)
                {
-               using (Image<Bgr, byte> invertedImage = imageController.Image.Convert<Bgr, byte>())
+               using (Image<Rgb, byte> invertedImage = new Image<Rgb, byte>(imageController.ImageData))
                   {
                   invertedImage._Not();
 
-                  imageController.Image.ConvertFrom<Bgr, byte>(invertedImage);
+                  imageController.UpdateImageData(invertedImage.Data);
                   }
-
-               imageController.UpdateImage();
                }
             }
          }

@@ -28,36 +28,36 @@
       /// </summary>
       private void InitializeComponent()
          {
-         this.components = new System.ComponentModel.Container();
-         this.imageBox = new Emgu.CV.UI.ImageBox();
-         ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
+         this.glControl = new OpenTK.GLControl();
          this.SuspendLayout();
          // 
-         // imageBox
+         // glControl
          // 
-         this.imageBox.BackColor = System.Drawing.SystemColors.Control;
-         this.imageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom;
-         this.imageBox.Location = new System.Drawing.Point(0, 0);
-         this.imageBox.Name = "imageBox";
-         this.imageBox.Size = new System.Drawing.Size(375, 375);
-         this.imageBox.TabIndex = 3;
-         this.imageBox.TabStop = false;
+         this.glControl.BackColor = System.Drawing.Color.Black;
+         this.glControl.Location = new System.Drawing.Point(0, 0);
+         this.glControl.Name = "glControl";
+         this.glControl.Size = new System.Drawing.Size(375, 375);
+         this.glControl.TabIndex = 0;
+         this.glControl.VSync = false;
+         this.glControl.Load += new System.EventHandler(this.GLControl_Load);
+         this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLControl_Paint);
+         this.glControl.Resize += new System.EventHandler(this.GLControl_Resize);
          // 
          // ImageView
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.AutoScroll = true;
-         this.Controls.Add(this.imageBox);
+         this.Controls.Add(this.glControl);
          this.Name = "ImageView";
-         this.Size = new System.Drawing.Size(116, 116);
-         ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
+         this.Size = new System.Drawing.Size(82, 82);
          this.ResumeLayout(false);
 
          }
 
       #endregion
 
-      private Emgu.CV.UI.ImageBox imageBox;
+      private OpenTK.GLControl glControl;
+
       }
    }
