@@ -35,7 +35,7 @@
          this.Dock = DockStyle.Fill;
          }
 
-      public void AddPluginView(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel)
+      public void AddPlugin(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel)
          {
          TabPage tabPage = new TabPage(rawPluginModel.DisplayName);
          ToolTip toolTip = new ToolTip();
@@ -62,7 +62,7 @@
          this.pluginsTabControl.Controls.Add(tabPage);
          }
 
-      public IRawPluginView GetActivePluginView()
+      public IRawPluginView GetActivePlugin()
          {
          if (this.pluginsTabControl.SelectedTab != null)
             {
@@ -74,7 +74,7 @@
             }
          }
 
-      public void RemovePluginView(IRawPluginView rawPluginView)
+      public void RemovePlugin(IRawPluginView rawPluginView)
          {
          TabPage tabPage = this.pluginViewTabPage[rawPluginView];
          ToolTip toolTip = this.pluginViewToolTip[rawPluginView];

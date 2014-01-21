@@ -85,7 +85,7 @@
     <Compile Include="IImageManagerView.cs" />
     <Compile Include="IMainView.cs" />
     <Compile Include="IPluginManagerView.cs" />
-    <Compile Include="IPluginOperationsView.cs" />
+    <Compile Include="IPluginOperationView.cs" />
     <Compile Include="IRawImageView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

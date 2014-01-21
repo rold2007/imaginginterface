@@ -20,6 +20,10 @@
 
       public event EventHandler Rotate;
 
+      public void Close()
+         {
+         }
+
       private void RotateRightButton_Click(object sender, EventArgs e)
          {
          if (this.Rotate != null)

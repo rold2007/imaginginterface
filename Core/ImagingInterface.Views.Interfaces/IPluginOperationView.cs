@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Views.EventArguments;
 
-   public interface IPluginOperationsView
+   public interface IPluginOperationView
       {
       event EventHandler<PluginCreateEventArgs> PluginCreate;
 

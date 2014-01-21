@@ -25,7 +25,7 @@
       public void PluginCreate()
          {
          IPluginOperationController pluginOperationController = this.ServiceLocator.GetInstance<IPluginOperationController>();
-         PluginOperationsView pluginOperationsView = this.ServiceLocator.GetInstance<IPluginOperationsView>() as PluginOperationsView;
+         PluginOperationsView pluginOperationsView = this.ServiceLocator.GetInstance<IPluginOperationView>() as PluginOperationsView;
          IPluginController pluginController1 = this.ServiceLocator.GetInstance<PluginController1>();
          IPluginController pluginController2 = this.ServiceLocator.GetInstance<PluginController2>();
          PluginManagerView pluginManagerView = this.ServiceLocator.GetInstance<IPluginManagerView>() as PluginManagerView;

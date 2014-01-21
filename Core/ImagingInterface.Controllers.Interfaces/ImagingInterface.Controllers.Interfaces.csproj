@@ -80,6 +80,7 @@
     <Compile Include="IHelpOperationController.cs" />
     <Compile Include="IImageController.cs" />
     <Compile Include="IImageManagerController.cs" />
+    <Compile Include="IImageSourceController.cs" />
     <Compile Include="IMainController.cs" />
     <Compile Include="IPluginOperationController.cs" />
     <Compile Include="IPluginManagerController.cs" />

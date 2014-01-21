@@ -31,5 +31,13 @@
             return new System.Drawing.Size(this.ImageData.GetLength(1), this.ImageData.GetLength(0));
             }
          }
+
+      public bool IsGrayscale
+         {
+         get
+            {
+            return this.ImageData.GetLength(2) == 1;
+            }
+         }
       }
    }

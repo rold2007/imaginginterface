@@ -103,6 +103,7 @@
     <ProjectReference Include="..\..\..\..\..\..\..\..\Documents\Data\Programmation\Projets\ImagingInterface\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj">
       <Project>{deee4845-897d-41f4-925d-4720f6f1f986}</Project>

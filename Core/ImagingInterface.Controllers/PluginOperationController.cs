@@ -15,7 +15,7 @@
       private IServiceLocator serviceLocator;
       private SortedDictionary<string, Type> plugins;
 
-      public PluginOperationController(IPluginOperationsView pluginManagerView, IEnumerable<IPluginController> plugins, IServiceLocator serviceLocator)
+      public PluginOperationController(IPluginOperationView pluginOperationView, IEnumerable<IPluginController> plugins, IServiceLocator serviceLocator)
          {
          this.plugins = new SortedDictionary<string, Type>();
          this.serviceLocator = serviceLocator;
@@ -23,10 +23,10 @@
          foreach (IPluginController plugin in plugins)
             {
             this.plugins.Add(plugin.RawPluginModel.DisplayName, plugin.GetType());
-            pluginManagerView.AddPlugin(plugin.RawPluginModel.DisplayName);
+            pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
             }
 
-         pluginManagerView.PluginCreate += this.PluginCreate;
+         pluginOperationView.PluginCreate += this.PluginCreate;
          }
 
       private void PluginCreate(object sender, PluginCreateEventArgs e)
@@ -34,7 +34,7 @@
          IPluginController pluginController = this.serviceLocator.GetInstance(this.plugins[e.Name]) as IPluginController;
          IPluginManagerController pluginManagerController = this.serviceLocator.GetInstance<IPluginManagerController>();
 
-         pluginManagerController.Add(pluginController);
+         pluginManagerController.AddPlugin(pluginController);
          }
       }
    }

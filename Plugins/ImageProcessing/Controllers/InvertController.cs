@@ -2,6 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
+   using System.ComponentModel;
    using System.Diagnostics;
    using System.Drawing;
    using System.Drawing.Imaging;
@@ -36,6 +37,10 @@
          this.invertView.Invert += this.InvertView_Invert;
          }
 
+      public event CancelEventHandler Closing;
+
+      public event EventHandler Closed;
+
       public IRawPluginView RawPluginView
          {
          get
@@ -52,9 +57,26 @@
             }
          }
 
+      public void Close()
+         {
+         CancelEventArgs cancelEventArgs = new CancelEventArgs();
+
+         if (this.Closing != null)
+            {
+            this.Closing(this, cancelEventArgs);
+            }
+
+         this.invertView.Close();
+
+         if (this.Closed != null)
+            {
+            this.Closed(this, EventArgs.Empty);
+            }
+         }
+
       private void InvertView_Invert(object sender, EventArgs e)
          {
-         IImageController imageController = this.imageManagerController.GetActiveImageController();
+         IImageController imageController = this.imageManagerController.GetActiveImage();
 
          if (imageController != null)
             {

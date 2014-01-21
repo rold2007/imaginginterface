@@ -11,12 +11,23 @@
       {
       public event EventHandler Invert;
 
+      public bool CloseCalled
+         {
+         get;
+         private set;
+         }
+
       public void TriggerInvert()
          {
          if (this.Invert != null)
             {
             this.Invert(this, EventArgs.Empty);
             }
+         }
+
+      public void Close()
+         {
+         this.CloseCalled = true;
          }
       }
    }

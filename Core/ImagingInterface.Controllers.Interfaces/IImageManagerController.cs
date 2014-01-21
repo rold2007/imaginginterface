@@ -11,10 +11,10 @@
 
    public interface IImageManagerController
       {
-      void AddImageController(IImageController imageController, IRawImageView rawImageView, IRawImageModel rawImageModel);
+      void AddImage(IImageController imageController);
 
-      IImageController GetActiveImageController();
-      
-      void RemoveImageController(IRawImageView rawImageView);
+      IImageController GetActiveImage();
+
+      IList<IImageController> GetAllImages();
       }
    }

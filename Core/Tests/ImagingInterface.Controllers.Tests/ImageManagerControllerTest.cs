@@ -27,7 +27,7 @@
          }
 
       [Test]
-      public void AddImageController()
+      public void AddImage()
          {
          this.Container.RegisterSingle<IImageView, ImageView>();
          this.Container.RegisterSingle<IImageModel, ImageModel>();
@@ -39,34 +39,32 @@
          IImageModel imageModel = this.Container.GetInstance<IImageModel>();
 
          Assert.IsNull(imageManagerView.GetActiveImageView());
-         Assert.IsNull(imageViewManagerController.GetActiveImageController());
+         Assert.IsNull(imageViewManagerController.GetActiveImage());
 
-         imageViewManagerController.AddImageController(imageController, imageView, imageModel);
+         imageViewManagerController.AddImage(imageController);
 
          Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
-         Assert.AreSame(imageController, imageViewManagerController.GetActiveImageController());
+         Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
          }
 
       [Test]
-      public void GetActiveImageController()
+      public void GetActiveImage()
          {
          this.Container.RegisterSingle<IImageView, ImageView>();
          this.Container.RegisterSingle<IImageModel, ImageModel>();
 
          IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
-         IImageView imageView = this.Container.GetInstance<IImageView>();
          IImageController imageController = this.Container.GetInstance<IImageController>();
-         IImageModel imageModel = this.Container.GetInstance<IImageModel>();
 
-         Assert.IsNull(imageViewManagerController.GetActiveImageController());
+         Assert.IsNull(imageViewManagerController.GetActiveImage());
 
-         imageViewManagerController.AddImageController(imageController, imageView, imageModel);
+         imageViewManagerController.AddImage(imageController);
 
-         Assert.AreSame(imageController, imageViewManagerController.GetActiveImageController());
+         Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
 
-         imageViewManagerController.RemoveImageController(imageView);
+         imageController.Close();
 
-         Assert.IsNull(imageViewManagerController.GetActiveImageController());
+         Assert.IsNull(imageViewManagerController.GetActiveImage());
          }
 
       [Test]
@@ -79,17 +77,16 @@
          IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          IImageView imageView = this.Container.GetInstance<IImageView>();
          IImageController imageController = this.Container.GetInstance<IImageController>();
-         IImageModel imageModel = this.Container.GetInstance<IImageModel>();
 
-         imageViewManagerController.AddImageController(imageController, imageView, imageModel);
+         imageViewManagerController.AddImage(imageController);
 
          Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
-         Assert.AreSame(imageController, imageViewManagerController.GetActiveImageController());
+         Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
 
-         imageViewManagerController.RemoveImageController(imageView);
+         imageController.Close();
 
          Assert.IsNull(imageManagerView.GetActiveImageView());
-         Assert.IsNull(imageViewManagerController.GetActiveImageController());
+         Assert.IsNull(imageViewManagerController.GetActiveImage());
          }
       }
    }

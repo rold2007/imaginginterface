@@ -19,5 +19,10 @@
          {
          get;
          }
+
+      bool IsGrayscale
+         {
+         get;
+         }
       }
    }
