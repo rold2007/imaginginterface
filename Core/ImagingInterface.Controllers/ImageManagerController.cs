@@ -19,16 +19,18 @@
          this.imageManagerView = imageManagerView;
          this.imageControllers = new Dictionary<IRawImageView, IImageController>();
 
-         mainController.AddImageManagerView(this.imageManagerView);
+         mainController.AddImageManager(this, this.imageManagerView);
          }
 
-      public void AddImageController(IImageController imageController, IRawImageView rawImageView, IRawImageModel rawImageModel)
+      public void AddImage(IImageController imageController)
          {
-         this.imageManagerView.AddImageView(rawImageView, rawImageModel);
-         this.imageControllers.Add(rawImageView, imageController);
+         imageController.Closed += this.ImageController_Closed;
+
+         this.imageManagerView.AddImage(imageController.RawImageView, imageController.RawImageModel);
+         this.imageControllers.Add(imageController.RawImageView, imageController);
          }
 
-      public IImageController GetActiveImageController()
+      public IImageController GetActiveImage()
          {
          IRawImageView activeRawImageView = this.imageManagerView.GetActiveImageView();
 
@@ -42,10 +44,22 @@
             }
          }
 
-      public void RemoveImageController(IRawImageView rawImageView)
+      public IList<IImageController> GetAllImages()
          {
-         this.imageManagerView.RemoveImageView(rawImageView);
-         this.imageControllers.Remove(rawImageView);
+         return this.imageControllers.Values.ToList();
+         }
+
+      private void RemoveImage(IImageController imageController)
+         {
+         imageController.Closed -= this.ImageController_Closed;
+
+         this.imageManagerView.RemoveImage(imageController.RawImageView);
+         this.imageControllers.Remove(imageController.RawImageView);
+         }
+
+      private void ImageController_Closed(object sender, EventArgs e)
+         {
+         this.RemoveImage(sender as IImageController);
          }
       }
    }

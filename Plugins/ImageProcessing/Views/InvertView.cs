@@ -20,6 +20,10 @@
 
       public event EventHandler Invert;
 
+      public void Close()
+         {
+         }
+
       private void InvertButton_Click(object sender, EventArgs e)
          {
          if (this.Invert != null)

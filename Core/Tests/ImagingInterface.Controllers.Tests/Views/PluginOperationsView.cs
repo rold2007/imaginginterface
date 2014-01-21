@@ -8,7 +8,7 @@
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
 
-   public class PluginOperationsView : IPluginOperationsView
+   public class PluginOperationsView : IPluginOperationView
       {
       public event EventHandler<PluginCreateEventArgs> PluginCreate;
 

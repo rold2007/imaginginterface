@@ -9,10 +9,10 @@
 
    public interface IPluginManagerView
       {
-      void AddPluginView(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel);
+      void AddPlugin(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel);
 
-      IRawPluginView GetActivePluginView();
+      IRawPluginView GetActivePlugin();
 
-      void RemovePluginView(IRawPluginView rawPluginView);
+      void RemovePlugin(IRawPluginView rawPluginView);
       }
    }

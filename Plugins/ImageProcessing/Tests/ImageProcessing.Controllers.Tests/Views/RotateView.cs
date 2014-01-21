@@ -11,12 +11,23 @@
       {
       public event EventHandler Rotate;
 
+      public bool CloseCalled
+         {
+         get;
+         private set;
+         }
+
       public void TriggerRotate()
          {
          if (this.Rotate != null)
             {
             this.Rotate(this, EventArgs.Empty);
             }
+         }
+
+      public void Close()
+         {
+         this.CloseCalled = true;
          }
       }
    }

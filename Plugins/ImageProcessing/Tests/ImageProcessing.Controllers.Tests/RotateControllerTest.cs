@@ -9,6 +9,7 @@
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
+   using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views;
@@ -43,6 +44,26 @@
          }
 
       [Test]
+      public void Close()
+         {
+         this.Container.RegisterSingle<IRotateView, RotateView>();
+
+         RotateView rotateView = this.ServiceLocator.GetInstance<IRotateView>() as RotateView;
+         IRotateController rotateController = this.ServiceLocator.GetInstance<IRotateController>();
+         bool closingCalled = false;
+         bool closedCalled = false;
+
+         rotateController.Closing += (sender, eventArgs) => { closingCalled = true; };
+         rotateController.Closed += (sender, eventArgs) => { closedCalled = true; };
+
+         rotateController.Close();
+
+         Assert.IsTrue(closingCalled);
+         Assert.IsTrue(closedCalled);
+         Assert.IsTrue(rotateView.CloseCalled);
+         }
+
+      [Test]
       public void RotateView_Rotate()
          {
          IRotateController rotateController = this.ServiceLocator.GetInstance<IRotateController>();
@@ -56,7 +77,8 @@
          using (Image<Rgb, byte> image = new Image<Rgb, byte>(1, 1))
             {
             imageController.LoadImage(image.Data, string.Empty);
-            imageController.Add();
+
+            imageManagerController.AddImage(imageController);
 
             ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
 

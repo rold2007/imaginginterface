@@ -9,6 +9,10 @@
 
    public interface IPluginManagerController
       {
-      void Add(IPluginController pluginController);
+      void AddPlugin(IPluginController pluginController);
+
+      IPluginController GetActivePlugin();
+
+      IList<IPluginController> GetAllPlugins();
       }
    }

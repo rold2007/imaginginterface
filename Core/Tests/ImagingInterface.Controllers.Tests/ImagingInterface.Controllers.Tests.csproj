@@ -101,6 +101,8 @@
     <Compile Include="HelpOperationControllerTest.cs" />
     <Compile Include="ImageControllerTest.cs" />
     <Compile Include="ImageManagerControllerTest.cs" />
+    <Compile Include="MainControllerTest.cs" />
+    <Compile Include="Mocks\ImageSourceController.cs" />
     <Compile Include="Mocks\PluginController1.cs" />
     <Compile Include="Mocks\PluginController2.cs" />
     <Compile Include="Mocks\PluginModel1.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Views\MainView.cs" />
     <Compile Include="Views\PluginManagerView.cs" />
     <Compile Include="Views\PluginOperationsView.cs" />
+    <Compile Include="Views\PluginView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">

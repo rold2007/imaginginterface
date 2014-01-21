@@ -48,23 +48,23 @@
 
                fileOperationView.Files = new string[1] { tempFileName };
 
-               Assert.IsNull(imageViewManagerController.GetActiveImageController());
+               Assert.IsNull(imageViewManagerController.GetActiveImage());
 
                fileOperationView.TriggerOpenFileEvent();
 
-               Assert.IsNotNull(imageViewManagerController.GetActiveImageController());
+               Assert.IsNotNull(imageViewManagerController.GetActiveImage());
 
                fileOperationView.TriggerCloseFileEvent();
                fileOperationView.Files = null;
                fileOperationView.TriggerOpenFileEvent();
 
-               Assert.IsNull(imageViewManagerController.GetActiveImageController(), "The image should not be loaded when Files is null.");
+               Assert.IsNull(imageViewManagerController.GetActiveImage(), "The image should not be loaded when Files is null.");
 
                fileOperationView.Files = new string[1] { "Dummy" };
 
                fileOperationView.TriggerOpenFileEvent();
 
-               Assert.IsNull(imageViewManagerController.GetActiveImageController(), "The image should not be loaded when Files is invalid.");
+               Assert.IsNull(imageViewManagerController.GetActiveImage(), "The image should not be loaded when Files is invalid.");
                }
             }
          finally
@@ -100,22 +100,22 @@
 
                fileOperationView.TriggerOpenFileEvent();
 
-               IImageController activeImageControllerToClose = imageManagerController.GetActiveImageController();
+               IImageController activeImageControllerToClose = imageManagerController.GetActiveImage();
 
                // CloseFile should close the active image controller
                fileOperationView.TriggerCloseFileEvent();
 
                // Make sure there is still an active image controller
-               Assert.IsNotNull(imageManagerController.GetActiveImageController());
+               Assert.IsNotNull(imageManagerController.GetActiveImage());
 
                // Make sure the previously active image controller isn't active anymore
-               Assert.AreNotSame(activeImageControllerToClose, imageManagerController.GetActiveImageController());
+               Assert.AreNotSame(activeImageControllerToClose, imageManagerController.GetActiveImage());
 
                // Close the remaining image controller
                fileOperationView.TriggerCloseFileEvent();
 
                // There should be no more open image controller
-               Assert.IsNull(imageManagerController.GetActiveImageController());
+               Assert.IsNull(imageManagerController.GetActiveImage());
                }
             }
          finally
@@ -151,11 +151,11 @@
 
                fileOperationView.TriggerOpenFileEvent();
 
-               Assert.IsNotNull(imageManagerController.GetActiveImageController());
+               Assert.IsNotNull(imageManagerController.GetActiveImage());
 
                fileOperationView.TriggerCloseAllFileEvent();
 
-               Assert.IsNull(imageManagerController.GetActiveImageController());
+               Assert.IsNull(imageManagerController.GetActiveImage());
                }
             }
          finally
@@ -186,21 +186,21 @@
 
                fileOperationView.Files = new string[1] { tempFileName };
 
-               Assert.IsNull(imageManagerController.GetActiveImageController());
+               Assert.IsNull(imageManagerController.GetActiveImage());
 
                fileOperationView.TriggerDragDropFileEvent(fileOperationView.Files);
 
-               Assert.IsNotNull(imageManagerController.GetActiveImageController());
+               Assert.IsNotNull(imageManagerController.GetActiveImage());
 
                fileOperationView.TriggerCloseFileEvent();
 
                fileOperationView.TriggerDragDropFileEvent(null);
 
-               Assert.IsNull(imageManagerController.GetActiveImageController(), "The image should not be loaded when Files is null.");
+               Assert.IsNull(imageManagerController.GetActiveImage(), "The image should not be loaded when Files is null.");
 
                fileOperationView.TriggerDragDropFileEvent(new string[] { "Dummy" });
 
-               Assert.IsNull(imageManagerController.GetActiveImageController(), "The image should not be loaded when Files is invalid.");
+               Assert.IsNull(imageManagerController.GetActiveImage(), "The image should not be loaded when Files is invalid.");
                }
             }
          finally

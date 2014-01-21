@@ -2,6 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
+   using System.ComponentModel;
    using System.Diagnostics;
    using System.Drawing;
    using System.Linq;
@@ -10,7 +11,7 @@
    using ImagingInterface.Plugins;
    using ImagingInterface.Views.EventArguments;
 
-   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationsView, IHelpOperationView
+   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationView, IHelpOperationView
       {
       private static bool checkSingleton = false;
 
@@ -23,6 +24,8 @@
 
          this.InitializeComponent();
          }
+
+      public event CancelEventHandler ApplicationClosing;
 
       public event EventHandler FileOpen;
 
@@ -63,6 +66,11 @@
       public void AddPluginManagerView(IPluginManagerView pluginManagerView)
          {
          this.mainSplitContainer.Panel2.Controls.Add(pluginManagerView as Control);
+         }
+
+      public new void Close()
+         {
+         base.Close();
          }
 
       private void PluginClick(object sender, EventArgs e)
@@ -128,7 +136,7 @@
 
       private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         Application.Exit();
+         base.Close();
          }
 
       private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -221,6 +229,18 @@
                splitContainer.IsSplitterFixed = false;
                }
             }
+         }
+
+      private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+         {
+         CancelEventArgs cancelEventArgs = new CancelEventArgs();
+
+         if (this.ApplicationClosing != null)
+            {
+            this.ApplicationClosing(this, cancelEventArgs);
+            }
+
+         e.Cancel = cancelEventArgs.Cancel;
          }
       }
    }

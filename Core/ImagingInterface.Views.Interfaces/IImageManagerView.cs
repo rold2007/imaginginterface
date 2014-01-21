@@ -10,10 +10,10 @@
 
    public interface IImageManagerView
       {
-      void AddImageView(IRawImageView imageView, IRawImageModel imageModel);
+      void AddImage(IRawImageView imageView, IRawImageModel imageModel);
 
       IRawImageView GetActiveImageView();
       
-      void RemoveImageView(IRawImageView imageView);
+      void RemoveImage(IRawImageView imageView);
       }
    }

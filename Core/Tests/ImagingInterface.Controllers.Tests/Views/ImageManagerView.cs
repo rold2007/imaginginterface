@@ -17,7 +17,7 @@
          this.allRawImageViews = new List<IRawImageView>();
          }
 
-      public void AddImageView(IRawImageView rawImageView, IRawImageModel rawImageModel)
+      public void AddImage(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
          this.allRawImageViews.Add(rawImageView);
          }
@@ -34,7 +34,7 @@
             }
          }
 
-      public void RemoveImageView(IRawImageView rawImageView)
+      public void RemoveImage(IRawImageView rawImageView)
          {
          this.allRawImageViews.Remove(rawImageView);
          }

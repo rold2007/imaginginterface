@@ -11,17 +11,54 @@
    public class PluginManagerController : IPluginManagerController
       {
       private IPluginManagerView pluginManagerView;
+      private Dictionary<IRawPluginView, IPluginController> pluginControllers;
 
       public PluginManagerController(IPluginManagerView pluginManagerView, IMainController mainController)
          {
          this.pluginManagerView = pluginManagerView;
+         this.pluginControllers = new Dictionary<IRawPluginView, IPluginController>();
 
-         mainController.AddPluginManagerView(this.pluginManagerView);
+         mainController.AddPluginManager(this, this.pluginManagerView);
          }
 
-      public void Add(IPluginController pluginController)
+      public void AddPlugin(IPluginController pluginController)
          {
-         this.pluginManagerView.AddPluginView(pluginController.RawPluginView, pluginController.RawPluginModel);
+         pluginController.Closed += this.PluginController_Closed;
+
+         this.pluginManagerView.AddPlugin(pluginController.RawPluginView, pluginController.RawPluginModel);
+         this.pluginControllers.Add(pluginController.RawPluginView, pluginController);
+         }
+
+      public IPluginController GetActivePlugin()
+         {
+         IRawPluginView activeRawPluginView = this.pluginManagerView.GetActivePlugin();
+
+         if (activeRawPluginView != null)
+            {
+            return this.pluginControllers[activeRawPluginView];
+            }
+         else
+            {
+            return null;
+            }
+         }
+
+      public IList<IPluginController> GetAllPlugins()
+         {
+         return this.pluginControllers.Values.ToList();
+         }
+
+      private void RemovePlugin(IPluginController pluginController)
+         {
+         pluginController.Closed -= this.PluginController_Closed;
+
+         this.pluginManagerView.RemovePlugin(pluginController.RawPluginView);
+         this.pluginControllers.Remove(pluginController.RawPluginView);
+         }
+
+      private void PluginController_Closed(object sender, EventArgs e)
+         {
+         this.RemovePlugin(sender as IPluginController);
          }
       }
    }

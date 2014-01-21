@@ -30,10 +30,11 @@
             foreach (string file in files)
                {
                IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
+               IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 
                if (imageController.LoadImage(file))
                   {
-                  imageController.Add();
+                  imageManagerController.AddImage(imageController);
                   }
                else
                   {
@@ -46,7 +47,7 @@
       private void FileClose(object sender, EventArgs e)
          {
          IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-         IImageController activeImageController = imageViewManagerController.GetActiveImageController();
+         IImageController activeImageController = imageViewManagerController.GetActiveImage();
 
          if (activeImageController != null)
             {
@@ -59,13 +60,13 @@
          IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
          IImageController activeImageController;
 
-         activeImageController = imageViewManagerController.GetActiveImageController();
+         activeImageController = imageViewManagerController.GetActiveImage();
 
          while (activeImageController != null)
             {
             activeImageController.Close();
 
-            activeImageController = imageViewManagerController.GetActiveImageController();
+            activeImageController = imageViewManagerController.GetActiveImage();
             }
 
          GC.Collect();
@@ -81,7 +82,9 @@
 
                if (imageController.LoadImage(file))
                   {
-                  imageController.Add();
+                  IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+
+                  imageManagerController.AddImage(imageController);
                   }
                else
                   {

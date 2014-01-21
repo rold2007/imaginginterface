@@ -35,7 +35,7 @@
          this.Dock = DockStyle.Fill;
          }
 
-      public void AddImageView(IRawImageView rawImageView, IRawImageModel rawImageModel)
+      public void AddImage(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
          TabPage tabPage = new TabPage(rawImageModel.DisplayName);
          ToolTip toolTip = new ToolTip();
@@ -74,7 +74,7 @@
             }
          }
 
-      public void RemoveImageView(IRawImageView rawImageView)
+      public void RemoveImage(IRawImageView rawImageView)
          {
          TabPage tabPage = this.rawImageViewTabPage[rawImageView];
          ToolTip toolTip = this.rawImageViewToolTip[rawImageView];

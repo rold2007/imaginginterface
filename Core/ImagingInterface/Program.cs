@@ -100,7 +100,7 @@
          container.RegisterSingle<IMainView>(Program.GetMainWindow);
          container.RegisterSingle<IFileOperationView>(Program.GetMainWindow);
          container.RegisterSingle<IImageManagerView>(Program.GetImageManagerView);
-         container.RegisterSingle<IPluginOperationsView>(Program.GetMainWindow);
+         container.RegisterSingle<IPluginOperationView>(Program.GetMainWindow);
          container.RegisterSingle<IPluginManagerView>(Program.GetPluginManagerView);
          container.RegisterSingle<IHelpOperationView>(Program.GetMainWindow);
          container.RegisterSingle<IAboutBoxView, AboutBoxView>();

@@ -23,21 +23,21 @@
          private set;
          }
 
-      public void AddPluginView(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel)
+      public void AddPlugin(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel)
          {
          this.RawPluginViews.Add(rawPluginView);
 
          this.activeRawPluginView = rawPluginView;
          }
 
-      public IRawPluginView GetActivePluginView()
+      public IRawPluginView GetActivePlugin()
          {
          return this.activeRawPluginView;
          }
 
-      public void RemovePluginView(IRawPluginView rawPluginView)
+      public void RemovePlugin(IRawPluginView rawPluginView)
          {
-         this.RawPluginViews.Add(rawPluginView);
+         this.RawPluginViews.Remove(rawPluginView);
 
          if (this.activeRawPluginView == rawPluginView)
             {

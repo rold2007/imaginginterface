@@ -48,11 +48,12 @@
          this.Container.RegisterSingle<IMainView, MainView>();
          this.Container.RegisterSingle<IFileOperationView, FileOperationView>();
          this.Container.RegisterSingle<IImageManagerView, ImageManagerView>();
-         this.Container.RegisterSingle<IPluginOperationsView, PluginOperationsView>();
+         this.Container.RegisterSingle<IPluginOperationView, PluginOperationsView>();
          this.Container.RegisterSingle<IPluginManagerView, PluginManagerView>();
          this.Container.RegisterSingle<IHelpOperationView, HelpOperationView>();
          this.Container.RegisterSingle<IAboutBoxView, AboutBoxView>();
          this.Container.Register<IImageView, ImageView>();
+         this.Container.Register<IPluginView, PluginView>();
 
          // Controllers
          this.Container.RegisterSingle<IMainController, MainController>();
@@ -63,6 +64,7 @@
          this.Container.RegisterSingle<IHelpOperationController, HelpOperationController>();
          this.Container.RegisterSingle<IAboutBoxController, AboutBoxController>();
          this.Container.Register<IImageController, ImageController>();
+         this.Container.Register<IImageSourceController, ImageSourceController>();
 
          // Models
          this.Container.RegisterSingle<IAboutBoxModel, AboutBoxModel>();

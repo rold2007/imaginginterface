@@ -9,6 +9,7 @@
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
+   using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views;
@@ -43,6 +44,26 @@
          }
 
       [Test]
+      public void Close()
+         {
+         this.Container.RegisterSingle<IInvertView, InvertView>();
+
+         InvertView invertView = this.ServiceLocator.GetInstance<IInvertView>() as InvertView;
+         IInvertController invertController = this.ServiceLocator.GetInstance<IInvertController>();
+         bool closingCalled = false;
+         bool closedCalled = false;
+
+         invertController.Closing += (sender, eventArgs) => { closingCalled = true; };
+         invertController.Closed += (sender, eventArgs) => { closedCalled = true; };
+
+         invertController.Close();
+
+         Assert.IsTrue(closingCalled);
+         Assert.IsTrue(closedCalled);
+         Assert.IsTrue(invertView.CloseCalled);
+         }
+
+      [Test]
       public void InvertView_Invert()
          {
          IInvertController invertController = this.ServiceLocator.GetInstance<IInvertController>();
@@ -56,7 +77,8 @@
          using (Image<Rgb, byte> image = new Image<Rgb, byte>(1, 1))
             {
             imageController.LoadImage(image.Data, string.Empty);
-            imageController.Add();
+
+            imageManagerController.AddImage(imageController);
 
             ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
 

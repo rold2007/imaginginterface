@@ -18,6 +18,8 @@
 
       public event EventHandler FileCloseAll;
 
+      public event EventHandler FileExit;
+
       public event EventHandler<DragDropEventArgs> DragDropFile;
 
       public string[] Files

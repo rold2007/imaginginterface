@@ -12,7 +12,7 @@
       {
       private IRawImageView activeRawImageView;
 
-      public void AddImageView(IRawImageView rawImageView, IRawImageModel rawImageModel)
+      public void AddImage(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
          this.activeRawImageView = rawImageView;
          }
@@ -22,7 +22,7 @@
          return this.activeRawImageView;
          }
 
-      public void RemoveImageView(IRawImageView rawImageView)
+      public void RemoveImage(IRawImageView rawImageView)
          {
          if (rawImageView == this.activeRawImageView)
             {

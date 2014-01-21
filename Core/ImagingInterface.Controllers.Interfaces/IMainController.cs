@@ -5,12 +5,13 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-      using ImagingInterface.Views;
+   using ImagingInterface.Controllers;
+   using ImagingInterface.Views;
 
    public interface IMainController
       {
-      void AddImageManagerView(IImageManagerView imageManagerView);
+      void AddImageManager(IImageManagerController imageManagerController, IImageManagerView imageManagerView);
 
-      void AddPluginManagerView(IPluginManagerView pluginManagerView);
+      void AddPluginManager(IPluginManagerController pluginManagerController, IPluginManagerView pluginManagerView);
       }
    }
