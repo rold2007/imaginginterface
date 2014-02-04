@@ -124,7 +124,7 @@
 
          Stopwatch stopwatch = Stopwatch.StartNew();
 
-         while (stopwatch.ElapsedMilliseconds < 1000 && imageSourceController.NextImageDataCalls == 0)
+         while (stopwatch.ElapsedMilliseconds < 1000 && imageView.AssignedImageModel == null)
             {
             Thread.Sleep(10);
             }
@@ -152,7 +152,7 @@
 
          Stopwatch stopwatch = Stopwatch.StartNew();
 
-         while (stopwatch.ElapsedMilliseconds < 1000 && imageSourceController.NextImageDataCalls == 0)
+         while (stopwatch.ElapsedMilliseconds < 1000 && imageView.AssignedImageModel == null)
             {
             Thread.Sleep(10);
             }
@@ -222,7 +222,7 @@
 
          Stopwatch stopwatch = Stopwatch.StartNew();
 
-         while (stopwatch.ElapsedMilliseconds < 1000 && imageSourceController.NextImageDataCalls == 0)
+         while (stopwatch.ElapsedMilliseconds < 1000 && imageView.AssignedImageModel == null)
             {
             Thread.Sleep(10);
             }
