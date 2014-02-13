@@ -143,10 +143,14 @@
          {
          SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
 
+         this.Container.RegisterSingle<IImageView, ImageView>();
+
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
          Assert.AreEqual(0, imageSourceController.NextImageDataCalls);
+         Assert.IsNull(imageView.AssignedImageModel);
 
          imageController.StartLiveUpdate(imageSourceController);
 
@@ -158,6 +162,7 @@
             }
 
          Assert.AreNotEqual(0, imageSourceController.NextImageDataCalls);
+         Assert.IsNotNull(imageView.AssignedImageModel);
 
          bool liveUpdateStopped = false;
 
