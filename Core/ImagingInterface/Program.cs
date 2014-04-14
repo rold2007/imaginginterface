@@ -90,7 +90,7 @@
 
          // Service
          Program.serviceLocator = new SimpleInjectorServiceLocatorAdapter(container);
-
+         
          container.RegisterSingle<IServiceLocator>(Program.serviceLocator);
 
          // Views

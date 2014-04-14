@@ -11,7 +11,6 @@
    using System.Threading.Tasks;
    using System.Windows.Forms;
    using ImagingInterface.Models;
-   using ImagingInterface.Plugins;
    using ImagingInterface.Views.EventArguments;
 
    public partial class ImageManagerView : UserControl, IImageManagerView

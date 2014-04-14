@@ -13,5 +13,22 @@
          get;
          set;
          }
+
+      public byte[,,] LastImageData
+         {
+         get;
+         set;
+         }
+
+      public bool LiveGrabRunning
+         {
+         get;
+         set;
+         }
+
+      public object Clone()
+         {
+         return this.MemberwiseClone();
+         }
       }
    }

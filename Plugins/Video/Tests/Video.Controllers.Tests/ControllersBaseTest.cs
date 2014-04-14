@@ -4,6 +4,7 @@
    using System.Collections.Generic;
    using System.Linq;
    using System.Text;
+   using System.Threading;
    using System.Threading.Tasks;
    using CommonServiceLocator.SimpleInjectorAdapter;
    using ImagingInterface.Controllers;
@@ -35,7 +36,14 @@
          }
 
       [SetUp]
-      protected void Bootstrap()
+      protected void SetUp()
+         {
+         this.InitializeSynchronizationContext();
+
+         this.Bootstrap();
+         }
+
+      private void Bootstrap()
          {
          ContainerOptions containerOptions = new ContainerOptions();
 
@@ -63,6 +71,11 @@
          // Models
          this.Container.Register<ICaptureModel, CaptureModel>();
          this.Container.Register<IImageModel, ImageModel>();
+         }
+
+      private void InitializeSynchronizationContext()
+         {
+         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
          }
       }
    }

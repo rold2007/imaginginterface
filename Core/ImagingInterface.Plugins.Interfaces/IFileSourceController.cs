@@ -1,15 +1,14 @@
-﻿namespace ImageProcessing.Models
+﻿namespace ImagingInterface.Plugins
    {
    using System;
    using System.Collections.Generic;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Plugins;
 
-   public interface IRotateModel : IRawPluginModel, ICloneable
+   public interface IFileSourceController : IImageSourceController
       {
-      double Angle
+      string Filename
          {
          get;
          set;

@@ -1,6 +1,7 @@
 ﻿namespace ImagingInterface.Controllers
    {
    using System;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
    using Microsoft.Practices.ServiceLocation;
@@ -29,17 +30,15 @@
             {
             foreach (string file in files)
                {
+               IFileSourceController fileSourceController = this.serviceLocator.GetInstance<IFileSourceController>();
                IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
                IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 
-               if (imageController.LoadImage(file))
-                  {
-                  imageManagerController.AddImage(imageController);
-                  }
-               else
-                  {
-                  imageController.Close();
-                  }
+               fileSourceController.Filename = file;
+
+               imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
+
+               imageManagerController.AddImage(imageController);
                }
             }
          }
@@ -78,18 +77,15 @@
             {
             foreach (string file in e.Data)
                {
+               IFileSourceController fileSourceController = this.serviceLocator.GetInstance<IFileSourceController>();
                IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
+               IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 
-               if (imageController.LoadImage(file))
-                  {
-                  IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+               fileSourceController.Filename = file;
 
-                  imageManagerController.AddImage(imageController);
-                  }
-               else
-                  {
-                  imageController.Close();
-                  }
+               imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
+
+               imageManagerController.AddImage(imageController);
                }
             }
          }

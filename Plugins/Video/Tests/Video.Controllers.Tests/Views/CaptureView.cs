@@ -9,8 +9,6 @@
 
    public class CaptureView : ICaptureView
       {
-      public event EventHandler Temp;
-
       public event EventHandler Start;
 
       public event EventHandler Stop;
@@ -39,6 +37,10 @@
          {
          this.AllowGrab = allowGrab;
          this.LiveGrabRunning = liveGrabRunning;
+         }
+
+      public void Hide()
+         {
          }
 
       public void Close()

@@ -1,28 +1,23 @@
-﻿namespace ImagingInterface.Models
+﻿namespace ImagingInterface.Plugins
    {
    using System;
    using System.Collections.Generic;
-   using System.Drawing;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
 
-   public interface IImageModel : IRawImageModel
+   public interface IFileSourceModel : IRawPluginModel
       {
-      byte[, ,] DisplayImageData
+      string Filename
          {
          get;
          set;
          }
 
-      System.Drawing.Size Size
+      byte[, ,] ImageData
          {
          get;
-         }
-
-      bool IsGrayscale
-         {
-         get;
+         set;
          }
       }
    }

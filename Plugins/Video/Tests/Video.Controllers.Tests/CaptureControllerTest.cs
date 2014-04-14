@@ -7,6 +7,7 @@
    using System.Threading;
    using System.Threading.Tasks;
    using ImagingInterface.Controllers;
+   using ImagingInterface.Plugins;
    using NUnit.Framework;
    using Video.Controllers.Tests.Views;
    using Video.Models;
@@ -15,12 +16,6 @@
    [TestFixture]
    public class CaptureControllerTest : ControllersBaseTest
       {
-      [SetUp]
-      public void SetUp()
-         {
-         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-         }
-
       [Test]
       public void Constructor()
          {
@@ -133,7 +128,7 @@
 
             IImageSourceController imageSourceController = captureController as IImageSourceController;
 
-            byte[,,] imageData = imageSourceController.NextImageData();
+            byte[,,] imageData = imageSourceController.NextImageData(null);
 
             Assert.IsNull(imageData);
             }
@@ -161,7 +156,7 @@
 
             IImageSourceController imageSourceController = captureController as IImageSourceController;
 
-            byte[,,] imageData = imageSourceController.NextImageData();
+            byte[,,] imageData = imageSourceController.NextImageData(null);
 
             Assert.IsNull(imageData);
 
@@ -169,10 +164,6 @@
             // If a bug is detected the test should be updated accordingly but note that it involves dealing
             // with multithreading...
             captureView.TriggerStart();
-
-            imageData = imageSourceController.NextImageData();
-
-            Assert.IsNotNull(imageData);
 
             captureView.TriggerStop();
 

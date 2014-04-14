@@ -3,6 +3,7 @@
    using System;
    using System.Collections.Generic;
    using System.ComponentModel;
+   using System.Diagnostics;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
@@ -13,10 +14,11 @@
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
+   using ImageProcessing.Views.EventArguments;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class RotateController : IRotateController
+   public class RotateController : IRotateController, IImageProcessingController
       {
       private static readonly string RotateDisplayName = "Rotate";
       private IRotateView rotateView;
@@ -63,21 +65,53 @@
             this.Closing(this, cancelEventArgs);
             }
 
-         this.rotateView.Close();
+         this.rotateView.Hide();
 
-         if (this.Closed != null)
+         if (!cancelEventArgs.Cancel)
             {
-            this.Closed(this, EventArgs.Empty);
+            this.rotateView.Close();
+
+            if (this.Closed != null)
+               {
+               this.Closed(this, EventArgs.Empty);
+               }
             }
          }
 
-      private void RotateView_Rotate(object sender, EventArgs e)
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
          {
-         IImageController imageController = this.imageManagerController.GetActiveImage();
+         IRotateModel rotateModel = rawPluginModel as IRotateModel;
 
-         using (Image<Rgb, byte> convertedImage = new Image<Rgb, byte>(imageController.ImageData), rotatedImage = convertedImage.Rotate(90.0, new Rgb()))
+         if (imageData.GetLength(2) == 1)
             {
-            imageController.UpdateImageData(rotatedImage.Data);
+            using (Image<Gray, byte> convertedImage = new Image<Gray, byte>(imageData), rotatedImage = convertedImage.Rotate(rotateModel.Angle, new Gray()))
+               {
+               return rotatedImage.Data;
+               }
+            }
+         else
+            {
+            Debug.Assert(imageData.GetLength(2) == 3);
+
+            using (Image<Bgr, byte> convertedImage = new Image<Bgr, byte>(imageData), rotatedImage = convertedImage.Rotate(rotateModel.Angle, new Bgr()))
+               {
+               return rotatedImage.Data;
+               }
+            }
+         }
+
+      private void RotateView_Rotate(object sender, RotateEventArgs e)
+         {
+         if (this.rotateModel.Angle != e.Angle)
+            {
+            this.rotateModel.Angle = e.Angle;
+
+            IImageController imageController = this.imageManagerController.GetActiveImage();
+
+            if (imageController != null)
+               {
+               imageController.AddImageProcessingController(this, this, this.rotateModel.Clone() as IRawPluginModel);
+               }
             }
          }
       }

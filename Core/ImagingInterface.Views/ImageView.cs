@@ -24,10 +24,13 @@
       public void AssignImageModel(IImageModel imageModel)
          {
          this.imageModel = imageModel;
+         }
 
-         if (imageModel.ImageData != null)
+      public void UpdateDisplay()
+         {
+         if (this.imageModel.DisplayImageData != null)
             {
-            this.glControl.Size = imageModel.Size;
+            this.glControl.Size = this.imageModel.Size;
 
             // Force reset of GLControl when assigning new image
             this.glControlInitialized = false;
@@ -59,6 +62,8 @@
 
       private void InitializeGLControl()
          {
+         Debug.Assert(!this.InvokeRequired, "This should always be called from the Main UI Thread.");
+
          if (this.glControlLoaded)
             {
             if (!this.glControlInitialized)
@@ -88,11 +93,11 @@
 
                if (this.imageModel.IsGrayscale)
                   {
-                  GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.ImageData);
+                  GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
                   }
                else
                   {
-                  GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.ImageData);
+                  GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
                   }
                }
 

@@ -6,9 +6,10 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
+   using ImageProcessing.Views.EventArguments;
 
    public interface IRotateView : IPluginView
       {
-      event EventHandler Rotate;
+      event EventHandler<RotateEventArgs> Rotate;
       }
    }

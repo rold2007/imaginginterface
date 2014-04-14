@@ -14,6 +14,7 @@
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
    using NUnit.Framework;
@@ -46,21 +47,23 @@
                image.Save(tempFileName);
 
                Assert.IsNullOrEmpty(imageModel.DisplayName);
-               Assert.IsNull(imageModel.ImageData);
+               Assert.IsNull(imageModel.DisplayImageData);
 
                ImageController imageController = this.Container.GetInstance<ImageController>();
+               IFileSourceController fileSourceController = this.Container.GetInstance<IFileSourceController>();
 
-               bool loadResult = imageController.LoadImage(tempFileName);
+               fileSourceController.Filename = tempFileName;
 
-               Assert.IsTrue(loadResult);
+               imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
+
                Assert.IsNotNullOrEmpty(imageModel.DisplayName);
-               Assert.IsNotNull(imageModel.ImageData);
+               Assert.IsNotNull(imageModel.DisplayImageData);
                Assert.AreSame(imageModel, imageView.AssignedImageModel);
 
                imageController.Close();
 
-               // imageModel.Image is set to null when imageController is closed
-               Assert.IsNull(imageModel.ImageData);
+               // imageModel.DisplayImageData is set to null when imageController is closed
+               Assert.IsNull(imageModel.DisplayImageData);
                }
             }
          finally
@@ -84,15 +87,17 @@
             tempFileName = Path.GetTempFileName();
 
             Assert.IsNullOrEmpty(imageModel.DisplayName);
-            Assert.IsNull(imageModel.ImageData);
+            Assert.IsNull(imageModel.DisplayImageData);
 
             IImageController imageController = this.Container.GetInstance<IImageController>();
+            IFileSourceController fileSourceController = this.Container.GetInstance<IFileSourceController>();
 
-            bool loadResult = imageController.LoadImage(tempFileName);
+            fileSourceController.Filename = tempFileName;
 
-            Assert.IsFalse(loadResult);
+            imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
+
             Assert.IsNullOrEmpty(imageModel.DisplayName);
-            Assert.IsNull(imageModel.ImageData);
+            Assert.IsNull(imageModel.DisplayImageData);
             Assert.IsNull(imageView.AssignedImageModel);
             }
          finally
@@ -107,8 +112,6 @@
       [Test]
       public void StartLiveUpdate()
          {
-         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-
          this.Container.RegisterSingle<IImageView, ImageView>();
          this.Container.RegisterSingle<IImageModel, ImageModel>();
 
@@ -117,92 +120,93 @@
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
-         Assert.AreEqual(0, imageSourceController.NextImageDataCalls);
-         Assert.IsNull(imageView.AssignedImageModel);
-
-         imageController.StartLiveUpdate(imageSourceController);
-
-         Stopwatch stopwatch = Stopwatch.StartNew();
-
-         while (stopwatch.ElapsedMilliseconds < 1000 && imageView.AssignedImageModel == null)
-            {
-            Thread.Sleep(10);
-            }
-
-         Assert.AreNotEqual(0, imageSourceController.NextImageDataCalls);
          Assert.IsNotNull(imageView.AssignedImageModel);
+
+         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+         imageController.StartLiveUpdate();
+
+         imageView.WaitForDisplayUpdate();
+
+         Assert.IsNotNull(imageView.AssignedImageModel);
+         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
 
          // Make sure a Start after Stop doesn't throw any exception
          imageController.StopLiveUpdate();
-         imageController.StartLiveUpdate(imageSourceController);
+         imageController.StartLiveUpdate();
          imageController.StopLiveUpdate();
          }
 
       [Test]
       public void StopLiveUpdate()
          {
-         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-
          this.Container.RegisterSingle<IImageView, ImageView>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
-         Assert.AreEqual(0, imageSourceController.NextImageDataCalls);
-         Assert.IsNull(imageView.AssignedImageModel);
-
-         imageController.StartLiveUpdate(imageSourceController);
-
-         Stopwatch stopwatch = Stopwatch.StartNew();
-
-         while (stopwatch.ElapsedMilliseconds < 1000 && imageView.AssignedImageModel == null)
-            {
-            Thread.Sleep(10);
-            }
-
-         Assert.AreNotEqual(0, imageSourceController.NextImageDataCalls);
          Assert.IsNotNull(imageView.AssignedImageModel);
 
-         bool liveUpdateStopped = false;
+         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-         imageController.LiveUpdateStopped += (sender, eventArgs) => { liveUpdateStopped = true; };
+         imageController.StartLiveUpdate();
+
+         imageView.WaitForDisplayUpdate();
+
+         Assert.IsNotNull(imageView.AssignedImageModel);
+         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+
+         AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+
+         imageController.LiveUpdateStopped += (sender, eventArgs) => { autoResetEvent.Set(); };
 
          imageController.StopLiveUpdate();
 
-         stopwatch = Stopwatch.StartNew();
-
-         while (stopwatch.ElapsedMilliseconds < 1000 && !liveUpdateStopped)
+         while (!autoResetEvent.WaitOne(10))
             {
-            Thread.Sleep(10);
             }
 
-         Assert.IsTrue(liveUpdateStopped);
-
-         int nextImageDataCalls = imageSourceController.NextImageDataCalls;
+         imageView.DisplayUpdated = false;
 
          Thread.Sleep(500);
 
-         Assert.AreEqual(nextImageDataCalls, imageSourceController.NextImageDataCalls);
+         // There should not be any update once the live update is stopped
+         Assert.IsFalse(imageView.DisplayUpdated);
          }
 
       [Test]
       public void IsGrayscale()
          {
          this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingle<IImageView, ImageView>();
 
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
-         imageController.LoadImage(new byte[1, 1, 1], "Dummy");
+         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+         Stopwatch stopwatch = Stopwatch.StartNew();
+
+         imageView.WaitForDisplayUpdate();
 
          Assert.IsTrue(imageModel.IsGrayscale);
 
-         imageController.LoadImage(new byte[1, 1, 3], "Dummy");
+         imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+         imageSourceController.ImageData = new byte[1, 1, 3];
+         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+         imageView.WaitForDisplayUpdate();
 
          Assert.IsFalse(imageModel.IsGrayscale);
 
-         imageController.LoadImage(new byte[1, 1, 4], "Dummy");
+         imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+         imageSourceController.ImageData = new byte[1, 1, 4];
+         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+         imageView.WaitForDisplayUpdate();
 
          Assert.IsFalse(imageModel.IsGrayscale);
          }
@@ -210,8 +214,6 @@
       [Test]
       public void CloseWhileStartLiveUpdate()
          {
-         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-
          this.Container.RegisterSingle<IImageView, ImageView>();
          this.Container.RegisterSingle<IImageModel, ImageModel>();
 
@@ -220,20 +222,16 @@
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
          IImageController imageController = this.Container.GetInstance<IImageController>();
 
-         Assert.AreEqual(0, imageSourceController.NextImageDataCalls);
-         Assert.IsNull(imageView.AssignedImageModel);
-
-         imageController.StartLiveUpdate(imageSourceController);
-
-         Stopwatch stopwatch = Stopwatch.StartNew();
-
-         while (stopwatch.ElapsedMilliseconds < 1000 && imageView.AssignedImageModel == null)
-            {
-            Thread.Sleep(10);
-            }
-
-         Assert.AreNotEqual(0, imageSourceController.NextImageDataCalls);
          Assert.IsNotNull(imageView.AssignedImageModel);
+
+         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+         imageController.StartLiveUpdate();
+
+         imageView.WaitForDisplayUpdate();
+
+         Assert.IsNotNull(imageView.AssignedImageModel);
+         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
 
          imageController.Closing += this.ImageController_Closing;
 

@@ -18,7 +18,7 @@
          set;
          }
 
-      public byte[,,] ImageData
+      public byte[, ,] DisplayImageData
          {
          get;
          set;
@@ -28,7 +28,7 @@
          {
          get
             {
-            return new System.Drawing.Size(this.ImageData.GetLength(1), this.ImageData.GetLength(0));
+            return new System.Drawing.Size(this.DisplayImageData.GetLength(1), this.DisplayImageData.GetLength(0));
             }
          }
 
@@ -36,7 +36,7 @@
          {
          get
             {
-            return this.ImageData.GetLength(2) == 1;
+            return this.DisplayImageData.GetLength(2) == 1;
             }
          }
       }

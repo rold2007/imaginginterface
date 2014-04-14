@@ -8,7 +8,6 @@
    using System.Linq;
    using System.Windows.Forms;
    using ImagingInterface.Models;
-   using ImagingInterface.Plugins;
    using ImagingInterface.Views.EventArguments;
 
    public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationView, IHelpOperationView
