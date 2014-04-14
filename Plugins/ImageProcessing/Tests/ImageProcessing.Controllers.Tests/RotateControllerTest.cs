@@ -71,22 +71,23 @@
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
          IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
          IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
+         IImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>();
 
          Assert.IsNotNull(rotateView);
 
          using (Image<Rgb, byte> image = new Image<Rgb, byte>(1, 1))
             {
-            imageController.LoadImage(image.Data, string.Empty);
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
             imageManagerController.AddImage(imageController);
 
             ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
 
-            imageView.AssignedImageModel = null;
+            imageView.WaitForDisplayUpdate();
 
             rotateView.TriggerRotate();
 
-            Assert.IsNotNull(imageView.AssignedImageModel);
+            imageView.WaitForDisplayUpdate();
             }
          }
       }

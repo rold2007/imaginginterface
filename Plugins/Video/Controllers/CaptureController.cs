@@ -23,9 +23,9 @@
       private IServiceLocator serviceLocator;
       private ICaptureWrapper captureWrapper;
       private IImageController liveGrabImageController;
-      private bool liveGrabRunning;
       private bool closeImageControllerAfterLiveUpdate;
       private bool closeCaptureControllerAfterLiveUpdate;
+      private ICaptureModel liveGrabCaptureModel;
 
       public CaptureController(ICaptureView captureView, ICaptureModel captureModel, IServiceLocator serviceLocator, ICaptureWrapper captureWrapper)
          {
@@ -85,7 +85,7 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            if (this.liveGrabRunning)
+            if (this.liveGrabCaptureModel != null)
                {
                this.closeCaptureControllerAfterLiveUpdate = true;
                this.StopLiveGrab();
@@ -105,14 +105,40 @@
             }
          }
 
-      public byte[,,] NextImageData()
+      public string DisplayName(IRawPluginModel rawPluginModel)
          {
-         if (this.captureWrapper.CaptureAllocated)
+         ICaptureModel captureModel = rawPluginModel as ICaptureModel;
+
+         if (captureModel.LiveGrabRunning)
             {
-            using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+            return "LiveGrab";
+            }
+         else
+            {
+            return "SnapShot";
+            }
+         }
+
+      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+         {
+         if (rawPluginModel != null)
+            {
+            ICaptureModel captureModel = rawPluginModel as ICaptureModel;
+
+            Debug.Assert(captureModel != null, "Something went wrong with the cast.");
+
+            if (captureModel.LiveGrabRunning)
                {
-               return image.Data;
+               Debug.Assert(this.captureWrapper.CaptureAllocated, "The capture should have been allocated before launching NextImageData. This is done by calling the Grab() method.");
+
+               using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+                  {
+                  // Keep a copy of the last grabbed image to give it when when the grab is stopped and an image processing is applied
+                  captureModel.LastImageData = image.Data;
+                  }
                }
+
+            return captureModel.LastImageData;
             }
          else
             {
@@ -134,9 +160,11 @@
 
       private void CaptureView_Start(object sender, EventArgs e)
          {
-         if (!this.liveGrabRunning)
+         if (this.liveGrabCaptureModel == null)
             {
-            this.liveGrabRunning = true;
+            this.liveGrabCaptureModel = this.captureModel.Clone() as ICaptureModel;
+
+            this.liveGrabCaptureModel.LiveGrabRunning = true;
 
             this.captureView.UpdateLiveGrabStatus(false, true);
 
@@ -148,21 +176,21 @@
                   {
                   this.liveGrabImageController = this.serviceLocator.GetInstance<IImageController>();
 
-                  this.liveGrabImageController.LoadImage(new byte[this.captureWrapper.Height, this.captureWrapper.Width, 1], "LiveGrab");
-
-                  IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-
                   this.liveGrabImageController.Closing += this.LiveGrabImageController_Closing;
                   this.liveGrabImageController.Closed += this.LiveGrabImageController_Closed;
                   this.liveGrabImageController.LiveUpdateStopped += this.LiveGrabImageController_LiveUpdateStopped;
 
+                  this.liveGrabImageController.InitializeImageSourceController(this, this.liveGrabCaptureModel);
+
+                  IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+
                   imageManagerController.AddImage(this.liveGrabImageController);
 
-                  this.liveGrabImageController.StartLiveUpdate(this);
+                  this.liveGrabImageController.StartLiveUpdate();
                   }
                else
                   {
-                  this.liveGrabImageController.StartLiveUpdate(this);
+                  this.liveGrabImageController.StartLiveUpdate();
                   }
                }
             }
@@ -174,7 +202,7 @@
 
       private void LiveGrabImageController_Closing(object sender, CancelEventArgs e)
          {
-         if (this.liveGrabRunning)
+         if (this.liveGrabCaptureModel != null)
             {
             this.closeImageControllerAfterLiveUpdate = true;
 
@@ -195,7 +223,7 @@
 
       private void LiveGrabImageController_LiveUpdateStopped(object sender, EventArgs e)
          {
-         this.liveGrabRunning = false;
+         this.liveGrabCaptureModel = null;
 
          if (this.closeImageControllerAfterLiveUpdate)
             {
@@ -226,7 +254,7 @@
 
       private void StopLiveGrab()
          {
-         if (this.liveGrabRunning)
+         if (this.liveGrabCaptureModel != null)
             {
             this.captureView.UpdateLiveGrabStatus(false, false);
 
@@ -248,7 +276,12 @@
                {
                IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
 
-               imageController.LoadImage(image.Data, "SnapShot");
+               ICaptureModel captureModel = this.captureModel.Clone() as ICaptureModel;
+
+               captureModel.LiveGrabRunning = false;
+               captureModel.LastImageData = image.Data;
+
+               imageController.InitializeImageSourceController(this, captureModel);
 
                IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 

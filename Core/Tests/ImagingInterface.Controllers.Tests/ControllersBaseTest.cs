@@ -4,6 +4,7 @@
    using System.Collections.Generic;
    using System.Linq;
    using System.Text;
+   using System.Threading;
    using System.Threading.Tasks;
    using CommonServiceLocator.SimpleInjectorAdapter;
    using ImagingInterface.Controllers.Tests.Mocks;
@@ -32,7 +33,14 @@
          }
 
       [SetUp]
-      protected void Bootstrap()
+      protected void SetUp()
+         {
+         this.InitializeSynchronizationContext();
+
+         this.Bootstrap();
+         }
+
+      private void Bootstrap()
          {
          ContainerOptions containerOptions = new ContainerOptions();
 
@@ -65,13 +73,20 @@
          this.Container.RegisterSingle<IAboutBoxController, AboutBoxController>();
          this.Container.Register<IImageController, ImageController>();
          this.Container.Register<IImageSourceController, ImageSourceController>();
+         this.Container.Register<IFileSourceController, FileSourceController>();
 
          // Models
          this.Container.RegisterSingle<IAboutBoxModel, AboutBoxModel>();
          this.Container.Register<IImageModel, ImageModel>();
+         this.Container.Register<IFileSourceModel, FileSourceModel>();
 
          // Plugins
          this.Container.RegisterAll<IPluginController>(new Type[] { typeof(PluginController1), typeof(PluginController2) });
+         }
+
+      private void InitializeSynchronizationContext()
+         {
+         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
          }
       }
    }

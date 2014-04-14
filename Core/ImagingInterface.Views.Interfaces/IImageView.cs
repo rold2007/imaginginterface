@@ -11,6 +11,10 @@
       {
       void AssignImageModel(IImageModel imageModel);
 
+      void UpdateDisplay();
+
+      void Hide();
+
       void Close();
       }
    }

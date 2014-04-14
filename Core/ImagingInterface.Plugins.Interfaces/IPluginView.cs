@@ -8,6 +8,8 @@
 
    public interface IPluginView : IRawPluginView
       {
+      void Hide();
+
       void Close();
       }
    }

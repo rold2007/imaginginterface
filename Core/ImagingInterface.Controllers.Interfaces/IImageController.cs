@@ -7,6 +7,7 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Views;
 
    public interface IImageController
@@ -27,26 +28,19 @@
          get;
          }
 
-      byte[,,] ImageData
-         {
-         get;
-         }
-
       bool CanLiveUpdate
          {
          get;
          }
 
-      void LoadImage(byte[,,] imageData, string displayName);
-
-      bool LoadImage(string file);
-
-      void UpdateImageData(byte[,,] imageData);
+      void InitializeImageSourceController(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel);
 
       void Close();
 
-      void StartLiveUpdate(IImageSourceController imageSourceController);
+      void StartLiveUpdate();
 
       void StopLiveUpdate();
+
+      void AddImageProcessingController(IPluginController pluginController, IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel);
       }
    }

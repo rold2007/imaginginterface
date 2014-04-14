@@ -25,6 +25,10 @@
             }
          }
 
+      public void Hide()
+         {
+         }
+
       public void Close()
          {
          this.CloseCalled = true;

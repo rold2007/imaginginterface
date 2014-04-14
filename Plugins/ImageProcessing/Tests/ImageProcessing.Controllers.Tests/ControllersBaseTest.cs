@@ -4,14 +4,17 @@
    using System.Collections.Generic;
    using System.Linq;
    using System.Text;
+   using System.Threading;
    using System.Threading.Tasks;
    using CommonServiceLocator.SimpleInjectorAdapter;
    using ImageProcessing.Controllers;
+   using ImageProcessing.Controllers.Tests.Mocks;
    using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
@@ -32,8 +35,15 @@
             return this.Container.GetInstance<IServiceLocator>();
             }
          }
-
+      
       [SetUp]
+      protected void SetUp()
+         {
+         this.InitializeSynchronizationContext();
+
+         this.Bootstrap();
+         }
+
       protected void Bootstrap()
          {
          ContainerOptions containerOptions = new ContainerOptions();
@@ -59,11 +69,17 @@
          this.Container.Register<IInvertController, InvertController>();
          this.Container.Register<IRotateController, RotateController>();
          this.Container.Register<IImageController, ImageController>();
+         this.Container.Register<IImageSourceController, ImageSourceController>();
 
          // Models
          this.Container.Register<IInvertModel, InvertModel>();
          this.Container.Register<IRotateModel, RotateModel>();
          this.Container.Register<IImageModel, ImageModel>();
+         }
+
+      private void InitializeSynchronizationContext()
+         {
+         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
          }
       }
    }

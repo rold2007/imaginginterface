@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Controllers.Tests.Mocks
+﻿namespace ImageProcessing.Controllers.Tests.Mocks
    {
    using System;
    using System.Collections.Generic;

@@ -76,6 +76,9 @@
       <HintPath>..\..\..\Libs\Emgu.Util.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Magick.NET-x86">
+      <HintPath>..\..\..\..\..\..\..\..\Documents\Data\Programmation\Projets\ImagingInterface\Libs\Magick.NET-x86.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>False</Private>
@@ -90,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSourceController.cs" />
     <Compile Include="InvertController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateController.cs" />

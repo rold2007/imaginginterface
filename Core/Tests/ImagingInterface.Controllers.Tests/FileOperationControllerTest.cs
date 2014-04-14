@@ -5,11 +5,14 @@
    using System.IO;
    using System.Linq;
    using System.Text;
+   using System.Threading;
    using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
    using NUnit.Framework;
@@ -32,48 +35,49 @@
       [Test]
       public void FileOpen()
          {
+         this.Container.RegisterSingle<IImageView, ImageView>();
+         this.Container.RegisterSingle<IFileSourceModel, FileSourceModel>();
+
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          FileOperationView fileOperationView = this.ServiceLocator.GetInstance<IFileOperationView>() as FileOperationView;
          FileOperationController fileOperationController = this.ServiceLocator.GetInstance<IFileOperationController>() as FileOperationController;
-         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>() as ImageManagerController;
+         ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>() as ImageManagerController;
+         FileSourceModel fileSourceModel = this.Container.GetInstance<IFileSourceModel>() as FileSourceModel;
 
-         string tempFileName = string.Empty;
+         fileOperationView.Files = new string[1] { "ValidFile" };
 
-         try
-            {
-            tempFileName = Path.GetRandomFileName() + ".png";
+         Assert.IsNull(imageView.AssignedImageModel);
+         Assert.IsNull(imageManagerController.GetActiveImage());
 
-            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
-               {
-               image.Save(tempFileName);
+         fileSourceModel.ImageData = new byte[1, 1, 1];
+         fileOperationView.TriggerOpenFileEvent();
 
-               fileOperationView.Files = new string[1] { tempFileName };
+         imageView.WaitForDisplayUpdate();
 
-               Assert.IsNull(imageViewManagerController.GetActiveImage());
+         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+         Assert.IsNotNull(imageManagerController.GetActiveImage());
 
-               fileOperationView.TriggerOpenFileEvent();
+         fileOperationView.TriggerCloseFileEvent();
 
-               Assert.IsNotNull(imageViewManagerController.GetActiveImage());
+         fileOperationView.Files = null;
+         fileSourceModel.ImageData = null;
+         fileOperationView.TriggerOpenFileEvent();
 
-               fileOperationView.TriggerCloseFileEvent();
-               fileOperationView.Files = null;
-               fileOperationView.TriggerOpenFileEvent();
+         // Do not call imageView.WaitForDisplayUpdate() as the open will do nothing with null files
+         Assert.IsNull(imageView.AssignedImageModel.DisplayImageData, "The array should still be null because no update was really done");
+         Assert.IsNull(imageManagerController.GetActiveImage(), "The image should not be loaded when Files is null.");
 
-               Assert.IsNull(imageViewManagerController.GetActiveImage(), "The image should not be loaded when Files is null.");
+         // Simulate an existing file that is not a valid image file
+         fileOperationView.Files = new string[1] { "Dummy" };
+         fileSourceModel.ImageData = null;
+         fileOperationView.TriggerOpenFileEvent();
 
-               fileOperationView.Files = new string[1] { "Dummy" };
+         imageView.WaitForDisplayUpdate();
 
-               fileOperationView.TriggerOpenFileEvent();
+         Assert.IsNull(imageView.AssignedImageModel.DisplayImageData, "An invalid file will return a null data array");
+         Assert.IsNotNull(imageManagerController.GetActiveImage(), "The image should still be opened but empty");
 
-               Assert.IsNull(imageViewManagerController.GetActiveImage(), "The image should not be loaded when Files is invalid.");
-               }
-            }
-         finally
-            {
-            if (!string.IsNullOrEmpty(tempFileName))
-               {
-               File.Delete(tempFileName);
-               }
-            }
+         fileOperationView.TriggerCloseFileEvent();
          }
 
       [Test]
@@ -83,48 +87,29 @@
          IFileOperationController fileOperationController = this.Container.GetInstance<IFileOperationController>();
          FileOperationView fileOperationView = this.Container.GetInstance<IFileOperationView>() as FileOperationView;
 
-         string tempFileName = string.Empty;
+         fileOperationView.Files = new string[2] { "ValidFile1", "ValidFile2" };
 
-         try
-            {
-            tempFileName = Path.GetRandomFileName() + ".png";
+         // Make sure closing without any open file doesn't crash
+         fileOperationView.TriggerCloseFileEvent();
 
-            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
-               {
-               image.Save(tempFileName);
+         fileOperationView.TriggerOpenFileEvent();
 
-               fileOperationView.Files = new string[2] { tempFileName, tempFileName };
+         IImageController activeImageControllerToClose = imageManagerController.GetActiveImage();
 
-               // Make sure closing without any open file doesn't crash
-               fileOperationView.TriggerCloseFileEvent();
+         // CloseFile should close the active image controller
+         fileOperationView.TriggerCloseFileEvent();
 
-               fileOperationView.TriggerOpenFileEvent();
+         // Make sure there is still an active image controller
+         Assert.IsNotNull(imageManagerController.GetActiveImage());
 
-               IImageController activeImageControllerToClose = imageManagerController.GetActiveImage();
+         // Make sure the previously active image controller isn't active anymore
+         Assert.AreNotSame(activeImageControllerToClose, imageManagerController.GetActiveImage());
 
-               // CloseFile should close the active image controller
-               fileOperationView.TriggerCloseFileEvent();
+         // Close the remaining image controller
+         fileOperationView.TriggerCloseFileEvent();
 
-               // Make sure there is still an active image controller
-               Assert.IsNotNull(imageManagerController.GetActiveImage());
-
-               // Make sure the previously active image controller isn't active anymore
-               Assert.AreNotSame(activeImageControllerToClose, imageManagerController.GetActiveImage());
-
-               // Close the remaining image controller
-               fileOperationView.TriggerCloseFileEvent();
-
-               // There should be no more open image controller
-               Assert.IsNull(imageManagerController.GetActiveImage());
-               }
-            }
-         finally
-            {
-            if (!string.IsNullOrEmpty(tempFileName))
-               {
-               File.Delete(tempFileName);
-               }
-            }
+         // There should be no more open image controller
+         Assert.IsNull(imageManagerController.GetActiveImage());
          }
 
       [Test]
@@ -134,82 +119,63 @@
          IFileOperationController fileOperationController = this.Container.GetInstance<IFileOperationController>();
          FileOperationView fileOperationView = this.Container.GetInstance<IFileOperationView>() as FileOperationView;
 
-         string tempFileName = string.Empty;
+         fileOperationView.Files = new string[2] { "ValidFile1", "ValidFile2" };
 
-         try
-            {
-            tempFileName = Path.GetRandomFileName() + ".png";
+         // Make sure closing without any open file doesn't crash
+         fileOperationView.TriggerCloseAllFileEvent();
 
-            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
-               {
-               image.Save(tempFileName);
+         fileOperationView.TriggerOpenFileEvent();
 
-               fileOperationView.Files = new string[2] { tempFileName, tempFileName };
+         Assert.IsNotNull(imageManagerController.GetActiveImage());
 
-               // Make sure closing without any open file doesn't crash
-               fileOperationView.TriggerCloseAllFileEvent();
+         fileOperationView.TriggerCloseAllFileEvent();
 
-               fileOperationView.TriggerOpenFileEvent();
-
-               Assert.IsNotNull(imageManagerController.GetActiveImage());
-
-               fileOperationView.TriggerCloseAllFileEvent();
-
-               Assert.IsNull(imageManagerController.GetActiveImage());
-               }
-            }
-         finally
-            {
-            if (!string.IsNullOrEmpty(tempFileName))
-               {
-               File.Delete(tempFileName);
-               }
-            }
+         Assert.IsNull(imageManagerController.GetActiveImage());
          }
 
       [Test]
       public void DragDrop()
          {
+         this.Container.RegisterSingle<IImageView, ImageView>();
+         this.Container.RegisterSingle<IFileSourceModel, FileSourceModel>();
+
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageManagerController imageManagerController = this.Container.GetInstance<IImageManagerController>();
          IFileOperationController fileOperationController = this.Container.GetInstance<IFileOperationController>();
          FileOperationView fileOperationView = this.Container.GetInstance<IFileOperationView>() as FileOperationView;
+         FileSourceModel fileSourceModel = this.Container.GetInstance<IFileSourceModel>() as FileSourceModel;
 
-         string tempFileName = string.Empty;
+         fileOperationView.Files = new string[1] { "ValidFile" };
 
-         try
-            {
-            tempFileName = Path.GetRandomFileName() + ".png";
+         Assert.IsNull(imageView.AssignedImageModel);
+         Assert.IsNull(imageManagerController.GetActiveImage());
 
-            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
-               {
-               image.Save(tempFileName);
+         fileSourceModel.ImageData = new byte[1, 1, 1];
+         fileOperationView.TriggerDragDropFileEvent(fileOperationView.Files);
 
-               fileOperationView.Files = new string[1] { tempFileName };
+         imageView.WaitForDisplayUpdate();
 
-               Assert.IsNull(imageManagerController.GetActiveImage());
+         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+         Assert.IsNotNull(imageManagerController.GetActiveImage());
 
-               fileOperationView.TriggerDragDropFileEvent(fileOperationView.Files);
+         fileOperationView.TriggerCloseFileEvent();
 
-               Assert.IsNotNull(imageManagerController.GetActiveImage());
+         fileOperationView.TriggerDragDropFileEvent(null);
 
-               fileOperationView.TriggerCloseFileEvent();
+         // Do not call imageView.WaitForDisplayUpdate() as the open will do nothing with null files
+         Assert.IsNull(imageView.AssignedImageModel.DisplayImageData, "The array should still be null because no update was really done");
+         Assert.IsNull(imageManagerController.GetActiveImage(), "With a null Files no image should get opened");
 
-               fileOperationView.TriggerDragDropFileEvent(null);
+         // Simulate an existing file that is not a valid image file
+         fileSourceModel.ImageData = null;
+         fileOperationView.TriggerDragDropFileEvent(new string[] { "Dummy" });
 
-               Assert.IsNull(imageManagerController.GetActiveImage(), "The image should not be loaded when Files is null.");
+         imageView.WaitForDisplayUpdate();
 
-               fileOperationView.TriggerDragDropFileEvent(new string[] { "Dummy" });
+         Assert.IsNull(imageView.AssignedImageModel.DisplayImageData, "An invalid file will return a null data array");
+         Assert.IsNotNull(imageManagerController.GetActiveImage(), "The image should still be opened but empty");
 
-               Assert.IsNull(imageManagerController.GetActiveImage(), "The image should not be loaded when Files is invalid.");
-               }
-            }
-         finally
-            {
-            if (!string.IsNullOrEmpty(tempFileName))
-               {
-               File.Delete(tempFileName);
-               }
-            }
+         fileOperationView.TriggerCloseFileEvent();
          }
       }
    }

@@ -6,10 +6,11 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImageProcessing.Views;
+   using ImageProcessing.Views.EventArguments;
 
    public class RotateView : IRotateView
       {
-      public event EventHandler Rotate;
+      public event EventHandler<RotateEventArgs> Rotate;
 
       public bool CloseCalled
          {
@@ -21,8 +22,12 @@
          {
          if (this.Rotate != null)
             {
-            this.Rotate(this, EventArgs.Empty);
+            this.Rotate(this, new RotateEventArgs(42.54));
             }
+         }
+
+      public void Hide()
+         {
          }
 
       public void Close()

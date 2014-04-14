@@ -19,7 +19,7 @@
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class InvertController : IInvertController
+   public class InvertController : IInvertController, IImageProcessingController
       {
       private static readonly string InvertDisplayName = "Invert";
       private IInvertView invertView;
@@ -66,11 +66,40 @@
             this.Closing(this, cancelEventArgs);
             }
 
-         this.invertView.Close();
+         this.invertView.Hide();
 
-         if (this.Closed != null)
+         if (!cancelEventArgs.Cancel)
             {
-            this.Closed(this, EventArgs.Empty);
+            this.invertView.Close();
+
+            if (this.Closed != null)
+               {
+               this.Closed(this, EventArgs.Empty);
+               }
+            }
+         }
+
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
+         {
+         if (imageData.GetLength(2) == 1)
+            {
+            using (Image<Gray, byte> invertedImage = new Image<Gray, byte>(imageData))
+               {
+               invertedImage._Not();
+
+               return invertedImage.Data;
+               }
+            }
+         else
+            {
+            Debug.Assert(imageData.GetLength(2) == 3);
+
+            using (Image<Bgr, byte> invertedImage = new Image<Bgr, byte>(imageData))
+               {
+               invertedImage._Not();
+
+               return invertedImage.Data;
+               }
             }
          }
 
@@ -80,15 +109,7 @@
 
          if (imageController != null)
             {
-            if (imageController.ImageData != null)
-               {
-               using (Image<Rgb, byte> invertedImage = new Image<Rgb, byte>(imageController.ImageData))
-                  {
-                  invertedImage._Not();
-
-                  imageController.UpdateImageData(invertedImage.Data);
-                  }
-               }
+            imageController.AddImageProcessingController(this, this, null);
             }
          }
       }

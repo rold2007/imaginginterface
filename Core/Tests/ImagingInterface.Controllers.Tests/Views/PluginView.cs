@@ -9,6 +9,10 @@
 
    public class PluginView : IPluginView
       {
+      public void Hide()
+         {
+         }
+
       public void Close()
          {
          }

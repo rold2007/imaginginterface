@@ -7,7 +7,18 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public interface ICaptureModel : IRawPluginModel
+   public interface ICaptureModel : IRawPluginModel, ICloneable
       {
+      byte[, ,] LastImageData
+         {
+         get;
+         set;
+         }
+
+      bool LiveGrabRunning
+         {
+         get;
+         set;
+         }
       }
    }

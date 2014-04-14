@@ -1,29 +1,22 @@
-﻿namespace ImageProcessing.Models
+﻿namespace ImageProcessing.Views.EventArguments
    {
    using System;
    using System.Collections.Generic;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImageProcessing.Models;
 
-   public class RotateModel : IRotateModel
+   public class RotateEventArgs : EventArgs
       {
-      public string DisplayName
+      public RotateEventArgs(double angle)
          {
-         get;
-         set;
+         this.Angle = angle;
          }
 
       public double Angle
          {
          get;
          set;
-         }
-
-      public object Clone()
-         {
-         return this.MemberwiseClone();
          }
       }
    }

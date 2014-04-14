@@ -44,13 +44,16 @@
 
             if (imageControllers != null)
                {
-               foreach (IImageController imageController in imageControllers)
+               if (imageControllers.Count != 0)
                   {
-                  imageController.Closed += this.ImageController_Closed;
-                  imageController.Close();
-                  }
+                  foreach (IImageController imageController in imageControllers)
+                     {
+                     imageController.Closed += this.ImageController_Closed;
+                     imageController.Close();
+                     }
 
-               e.Cancel = true;
+                  e.Cancel = true;
+                  }
                }
             }
 
@@ -60,13 +63,16 @@
 
             if (pluginControllers != null)
                {
-               foreach (IPluginController pluginController in pluginControllers)
+               if (pluginControllers.Count != 0)
                   {
-                  pluginController.Closed += this.PluginController_Closed;
-                  pluginController.Close();
-                  }
+                  foreach (IPluginController pluginController in pluginControllers)
+                     {
+                     pluginController.Closed += this.PluginController_Closed;
+                     pluginController.Close();
+                     }
 
-               e.Cancel = true;
+                  e.Cancel = true;
+                  }
                }
             }
          }

@@ -7,20 +7,24 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class ImageSourceController : IImageSourceController
+   public class FileSourceController : IFileSourceController
       {
-      public ImageSourceController()
-         {
-         this.ImageData = new byte[1, 1, 1];
-         }
+      private IFileSourceModel fileSourceModel;
 
-      public byte[, ,] ImageData
+      public FileSourceController(IFileSourceModel fileSourceModel)
          {
-         get;
-         set;
+         this.fileSourceModel = fileSourceModel;
          }
 
       public IRawPluginModel RawPluginModel
+         {
+         get
+            {
+            return this.fileSourceModel;
+            }
+         }
+
+      public string Filename
          {
          get;
          set;
@@ -31,9 +35,9 @@
          return "DisplayName";
          }
 
-      public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
+      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
          {
-         return this.ImageData;
+         return this.fileSourceModel.ImageData;
          }
       }
    }
