@@ -15,12 +15,13 @@
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Tests.Common;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
    using SimpleInjector;
 
-   public abstract class ControllersBaseTest
+   public abstract class ControllersBaseTest : BaseTest
       {
       public Container Container
          {
@@ -37,9 +38,9 @@
          }
       
       [SetUp]
-      protected void SetUp()
+      protected override void SetUp()
          {
-         this.InitializeSynchronizationContext();
+         base.SetUp();
 
          this.Bootstrap();
          }
@@ -70,16 +71,13 @@
          this.Container.Register<IRotateController, RotateController>();
          this.Container.Register<IImageController, ImageController>();
          this.Container.Register<IImageSourceController, ImageSourceController>();
+         this.Container.Register<IFileSourceController, FileSourceController>();
 
          // Models
          this.Container.Register<IInvertModel, InvertModel>();
          this.Container.Register<IRotateModel, RotateModel>();
          this.Container.Register<IImageModel, ImageModel>();
-         }
-
-      private void InitializeSynchronizationContext()
-         {
-         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+         this.Container.Register<IFileSourceModel, FileSourceModel>();
          }
       }
    }

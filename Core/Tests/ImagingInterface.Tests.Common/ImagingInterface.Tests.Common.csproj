@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA7DBE95-8BD7-4169-82B2-8884CC31D6D0}</ProjectGuid>
+    <ProjectGuid>{1692FC94-EC70-44C5-B856-694648BAFA73}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImagingInterface.Controllers</RootNamespace>
-    <AssemblyName>ImagingInterface.Controllers.Interfaces</AssemblyName>
+    <RootNamespace>ImagingInterface.Tests.Common</RootNamespace>
+    <AssemblyName>ImagingInterface.Tests.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -29,23 +31,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +42,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -64,41 +52,28 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="ImageControllerWrapper.cs" />
+    <Compile Include="STASynchronizationContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventArguments\DisplayUpdateEventArgs.cs" />
-    <Compile Include="IAboutBoxController.cs" />
-    <Compile Include="IFileOperationController.cs" />
-    <Compile Include="IHelpOperationController.cs" />
-    <Compile Include="IImageController.cs" />
-    <Compile Include="IImageManagerController.cs" />
-    <Compile Include="IImageProcessingController.cs" />
-    <Compile Include="IMainController.cs" />
-    <Compile Include="IPluginOperationController.cs" />
-    <Compile Include="IPluginManagerController.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
-      <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
-      <Name>ImagingInterface.Models.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
-      <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
-      <Name>ImagingInterface.Plugins.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
-      <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
-      <Name>ImagingInterface.Views.Interfaces</Name>
+    <ProjectReference Include="..\..\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
+      <Project>{fa7dbe95-8bd7-4169-82b2-8884cc31d6d0}</Project>
+      <Name>ImagingInterface.Controllers.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,10 +8,12 @@
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
+   using ImageProcessing.Controllers.Tests.Mocks;
    using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Tests.Common;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
@@ -71,21 +73,37 @@
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
          IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
          IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
-         IImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>();
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
 
          Assert.IsNotNull(invertView);
 
-         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-         imageManagerController.AddImage(imageController);
+            imageManagerController.AddImage(imageController);
 
-         ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
+            ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
 
-         imageView.WaitForDisplayUpdate();
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
 
-         invertView.TriggerInvert();
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            invertView.TriggerInvert();
 
-         imageView.WaitForDisplayUpdate();
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            // Test the 3 channels code
+            imageSourceController.ImageData = new byte[1, 1, 3];
+
+            invertView.TriggerInvert();
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
          }
       }
    }

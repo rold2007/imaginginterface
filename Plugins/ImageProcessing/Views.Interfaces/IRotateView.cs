@@ -5,8 +5,8 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Plugins;
    using ImageProcessing.Views.EventArguments;
+   using ImagingInterface.Plugins;
 
    public interface IRotateView : IPluginView
       {

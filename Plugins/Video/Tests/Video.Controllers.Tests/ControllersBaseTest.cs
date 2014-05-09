@@ -9,6 +9,7 @@
    using CommonServiceLocator.SimpleInjectorAdapter;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
+   using ImagingInterface.Tests.Common;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
@@ -19,7 +20,7 @@
    using Video.Models;
    using Video.Views;
 
-   public abstract class ControllersBaseTest
+   public abstract class ControllersBaseTest : BaseTest
       {
       public Container Container
          {
@@ -36,9 +37,9 @@
          }
 
       [SetUp]
-      protected void SetUp()
+      protected override void SetUp()
          {
-         this.InitializeSynchronizationContext();
+         base.SetUp();
 
          this.Bootstrap();
          }
@@ -71,11 +72,6 @@
          // Models
          this.Container.Register<ICaptureModel, CaptureModel>();
          this.Container.Register<IImageModel, ImageModel>();
-         }
-
-      private void InitializeSynchronizationContext()
-         {
-         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
          }
       }
    }

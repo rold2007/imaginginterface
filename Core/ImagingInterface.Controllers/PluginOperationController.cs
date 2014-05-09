@@ -12,6 +12,7 @@
 
    public class PluginOperationController : IPluginOperationController
       {
+      private static string closePluginName = "Close plugin"; // ncrunch: no coverage
       private IServiceLocator serviceLocator;
       private SortedDictionary<string, Type> plugins;
 
@@ -26,15 +27,25 @@
             pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
             }
 
+         pluginOperationView.AddPlugin(PluginOperationController.closePluginName);
+
          pluginOperationView.PluginCreate += this.PluginCreate;
          }
 
       private void PluginCreate(object sender, PluginCreateEventArgs e)
          {
-         IPluginController pluginController = this.serviceLocator.GetInstance(this.plugins[e.Name]) as IPluginController;
          IPluginManagerController pluginManagerController = this.serviceLocator.GetInstance<IPluginManagerController>();
 
-         pluginManagerController.AddPlugin(pluginController);
+         if (e.Name == PluginOperationController.closePluginName)
+            {
+            pluginManagerController.CloseActivePlugin();
+            }
+         else
+            {
+            IPluginController pluginController = this.serviceLocator.GetInstance(this.plugins[e.Name]) as IPluginController;
+
+            pluginManagerController.AddPlugin(pluginController);
+            }
          }
       }
    }

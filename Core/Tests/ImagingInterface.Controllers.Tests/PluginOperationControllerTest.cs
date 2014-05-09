@@ -45,6 +45,10 @@
          pluginOperationsView.TriggerPluginCreate(pluginController2.RawPluginModel.DisplayName);
 
          Assert.AreEqual(3, pluginManagerView.RawPluginViews.Count);
+
+         pluginOperationsView.TriggerPluginCreate("Close plugin");
+
+         Assert.AreEqual(2, pluginManagerView.RawPluginViews.Count);
          }
       }
    }

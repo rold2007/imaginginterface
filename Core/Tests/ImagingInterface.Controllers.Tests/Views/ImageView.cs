@@ -17,7 +17,7 @@
          private set;
          }
 
-      public bool DisplayUpdated
+      public double UpdateFrequency
          {
          get;
          set;
@@ -25,7 +25,6 @@
 
       public void UpdateDisplay()
          {
-         this.DisplayUpdated = true;
          }
 
       public void AssignImageModel(IImageModel imageModel)
@@ -39,16 +38,6 @@
 
       public void Close()
          {
-         }
-
-      public void WaitForDisplayUpdate()
-         {
-         while (!this.DisplayUpdated)
-            {
-            Thread.Sleep(10);
-            }
-
-         this.DisplayUpdated = false;
          }
       }
    }

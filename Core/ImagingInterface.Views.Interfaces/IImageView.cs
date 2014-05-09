@@ -9,6 +9,11 @@
 
    public interface IImageView : IRawImageView
       {
+      double UpdateFrequency
+         {
+         get;
+         }
+
       void AssignImageModel(IImageModel imageModel);
 
       void UpdateDisplay();

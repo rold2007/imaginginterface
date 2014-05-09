@@ -2,7 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
-   using System.Linq;
+   using System.Diagnostics;
    using System.Text;
    using System.Threading.Tasks;
 
@@ -21,6 +21,12 @@
          }
 
       public bool LiveGrabRunning
+         {
+         get;
+         set;
+         }
+
+      public Stopwatch TimeSinceLastGrab
          {
          get;
          set;

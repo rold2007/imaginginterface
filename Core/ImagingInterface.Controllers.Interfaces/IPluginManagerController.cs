@@ -14,5 +14,7 @@
       IPluginController GetActivePlugin();
 
       IList<IPluginController> GetAllPlugins();
+
+      void CloseActivePlugin();
       }
    }

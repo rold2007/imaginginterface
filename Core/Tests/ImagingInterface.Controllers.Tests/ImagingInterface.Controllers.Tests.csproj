@@ -64,6 +64,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator.SimpleInjectorAdapter">
@@ -88,6 +89,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -146,6 +148,13 @@
       <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
       <Name>ImagingInterface.Views.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj">
+      <Project>{1692fc94-ec70-44c5-b856-694648bafa73}</Project>
+      <Name>ImagingInterface.Tests.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

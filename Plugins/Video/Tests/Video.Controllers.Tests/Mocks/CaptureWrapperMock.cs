@@ -44,6 +44,14 @@
             }
          }
 
+      public double FramePeriod
+         {
+         get
+            {
+            return 33;
+            }
+         }
+
       public void Dispose()
          {
          this.Dispose(true);
@@ -55,6 +63,11 @@
          this.grabStarted = true;
 
          return true;
+         }
+
+      public Image<Gray, byte> QueryGrayFrame()
+         {
+         return this.RetrieveGrayFrame();
          }
 
       public Image<Gray, byte> RetrieveGrayFrame()

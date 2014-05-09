@@ -26,17 +26,29 @@
 
       public string Filename
          {
-         get;
-         set;
+         get
+            {
+            return this.fileSourceModel.DisplayName;
+            }
+
+         set
+            {
+            this.fileSourceModel.DisplayName = value;
+            }
          }
 
-      public string DisplayName(IRawPluginModel rawPluginModel)
+      public bool IsDynamic(IRawPluginModel rawPluginModel)
          {
-         return "DisplayName";
+         return false;
          }
 
       public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
          {
+         if (this.fileSourceModel.ImageData == null)
+            {
+            this.fileSourceModel.ImageData = new byte[1, 1, 1];
+            }
+
          return this.fileSourceModel.ImageData;
          }
       }

@@ -27,6 +27,11 @@
          get;
          }
 
+      double FramePeriod
+         {
+         get;
+         }
+
       bool Grab();
 
       Image<Gray, byte> RetrieveGrayFrame();

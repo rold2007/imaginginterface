@@ -36,14 +36,14 @@
             }
          }
 
-      private void rotationAngleTrackBar_Scroll(object sender, EventArgs e)
+      private void RotationAngleTrackBar_Scroll(object sender, EventArgs e)
          {
          double angle = Convert.ToDouble(this.rotationAngleTrackBar.Value / 100);
 
          this.SetRotationAngle(angle);
          }
 
-      private void rotationAngleNumericUpDown_ValueChanged(object sender, EventArgs e)
+      private void RotationAngleNumericUpDown_ValueChanged(object sender, EventArgs e)
          {
          double angle = Convert.ToDouble(this.rotationAngleNumericUpDown.Value);
 

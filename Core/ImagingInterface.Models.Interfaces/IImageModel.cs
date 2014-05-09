@@ -15,7 +15,7 @@
          set;
          }
 
-      System.Drawing.Size Size
+      Size Size
          {
          get;
          }

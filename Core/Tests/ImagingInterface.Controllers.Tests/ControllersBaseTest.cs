@@ -11,12 +11,13 @@
    using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Tests.Common;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
    using SimpleInjector;
 
-   public abstract class ControllersBaseTest
+   public abstract class ControllersBaseTest : BaseTest
       {
       public Container Container
          {
@@ -33,9 +34,9 @@
          }
 
       [SetUp]
-      protected void SetUp()
+      protected override void SetUp()
          {
-         this.InitializeSynchronizationContext();
+         base.SetUp();
 
          this.Bootstrap();
          }
@@ -82,11 +83,6 @@
 
          // Plugins
          this.Container.RegisterAll<IPluginController>(new Type[] { typeof(PluginController1), typeof(PluginController2) });
-         }
-
-      private void InitializeSynchronizationContext()
-         {
-         SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
          }
       }
    }
