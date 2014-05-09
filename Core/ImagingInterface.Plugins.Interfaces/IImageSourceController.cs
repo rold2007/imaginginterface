@@ -13,7 +13,7 @@
          get;
          }
 
-      string DisplayName(IRawPluginModel rawPluginModel);
+      bool IsDynamic(IRawPluginModel rawPluginModel);
 
       byte[, ,] NextImageData(IRawPluginModel rawPluginModel);
       }

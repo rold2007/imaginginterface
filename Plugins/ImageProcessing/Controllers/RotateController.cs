@@ -20,7 +20,7 @@
 
    public class RotateController : IRotateController, IImageProcessingController
       {
-      private static readonly string RotateDisplayName = "Rotate";
+      private static readonly string RotateDisplayName = "Rotate"; // ncrunch: no coverage
       private IRotateView rotateView;
       private IRotateModel rotateModel;
       private IImageManagerController imageManagerController;
@@ -91,7 +91,7 @@
             }
          else
             {
-            Debug.Assert(imageData.GetLength(2) == 3);
+            Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
 
             using (Image<Bgr, byte> convertedImage = new Image<Bgr, byte>(imageData), rotatedImage = convertedImage.Rotate(rotateModel.Angle, new Bgr()))
                {

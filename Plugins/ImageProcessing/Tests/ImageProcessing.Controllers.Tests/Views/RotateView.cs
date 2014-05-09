@@ -18,11 +18,11 @@
          private set;
          }
 
-      public void TriggerRotate()
+      public void TriggerRotate(double angle)
          {
          if (this.Rotate != null)
             {
-            this.Rotate(this, new RotateEventArgs(42.54));
+            this.Rotate(this, new RotateEventArgs(angle));
             }
          }
 

@@ -21,7 +21,7 @@
 
    public class InvertController : IInvertController, IImageProcessingController
       {
-      private static readonly string InvertDisplayName = "Invert";
+      private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
       private IInvertView invertView;
       private IInvertModel invertModel;
       private IImageManagerController imageManagerController;
@@ -92,7 +92,7 @@
             }
          else
             {
-            Debug.Assert(imageData.GetLength(2) == 3);
+            Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
 
             using (Image<Bgr, byte> invertedImage = new Image<Bgr, byte>(imageData))
                {

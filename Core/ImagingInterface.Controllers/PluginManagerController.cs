@@ -48,6 +48,16 @@
          return this.pluginControllers.Values.ToList();
          }
 
+      public void CloseActivePlugin()
+         {
+         IPluginController activePlugin = this.GetActivePlugin();
+
+         if (activePlugin != null)
+            {
+            activePlugin.Close();
+            }
+         }
+
       private void RemovePlugin(IPluginController pluginController)
          {
          pluginController.Closed -= this.PluginController_Closed;

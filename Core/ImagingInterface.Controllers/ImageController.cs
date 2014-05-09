@@ -8,6 +8,7 @@
    using System.Drawing;
    using System.Threading;
    using System.Threading.Tasks;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views;
@@ -18,33 +19,54 @@
       private IImageView imageView;
       private IImageModel imageModel;
       private IServiceLocator serviceLocator;
-      private bool? cancelLiveGrab;
       private bool closing;
+      private bool closed;
       private Dictionary<IImageProcessingController, IRawPluginModel> imageProcessingControllers;
       private Task<byte[, ,]> lastFetchNextImageFromSourceTask;
       private Task lastDisplayNextImageTask;
       private IImageSourceController imageSourceController;
       private IRawPluginModel imageSourceRawPluginModel;
+      private Stopwatch lastDisplayUpdate;
+      private double updatePeriod;
 
       public ImageController(IImageView imageView, IImageModel imageModel, IServiceLocator serviceLocator)
          {
          this.imageView = imageView;
          this.imageModel = imageModel;
          this.serviceLocator = serviceLocator;
-         this.cancelLiveGrab = null;
          this.imageProcessingControllers = new Dictionary<IImageProcessingController, IRawPluginModel>();
          this.lastFetchNextImageFromSourceTask = null;
          this.lastDisplayNextImageTask = null;
 
-         this.imageModel.DisplayImageData = new byte[1, 1, 1];
          this.imageView.AssignImageModel(this.imageModel);
+
+         this.lastDisplayUpdate = Stopwatch.StartNew();
+
+         double updateFrequency = this.imageView.UpdateFrequency;
+
+         if (updateFrequency != 0.0)
+            {
+            this.updatePeriod = 1000 / this.imageView.UpdateFrequency;
+            }
+         else
+            {
+            this.updatePeriod = -1.0;
+            }
+
+         this.closed = false;
+
+         this.imageModel.DisplayImageData = new byte[1, 1, 1];
+         }
+
+      ~ImageController()
+         {
          }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
 
-      public event EventHandler LiveUpdateStopped;
+      public event EventHandler<DisplayUpdateEventArgs> DisplayUpdated;
 
       public IRawImageView RawImageView
          {
@@ -62,78 +84,59 @@
             }
          }
 
-      public bool CanLiveUpdate
+      public void SetDisplayName(string displayName)
          {
-         get
-            {
-            return !this.closing;
-            }
+         this.imageModel.DisplayName = displayName;
          }
 
       public void InitializeImageSourceController(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel)
          {
          this.imageSourceController = imageSourceController;
          this.imageSourceRawPluginModel = rawPluginModel;
-         this.imageModel.DisplayName = imageSourceController.DisplayName(rawPluginModel);
 
-         // If an assert pops here while running a unit test with NCrunch, don't forget to
-         // call SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-         // at the beginning of the test
-         this.CreateLiveGrabTask(this.imageSourceController, this.imageSourceRawPluginModel, TaskScheduler.FromCurrentSynchronizationContext(), false);
+         // If an assert pops here while running a unit test with NCrunch, you need to use
+         // the AsynchronousTestRunner class to initialize a proper SynchronizationContext
+         this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
          }
 
       public void Close()
          {
-         CancelEventArgs cancelEventArgs = new CancelEventArgs();
-
-         if (this.Closing != null)
+         if (!this.closed)
             {
-            this.Closing(this, cancelEventArgs);
-            }
+            CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
-         this.imageView.Hide();
-
-         if (!cancelEventArgs.Cancel)
-            {
-
-            // This is certainly not true anymore. Threads are launched simply by calling InitializeImageSourceController
-            //  So we need to make sure to wait for the last DisplayThread to finish AND make sure no new thread is started after that
-
-
-            Debug.Assert(!this.cancelLiveGrab.HasValue, "Each controller is responsible to stop the live update from the closing event.");
-
-            this.closing = true;
-
-            this.imageView.Close();
-            this.imageModel.DisplayImageData = null;
-
-            if (this.Closed != null)
+            // The close was prevented by the ImageController, do not send a closing again
+            if (!this.closing)
                {
-               this.Closed(this, EventArgs.Empty);
+               if (this.Closing != null)
+                  {
+                  this.Closing(this, cancelEventArgs);
+                  }
                }
 
-            this.imageView = null;
-            }
-         }
+            if (!cancelEventArgs.Cancel)
+               {
+               this.closing = true;
 
-      public void StartLiveUpdate()
-         {
-         if (!this.cancelLiveGrab.HasValue && !this.closing)
-            {
-            this.cancelLiveGrab = false;
+               // Make sure the display thread is finished before really closing
+               if (this.lastDisplayNextImageTask == null)
+                  {
+                  // Prevent calling the Closed event more than once
+                  this.closed = true;
 
-            // If an assert pops here while running a unit test with NCrunch, don't forget to
-            // call SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-            // at the beginning of the test
-            this.CreateLiveGrabTask(this.imageSourceController, this.imageSourceRawPluginModel, TaskScheduler.FromCurrentSynchronizationContext(), true);
-            }
-         }
+                  this.imageView.Hide();
+                  this.imageView.Close();
+                  this.imageModel.DisplayImageData = null;
 
-      public void StopLiveUpdate()
-         {
-         if (this.cancelLiveGrab.HasValue)
-            {
-            this.cancelLiveGrab = true;
+                  if (this.Closed != null)
+                     {
+                     this.Closed(this, EventArgs.Empty);
+                     }
+
+                  // The image view is used by some Closed events
+                  this.imageView = null;
+                  }
+               }
             }
          }
 
@@ -141,44 +144,40 @@
          {
          if (!this.closing)
             {
-            //Si il ny a pas de dynamic imagesource, il faut faire un update du display avec processing
-            //    Il faut faire un overwrite du processing de meme type (Rotate) pour eviter den accumuler
-
-            //Attention, si on ferme le rotatecontroller on pointe sur un objet disposé... Il faut sabonner au closing du plugincontroller
-            // puis faire le cancel et gerer un close dans le display (quand on revient sur la main thread)
-            // Il faut donc maintenir une list des tasks en cours pour s'assurer qu'aucune task ne pointe sur cet item
-            // Ajouter temporairement des boutons "Close" dans rotate et invert pour tester le close en attendant d'avoir des tabs avec close
-
-
             // For now, only one processing controller is supported. In the future, it should be possible to "pin" some
             // image processing controllers and overwrite any unpinned duplicate.
             this.imageProcessingControllers.Clear();
 
             this.imageProcessingControllers.Add(imageProcessingController, rawPluginModel);
 
-            // If an assert pops here while running a unit test with NCrunch, don't forget to
-            // call SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-            // at the beginning of the test
-            this.CreateLiveGrabTask(this.imageSourceController, this.imageSourceRawPluginModel, TaskScheduler.FromCurrentSynchronizationContext(), false);
+            // If an assert pops here while running a unit test with NCrunch, you need to use
+            // the AsynchronousTestRunner class to initialize a proper SynchronizationContext
+            this.CreateLiveUpdateTask(TaskScheduler.FromCurrentSynchronizationContext(), false);
             }
          }
 
-      private void CreateLiveGrabTask(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, TaskScheduler taskScheduler, bool launchHeartBeat)
+      private void CreateDynamicUpdateTasks(TaskScheduler taskScheduler)
+         {
+         bool isDynamic = this.imageSourceController.IsDynamic(this.imageSourceRawPluginModel);
+
+         this.CreateLiveUpdateTask(taskScheduler, isDynamic);
+         }
+
+      private void CreateLiveUpdateTask(TaskScheduler taskScheduler, bool launchHeartBeat)
          {
          Task<byte[, ,]> fetchNextImageFromSourceTask;
          Task<byte[, ,]> imageSourceTask;
-         Tuple<IImageSourceController, IRawPluginModel> tuple = Tuple.Create<IImageSourceController, IRawPluginModel>(imageSourceController, rawPluginModel);
          Task waitForFetchNextImageSourceTask = new Task(this.WaitForNextImageSource, this.lastFetchNextImageFromSourceTask);
 
          if (launchHeartBeat)
             {
-            Tuple<IImageSourceController, IRawPluginModel> startNewHeartBeatTuple = Tuple.Create<IImageSourceController, IRawPluginModel>(imageSourceController, rawPluginModel);
-
-            waitForFetchNextImageSourceTask.ContinueWith(this.StartNewHeartBeat, startNewHeartBeatTuple, taskScheduler);
+            waitForFetchNextImageSourceTask.ContinueWith(this.StartNewHeartBeat, null, taskScheduler);
             }
 
          // Task needed to synchronize all the FetchNextImageFromSource and make sure only one is ran at any time and that they run in-order
          waitForFetchNextImageSourceTask.Start(TaskScheduler.Default);
+
+         MutableTuple tuple = new MutableTuple(this.imageSourceController, this.imageSourceRawPluginModel, null, waitForFetchNextImageSourceTask, null);
 
          fetchNextImageFromSourceTask = new Task<byte[, ,]>(this.FetchNextImageFromSource, tuple);
 
@@ -195,9 +194,10 @@
             imageSourceTask = fetchNextImageFromSourceTask;
             }
 
-         Tuple<Task<byte[, ,]>, Task> waitForDisplayNextImageTuple = new Tuple<Task<byte[, ,]>, Task>(imageSourceTask, this.lastDisplayNextImageTask);
+         MutableTuple waitForDisplayNextImageTuple = new MutableTuple(null, null, imageSourceTask, this.lastDisplayNextImageTask, null);
+
          Task<byte[, ,]> waitForDisplayNextImageTask = new Task<byte[, ,]>(this.WaitForDisplayNextImage, waitForDisplayNextImageTuple);
-         Task displayNextImageTask = waitForDisplayNextImageTask.ContinueWith(this.DisplayNextImage, null, taskScheduler);
+         Task displayNextImageTask = waitForDisplayNextImageTask.ContinueWith(this.DisplayNextImage, this.imageSourceRawPluginModel, taskScheduler);
 
          waitForDisplayNextImageTask.Start(TaskScheduler.Default);
 
@@ -209,11 +209,11 @@
          Debug.Assert(this.imageProcessingControllers.Count > 0, "CreateProcessingTasks should only be called when there is some image processing to do.");
 
          Task<byte[, ,]> previousTask = taskInput;
-         Tuple<Task<byte[, ,]>, IImageProcessingController, IRawPluginModel> tuple = null;
+         MutableTuple tuple;
 
          foreach (KeyValuePair<IImageProcessingController, IRawPluginModel> keyValuePair in this.imageProcessingControllers)
             {
-            tuple = Tuple.Create<Task<byte[, ,]>, IImageProcessingController, IRawPluginModel>(previousTask, keyValuePair.Key, keyValuePair.Value);
+            tuple = new MutableTuple(null, keyValuePair.Value, previousTask, null, keyValuePair.Key);
 
             previousTask = new Task<byte[, ,]>(this.ProcessImage, tuple);
 
@@ -222,17 +222,6 @@
 
          return previousTask;
          }
-
-      //private void CreateLiveHeartBeat(Task<byte[, ,]> task, IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, TaskScheduler taskScheduler)
-      //   {
-      //   Task heartBeatTask = new Task(this.WaitForNextImageSource, task);
-
-      //   Tuple<IImageSourceController, IRawPluginModel> startNewHeartBeatTuple = Tuple.Create<IImageSourceController, IRawPluginModel>(imageSourceController, rawPluginModel);
-
-      //   heartBeatTask.ContinueWith(this.StartNewHeartBeat, startNewHeartBeatTuple, taskScheduler);
-
-      //   heartBeatTask.Start(TaskScheduler.Default);
-      //   }
 
       private void WaitForNextImageSource(object state)
          {
@@ -246,100 +235,186 @@
 
       private byte[, ,] WaitForDisplayNextImage(object state)
          {
-         Tuple<Task<byte[, ,]>, Task> waitForDisplayNextImageTuple = state as Tuple<Task<byte[, ,]>, Task>;
-         Task<byte[, ,]> fetchNextImageSourceOrProcessImageTask = waitForDisplayNextImageTuple.Item1;
-         Task displayNextImageTask = waitForDisplayNextImageTuple.Item2;
+         MutableTuple waitForDisplayNextImageTuple = state as MutableTuple;
+         Task<byte[, ,]> fetchNextImageSourceOrProcessImageTask = waitForDisplayNextImageTuple.TaskByte;
+         Task displayNextImageTask = waitForDisplayNextImageTuple.Task;
 
          // Make sure the previous display task is completed to run them in-order
          if (displayNextImageTask != null)
             {
             displayNextImageTask.Wait();
+            displayNextImageTask.Dispose();
             }
 
          // Wait for the image to be ready to be displayed
          fetchNextImageSourceOrProcessImageTask.Wait();
 
-         return fetchNextImageSourceOrProcessImageTask.Result;
+         byte[, ,] imageData = fetchNextImageSourceOrProcessImageTask.Result;
+
+         fetchNextImageSourceOrProcessImageTask.Dispose();
+
+         waitForDisplayNextImageTuple.Clear();
+
+         return imageData;
          }
 
       private void StartNewHeartBeat(Task parentTask, object state)
          {
+         parentTask.Dispose();
+
          if (!this.closing)
             {
-            if (this.cancelLiveGrab.HasValue && this.cancelLiveGrab == false)
-               {
-               Tuple<IImageSourceController, IRawPluginModel> tuple = state as Tuple<IImageSourceController, IRawPluginModel>;
-               IImageSourceController imageSourceController = tuple.Item1;
-               IRawPluginModel rawPluginModel = tuple.Item2;
-
-               // TaskScheduler.Current should be the MainThread
-               this.CreateLiveGrabTask(imageSourceController, rawPluginModel, TaskScheduler.Current, true);
-               }
-            else
-               {
-               this.cancelLiveGrab = null;
-
-               if (this.LiveUpdateStopped != null)
-                  {
-                  this.LiveUpdateStopped(this, EventArgs.Empty);
-                  }
-               }
+            // TaskScheduler.Current should be the MainThread
+            this.CreateDynamicUpdateTasks(TaskScheduler.Current);
             }
          }
 
       private byte[, ,] FetchNextImageFromSource(object state)
          {
-         Tuple<IImageSourceController, IRawPluginModel> tuple = state as Tuple<IImageSourceController, IRawPluginModel>;
-         IImageSourceController imageSourceController = tuple.Item1;
-         IRawPluginModel rawPluginModel = tuple.Item2;
+         MutableTuple tuple = state as MutableTuple;
+         IImageSourceController imageSourceController = tuple.ImageSourceController;
+         IRawPluginModel rawPluginModel = tuple.RawPluginModel;
+         Task previousFetchNextImageFromSourceTask = tuple.Task;
 
-         //    Il faudra peut-etre utiliser un canceltoken pour empecher dappeler le NextImageData
+         previousFetchNextImageFromSourceTask.Wait();
 
+         // Do not clone the result here. It is the responsibility of the IImageSourceController to return the same (unmodified) image
+         // or a new image
          byte[, ,] resultImage = imageSourceController.NextImageData(rawPluginModel);
-         byte[, ,] clonedResultImage = null;
 
-         if (resultImage != null)
-            {
-            clonedResultImage = (byte[, ,])resultImage.Clone();
-            }
+         Debug.Assert(resultImage != null, "The image source controller should always return a valid array.");
 
-         return clonedResultImage;
+         tuple.Clear();
+
+         return resultImage;
          }
 
       private byte[, ,] ProcessImage(object state)
          {
-         Tuple<Task<byte[, ,]>, IImageProcessingController, IRawPluginModel> tuple = state as Tuple<Task<byte[, ,]>, IImageProcessingController, IRawPluginModel>;
-         Task<byte[, ,]> previousTask = tuple.Item1;
-         IImageProcessingController imageProcessingController = tuple.Item2;
-         IRawPluginModel rawPluginModel = tuple.Item3;
+         MutableTuple tuple = state as MutableTuple;
+         Task<byte[, ,]> previousTask = tuple.TaskByte;
+         IImageProcessingController imageProcessingController = tuple.ImageProcessingController;
+         IRawPluginModel rawPluginModel = tuple.RawPluginModel;
 
          Debug.Assert(previousTask != null, "This task should always exist as it gives the next image source.");
          previousTask.Wait();
 
-         byte[, ,] resultImage = imageProcessingController.ProcessImageData(previousTask.Result, rawPluginModel);
+         byte[, ,] previousResult = previousTask.Result;
+
+         previousTask.Dispose();
+
+         byte[, ,] resultImage = imageProcessingController.ProcessImageData(previousResult, rawPluginModel);
+
+         tuple.Clear();
 
          return resultImage;
          }
 
       private void DisplayNextImage(Task<byte[, ,]> parentTask, object state)
          {
+         parentTask.Dispose();
+
+         Debug.Assert(Task.CurrentId != null, "There's a problem with the current Task.");
+         Debug.Assert(this != null, "Protect the next assert.");
+         Debug.Assert(this.lastDisplayNextImageTask != null, "The last display task should not be set to null if another task is still running.");
+
+         if (Task.CurrentId == this.lastDisplayNextImageTask.Id)
+            {
+            this.lastDisplayNextImageTask = null;
+            this.lastFetchNextImageFromSourceTask = null;
+            }
+
          // This method and the closing event should run on the main thread so there is no potential concurrency issue
          if (!this.closing)
             {
             this.UpdateDisplayImageData(parentTask.Result);
 
-            if (Task.CurrentId == this.lastDisplayNextImageTask.Id)
+            if (this.DisplayUpdated != null)
                {
-               this.lastDisplayNextImageTask = null;
-               this.lastFetchNextImageFromSourceTask = null;
+               this.DisplayUpdated(this, new DisplayUpdateEventArgs((IRawPluginModel)state));
+               }
+            }
+         else
+            {
+            // The close is the responsibility of the ImageController
+            if (this.lastDisplayNextImageTask == null)
+               {
+               this.Close();
                }
             }
          }
 
       private void UpdateDisplayImageData(byte[, ,] imageData)
          {
-         this.imageModel.DisplayImageData = imageData;
-         this.imageView.UpdateDisplay();
+         // Do not clone the result here. It is the responsibility of the IImageSourceController to return the same (unmodified) image
+         // or a new image
+         if (this.imageModel.DisplayImageData != imageData)
+            {
+            long lastDisplayUpdateMilliseconds = this.lastDisplayUpdate.ElapsedMilliseconds;
+
+            if (lastDisplayUpdateMilliseconds > this.updatePeriod)
+               {
+               this.imageModel.DisplayImageData = imageData;
+               this.imageView.UpdateDisplay();
+
+               this.lastDisplayUpdate = Stopwatch.StartNew();
+               }
+            else
+               {
+               lastDisplayUpdateMilliseconds = 0;
+               }
+            }
+         }
+
+      private class MutableTuple
+         {
+         public MutableTuple(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, Task<byte[, ,]> taskByte, Task task, IImageProcessingController imageProcessingController)
+            {
+            this.ImageSourceController = imageSourceController;
+            this.RawPluginModel = rawPluginModel;
+            this.TaskByte = taskByte;
+            this.Task = task;
+            this.ImageProcessingController = imageProcessingController;
+            }
+
+         public IImageSourceController ImageSourceController
+            {
+            get;
+            private set;
+            }
+
+         public IRawPluginModel RawPluginModel
+            {
+            get;
+            private set;
+            }
+
+         public Task<byte[, ,]> TaskByte
+            {
+            get;
+            private set;
+            }
+
+         public Task Task
+            {
+            get;
+            private set;
+            }
+
+         public IImageProcessingController ImageProcessingController
+            {
+            get;
+            private set;
+            }
+
+         public void Clear()
+            {
+            this.ImageSourceController = null;
+            this.RawPluginModel = null;
+            this.TaskByte = null;
+            this.Task = null;
+            this.ImageProcessingController = null;
+            }
          }
       }
    }

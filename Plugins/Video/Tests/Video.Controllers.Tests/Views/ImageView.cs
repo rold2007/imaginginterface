@@ -11,21 +11,25 @@
 
    public class ImageView : IImageView
       {
+      private AutoResetEvent displayUpdated = new AutoResetEvent(false);
+
       public IImageModel AssignedImageModel
          {
          get;
          private set;
          }
 
-      public bool DisplayUpdated
+      public double UpdateFrequency
          {
-         get;
-         set;
+         get
+            {
+            return 0.0;
+            }
          }
 
       public void UpdateDisplay()
          {
-         this.DisplayUpdated = true;
+         this.displayUpdated.Set();
          }
 
       public void AssignImageModel(IImageModel imageModel)
@@ -41,14 +45,10 @@
          {
          }
 
+      [Obsolete]
       public void WaitForDisplayUpdate()
          {
-         while (!this.DisplayUpdated)
-            {
-            Thread.Sleep(10);
-            }
-
-         this.DisplayUpdated = false;
+         this.displayUpdated.WaitOne();
          }
       }
    }

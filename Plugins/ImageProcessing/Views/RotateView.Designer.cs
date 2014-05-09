@@ -44,7 +44,7 @@
          this.rotationAngleTrackBar.SmallChange = 10;
          this.rotationAngleTrackBar.TabIndex = 1;
          this.rotationAngleTrackBar.TickFrequency = 4500;
-         this.rotationAngleTrackBar.Scroll += new System.EventHandler(this.rotationAngleTrackBar_Scroll);
+         this.rotationAngleTrackBar.Scroll += new System.EventHandler(this.RotationAngleTrackBar_Scroll);
          // 
          // rotationAngleNumericUpDown1
          // 
@@ -64,7 +64,7 @@
          this.rotationAngleNumericUpDown.Size = new System.Drawing.Size(265, 20);
          this.rotationAngleNumericUpDown.TabIndex = 3;
          this.rotationAngleNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-         this.rotationAngleNumericUpDown.ValueChanged += new System.EventHandler(this.rotationAngleNumericUpDown_ValueChanged);
+         this.rotationAngleNumericUpDown.ValueChanged += new System.EventHandler(this.RotationAngleNumericUpDown_ValueChanged);
          // 
          // RotateView
          // 

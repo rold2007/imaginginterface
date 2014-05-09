@@ -6,6 +6,7 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views;
@@ -16,7 +17,7 @@
 
       event EventHandler Closed;
 
-      event EventHandler LiveUpdateStopped;
+      event EventHandler<DisplayUpdateEventArgs> DisplayUpdated;
 
       IRawImageView RawImageView
          {
@@ -28,18 +29,11 @@
          get;
          }
 
-      bool CanLiveUpdate
-         {
-         get;
-         }
+      void SetDisplayName(string displayName);
 
       void InitializeImageSourceController(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel);
 
       void Close();
-
-      void StartLiveUpdate();
-
-      void StopLiveUpdate();
 
       void AddImageProcessingController(IPluginController pluginController, IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel);
       }

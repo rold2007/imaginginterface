@@ -21,6 +21,14 @@
          this.InitializeComponent();
          }
 
+      public double UpdateFrequency
+         {
+         get
+            {
+            return OpenTK.DisplayDevice.GetDisplay(0).RefreshRate;
+            }
+         }
+
       public void AssignImageModel(IImageModel imageModel)
          {
          this.imageModel = imageModel;
@@ -37,7 +45,8 @@
 
             this.InitializeGLControl();
 
-            this.glControl.Invalidate();
+            // Optimization suggested in OpenTK forum instead of calling this.GLControl.Invalidate()
+            this.GLControl_Paint(this, null);
             }
          }
 

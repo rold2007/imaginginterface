@@ -35,6 +35,7 @@
                IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 
                fileSourceController.Filename = file;
+               imageController.SetDisplayName(file);
 
                imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
 
@@ -57,15 +58,10 @@
       private void FileCloseAll(object sender, EventArgs e)
          {
          IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-         IImageController activeImageController;
 
-         activeImageController = imageViewManagerController.GetActiveImage();
-
-         while (activeImageController != null)
+         foreach (IImageController imageController in imageViewManagerController.GetAllImages())
             {
-            activeImageController.Close();
-
-            activeImageController = imageViewManagerController.GetActiveImage();
+            imageController.Close();
             }
 
          GC.Collect();
@@ -82,6 +78,7 @@
                IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
 
                fileSourceController.Filename = file;
+               imageController.SetDisplayName(file);
 
                imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
 

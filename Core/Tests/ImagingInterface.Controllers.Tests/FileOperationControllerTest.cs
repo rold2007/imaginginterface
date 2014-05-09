@@ -2,6 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
+   using System.Diagnostics;
    using System.IO;
    using System.Linq;
    using System.Text;
@@ -9,10 +10,12 @@
    using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Tests.Common;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;
    using NUnit.Framework;
@@ -52,12 +55,19 @@
          fileSourceModel.ImageData = new byte[1, 1, 1];
          fileOperationView.TriggerOpenFileEvent();
 
-         imageView.WaitForDisplayUpdate();
+         IImageController activeImageController = imageManagerController.GetActiveImage();
 
-         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
-         Assert.IsNotNull(imageManagerController.GetActiveImage());
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(activeImageController))
+            {
+            imageControllerWrapper.WaitForDisplayUpdate();
 
-         fileOperationView.TriggerCloseFileEvent();
+            Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+            Assert.IsNotNull(imageManagerController.GetActiveImage());
+
+            fileOperationView.TriggerCloseFileEvent();
+
+            imageControllerWrapper.WaitForClosed();
+            }
 
          fileOperationView.Files = null;
          fileSourceModel.ImageData = null;
@@ -72,9 +82,14 @@
          fileSourceModel.ImageData = null;
          fileOperationView.TriggerOpenFileEvent();
 
-         imageView.WaitForDisplayUpdate();
+         activeImageController = imageManagerController.GetActiveImage();
 
-         Assert.IsNull(imageView.AssignedImageModel.DisplayImageData, "An invalid file will return a null data array");
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(activeImageController))
+            {
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
+
+         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData, "For now, an invalid file will NOT return a null data array");
          Assert.IsNotNull(imageManagerController.GetActiveImage(), "The image should still be opened but empty");
 
          fileOperationView.TriggerCloseFileEvent();
@@ -86,6 +101,7 @@
          IImageManagerController imageManagerController = this.Container.GetInstance<IImageManagerController>();
          IFileOperationController fileOperationController = this.Container.GetInstance<IFileOperationController>();
          FileOperationView fileOperationView = this.Container.GetInstance<IFileOperationView>() as FileOperationView;
+         IImageController activeImageControllerToClose;
 
          fileOperationView.Files = new string[2] { "ValidFile1", "ValidFile2" };
 
@@ -94,10 +110,15 @@
 
          fileOperationView.TriggerOpenFileEvent();
 
-         IImageController activeImageControllerToClose = imageManagerController.GetActiveImage();
+         activeImageControllerToClose = imageManagerController.GetActiveImage();
 
-         // CloseFile should close the active image controller
-         fileOperationView.TriggerCloseFileEvent();
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(activeImageControllerToClose))
+            {
+            // CloseFile should close the active image controller
+            fileOperationView.TriggerCloseFileEvent();
+
+            imageControllerWrapper.WaitForClosed();
+            }
 
          // Make sure there is still an active image controller
          Assert.IsNotNull(imageManagerController.GetActiveImage());
@@ -105,8 +126,15 @@
          // Make sure the previously active image controller isn't active anymore
          Assert.AreNotSame(activeImageControllerToClose, imageManagerController.GetActiveImage());
 
-         // Close the remaining image controller
-         fileOperationView.TriggerCloseFileEvent();
+         activeImageControllerToClose = imageManagerController.GetActiveImage();
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(activeImageControllerToClose))
+            {
+            // Close the remaining image controller
+            fileOperationView.TriggerCloseFileEvent();
+
+            imageControllerWrapper.WaitForClosed();
+            }
 
          // There should be no more open image controller
          Assert.IsNull(imageManagerController.GetActiveImage());
@@ -128,8 +156,14 @@
 
          Assert.IsNotNull(imageManagerController.GetActiveImage());
 
-         fileOperationView.TriggerCloseAllFileEvent();
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageManagerController.GetAllImages()))
+            {
+            fileOperationView.TriggerCloseAllFileEvent();
 
+            imageControllerWrapper.WaitForClosed();
+            }
+
+         // Closing should be synchronous because no display thread should be running
          Assert.IsNull(imageManagerController.GetActiveImage());
          }
 
@@ -153,12 +187,21 @@
          fileSourceModel.ImageData = new byte[1, 1, 1];
          fileOperationView.TriggerDragDropFileEvent(fileOperationView.Files);
 
-         imageView.WaitForDisplayUpdate();
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageManagerController.GetActiveImage()))
+            {
+            imageControllerWrapper.WaitForDisplayUpdate();
 
-         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
-         Assert.IsNotNull(imageManagerController.GetActiveImage());
+            Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+            Assert.IsNotNull(imageManagerController.GetActiveImage());
 
-         fileOperationView.TriggerCloseFileEvent();
+            fileOperationView.TriggerCloseFileEvent();
+
+            imageControllerWrapper.WaitForClosed();
+            }
+
+         Assert.IsNull(imageManagerController.GetActiveImage(), "With a null Files no image should get opened");
+
+         imageView.AssignedImageModel.DisplayImageData = null;
 
          fileOperationView.TriggerDragDropFileEvent(null);
 
@@ -170,12 +213,17 @@
          fileSourceModel.ImageData = null;
          fileOperationView.TriggerDragDropFileEvent(new string[] { "Dummy" });
 
-         imageView.WaitForDisplayUpdate();
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageManagerController.GetActiveImage()))
+            {
+            imageControllerWrapper.WaitForDisplayUpdate();
 
-         Assert.IsNull(imageView.AssignedImageModel.DisplayImageData, "An invalid file will return a null data array");
-         Assert.IsNotNull(imageManagerController.GetActiveImage(), "The image should still be opened but empty");
+            Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData, "For now, an invalid file will NOT return a null data array");
+            Assert.IsNotNull(imageManagerController.GetActiveImage(), "The image should still be opened but empty");
 
-         fileOperationView.TriggerCloseFileEvent();
+            fileOperationView.TriggerCloseFileEvent();
+
+            imageControllerWrapper.WaitForClosed();
+            }
          }
       }
    }

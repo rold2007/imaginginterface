@@ -26,9 +26,9 @@
          set;
          }
 
-      public string DisplayName(IRawPluginModel rawPluginModel)
+      public bool IsDynamic(IRawPluginModel rawPluginModel)
          {
-         return "DisplayName";
+         return false;
          }
 
       public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)

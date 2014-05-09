@@ -66,12 +66,13 @@
          {
          if (this.pluginsTabControl.SelectedTab != null)
             {
-            return this.pluginsTabControl.SelectedTab.Controls[0] as IRawPluginView;
+            if (this.pluginsTabControl.SelectedTab.Controls.Count > 0)
+               {
+               return this.pluginsTabControl.SelectedTab.Controls[0] as IRawPluginView;
+               }
             }
-         else
-            {
-            return null;
-            }
+
+         return null;
          }
 
       public void RemovePlugin(IRawPluginView rawPluginView)

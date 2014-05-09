@@ -61,6 +61,13 @@
          this.DragDropFile(null, new DragDropEventArgs(files));
          }
 
+      public void TriggerFileExit()
+         {
+         Assert.IsNotNull(this.FileExit);
+         
+         this.FileExit(this, EventArgs.Empty);
+         }
+
       public string[] OpenFile()
          {
          return this.Files;

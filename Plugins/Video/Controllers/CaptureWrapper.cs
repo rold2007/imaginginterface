@@ -13,6 +13,7 @@
    public class CaptureWrapper : ICaptureWrapper
       {
       private Capture capture;
+      private double framePeriod;
 
       ~CaptureWrapper()
          {
@@ -43,6 +44,14 @@
             }
          }
 
+      public double FramePeriod
+         {
+         get
+            {
+            return this.framePeriod;
+            }
+         }
+
       public void Dispose()
          {
          this.Dispose(true);
@@ -58,6 +67,8 @@
 
       public Image<Gray, byte> RetrieveGrayFrame()
          {
+         double frameRate = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FPS);
+
          return this.capture.RetrieveGrayFrame();
          }
 
@@ -78,6 +89,17 @@
          if (this.capture == null)
             {
             this.capture = new Capture();
+
+            double frameRate = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FPS);
+
+            if (frameRate > 0.0)
+               {
+               this.framePeriod = 1000 / frameRate;
+               }
+            else
+               {
+               this.framePeriod = 1000.0 / 30.0;
+               }
             }
          }
       }

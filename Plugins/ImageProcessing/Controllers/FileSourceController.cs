@@ -39,11 +39,9 @@
             }
          }
 
-      public string DisplayName(IRawPluginModel rawPluginModel)
+      public bool IsDynamic(IRawPluginModel rawPluginModel)
          {
-         IFileSourceModel fileSourceModel = rawPluginModel as IFileSourceModel;
-
-         return fileSourceModel.Filename;
+         return false;
          }
 
       public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
