@@ -66,13 +66,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SimpleInjector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SimpleInjector, Version=2.4.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\SimpleInjector.dll</HintPath>
+      <HintPath>..\..\Libs\SimpleInjector.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector.Packaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SimpleInjector.Packaging, Version=2.4.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\SimpleInjector.Packaging.dll</HintPath>
+      <HintPath>..\..\Libs\SimpleInjector.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

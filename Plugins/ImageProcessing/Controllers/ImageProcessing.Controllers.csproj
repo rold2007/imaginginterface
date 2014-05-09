@@ -78,7 +78,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Magick.NET-x86">
-      <HintPath>..\..\..\..\..\..\..\..\Documents\Data\Programmation\Projets\ImagingInterface\Libs\Magick.NET-x86.dll</HintPath>
+      <HintPath>..\..\..\Libs\Magick.NET-x86.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -100,17 +101,17 @@
     <Compile Include="RotateController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\Documents\Data\Programmation\Projets\ImagingInterface\Core\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
+    <ProjectReference Include="..\..\..\Core\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
       <Project>{fa7dbe95-8bd7-4169-82b2-8884cc31d6d0}</Project>
       <Name>ImagingInterface.Controllers.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\Documents\Data\Programmation\Projets\ImagingInterface\Core\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
+    <ProjectReference Include="..\..\..\Core\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
       <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
       <Name>ImagingInterface.Models.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\Documents\Data\Programmation\Projets\ImagingInterface\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
+    <ProjectReference Include="..\..\..\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
       <Private>False</Private>

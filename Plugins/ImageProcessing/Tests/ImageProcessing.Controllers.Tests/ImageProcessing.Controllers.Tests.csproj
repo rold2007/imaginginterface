@@ -68,25 +68,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator.SimpleInjectorAdapter">
-      <HintPath>..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
+      <HintPath>..\..\..\..\Libs\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\Emgu.CV.dll</HintPath>
+    <Reference Include="Emgu.CV">
+      <HintPath>..\..\..\..\Libs\Emgu.CV.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.Util, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\Emgu.Util.dll</HintPath>
+    <Reference Include="Emgu.Util">
+      <HintPath>..\..\..\..\Libs\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="SimpleInjector">
-      <HintPath>..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Libs\SimpleInjector.dll</HintPath>
+      <HintPath>..\..\..\..\Libs\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -110,26 +108,6 @@
     <Compile Include="Views\RotateView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj">
-      <Project>{0f3237a4-3da2-40cc-924f-d2431376e3ba}</Project>
-      <Name>ImageProcessing.Controllers.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Controllers\ImageProcessing.Controllers.csproj">
-      <Project>{34bce76c-484c-487d-8d6b-d3b475974183}</Project>
-      <Name>ImageProcessing.Controllers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
-      <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
-      <Name>ImageProcessing.Models.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Models\ImageProcessing.Models.csproj">
-      <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
-      <Name>ImageProcessing.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\..\My Documents\Data\Programmation\Projets\ImagingInterface\Plugins\ImageProcessing\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj">
-      <Project>{deee4845-897d-41f4-925d-4720f6f1f986}</Project>
-      <Name>ImageProcessing.Views.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Core\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
       <Project>{fa7dbe95-8bd7-4169-82b2-8884cc31d6d0}</Project>
       <Name>ImagingInterface.Controllers.Interfaces</Name>
@@ -157,6 +135,26 @@
     <ProjectReference Include="..\..\..\..\Core\Tests\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj">
       <Project>{1692fc94-ec70-44c5-b856-694648bafa73}</Project>
       <Name>ImagingInterface.Tests.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj">
+      <Project>{0f3237a4-3da2-40cc-924f-d2431376e3ba}</Project>
+      <Name>ImageProcessing.Controllers.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controllers\ImageProcessing.Controllers.csproj">
+      <Project>{34bce76c-484c-487d-8d6b-d3b475974183}</Project>
+      <Name>ImageProcessing.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
+      <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
+      <Name>ImageProcessing.Models.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Models\ImageProcessing.Models.csproj">
+      <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
+      <Name>ImageProcessing.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj">
+      <Project>{deee4845-897d-41f4-925d-4720f6f1f986}</Project>
+      <Name>ImageProcessing.Views.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
