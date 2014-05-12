@@ -100,6 +100,10 @@
                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
 
+               int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
+
+               GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+
                if (this.imageModel.IsGrayscale)
                   {
                   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
@@ -108,6 +112,8 @@
                   {
                   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
                   }
+
+               GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
                }
 
             this.glControlInitialized = true;
