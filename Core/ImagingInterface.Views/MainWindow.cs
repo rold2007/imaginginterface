@@ -202,11 +202,6 @@
                      {
                      // Move the splitter
                      splitContainer.SplitterDistance = e.X;
-                     Trace.WriteLine(string.Format("X: {0} Distance: {1}", e.X, splitContainer.SplitterDistance));
-                     }
-                  else
-                     {
-                     Trace.WriteLine(string.Format("Out X: {0} Distance {1}", e.X, splitContainer.SplitterDistance));
                      }
                   }
                else
