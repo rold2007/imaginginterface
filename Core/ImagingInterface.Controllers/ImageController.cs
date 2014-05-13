@@ -156,6 +156,20 @@
             }
          }
 
+      public void RemoveImageProcessingController(IPluginController pluginController, IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
+         {
+         if (!this.closing)
+            {
+            // For now, only one processing controller is supported. In the future, it should be possible to "pin" some
+            // image processing controllers and overwrite any unpinned duplicate.
+            this.imageProcessingControllers.Clear();
+
+            // If an assert pops here while running a unit test with NCrunch, you need to use
+            // the AsynchronousTestRunner class to initialize a proper SynchronizationContext
+            this.CreateLiveUpdateTask(TaskScheduler.FromCurrentSynchronizationContext(), false);
+            }
+         }
+
       private void CreateDynamicUpdateTasks(TaskScheduler taskScheduler)
          {
          bool isDynamic = this.imageSourceController.IsDynamic(this.imageSourceRawPluginModel);

@@ -10,6 +10,7 @@
    using System.Threading.Tasks;
    using System.Windows.Forms;
    using ImageProcessing.Views;
+   using ImageProcessing.Views.EventArguments;
 
    public partial class InvertView : UserControl, IInvertView
       {
@@ -18,17 +19,17 @@
          this.InitializeComponent();
          }
 
-      public event EventHandler Invert;
+      public event EventHandler<InvertEventArgs> Invert;
 
       public void Close()
          {
          }
 
-      private void InvertButton_Click(object sender, EventArgs e)
+      private void InvertCheckBox_CheckedChanged(object sender, EventArgs e)
          {
          if (this.Invert != null)
             {
-            this.Invert(this, EventArgs.Empty);
+            this.Invert(this, new InvertEventArgs(this.InvertCheckBox.Checked));
             }
          }
       }

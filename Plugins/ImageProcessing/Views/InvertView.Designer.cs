@@ -28,31 +28,33 @@
       /// </summary>
       private void InitializeComponent()
          {
-         this.invertButton = new System.Windows.Forms.Button();
+         this.InvertCheckBox = new System.Windows.Forms.CheckBox();
          this.SuspendLayout();
          // 
-         // invertButton
+         // InvertCheckBox
          // 
-         this.invertButton.Location = new System.Drawing.Point(0, 0);
-         this.invertButton.Name = "invertButton";
-         this.invertButton.Size = new System.Drawing.Size(75, 23);
-         this.invertButton.TabIndex = 0;
-         this.invertButton.Text = "Invert";
-         this.invertButton.UseVisualStyleBackColor = true;
-         this.invertButton.Click += new System.EventHandler(this.InvertButton_Click);
+         this.InvertCheckBox.AutoSize = true;
+         this.InvertCheckBox.Location = new System.Drawing.Point(0, 3);
+         this.InvertCheckBox.Name = "InvertCheckBox";
+         this.InvertCheckBox.Size = new System.Drawing.Size(53, 17);
+         this.InvertCheckBox.TabIndex = 1;
+         this.InvertCheckBox.Text = "Invert";
+         this.InvertCheckBox.UseVisualStyleBackColor = true;
+         this.InvertCheckBox.CheckedChanged += new System.EventHandler(this.InvertCheckBox_CheckedChanged);
          // 
          // InvertView
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.Controls.Add(this.invertButton);
+         this.Controls.Add(this.InvertCheckBox);
          this.Name = "InvertView";
          this.ResumeLayout(false);
+         this.PerformLayout();
 
          }
 
       #endregion
 
-      private System.Windows.Forms.Button invertButton;
+      private System.Windows.Forms.CheckBox InvertCheckBox;
       }
    }
