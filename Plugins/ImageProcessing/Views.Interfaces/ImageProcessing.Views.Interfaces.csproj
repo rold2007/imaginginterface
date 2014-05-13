@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventArguments\InvertEventArgs.cs" />
     <Compile Include="EventArguments\RotateEventArgs.cs" />
     <Compile Include="IInvertView.cs" />
     <Compile Include="IRotateView.cs" />

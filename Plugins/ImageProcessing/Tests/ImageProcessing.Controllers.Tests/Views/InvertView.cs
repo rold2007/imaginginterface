@@ -6,10 +6,11 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImageProcessing.Views;
+   using ImageProcessing.Views.EventArguments;
 
    public class InvertView : IInvertView
       {
-      public event EventHandler Invert;
+      public event EventHandler<InvertEventArgs> Invert;
 
       public bool CloseCalled
          {
@@ -17,11 +18,11 @@
          private set;
          }
 
-      public void TriggerInvert()
+      public void TriggerInvert(bool invert)
          {
          if (this.Invert != null)
             {
-            this.Invert(this, EventArgs.Empty);
+            this.Invert(this, new InvertEventArgs(invert));
             }
          }
 

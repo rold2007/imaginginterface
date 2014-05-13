@@ -91,7 +91,7 @@
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
-            invertView.TriggerInvert();
+            invertView.TriggerInvert(true);
 
             imageControllerWrapper.WaitForDisplayUpdate();
             }
@@ -101,7 +101,15 @@
             // Test the 3 channels code
             imageSourceController.ImageData = new byte[1, 1, 3];
 
-            invertView.TriggerInvert();
+            invertView.TriggerInvert(true);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
+
+         // Test removing the invert processing
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            invertView.TriggerInvert(false);
 
             imageControllerWrapper.WaitForDisplayUpdate();
             }

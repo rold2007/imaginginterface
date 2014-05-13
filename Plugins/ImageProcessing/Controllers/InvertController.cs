@@ -16,6 +16,7 @@
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
+   using ImageProcessing.Views.EventArguments;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
@@ -103,13 +104,20 @@
             }
          }
 
-      private void InvertView_Invert(object sender, EventArgs e)
+      private void InvertView_Invert(object sender, InvertEventArgs e)
          {
          IImageController imageController = this.imageManagerController.GetActiveImage();
 
          if (imageController != null)
             {
-            imageController.AddImageProcessingController(this, this, null);
+            if (e.Invert)
+               {
+               imageController.AddImageProcessingController(this, this, null);
+               }
+            else
+               {
+               imageController.RemoveImageProcessingController(this, this, null);
+               }
             }
          }
       }
