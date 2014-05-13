@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Controllers.EventArguments
+﻿namespace ImagingInterface.Plugins.EventArguments
    {
    using System;
    using System.Collections.Generic;

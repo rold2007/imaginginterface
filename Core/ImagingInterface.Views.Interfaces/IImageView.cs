@@ -6,6 +6,7 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
 
    public interface IImageView : IRawImageView
       {

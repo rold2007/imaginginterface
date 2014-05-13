@@ -78,8 +78,13 @@
   <ItemGroup>
     <Compile Include="IAboutBoxModel.cs" />
     <Compile Include="IImageModel.cs" />
-    <Compile Include="IRawImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
+      <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
+      <Name>ImagingInterface.Plugins.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

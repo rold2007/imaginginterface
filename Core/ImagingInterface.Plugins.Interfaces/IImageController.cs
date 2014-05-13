@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Controllers
+﻿namespace ImagingInterface.Plugins
    {
    using System;
    using System.Collections.Generic;
@@ -6,10 +6,8 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Views;
+   using ImagingInterface.Plugins.EventArguments;
 
    public interface IImageController
       {

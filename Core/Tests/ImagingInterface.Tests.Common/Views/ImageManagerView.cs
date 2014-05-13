@@ -5,7 +5,7 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Views;
 
    public class ImageManagerView : IImageManagerView

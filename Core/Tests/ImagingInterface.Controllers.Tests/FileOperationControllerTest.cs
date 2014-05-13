@@ -10,7 +10,6 @@
    using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
-   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
