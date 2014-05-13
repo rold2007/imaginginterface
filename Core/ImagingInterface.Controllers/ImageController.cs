@@ -8,9 +8,9 @@
    using System.Drawing;
    using System.Threading;
    using System.Threading.Tasks;
-   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Plugins.EventArguments;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
 

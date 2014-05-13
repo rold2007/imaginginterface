@@ -75,16 +75,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventArguments\DisplayUpdateEventArgs.cs" />
     <Compile Include="IFileSourceController.cs" />
     <Compile Include="IFileSourceModel.cs" />
+    <Compile Include="IImageController.cs" />
+    <Compile Include="IImageManagerController.cs" />
+    <Compile Include="IImageProcessingController.cs" />
     <Compile Include="IImageSourceController.cs" />
     <Compile Include="IPluginController.cs" />
     <Compile Include="IPluginModel.cs" />
     <Compile Include="IPluginView.cs" />
+    <Compile Include="IRawImageModel.cs" />
+    <Compile Include="IRawImageView.cs" />
     <Compile Include="IRawPluginModel.cs" />
     <Compile Include="IRawPluginView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

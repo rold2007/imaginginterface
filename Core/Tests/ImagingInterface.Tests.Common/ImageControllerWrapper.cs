@@ -8,6 +8,8 @@
    using System.Threading.Tasks;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
+   using ImagingInterface.Plugins;
+   using ImagingInterface.Plugins.EventArguments;
 
    public class ImageControllerWrapper : IDisposable
       {
@@ -102,7 +104,7 @@
          imageController.Closed -= this.ImageController_Closed;
          }
 
-      private void ImageController_DisplayUpdated(object sender, Controllers.EventArguments.DisplayUpdateEventArgs e)
+      private void ImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
          {
          IImageController imageController = sender as IImageController;
 

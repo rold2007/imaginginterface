@@ -15,7 +15,6 @@
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImageProcessing.Views.EventArguments;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
    public class RotateController : IRotateController, IImageProcessingController

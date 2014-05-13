@@ -9,7 +9,6 @@
    using System.Threading.Tasks;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
-   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using NUnit.Framework;

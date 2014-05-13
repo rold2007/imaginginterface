@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Views
+﻿namespace ImagingInterface.Plugins
    {
    using System;
    using System.Collections.Generic;
@@ -6,7 +6,12 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public interface IRawImageView
+   public interface IRawImageModel
       {
+      string DisplayName
+         {
+         get;
+         set;
+         }
       }
    }

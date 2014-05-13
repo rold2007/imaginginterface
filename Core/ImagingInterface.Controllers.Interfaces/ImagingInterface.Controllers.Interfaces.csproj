@@ -75,13 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventArguments\DisplayUpdateEventArgs.cs" />
     <Compile Include="IAboutBoxController.cs" />
     <Compile Include="IFileOperationController.cs" />
     <Compile Include="IHelpOperationController.cs" />
-    <Compile Include="IImageController.cs" />
-    <Compile Include="IImageManagerController.cs" />
-    <Compile Include="IImageProcessingController.cs" />
     <Compile Include="IMainController.cs" />
     <Compile Include="IPluginOperationController.cs" />
     <Compile Include="IPluginManagerController.cs" />

@@ -10,6 +10,7 @@
    using Emgu.CV.Structure;
    using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common.Views;
    using ImagingInterface.Views;
    using ImagingInterface.Views.EventArguments;

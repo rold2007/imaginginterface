@@ -9,9 +9,8 @@
    using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
-   using ImagingInterface.Controllers;
-   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Plugins.EventArguments;
    using Microsoft.Practices.ServiceLocation;
    using Video.Models;
    using Video.Views;
