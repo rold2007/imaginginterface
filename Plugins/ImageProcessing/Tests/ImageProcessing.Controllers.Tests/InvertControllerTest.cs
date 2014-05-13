@@ -8,12 +8,13 @@
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
-   using ImageProcessing.Controllers.Tests.Mocks;
    using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
+   using ImagingInterface.Tests.Common.Mocks;
+   using ImagingInterface.Tests.Common.Views;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;

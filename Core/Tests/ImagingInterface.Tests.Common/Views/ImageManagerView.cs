@@ -1,4 +1,4 @@
-﻿namespace ImageProcessing.Controllers.Tests.Views
+﻿namespace ImagingInterface.Tests.Common.Views
    {
    using System;
    using System.Collections.Generic;
@@ -10,24 +10,33 @@
 
    public class ImageManagerView : IImageManagerView
       {
-      private IRawImageView activeRawImageView;
+      private List<IRawImageView> allRawImageViews;
+
+      public ImageManagerView()
+         {
+         this.allRawImageViews = new List<IRawImageView>();
+         }
 
       public void AddImage(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
-         this.activeRawImageView = rawImageView;
+         this.allRawImageViews.Add(rawImageView);
          }
 
       public IRawImageView GetActiveImageView()
          {
-         return this.activeRawImageView;
+         if (this.allRawImageViews.Count == 0)
+            {
+            return null;
+            }
+         else
+            {
+            return this.allRawImageViews[0];
+            }
          }
 
       public void RemoveImage(IRawImageView rawImageView)
          {
-         if (rawImageView == this.activeRawImageView)
-            {
-            this.activeRawImageView = null;
-            }
+         this.allRawImageViews.Remove(rawImageView);
          }
       }
    }

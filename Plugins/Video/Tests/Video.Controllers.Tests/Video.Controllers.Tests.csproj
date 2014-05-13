@@ -86,9 +86,6 @@
     <Compile Include="Mocks\CaptureWrapperMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CaptureView.cs" />
-    <Compile Include="Views\ImageManagerView.cs" />
-    <Compile Include="Views\ImageView.cs" />
-    <Compile Include="Views\MainView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">

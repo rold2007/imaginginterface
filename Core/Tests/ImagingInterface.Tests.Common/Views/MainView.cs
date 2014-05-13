@@ -1,4 +1,4 @@
-﻿namespace Video.Controllers.Tests.Views
+﻿namespace ImagingInterface.Tests.Common.Views
    {
    using System;
    using System.Collections.Generic;
@@ -22,6 +22,12 @@
 
       public void Close()
          {
+         CancelEventArgs cancelEventArgs = new CancelEventArgs();
+
+         if (this.ApplicationClosing != null)
+            {
+            this.ApplicationClosing(this, cancelEventArgs);
+            }
          }
       }
    }
