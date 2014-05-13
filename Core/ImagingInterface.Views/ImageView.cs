@@ -15,10 +15,13 @@
       private bool glControlInitialized = false;
       private int texture;
       private IImageModel imageModel;
+      private bool isFirstPaint = true;
 
       public ImageView()
          {
          this.InitializeComponent();
+
+         this.Dock = DockStyle.Fill;
          }
 
       public double UpdateFrequency
@@ -45,8 +48,18 @@
 
             this.InitializeGLControl();
 
-            // Optimization suggested in OpenTK forum instead of calling this.GLControl.Invalidate()
-            this.GLControl_Paint(this, null);
+            // The creation of the control already triggers a paint so don't force the first paint
+            if (this.isFirstPaint == true)
+               {
+               this.isFirstPaint = false;
+
+               this.glControl.Invalidate();
+               }
+            else
+               {
+               // Optimization suggested in OpenTK forum instead of calling this.glControl.Invalidate()
+               this.GLControl_Paint(this, null);
+               }
             }
          }
 
@@ -66,6 +79,7 @@
          {
          this.glControlLoaded = true;
 
+         // Display a first buffer of size 1x1x1
          this.InitializeGLControl();
          }
 
@@ -159,6 +173,11 @@
          GL.End();
 
          this.glControl.SwapBuffers();
+         }
+
+      private void ImageView_Scroll(object sender, ScrollEventArgs e)
+         {
+         this.glControl.Invalidate();
          }
       }
    }

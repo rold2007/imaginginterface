@@ -50,7 +50,8 @@
          this.AutoScroll = true;
          this.Controls.Add(this.glControl);
          this.Name = "ImageView";
-         this.Size = new System.Drawing.Size(82, 82);
+         this.Size = new System.Drawing.Size(65, 65);
+         this.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ImageView_Scroll);
          this.ResumeLayout(false);
 
          }
