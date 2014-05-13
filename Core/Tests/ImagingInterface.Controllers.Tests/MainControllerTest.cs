@@ -7,6 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Tests.Views;
+   using ImagingInterface.Tests.Common.Views;
    using ImagingInterface.Views;
    using NUnit.Framework;
    using Plugins;

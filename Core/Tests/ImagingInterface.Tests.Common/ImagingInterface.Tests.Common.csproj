@@ -60,7 +60,11 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="ImageControllerWrapper.cs" />
+    <Compile Include="Mocks\ImageSourceController.cs" />
     <Compile Include="STASynchronizationContext.cs" />
+    <Compile Include="Views\ImageManagerView.cs" />
+    <Compile Include="Views\ImageView.cs" />
+    <Compile Include="Views\MainView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
@@ -75,7 +79,20 @@
       <Project>{fa7dbe95-8bd7-4169-82b2-8884cc31d6d0}</Project>
       <Name>ImagingInterface.Controllers.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
+      <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
+      <Name>ImagingInterface.Models.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
+      <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
+      <Name>ImagingInterface.Plugins.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
+      <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
+      <Name>ImagingInterface.Views.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

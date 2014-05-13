@@ -8,7 +8,6 @@
    using System.Threading.Tasks;
    using CommonServiceLocator.SimpleInjectorAdapter;
    using ImageProcessing.Controllers;
-   using ImageProcessing.Controllers.Tests.Mocks;
    using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
@@ -16,6 +15,8 @@
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
+   using ImagingInterface.Tests.Common.Mocks;
+   using ImagingInterface.Tests.Common.Views;
    using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;

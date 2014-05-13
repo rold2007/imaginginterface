@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Controllers.Tests.Views
+﻿namespace ImagingInterface.Tests.Common.Views
    {
    using System;
    using System.Collections.Generic;
@@ -11,6 +11,8 @@
 
    public class ImageView : IImageView
       {
+      private double updateFrequency = 0.0f;
+
       public IImageModel AssignedImageModel
          {
          get;
@@ -19,8 +21,15 @@
 
       public double UpdateFrequency
          {
-         get;
-         set;
+         get
+            {
+            return this.updateFrequency;
+            }
+
+         set
+            {
+            this.updateFrequency = value;
+            }
          }
 
       public void UpdateDisplay()
