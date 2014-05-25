@@ -16,7 +16,7 @@
       public bool Invert
          {
          get;
-         set;
+         private set;
          }
       }
    }

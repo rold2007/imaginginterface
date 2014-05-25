@@ -16,7 +16,7 @@
       public string[] Data
          {
          get;
-         set;
+         private set;
          }
       }
    }

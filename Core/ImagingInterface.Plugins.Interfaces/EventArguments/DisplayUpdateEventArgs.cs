@@ -17,7 +17,7 @@
       public IRawPluginModel RawPluginModel
          {
          get;
-         set;
+         private set;
          }
       }
    }

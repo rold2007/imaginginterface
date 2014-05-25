@@ -332,16 +332,24 @@
          Debug.Assert(this != null, "Protect the next assert.");
          Debug.Assert(this.lastDisplayNextImageTask != null, "The last display task should not be set to null if another task is still running.");
 
+         bool isLastUpdateQueued;
+
          if (Task.CurrentId == this.lastDisplayNextImageTask.Id)
             {
             this.lastDisplayNextImageTask = null;
             this.lastFetchNextImageFromSourceTask = null;
+
+            isLastUpdateQueued = true;
+            }
+         else
+            {
+            isLastUpdateQueued = false;
             }
 
          // This method and the closing event should run on the main thread so there is no potential concurrency issue
          if (!this.closing)
             {
-            this.UpdateDisplayImageData(parentTask.Result);
+            this.UpdateDisplayImageData(parentTask.Result, isLastUpdateQueued);
 
             if (this.DisplayUpdated != null)
                {
@@ -358,7 +366,7 @@
             }
          }
 
-      private void UpdateDisplayImageData(byte[, ,] imageData)
+      private void UpdateDisplayImageData(byte[, ,] imageData, bool forced)
          {
          // Do not clone the result here. It is the responsibility of the IImageSourceController to return the same (unmodified) image
          // or a new image
@@ -366,7 +374,7 @@
             {
             long lastDisplayUpdateMilliseconds = this.lastDisplayUpdate.ElapsedMilliseconds;
 
-            if (lastDisplayUpdateMilliseconds > this.updatePeriod)
+            if (lastDisplayUpdateMilliseconds > this.updatePeriod || forced)
                {
                this.imageModel.DisplayImageData = imageData;
                this.imageView.UpdateDisplay();
@@ -375,6 +383,8 @@
                }
             else
                {
+               Debug.WriteLine("Skipping display update");
+
                lastDisplayUpdateMilliseconds = 0;
                }
             }
