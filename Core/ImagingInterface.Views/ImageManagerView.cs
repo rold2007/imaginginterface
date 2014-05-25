@@ -57,11 +57,14 @@
 
       public IRawImageView GetActiveImageView()
          {
-         if (this.imagesTabControl.SelectedTab != null)
+         if (this.imagesTabControl.IsHandleCreated)
             {
-            if (this.imagesTabControl.SelectedTab.Controls.Count > 0)
+            if (this.imagesTabControl.SelectedTab != null)
                {
-               return this.imagesTabControl.SelectedTab.Controls[0] as IRawImageView;
+               if (this.imagesTabControl.SelectedTab.Controls.Count > 0)
+                  {
+                  return this.imagesTabControl.SelectedTab.Controls[0] as IRawImageView;
+                  }
                }
             }
 

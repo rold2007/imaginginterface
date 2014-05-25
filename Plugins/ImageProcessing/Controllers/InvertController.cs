@@ -1,19 +1,11 @@
 ﻿namespace ImageProcessing.Controllers
    {
    using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
    using System.Diagnostics;
    using System.Drawing;
-   using System.Drawing.Imaging;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using Emgu.CV;
-   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
-   using Emgu.Util;
-   using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImageProcessing.Views.EventArguments;

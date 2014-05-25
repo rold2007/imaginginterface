@@ -16,7 +16,7 @@
       public double Angle
          {
          get;
-         set;
+         private set;
          }
       }
    }
