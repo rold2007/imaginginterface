@@ -77,6 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CudafyView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CudafyView.Designer.cs">
+      <DependentUpon>CudafyView.cs</DependentUpon>
+    </Compile>
     <Compile Include="InvertView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,6 +98,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CudafyView.resx">
+      <DependentUpon>CudafyView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InvertView.resx">
       <DependentUpon>InvertView.cs</DependentUpon>
     </EmbeddedResource>

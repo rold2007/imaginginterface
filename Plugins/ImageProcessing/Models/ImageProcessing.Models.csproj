@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CudafyModel.cs" />
     <Compile Include="FileSourceModel.cs" />
     <Compile Include="InvertModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

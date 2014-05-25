@@ -75,8 +75,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventArguments\CudafyAddEventArgs.cs" />
+    <Compile Include="EventArguments\CudafyBlockSizeChangedEventArgs.cs" />
+    <Compile Include="EventArguments\CudafyGPUChangedEventArgs.cs" />
+    <Compile Include="EventArguments\CudafyGridSizeChangedEventArgs.cs" />
     <Compile Include="EventArguments\InvertEventArgs.cs" />
     <Compile Include="EventArguments\RotateEventArgs.cs" />
+    <Compile Include="ICudafyView.cs" />
     <Compile Include="IInvertView.cs" />
     <Compile Include="IRotateView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
