@@ -231,7 +231,7 @@
          imageView.UpdateFrequency = 30;
 
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
-         IImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>();
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
@@ -244,6 +244,19 @@
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
+
+         imageSourceController.ImageData = new byte[1, 1, 1];
+         imageView.UpdateFrequency = double.Epsilon;
+         imageController = this.ServiceLocator.GetInstance<IImageController>();
+
+         // Let the UpdateDisplayImageData() skip a frame
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
             imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
             imageControllerWrapper.WaitForDisplayUpdate();
