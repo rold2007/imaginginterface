@@ -383,8 +383,6 @@
                }
             else
                {
-               Debug.WriteLine("Skipping display update");
-
                lastDisplayUpdateMilliseconds = 0;
                }
             }
