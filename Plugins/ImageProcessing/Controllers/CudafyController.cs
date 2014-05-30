@@ -13,6 +13,7 @@
    using Cudafy.Translator;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImageProcessing.Cudafied;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImageProcessing.Views.EventArguments;
@@ -41,7 +42,6 @@
          this.cudafyView.GridSizeChanged += this.CudafyView_GridSizeChanged;
          this.cudafyView.BlockSizeXChanged += this.CudafyView_BlockSizeXChanged;
          this.cudafyView.BlockSizeYChanged += this.CudafyView_BlockSizeYChanged;
-         this.cudafyView.BlockSizeZChanged += this.CudafyView_BlockSizeZChanged;
 
          this.gpgpus = new Dictionary<string, GPGPU>();
          this.gpgpuProperties = new Dictionary<string, GPGPUProperties>();
@@ -53,9 +53,9 @@
          }
 
       ~CudafyController()
-         {
-         this.Dispose(false);
-         }
+         { // ncrunch: no coverage
+         this.Dispose(false); // ncrunch: no coverage
+         } // ncrunch: no coverage
 
       public event CancelEventHandler Closing;
 
@@ -145,7 +145,7 @@
 
                for (int channel = 0; channel < allocatedZ; channel++)
                   {
-                  gpgpu.LaunchAsync(gridSize, blockSize, 0, CudafyController.Add, gpuSourceData, allocatedX, allocatedY, cudafyModel.Add, channel, gpuDestinationData);
+                  gpgpu.LaunchAsync(gridSize, blockSize, 0, Primitives.Add, gpuSourceData, allocatedX, allocatedY, cudafyModel.Add, channel, gpuDestinationData);
                   }
 
                imageDataOutput = new byte[allocatedY, allocatedX, allocatedZ];
@@ -208,18 +208,6 @@
             }
          }
 
-      [Cudafy]
-      private static void Add(GThread thread, byte[, ,] sourceData, int lengthX, int lengthY, int add, int channel, byte[, ,] destinationData)
-         {
-         int x = thread.threadIdx.x + (thread.blockIdx.x * thread.blockDim.x);
-         int y = thread.threadIdx.y + (thread.blockIdx.y * thread.blockDim.y);
-
-         if ((x < lengthX) && (y < lengthY))
-            {
-            destinationData[y, x, channel] = (byte)((sourceData[y, x, channel] + add) % byte.MaxValue);
-            }
-         }
-
       private void CudafyView_Add(object sender, CudafyAddEventArgs e)
          {
          if (this.cudafyModel.Add != e.Add)
@@ -273,7 +261,7 @@
          this.cudafyModel.GridSize = new int[] { this.cudafyView.GridSizeX, this.cudafyView.GridSizeY, this.cudafyView.GridSizeZ };
          this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
 
-         int totalBlockThreads = this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2];
+         long totalBlockThreads = this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2];
 
          if (totalBlockThreads > gpgpuProperties.MaxThreadsPerBlock)
             {
@@ -290,11 +278,11 @@
          this.TriggerAddProcessing();
          }
 
-      private void CudafyView_BlockSizeXChanged(object sender, CudafyBlockSizeChangedEventArgs e)
+      private void CudafyView_BlockSizeXChanged(object sender, EventArgs e)
          {
-         if (e.BlockSize * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
+         if (this.cudafyView.BlockSizeX * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
             {
-            this.cudafyView.BlockSizeY = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / e.BlockSize));
+            this.cudafyView.BlockSizeY = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / this.cudafyView.BlockSizeX));
             }
 
          this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
@@ -302,20 +290,16 @@
          this.TriggerAddProcessing();
          }
 
-      private void CudafyView_BlockSizeYChanged(object sender, CudafyBlockSizeChangedEventArgs e)
+      private void CudafyView_BlockSizeYChanged(object sender, EventArgs e)
          {
-         if (e.BlockSize * this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
+         if (this.cudafyView.BlockSizeY * this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
             {
-            this.cudafyView.BlockSizeX = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / e.BlockSize));
+            this.cudafyView.BlockSizeX = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / this.cudafyView.BlockSizeY));
             }
 
          this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
 
          this.TriggerAddProcessing();
-         }
-
-      private void CudafyView_BlockSizeZChanged(object sender, CudafyBlockSizeChangedEventArgs e)
-         {
          }
 
       private void InitializeGPUs()
@@ -340,11 +324,11 @@
                      try
                         {
                         CudafyTranslator.Language = language;
-                        CudafyModule km = CudafyTranslator.Cudafy(eArchitecture.Unknown);
+                        CudafyModule cudafyModule = CudafyTranslator.Cudafy(eArchitecture.Unknown, typeof(Primitives));
 
-                        if (!gpgpu.IsModuleLoaded(km.Name))
+                        if (!gpgpu.IsModuleLoaded(cudafyModule.Name))
                            {
-                           gpgpu.LoadModule(km);
+                           gpgpu.LoadModule(cudafyModule);
                            }
 
                         gpgpu.EnableMultithreading();
@@ -358,15 +342,18 @@
                      catch (CudafyCompileException)
                         {
                         // Language not supported
+
+                        // ncrunch: no coverage start
                         }
                      }
                   }
                }
             catch (DllNotFoundException)
                {
-               // Device type not supported
-               }
+               } // ncrunch: no coverage end
             }
+
+         Debug.WriteLine("Number of initialized gpus: " + this.gpgpus.Count.ToString());
          }
       }
    }

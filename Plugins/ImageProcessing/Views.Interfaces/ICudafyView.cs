@@ -13,11 +13,9 @@
 
       event EventHandler<CudafyGridSizeChangedEventArgs> GridSizeChanged;
 
-      event EventHandler<CudafyBlockSizeChangedEventArgs> BlockSizeXChanged;
+      event EventHandler BlockSizeXChanged;
 
-      event EventHandler<CudafyBlockSizeChangedEventArgs> BlockSizeYChanged;
-
-      event EventHandler<CudafyBlockSizeChangedEventArgs> BlockSizeZChanged;
+      event EventHandler BlockSizeYChanged;
 
       int GridSizeX
          {
