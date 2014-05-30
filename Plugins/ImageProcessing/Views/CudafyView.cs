@@ -28,11 +28,9 @@
 
       public event EventHandler<CudafyGridSizeChangedEventArgs> GridSizeChanged;
 
-      public event EventHandler<CudafyBlockSizeChangedEventArgs> BlockSizeXChanged;
+      public event EventHandler BlockSizeXChanged;
 
-      public event EventHandler<CudafyBlockSizeChangedEventArgs> BlockSizeYChanged;
-
-      public event EventHandler<CudafyBlockSizeChangedEventArgs> BlockSizeZChanged;
+      public event EventHandler BlockSizeYChanged;
 
       public int GridSizeX
          {
@@ -278,7 +276,7 @@
          {
          if (this.BlockSizeXChanged != null)
             {
-            this.BlockSizeXChanged(this, new CudafyBlockSizeChangedEventArgs(this.BlockSizeX));
+            this.BlockSizeXChanged(this, EventArgs.Empty);
             }
          }
 
@@ -286,7 +284,7 @@
          {
          if (this.BlockSizeYChanged != null)
             {
-            this.BlockSizeYChanged(this, new CudafyBlockSizeChangedEventArgs(this.BlockSizeY));
+            this.BlockSizeYChanged(this, EventArgs.Empty);
             }
          }
 
