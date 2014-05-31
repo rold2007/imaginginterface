@@ -2,6 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
+   using System.Diagnostics;
    using System.IO;
    using System.Linq;
    using System.Reflection;
@@ -31,16 +32,30 @@
       [STAThread]
       public static void Main()
          {
-         Program.InitializePluginFolders();
+         TraceSource traceSource = new TraceSource("Critical", SourceLevels.Critical);
+         Trace.AutoFlush = true;
 
-         AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromSameFolder);
+         try
+            {
+            TextWriterTraceListener textWriterTraceListener = new TextWriterTraceListener("log.txt");
 
-         Application.EnableVisualStyles();
-         Application.SetCompatibleTextRenderingDefault(false);
+            traceSource.Listeners.Add(textWriterTraceListener);
 
-         Program.Bootstrap();
+            Program.InitializePluginFolders();
 
-         Application.Run(Program.serviceLocator.GetInstance<MainWindow>());
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromSameFolder);
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            Program.Bootstrap();
+
+            Application.Run(Program.serviceLocator.GetInstance<MainWindow>());
+            }
+         catch (Exception e)
+            {
+            traceSource.TraceEvent(TraceEventType.Critical, 0, e.ToString());
+            }
          }
 
       private static void InitializePluginFolders()
@@ -90,7 +105,7 @@
 
          // Service
          Program.serviceLocator = new SimpleInjectorServiceLocatorAdapter(container);
-         
+
          container.RegisterSingle<IServiceLocator>(Program.serviceLocator);
 
          // Views
