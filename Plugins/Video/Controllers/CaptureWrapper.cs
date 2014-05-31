@@ -67,9 +67,18 @@
 
       public Image<Gray, byte> RetrieveGrayFrame()
          {
-         double frameRate = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FPS);
+         double nextFrame = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_POS_FRAMES);
 
-         return this.capture.RetrieveGrayFrame();
+         // This seems to be the condition to detect if a camera is already in use by another application
+         // It might not work for all types of cameras though...
+         if (nextFrame == -1)
+            {
+            return this.capture.RetrieveGrayFrame();
+            }
+         else
+            {
+            return new Image<Gray, byte>(this.Width, this.Height);
+            }
          }
 
       protected virtual void Dispose(bool disposing)
