@@ -352,8 +352,6 @@
                {
                } // ncrunch: no coverage end
             }
-
-         Debug.WriteLine("Number of initialized gpus: " + this.gpgpus.Count.ToString());
          }
       }
    }
