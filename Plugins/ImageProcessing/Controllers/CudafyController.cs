@@ -350,6 +350,10 @@
                }
             catch (DllNotFoundException)
                {
+               }
+            catch (Cloo.ComputeException)
+               {
+               // Language not supported
                } // ncrunch: no coverage end
             }
          }
