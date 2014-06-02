@@ -55,11 +55,11 @@
     </Reference>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\Libs\Emgu.CV.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\..\Libs\Emgu.Util.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
