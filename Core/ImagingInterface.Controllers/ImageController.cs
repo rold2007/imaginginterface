@@ -349,7 +349,7 @@
          // This method and the closing event should run on the main thread so there is no potential concurrency issue
          if (!this.closing)
             {
-            Debug.Assert(parentTask.Status == TaskStatus.RanToCompletion, "The parent task should be completed.");
+            Debug.Assert(parentTask.Status == TaskStatus.RanToCompletion, string.Format("The parent task should be completed. TaskStatus: {0}", parentTask.Status.ToString()));
 
             this.UpdateDisplayImageData(parentTask.Result, isLastUpdateQueued);
 
