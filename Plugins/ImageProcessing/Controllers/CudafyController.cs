@@ -351,6 +351,10 @@
             catch (DllNotFoundException)
                {
                }
+            catch (InvalidOperationException)
+               {
+               // Language not supported
+               }
             catch (Cloo.ComputeException)
                {
                // Language not supported
