@@ -40,5 +40,11 @@
             return this.DisplayImageData.GetLength(2) == 1;
             }
          }
+
+      public double ZoomLevel
+         {
+         get;
+         set;
+         }
       }
    }

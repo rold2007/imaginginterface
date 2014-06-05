@@ -25,5 +25,11 @@
          {
          get;
          }
+
+      double ZoomLevel
+         {
+         get;
+         set;
+         }
       }
    }
