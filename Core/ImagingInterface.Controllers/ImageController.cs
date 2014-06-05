@@ -12,6 +12,7 @@
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
    using ImagingInterface.Views;
+   using ImagingInterface.Views.EventArguments;
    using Microsoft.Practices.ServiceLocation;
 
    public class ImageController : IImageController
@@ -56,6 +57,11 @@
          this.closed = false;
 
          this.imageModel.DisplayImageData = new byte[1, 1, 1];
+         this.imageModel.ZoomLevel = 1.0;
+
+         this.imageView.ZoomLevelIncreased += this.ImageView_ZoomLevelIncreased;
+         this.imageView.ZoomLevelDecreased += this.ImageView_ZoomLevelDecreased;
+         this.imageView.PixelViewChanged += this.ImageView_PixelViewChanged;
          }
 
       ~ImageController()
@@ -388,6 +394,91 @@
                lastDisplayUpdateMilliseconds = 0;
                }
             }
+         }
+
+      private void ImageView_ZoomLevelIncreased(object sender, EventArgs e)
+         {
+         this.imageModel.ZoomLevel *= 2.0;
+
+         this.imageView.UpdateZoomLevel();
+         }
+
+      private void ImageView_ZoomLevelDecreased(object sender, EventArgs e)
+         {
+         this.imageModel.ZoomLevel *= 0.5;
+
+         this.imageView.UpdateZoomLevel();
+         }
+
+      private void ImageView_PixelViewChanged(object sender, PixelViewChangedEventArgs e)
+         {
+         int gray = 0;
+         int[] rgb = null;
+         double[] hsv = null;
+
+         if (this.imageModel.IsGrayscale)
+            {
+            gray = this.imageModel.DisplayImageData[e.PixelPosition.Y, e.PixelPosition.X, 0];
+            }
+         else
+            {
+            rgb = new int[3];
+            hsv = new double[3];
+
+            rgb[0] = this.imageModel.DisplayImageData[e.PixelPosition.Y, e.PixelPosition.X, 0];
+            rgb[1] = this.imageModel.DisplayImageData[e.PixelPosition.Y, e.PixelPosition.X, 1];
+            rgb[2] = this.imageModel.DisplayImageData[e.PixelPosition.Y, e.PixelPosition.X, 2];
+
+            int maximumColorValues = Math.Max(Math.Max(rgb[0], rgb[1]), rgb[2]);
+            
+            hsv[2] = maximumColorValues;
+
+            if (hsv[2] == 0)
+               {
+               hsv[0] = 0;
+               hsv[1] = 0;
+               }
+            else
+               {
+               int minimumColorValues = Math.Min(Math.Min(rgb[0], rgb[1]), rgb[2]);
+               int chroma = maximumColorValues - minimumColorValues;
+
+               hsv[1] = chroma / hsv[2];
+
+               if (chroma == 0)
+                  {
+                  hsv[0] = 0;
+                  }
+               else
+                  {
+                  double huePrime;
+
+                  if (maximumColorValues == rgb[0])
+                     {
+                     huePrime = ((double)(rgb[1] - rgb[2]) / chroma) % 6;
+                     }
+                  else if (maximumColorValues == rgb[1])
+                     {
+                     huePrime = ((double)(rgb[2] - rgb[0]) / chroma) + 2;
+                     }
+                  else
+                     {
+                     Debug.Assert(maximumColorValues == rgb[2], "There should be no other cases. Helps skip huePrime initialization.");
+
+                     huePrime = ((double)(rgb[0] - rgb[1]) / chroma) + 4;
+                     }
+
+                  hsv[0] = Convert.ToInt32(60 * huePrime);
+
+                  if (hsv[0] < 0.0)
+                     {
+                     hsv[0] += 360;
+                     }
+                  }
+               }
+            }
+
+         this.imageView.UpdatePixelView(e.PixelPosition, gray, rgb, hsv);
          }
 
       private class MutableTuple

@@ -274,6 +274,159 @@
          Assert.AreEqual(54, imageModel.Size.Width);
          }
 
+      [Test]
+      public void ZoomLevel()
+         {
+         this.Container.RegisterSingle<IImageView, ImageView>();
+         this.Container.RegisterSingle<IImageModel, ImageModel>();
+
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+
+         Assert.AreEqual(1, imageModel.ZoomLevel);
+
+         imageView.TriggerZoomLevelIncreased();
+
+         Assert.AreEqual(2.0, imageModel.ZoomLevel);
+
+         imageView.TriggerZoomLevelDecreased();
+
+         Assert.AreEqual(1.0, imageModel.ZoomLevel);
+
+         imageView.TriggerZoomLevelDecreased();
+
+         Assert.AreEqual(0.5, imageModel.ZoomLevel);
+         }
+
+      [Test]
+      public void PixelView()
+         {
+         this.Container.RegisterSingle<IImageView, ImageView>();
+         this.Container.RegisterSingle<IImageModel, ImageModel>();
+
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+         Point pixelPosition = new Point();
+
+         imageModel.DisplayImageData = new byte[2, 2, 1];
+
+         imageModel.DisplayImageData[1, 1, 0] = 255;
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(0, imageView.Gray);
+         Assert.IsNull(imageView.RGB);
+         Assert.IsNull(imageView.HSV);
+
+         pixelPosition = new Point(1, 1);
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(255, imageView.Gray);
+         Assert.IsNull(imageView.RGB);
+         Assert.IsNull(imageView.HSV);
+
+         imageModel.DisplayImageData = new byte[3, 3, 3];
+
+         imageModel.DisplayImageData[0, 1, 0] = 0;
+         imageModel.DisplayImageData[0, 1, 1] = 0;
+         imageModel.DisplayImageData[0, 1, 2] = 255;
+         imageModel.DisplayImageData[1, 0, 0] = 0;
+         imageModel.DisplayImageData[1, 0, 1] = 255;
+         imageModel.DisplayImageData[1, 0, 2] = 0;
+         imageModel.DisplayImageData[1, 1, 0] = 255;
+         imageModel.DisplayImageData[1, 1, 1] = 255;
+         imageModel.DisplayImageData[1, 1, 2] = 255;
+         imageModel.DisplayImageData[0, 2, 0] = 255;
+         imageModel.DisplayImageData[0, 2, 1] = 0;
+         imageModel.DisplayImageData[0, 2, 2] = 0;
+         imageModel.DisplayImageData[1, 2, 0] = 255;
+         imageModel.DisplayImageData[1, 2, 1] = 64;
+         imageModel.DisplayImageData[1, 2, 2] = 128;
+
+         pixelPosition = new Point(0, 0);
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(0, imageView.Gray);
+         Assert.AreEqual(0, imageView.RGB[0]);
+         Assert.AreEqual(0, imageView.RGB[1]);
+         Assert.AreEqual(0, imageView.RGB[2]);
+         Assert.AreEqual(0.0, imageView.HSV[0]);
+         Assert.AreEqual(0.0, imageView.HSV[1]);
+         Assert.AreEqual(0.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(1, 0);
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(0, imageView.Gray);
+         Assert.AreEqual(0, imageView.RGB[0]);
+         Assert.AreEqual(0, imageView.RGB[1]);
+         Assert.AreEqual(255, imageView.RGB[2]);
+         Assert.AreEqual(240.0, imageView.HSV[0]);
+         Assert.AreEqual(1.0, imageView.HSV[1]);
+         Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(0, 1);
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(0, imageView.Gray);
+         Assert.AreEqual(0, imageView.RGB[0]);
+         Assert.AreEqual(255, imageView.RGB[1]);
+         Assert.AreEqual(0, imageView.RGB[2]);
+         Assert.AreEqual(120.0, imageView.HSV[0]);
+         Assert.AreEqual(1.0, imageView.HSV[1]);
+         Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(1, 1);
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(0, imageView.Gray);
+         Assert.AreEqual(255, imageView.RGB[0]);
+         Assert.AreEqual(255, imageView.RGB[1]);
+         Assert.AreEqual(255, imageView.RGB[2]);
+         Assert.AreEqual(0.0, imageView.HSV[0]);
+         Assert.AreEqual(0.0, imageView.HSV[1]);
+         Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(2, 0);
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(0, imageView.Gray);
+         Assert.AreEqual(255, imageView.RGB[0]);
+         Assert.AreEqual(0, imageView.RGB[1]);
+         Assert.AreEqual(0, imageView.RGB[2]);
+         Assert.AreEqual(0.0, imageView.HSV[0]);
+         Assert.AreEqual(1.0, imageView.HSV[1]);
+         Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(2, 1);
+
+         imageView.TriggerPixelViewChanged(pixelPosition);
+
+         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         Assert.AreEqual(0, imageView.Gray);
+         Assert.AreEqual(255, imageView.RGB[0]);
+         Assert.AreEqual(64, imageView.RGB[1]);
+         Assert.AreEqual(128, imageView.RGB[2]);
+         Assert.AreEqual(340.0, imageView.HSV[0]);
+         Assert.AreEqual(0.749, imageView.HSV[1], 0.01);
+         Assert.AreEqual(255.0, imageView.HSV[2]);
+         }
+
       private void ImageController_Closing(object sender, CancelEventArgs e)
          {
          e.Cancel = true;
