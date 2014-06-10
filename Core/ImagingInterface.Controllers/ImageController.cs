@@ -22,22 +22,26 @@
       private IServiceLocator serviceLocator;
       private bool closing;
       private bool closed;
-      private Dictionary<IImageProcessingController, IRawPluginModel> imageProcessingControllers;
+      private List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers;
       private Task<byte[, ,]> lastFetchNextImageFromSourceTask;
       private Task lastDisplayNextImageTask;
       private IImageSourceController imageSourceController;
       private IRawPluginModel imageSourceRawPluginModel;
       private Stopwatch lastDisplayUpdate;
       private double updatePeriod;
+      private Dictionary<IPluginController, int> asyncPluginControllers;
+      private HashSet<IPluginController> closingPluginControllers;
 
       public ImageController(IImageView imageView, IImageModel imageModel, IServiceLocator serviceLocator)
          {
          this.imageView = imageView;
          this.imageModel = imageModel;
          this.serviceLocator = serviceLocator;
-         this.imageProcessingControllers = new Dictionary<IImageProcessingController, IRawPluginModel>();
+         this.imageProcessingControllers = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
          this.lastFetchNextImageFromSourceTask = null;
          this.lastDisplayNextImageTask = null;
+         this.asyncPluginControllers = new Dictionary<IPluginController, int>();
+         this.closingPluginControllers = new HashSet<IPluginController>();
 
          this.imageView.AssignImageModel(this.imageModel);
 
@@ -65,8 +69,8 @@
          }
 
       ~ImageController()
-         {
-         }
+         { // ncrunch: no coverage
+         } // ncrunch: no coverage
 
       public event CancelEventHandler Closing;
 
@@ -97,12 +101,18 @@
 
       public void InitializeImageSourceController(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel)
          {
-         this.imageSourceController = imageSourceController;
-         this.imageSourceRawPluginModel = rawPluginModel;
+         if (!this.closing)
+            {
+            if (!this.closingPluginControllers.Contains(imageSourceController))
+               {
+               this.imageSourceController = imageSourceController;
+               this.imageSourceRawPluginModel = rawPluginModel;
 
-         // If an assert pops here while running a unit test with NCrunch, you need to use
-         // the AsynchronousTestRunner class to initialize a proper SynchronizationContext
-         this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
+               // If an assert pops here while running a unit test with NCrunch, you need to use
+               // the STASynchronizationContext class to initialize a proper SynchronizationContext
+               this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
+               }
+            }
          }
 
       public void Close()
@@ -146,23 +156,26 @@
             }
          }
 
-      public void AddImageProcessingController(IPluginController pluginController, IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
+      public void AddImageProcessingController(IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
          {
          if (!this.closing)
             {
-            // For now, only one processing controller is supported. In the future, it should be possible to "pin" some
-            // image processing controllers and overwrite any unpinned duplicate.
-            this.imageProcessingControllers.Clear();
+            if (!this.closingPluginControllers.Contains(imageProcessingController))
+               {
+               // For now, only one processing controller is supported. In the future, it should be possible to "pin" some
+               // image processing controllers and overwrite any unpinned duplicate.
+               this.imageProcessingControllers.Clear();
 
-            this.imageProcessingControllers.Add(imageProcessingController, rawPluginModel);
+               this.imageProcessingControllers.Add(Tuple.Create<IImageProcessingController, IRawPluginModel>(imageProcessingController, rawPluginModel));
 
-            // If an assert pops here while running a unit test with NCrunch, you need to use
-            // the AsynchronousTestRunner class to initialize a proper SynchronizationContext
-            this.CreateLiveUpdateTask(TaskScheduler.FromCurrentSynchronizationContext(), false);
+               // If an assert pops here while running a unit test with NCrunch, you need to use
+               // the STASynchronizationContext class to initialize a proper SynchronizationContext
+               this.CreateLiveUpdateTask(TaskScheduler.FromCurrentSynchronizationContext(), false);
+               }
             }
          }
 
-      public void RemoveImageProcessingController(IPluginController pluginController, IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
+      public void RemoveImageProcessingController(IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
          {
          if (!this.closing)
             {
@@ -171,7 +184,7 @@
             this.imageProcessingControllers.Clear();
 
             // If an assert pops here while running a unit test with NCrunch, you need to use
-            // the AsynchronousTestRunner class to initialize a proper SynchronizationContext
+            // the STASynchronizationContext class to initialize a proper SynchronizationContext
             this.CreateLiveUpdateTask(TaskScheduler.FromCurrentSynchronizationContext(), false);
             }
          }
@@ -203,6 +216,8 @@
 
          fetchNextImageFromSourceTask.Start(TaskScheduler.Default);
 
+         this.RegisterClosingEvent(this.imageSourceController);
+
          this.lastFetchNextImageFromSourceTask = fetchNextImageFromSourceTask;
 
          if (this.imageProcessingControllers.Count > 0)
@@ -214,14 +229,31 @@
             imageSourceTask = fetchNextImageFromSourceTask;
             }
 
+         Debug.Assert(this.imageProcessingControllers.Count <= 1, "Need to support a list of image processing controllers in the MutableTuple");
+
          MutableTuple waitForDisplayNextImageTuple = new MutableTuple(null, null, imageSourceTask, this.lastDisplayNextImageTask, null);
+         MutableTuple displayNextImageTuple = new MutableTuple(this.imageSourceController, this.imageSourceRawPluginModel, imageSourceTask, this.lastDisplayNextImageTask, new List<Tuple<IImageProcessingController, IRawPluginModel>>(this.imageProcessingControllers));
 
          Task<byte[, ,]> waitForDisplayNextImageTask = new Task<byte[, ,]>(this.WaitForDisplayNextImage, waitForDisplayNextImageTuple);
-         Task displayNextImageTask = waitForDisplayNextImageTask.ContinueWith(this.DisplayNextImage, this.imageSourceRawPluginModel, taskScheduler);
+         Task displayNextImageTask = waitForDisplayNextImageTask.ContinueWith(this.DisplayNextImage, displayNextImageTuple, taskScheduler);
 
          waitForDisplayNextImageTask.Start(TaskScheduler.Default);
 
          this.lastDisplayNextImageTask = displayNextImageTask;
+         }
+
+      private void RegisterClosingEvent(IPluginController pluginController)
+         {
+         if (this.asyncPluginControllers.ContainsKey(pluginController))
+            {
+            this.asyncPluginControllers[pluginController]++;
+            }
+         else
+            {
+            this.asyncPluginControllers.Add(pluginController, 1);
+
+            pluginController.Closing += this.PluginController_Closing;
+            }
          }
 
       private Task<byte[, ,]> CreateProcessingTasks(Task<byte[, ,]> taskInput)
@@ -231,13 +263,22 @@
          Task<byte[, ,]> previousTask = taskInput;
          MutableTuple tuple;
 
-         foreach (KeyValuePair<IImageProcessingController, IRawPluginModel> keyValuePair in this.imageProcessingControllers)
+         foreach (Tuple<IImageProcessingController, IRawPluginModel> imageProcessingControllerTuple in this.imageProcessingControllers)
             {
-            tuple = new MutableTuple(null, keyValuePair.Value, previousTask, null, keyValuePair.Key);
+            if (!this.closingPluginControllers.Contains(imageProcessingControllerTuple.Item1))
+               {
+               List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllerList = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
 
-            previousTask = new Task<byte[, ,]>(this.ProcessImage, tuple);
+               imageProcessingControllerList.Add(imageProcessingControllerTuple);
 
-            previousTask.Start(TaskScheduler.Default);
+               tuple = new MutableTuple(null, null, previousTask, null, imageProcessingControllerList);
+
+               previousTask = new Task<byte[, ,]>(this.ProcessImage, tuple);
+
+               previousTask.Start(TaskScheduler.Default);
+
+               this.RegisterClosingEvent(imageProcessingControllerTuple.Item1);
+               }
             }
 
          return previousTask;
@@ -270,8 +311,6 @@
          fetchNextImageSourceOrProcessImageTask.Wait();
 
          byte[, ,] imageData = fetchNextImageSourceOrProcessImageTask.Result;
-
-         fetchNextImageSourceOrProcessImageTask.Dispose();
 
          waitForDisplayNextImageTuple.Clear();
 
@@ -313,8 +352,9 @@
          {
          MutableTuple tuple = state as MutableTuple;
          Task<byte[, ,]> previousTask = tuple.TaskByte;
-         IImageProcessingController imageProcessingController = tuple.ImageProcessingController;
-         IRawPluginModel rawPluginModel = tuple.RawPluginModel;
+         List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingController = tuple.ImageProcessingControllers;
+
+         Debug.Assert(imageProcessingController.Count == 1, "For now this list should only contain one item.");
 
          Debug.Assert(previousTask != null, "This task should always exist as it gives the next image source.");
          previousTask.Wait();
@@ -323,7 +363,7 @@
 
          previousTask.Dispose();
 
-         byte[, ,] resultImage = imageProcessingController.ProcessImageData(previousResult, rawPluginModel);
+         byte[, ,] resultImage = imageProcessingController[0].Item1.ProcessImageData(previousResult, imageProcessingController[0].Item2);
 
          tuple.Clear();
 
@@ -352,6 +392,13 @@
             isLastUpdateQueued = false;
             }
 
+         MutableTuple displayNextImageTuple = state as MutableTuple;
+
+         // Keep a copy of the last source image data in case the image source controller gets closed
+         this.imageModel.SourceImageData = displayNextImageTuple.TaskByte.Result;
+
+         displayNextImageTuple.TaskByte.Dispose();
+
          // This method and the closing event should run on the main thread so there is no potential concurrency issue
          if (!this.closing)
             {
@@ -361,16 +408,73 @@
 
             if (this.DisplayUpdated != null)
                {
-               this.DisplayUpdated(this, new DisplayUpdateEventArgs((IRawPluginModel)state));
+               this.DisplayUpdated(this, new DisplayUpdateEventArgs(displayNextImageTuple.RawPluginModel));
                }
+
+            // This must be done after calling the DisplayUpdated event
+            this.ClearPluginControllers(displayNextImageTuple);
             }
          else
             {
             // The close is the responsibility of the ImageController
             if (this.lastDisplayNextImageTask == null)
                {
+               this.imageSourceController.Disconnected();
+
+               this.ClearPluginControllers(displayNextImageTuple);
+
                this.Close();
                }
+            else
+               {
+               this.ClearPluginControllers(displayNextImageTuple);
+               }
+            }
+
+         displayNextImageTuple.Clear();
+         }
+
+      private void ClearPluginControllers(MutableTuple displayNextImageTuple)
+         {
+         // Manage closing image source controller, this must be done after calling the DisplayUpdated event
+         this.ManageClosingPluginController(displayNextImageTuple.ImageSourceController);
+
+         // Manage any closing image processing controller, this must be done after calling the DisplayUpdated event
+         foreach (Tuple<IImageProcessingController, IRawPluginModel> tuple in displayNextImageTuple.ImageProcessingControllers)
+            {
+            this.ManageClosingPluginController(tuple.Item1);
+            }
+         }
+
+      private void ManageClosingPluginController(IPluginController pluginController)
+         {
+         this.asyncPluginControllers[pluginController]--;
+
+         if (this.asyncPluginControllers[pluginController] == 0)
+            {
+            pluginController.Closing -= this.PluginController_Closing;
+
+            if (this.closingPluginControllers.Contains(pluginController))
+               {
+               if (this.imageSourceController == pluginController)
+                  {
+                  IImageSourceController previousImageSourceController = pluginController as IImageSourceController;
+                  IMemorySourceController memorySourceController = this.serviceLocator.GetInstance<IMemorySourceController>();
+
+                  memorySourceController.ImageData = this.imageModel.SourceImageData;
+
+                  // Replace currently closing image source controller by a memory controller holding the last know source image
+                  this.InitializeImageSourceController(memorySourceController, memorySourceController.RawPluginModel);
+
+                  previousImageSourceController.Disconnected();
+                  }
+
+               pluginController.Close();
+
+               this.closingPluginControllers.Remove(pluginController);
+               }
+
+            this.asyncPluginControllers.Remove(pluginController);
             }
          }
 
@@ -430,7 +534,7 @@
             rgb[2] = this.imageModel.DisplayImageData[e.PixelPosition.Y, e.PixelPosition.X, 2];
 
             int maximumColorValues = Math.Max(Math.Max(rgb[0], rgb[1]), rgb[2]);
-            
+
             hsv[2] = maximumColorValues;
 
             if (hsv[2] == 0)
@@ -481,15 +585,34 @@
          this.imageView.UpdatePixelView(e.PixelPosition, gray, rgb, hsv);
          }
 
+      private void PluginController_Closing(object sender, CancelEventArgs e)
+         {
+         IPluginController pluginController = sender as IPluginController;
+
+         this.closingPluginControllers.Add(pluginController);
+
+         e.Cancel = true;
+
+         if (this.imageProcessingControllers.Count > 0)
+            {
+            IImageProcessingController imageProcessingController = pluginController as IImageProcessingController;
+
+            if (this.imageProcessingControllers[0].Item1 == imageProcessingController)
+               {
+               this.RemoveImageProcessingController(imageProcessingController, null);
+               }
+            }
+         }
+
       private class MutableTuple
          {
-         public MutableTuple(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, Task<byte[, ,]> taskByte, Task task, IImageProcessingController imageProcessingController)
+         public MutableTuple(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, Task<byte[, ,]> taskByte, Task task, List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers)
             {
             this.ImageSourceController = imageSourceController;
             this.RawPluginModel = rawPluginModel;
             this.TaskByte = taskByte;
             this.Task = task;
-            this.ImageProcessingController = imageProcessingController;
+            this.ImageProcessingControllers = imageProcessingControllers;
             }
 
          public IImageSourceController ImageSourceController
@@ -516,7 +639,7 @@
             private set;
             }
 
-         public IImageProcessingController ImageProcessingController
+         public List<Tuple<IImageProcessingController, IRawPluginModel>> ImageProcessingControllers
             {
             get;
             private set;
@@ -528,7 +651,7 @@
             this.RawPluginModel = null;
             this.TaskByte = null;
             this.Task = null;
-            this.ImageProcessingController = null;
+            this.ImageProcessingControllers = null;
             }
          }
       }

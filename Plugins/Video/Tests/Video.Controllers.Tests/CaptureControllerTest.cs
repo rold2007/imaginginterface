@@ -90,6 +90,26 @@
          }
 
       [Test]
+      public void Active()
+         {
+         ICaptureController captureController = null;
+
+         try
+            {
+            captureController = this.ServiceLocator.GetInstance<ICaptureController>();
+
+            Assert.IsTrue(captureController.Active);
+            }
+         finally
+            {
+            if (captureController != null)
+               {
+               captureController.Close();
+               }
+            }
+         }
+
+      [Test]
       public void Close()
          {
          this.Container.RegisterSingle<ICaptureView, CaptureView>();

@@ -82,6 +82,8 @@
     <Compile Include="IImageManagerController.cs" />
     <Compile Include="IImageProcessingController.cs" />
     <Compile Include="IImageSourceController.cs" />
+    <Compile Include="IMemorySourceController.cs" />
+    <Compile Include="IMemorySourceModel.cs" />
     <Compile Include="IPluginController.cs" />
     <Compile Include="IPluginModel.cs" />
     <Compile Include="IPluginView.cs" />

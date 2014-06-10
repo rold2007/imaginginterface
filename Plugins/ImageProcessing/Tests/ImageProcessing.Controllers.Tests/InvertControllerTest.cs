@@ -47,6 +47,14 @@
          }
 
       [Test]
+      public void Active()
+         {
+         IInvertController invertController = this.ServiceLocator.GetInstance<IInvertController>();
+
+         Assert.IsTrue(invertController.Active);
+         }
+
+      [Test]
       public void Close()
          {
          this.Container.RegisterSingle<IInvertView, InvertView>();

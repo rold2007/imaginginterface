@@ -19,6 +19,12 @@
          set;
          }
 
+      public byte[, ,] SourceImageData
+         {
+         get;
+         set;
+         }
+
       public byte[, ,] DisplayImageData
          {
          get;

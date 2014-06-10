@@ -99,6 +99,7 @@
     <Compile Include="CudafyControllerTest.cs" />
     <Compile Include="FileSourceControllerTest.cs" />
     <Compile Include="InvertControllerTest.cs" />
+    <Compile Include="MemorySourceControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateControllerTest.cs" />
     <Compile Include="Views\CudafyView.cs" />

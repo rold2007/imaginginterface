@@ -46,6 +46,14 @@
          }
 
       [Test]
+      public void Active()
+         {
+         IRotateController rotateController = this.ServiceLocator.GetInstance<IRotateController>();
+
+         Assert.IsTrue(rotateController.Active);
+         }
+
+      [Test]
       public void Close()
          {
          this.Container.RegisterSingle<IRotateView, RotateView>();

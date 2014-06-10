@@ -23,6 +23,14 @@
          }
 
       [Test]
+      public void Active()
+         {
+         IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
+
+         Assert.IsFalse(fileSourceController.Active);
+         }
+
+      [Test]
       public void Filename()
          {
          IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
@@ -41,6 +49,14 @@
 
          Assert.False(fileSourceController.IsDynamic(null));
          Assert.False(fileSourceController.IsDynamic(fileSourceController.RawPluginModel));
+         }
+
+      [Test]
+      public void Close()
+         {
+         IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
+
+         fileSourceController.Close();
          }
 
       [Test]
@@ -90,6 +106,14 @@
                File.Delete(tempFileName);
                }
             }
+         }
+
+      [Test]
+      public void Disconnected()
+         {
+         IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
+
+         fileSourceController.Disconnected();
          }
       }
    }

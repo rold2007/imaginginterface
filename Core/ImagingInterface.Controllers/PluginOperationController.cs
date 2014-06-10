@@ -23,8 +23,11 @@
 
          foreach (IPluginController plugin in plugins)
             {
-            this.plugins.Add(plugin.RawPluginModel.DisplayName, plugin.GetType());
-            pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
+            if (plugin.Active)
+               {
+               this.plugins.Add(plugin.RawPluginModel.DisplayName, plugin.GetType());
+               pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
+               }
             }
 
          pluginOperationView.AddPlugin(PluginOperationController.closePluginName);

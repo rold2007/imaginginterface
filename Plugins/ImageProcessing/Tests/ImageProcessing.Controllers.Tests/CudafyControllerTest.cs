@@ -35,6 +35,21 @@
          }
 
       [Test]
+      public void Active()
+         {
+         try
+            {
+            ICudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>();
+
+            Assert.IsTrue(cudafyController.Active);
+            }
+         catch (ActivationException)
+            {
+            Assert.Fail("For unit tests the Cudafy.NET.dll needs to be registered in the GAC using: gacutil -i Cudafy.NET.dll");
+            }
+         }
+
+      [Test]
       public void ProcessImageData()
          {
          this.Container.RegisterSingle<ICudafyView, CudafyView>();

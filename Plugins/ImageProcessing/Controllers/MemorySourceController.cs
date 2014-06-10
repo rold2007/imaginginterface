@@ -1,20 +1,22 @@
-﻿namespace ImagingInterface.Controllers.Tests.Mocks
+﻿namespace ImageProcessing.Controllers
    {
    using System;
    using System.Collections.Generic;
    using System.ComponentModel;
+   using System.Diagnostics;
+   using System.Drawing;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class FileSourceController : IFileSourceController
+   public class MemorySourceController : IMemorySourceController
       {
-      private IFileSourceModel fileSourceModel;
+      private IMemorySourceModel memorySourceModel;
 
-      public FileSourceController(IFileSourceModel fileSourceModel)
+      public MemorySourceController(IMemorySourceModel memorySourceModel)
          {
-         this.fileSourceModel = fileSourceModel;
+         this.memorySourceModel = memorySourceModel;
          }
 
       public event CancelEventHandler Closing;
@@ -31,7 +33,7 @@
          {
          get
             {
-            return this.fileSourceModel;
+            return this.memorySourceModel;
             }
          }
 
@@ -43,21 +45,19 @@
             }
          }
 
-      public string Filename
+      public byte[, ,] ImageData
          {
          get
             {
-            return this.fileSourceModel.DisplayName;
+            return this.memorySourceModel.ImageData;
             }
 
          set
             {
-            this.fileSourceModel.DisplayName = value;
-            }
-         }
+            Debug.Assert(value != null, "ImageData cannot be null.");
 
-      public void Close()
-         {
+            this.memorySourceModel.ImageData = value;
+            }
          }
 
       public bool IsDynamic(IRawPluginModel rawPluginModel)
@@ -65,14 +65,17 @@
          return false;
          }
 
-      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+      public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
          {
-         if (this.fileSourceModel.ImageData == null)
-            {
-            this.fileSourceModel.ImageData = new byte[1, 1, 1];
-            }
+         IMemorySourceModel memorySourceModel = rawPluginModel as IMemorySourceModel;
 
-         return this.fileSourceModel.ImageData;
+         Debug.Assert(memorySourceModel.ImageData != null, "The image data should never be null.");
+
+         return memorySourceModel.ImageData;
+         }
+
+      public void Close()
+         {
          }
 
       public void Disconnected()

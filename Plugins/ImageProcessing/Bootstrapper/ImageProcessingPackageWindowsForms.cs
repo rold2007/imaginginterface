@@ -21,12 +21,14 @@
          container.Register<IInvertModel, InvertModel>();
          container.Register<IFileSourceModel, FileSourceModel>();
          container.Register<ICudafyModel, CudafyModel>();
+         container.Register<IMemorySourceModel, MemorySourceModel>();
 
          // Controllers
          container.Register<IRotateController, RotateController>();
          container.Register<IInvertController, InvertController>();
          container.Register<IFileSourceController, FileSourceController>();
          container.Register<ICudafyController, CudafyController>();
+         container.Register<IMemorySourceController, MemorySourceController>();
 
          // Views
          container.Register<IRotateView, RotateView>();

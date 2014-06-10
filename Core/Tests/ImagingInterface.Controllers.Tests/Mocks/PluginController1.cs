@@ -3,12 +3,13 @@
    using System;
    using System.Collections.Generic;
    using System.ComponentModel;
+   using System.Diagnostics;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class PluginController1 : IPluginController
+   public class PluginController1 : IPluginController, IImageProcessingController
       {
       public PluginController1(IPluginView pluginView, PluginModel1 pluginModel)
          {
@@ -34,6 +35,20 @@
          private set;
          }
 
+      public bool Active
+         {
+         get
+            {
+            return true;
+            }
+         }
+
+      public bool IsClosed
+         {
+         get;
+         private set;
+         }
+
       public void Close()
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -49,7 +64,14 @@
                {
                this.Closed(this, EventArgs.Empty);
                }
+
+            this.IsClosed = true;
             }
+         }
+
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
+         {
+         return imageData.Clone() as byte[, ,];
          }
       }
    }

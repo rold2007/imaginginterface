@@ -64,6 +64,12 @@
          private set;
          }
 
+      public bool IsClosed
+         {
+         get;
+         private set;
+         }
+
       public void UpdateDisplay()
          {
          }
@@ -91,6 +97,7 @@
 
       public void Close()
          {
+         this.IsClosed = true;
          }
 
       public void TriggerZoomLevelIncreased()

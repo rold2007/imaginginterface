@@ -5,10 +5,13 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Plugins;
 
-   public interface IImageProcessingController : IPluginController
+   public interface IMemorySourceModel : IRawPluginModel
       {
-      byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel);
+      byte[, ,] ImageData
+         {
+         get;
+         set;
+         }
       }
    }

@@ -55,6 +55,14 @@
             }
          }
 
+      public bool Active
+         {
+         get
+            {
+            return true;
+            }
+         }
+
       public void Close()
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -64,10 +72,10 @@
             this.Closing(this, cancelEventArgs);
             }
 
-         this.rotateView.Hide();
-
          if (!cancelEventArgs.Cancel)
             {
+            this.rotateView.Hide();
+
             this.rotateView.Close();
 
             if (this.Closed != null)
@@ -109,7 +117,7 @@
 
             if (imageController != null)
                {
-               imageController.AddImageProcessingController(this, this, this.rotateModel.Clone() as IRawPluginModel);
+               imageController.AddImageProcessingController(this, this.rotateModel.Clone() as IRawPluginModel);
                }
             }
          }

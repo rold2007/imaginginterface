@@ -1,6 +1,8 @@
 ﻿namespace Video.Controllers.Tests
    {
    using CommonServiceLocator.SimpleInjectorAdapter;
+   using ImageProcessing.Controllers;
+   using ImageProcessing.Models;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
@@ -64,10 +66,12 @@
          this.Container.Register<ICaptureController, CaptureController>();
          this.Container.Register<IImageController, ImageController>();
          this.Container.Register<ICaptureWrapper, CaptureWrapperMock>();
+         this.Container.Register<IMemorySourceController, MemorySourceController>();
 
          // Models
          this.Container.Register<ICaptureModel, CaptureModel>();
          this.Container.Register<IImageModel, ImageModel>();
+         this.Container.Register<IMemorySourceModel, MemorySourceModel>();
          }
       }
    }

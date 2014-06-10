@@ -10,6 +10,12 @@
 
    public interface IImageModel : IRawImageModel
       {
+      byte[, ,] SourceImageData
+         {
+         get;
+         set;
+         }
+
       byte[, ,] DisplayImageData
          {
          get;
