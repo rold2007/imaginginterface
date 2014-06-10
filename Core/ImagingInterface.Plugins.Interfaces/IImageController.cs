@@ -33,8 +33,8 @@
 
       void Close();
 
-      void AddImageProcessingController(IPluginController pluginController, IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel);
+      void AddImageProcessingController(IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel);
 
-      void RemoveImageProcessingController(IPluginController pluginController, IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel);
+      void RemoveImageProcessingController(IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel);
       }
    }

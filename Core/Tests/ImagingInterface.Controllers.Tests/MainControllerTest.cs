@@ -7,6 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Tests.Views;
+   using ImagingInterface.Tests.Common.Mocks;
    using ImagingInterface.Tests.Common.Views;
    using ImagingInterface.Views;
    using NUnit.Framework;
@@ -87,6 +88,35 @@
          Assert.IsNull(imageManagerController.GetActiveImage());
          Assert.IsNull(pluginManagerController.GetActivePlugin());
          Assert.IsTrue(imageControllerClosing);
+         }
+
+      [Test]
+      public void MainView_ApplicationClosingWithImageProcessing()
+         {
+         this.Container.RegisterSingle<PluginController1>();
+         this.Container.RegisterSingle<IImageView, ImageView>();
+
+         MainView mainView = this.ServiceLocator.GetInstance<IMainView>() as MainView;
+         IMainController mainController = this.ServiceLocator.GetInstance<IMainController>();
+         IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
+         IPluginManagerController pluginManagerController = this.ServiceLocator.GetInstance<IPluginManagerController>();
+         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+         PluginController1 pluginController1 = this.ServiceLocator.GetInstance<PluginController1>();
+         IImageProcessingController imageProcessingController = this.Container.GetInstance<PluginController1>();
+
+         imageManagerController.AddImage(imageController);
+         pluginManagerController.AddPlugin(pluginController1);
+
+         imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+         imageController.AddImageProcessingController(imageProcessingController, null);
+
+         mainView.Close();
+
+         Assert.IsFalse(imageView.IsClosed);
+         Assert.IsFalse(pluginController1.IsClosed);
          }
       }
    }

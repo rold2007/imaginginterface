@@ -75,6 +75,7 @@
          this.Container.Register<IImageController, ImageController>();
          this.Container.Register<IImageSourceController, ImageSourceController>();
          this.Container.Register<IFileSourceController, FileSourceController>();
+         this.Container.Register<IMemorySourceController, MemorySourceController>();
 
          // Models
          this.Container.Register<IInvertModel, InvertModel>();
@@ -82,6 +83,7 @@
          this.Container.Register<ICudafyModel, CudafyModel>();
          this.Container.Register<IImageModel, ImageModel>();
          this.Container.Register<IFileSourceModel, FileSourceModel>();
+         this.Container.Register<IMemorySourceModel, MemorySourceModel>();
          }
       }
    }

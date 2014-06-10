@@ -2,6 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
+   using System.ComponentModel;
    using System.Drawing;
    using System.Linq;
    using System.Text;
@@ -18,11 +19,29 @@
          this.fileSourceModel = fileSourceModel;
          }
 
+      public event CancelEventHandler Closing;
+
+      public event EventHandler Closed;
+
+      public IRawPluginView RawPluginView
+         {
+         get;
+         private set;
+         }
+
       public IRawPluginModel RawPluginModel
          {
          get
             {
             return this.fileSourceModel;
+            }
+         }
+
+      public bool Active
+         {
+         get
+            {
+            return false;
             }
          }
 
@@ -37,6 +56,10 @@
             {
             this.fileSourceModel.Filename = value;
             }
+         }
+
+      public void Close()
+         {
          }
 
       public bool IsDynamic(IRawPluginModel rawPluginModel)
@@ -54,6 +77,10 @@
             }
 
          return fileSourceModel.ImageData;
+         }
+
+      public void Disconnected()
+         {
          }
 
       private void LoadImage()

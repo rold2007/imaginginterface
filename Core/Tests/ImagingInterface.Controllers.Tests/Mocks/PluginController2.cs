@@ -34,6 +34,14 @@
          private set;
          }
 
+      public bool Active
+         {
+         get
+            {
+            return true;
+            }
+         }
+
       public void Close()
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();

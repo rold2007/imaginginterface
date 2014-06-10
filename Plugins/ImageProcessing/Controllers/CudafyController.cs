@@ -77,6 +77,14 @@
             }
          }
 
+      public bool Active
+         {
+         get
+            {
+            return true;
+            }
+         }
+
       public void Dispose()
          {
          this.Dispose(true);
@@ -92,10 +100,10 @@
             this.Closing(this, cancelEventArgs);
             }
 
-         this.cudafyView.Hide();
-
          if (!cancelEventArgs.Cancel)
             {
+            this.cudafyView.Hide();
+
             this.cudafyView.Close();
 
             if (this.Closed != null)
@@ -224,7 +232,7 @@
 
          if (imageController != null)
             {
-            imageController.AddImageProcessingController(this, this, this.cudafyModel.Clone() as IRawPluginModel);
+            imageController.AddImageProcessingController(this, this.cudafyModel.Clone() as IRawPluginModel);
             }
          }
 

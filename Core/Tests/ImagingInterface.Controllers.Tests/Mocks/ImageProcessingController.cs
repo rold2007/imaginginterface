@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Tests.Common.Mocks
+﻿namespace ImagingInterface.Controllers.Tests.Mocks
    {
    using System;
    using System.Collections.Generic;
@@ -8,22 +8,11 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class ImageSourceController : IImageSourceController
+   public class ImageProcessingController : IImageProcessingController
       {
-      public ImageSourceController()
-         {
-         this.ImageData = new byte[1, 1, 1];
-         }
-
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
-
-      public byte[, ,] ImageData
-         {
-         get;
-         set;
-         }
 
       public IRawPluginView RawPluginView
          {
@@ -34,33 +23,24 @@
       public IRawPluginModel RawPluginModel
          {
          get;
-         set;
+         private set;
          }
 
       public bool Active
          {
          get
             {
-            return true;
+            return false;
             }
-         }
-
-      public bool IsDynamic(IRawPluginModel rawPluginModel)
-         {
-         return false;
-         }
-
-      public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
-         {
-         return this.ImageData;
          }
 
       public void Close()
          {
          }
 
-      public void Disconnected()
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
          {
+         return imageData.Clone() as byte[, ,];
          }
       }
    }

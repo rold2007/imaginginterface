@@ -6,15 +6,12 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public interface IImageSourceController
+   public interface IImageSourceController : IPluginController
       {
-      IRawPluginModel RawPluginModel
-         {
-         get;
-         }
-
       bool IsDynamic(IRawPluginModel rawPluginModel);
 
       byte[, ,] NextImageData(IRawPluginModel rawPluginModel);
+
+      void Disconnected();
       }
    }

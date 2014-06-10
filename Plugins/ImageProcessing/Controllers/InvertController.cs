@@ -49,6 +49,14 @@
             }
          }
 
+      public bool Active
+         {
+         get
+            {
+            return true;
+            }
+         }
+
       public void Close()
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -58,10 +66,10 @@
             this.Closing(this, cancelEventArgs);
             }
 
-         this.invertView.Hide();
-
          if (!cancelEventArgs.Cancel)
             {
+            this.invertView.Hide();
+
             this.invertView.Close();
 
             if (this.Closed != null)
@@ -103,11 +111,11 @@
             {
             if (e.Invert)
                {
-               imageController.AddImageProcessingController(this, this, null);
+               imageController.AddImageProcessingController(this, null);
                }
             else
                {
-               imageController.RemoveImageProcessingController(this, this, null);
+               imageController.RemoveImageProcessingController(this, null);
                }
             }
          }

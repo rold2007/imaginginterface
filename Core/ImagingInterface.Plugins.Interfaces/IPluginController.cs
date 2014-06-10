@@ -23,6 +23,11 @@
          get;
          }
 
+      bool Active
+         {
+         get;
+         }
+
       void Close();
       }
    }
