@@ -10,12 +10,19 @@
 
    public class TaggerView : ITaggerView
       {
+      public bool CloseCalled
+         {
+         get;
+         private set;
+         }
+
       public void Hide()
          {
          }
 
       public void Close()
          {
+         this.CloseCalled = true;
          }
       }
    }
