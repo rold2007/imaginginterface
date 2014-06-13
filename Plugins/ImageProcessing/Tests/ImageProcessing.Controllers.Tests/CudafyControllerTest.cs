@@ -52,12 +52,14 @@
       [Test]
       public void ProcessImageData()
          {
+         CudafyController cudafyController = null;
+
          this.Container.RegisterSingle<ICudafyView, CudafyView>();
          this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
 
          try
             {
-            CudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>() as CudafyController;
+            cudafyController = this.ServiceLocator.GetInstance<ICudafyController>() as CudafyController;
             CudafyView cudafyView = cudafyController.RawPluginView as CudafyView;
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
@@ -105,6 +107,13 @@
          catch (ActivationException)
             {
             Assert.Fail("For unit tests the Cudafy.NET.dll needs to be registered in the GAC using: gacutil -i Cudafy.NET.dll");
+            }
+         finally
+            {
+            if (cudafyController != null)
+               {
+               cudafyController.Dispose();
+               }
             }
          }
 
@@ -223,7 +232,7 @@
             {
             cudafyController = this.ServiceLocator.GetInstance<CudafyController>();
 
-            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView; 
+            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView;
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
@@ -277,7 +286,7 @@
             {
             cudafyController = this.ServiceLocator.GetInstance<CudafyController>();
 
-            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView; 
+            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView;
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
@@ -358,7 +367,7 @@
             {
             cudafyController = this.ServiceLocator.GetInstance<CudafyController>();
 
-            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView; 
+            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView;
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();

@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public interface ITaggerModel : IRawPluginModel, ICloneable
+   public interface ITaggerModel : IRawPluginModel
       {
       }
    }

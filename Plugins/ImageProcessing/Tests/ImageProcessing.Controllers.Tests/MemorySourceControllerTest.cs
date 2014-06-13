@@ -20,6 +20,8 @@
       public void Constructor()
          {
          IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();
+
+         memorySourceController.Initialize();
          }
 
       [Test]
