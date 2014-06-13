@@ -59,6 +59,14 @@
             }
          }
 
+      public Dictionary<string, List<Point>> DataPoints
+         {
+         get
+            {
+            return new Dictionary<string, List<Point>>(this.dataPoints);
+            }
+         }
+
       public void Initialize()
          {
          this.imageManagerController.ActiveImageChanged += this.ImageManagerController_ActiveImageChanged;

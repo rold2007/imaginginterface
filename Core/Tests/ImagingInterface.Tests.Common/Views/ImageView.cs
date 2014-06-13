@@ -116,5 +116,10 @@
          {
          this.PixelViewChanged(this, new PixelViewChangedEventArgs(pixelPosition));
          }
+
+      public void TriggerSelectionChanged(Point pixelPosition, bool select)
+         {
+         this.SelectionChanged(this, new SelectionChangedEventArgs(pixelPosition, select));
+         }
       }
    }
