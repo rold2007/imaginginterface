@@ -18,6 +18,8 @@
 
       event EventHandler<PixelViewChangedEventArgs> PixelViewChanged;
 
+      event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+
       double UpdateFrequency
          {
          get;

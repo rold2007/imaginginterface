@@ -34,12 +34,6 @@
          this.captureWrapper = captureWrapper;
 
          this.captureModel.DisplayName = CaptureController.CaptureDisplayName;
-
-         this.captureView.Start += this.CaptureView_Start;
-         this.captureView.Stop += this.CaptureView_Stop;
-         this.captureView.SnapShot += this.CaptureView_SnapShot;
-
-         this.captureView.UpdateLiveGrabStatus(true, false);
          }
 
       ~CaptureController()
@@ -79,6 +73,15 @@
          {
          this.Dispose(true);
          GC.SuppressFinalize(this);
+         }
+
+      public void Initialize()
+         {
+         this.captureView.Start += this.CaptureView_Start;
+         this.captureView.Stop += this.CaptureView_Stop;
+         this.captureView.SnapShot += this.CaptureView_SnapShot;
+
+         this.captureView.UpdateLiveGrabStatus(true, false);
          }
 
       public void Close()

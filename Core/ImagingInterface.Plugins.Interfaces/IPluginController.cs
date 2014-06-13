@@ -28,6 +28,8 @@
          get;
          }
 
+      void Initialize();
+
       void Close();
       }
    }

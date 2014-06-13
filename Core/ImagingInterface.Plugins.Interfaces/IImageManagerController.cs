@@ -8,6 +8,8 @@
 
    public interface IImageManagerController
       {
+      event EventHandler ActiveImageChanged;
+
       void AddImage(IImageController imageController);
 
       IImageController GetActiveImage();

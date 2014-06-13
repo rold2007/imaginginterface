@@ -64,6 +64,8 @@
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
 
+            cudafyView.TriggerLoaded();
+
             imageManagerController.AddImage(imageController);
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -137,18 +139,23 @@
       [Test]
       public void GPUChanged()
          {
+         CudafyController cudafyController = null;
+
          this.Container.RegisterSingle<ICudafyView, CudafyView>();
          this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
 
          try
             {
-            ICudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>();
-            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView; 
+            cudafyController = this.ServiceLocator.GetInstance<CudafyController>();
+
+            CudafyView cudafyView = cudafyController.RawPluginView as CudafyView;
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
+
+            cudafyView.TriggerLoaded();
 
             imageManagerController.AddImage(imageController);
 
@@ -195,17 +202,27 @@
             {
             Assert.Fail("For unit tests the Cudafy.NET.dll needs to be registered in the GAC using: gacutil -i Cudafy.NET.dll");
             }
+         finally
+            {
+            if (cudafyController != null)
+               {
+               cudafyController.Dispose();
+               }
+            }
          }
 
       [Test]
       public void GridSizeChanged()
          {
+         CudafyController cudafyController = null;
+
          this.Container.RegisterSingle<ICudafyView, CudafyView>();
          this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
 
          try
             {
-            ICudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>();
+            cudafyController = this.ServiceLocator.GetInstance<CudafyController>();
+
             CudafyView cudafyView = cudafyController.RawPluginView as CudafyView; 
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
@@ -237,23 +254,35 @@
             {
             Assert.Fail("For unit tests the Cudafy.NET.dll needs to be registered in the GAC using: gacutil -i Cudafy.NET.dll");
             }
+         finally
+            {
+            if (cudafyController != null)
+               {
+               cudafyController.Dispose();
+               }
+            }
          }
 
       [Test]
       public void BlockSizeXChanged()
          {
+         CudafyController cudafyController = null;
+
          this.Container.RegisterSingle<ICudafyView, CudafyView>();
          this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
 
          try
             {
-            ICudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>();
+            cudafyController = this.ServiceLocator.GetInstance<CudafyController>();
+
             CudafyView cudafyView = cudafyController.RawPluginView as CudafyView; 
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
+
+            cudafyView.TriggerLoaded();
 
             imageManagerController.AddImage(imageController);
 
@@ -306,23 +335,35 @@
             {
             Assert.Fail("For unit tests the Cudafy.NET.dll needs to be registered in the GAC using: gacutil -i Cudafy.NET.dll");
             }
+         finally
+            {
+            if (cudafyController != null)
+               {
+               cudafyController.Dispose();
+               }
+            }
          }
 
       [Test]
       public void BlockSizeYChanged()
          {
+         CudafyController cudafyController = null;
+
          this.Container.RegisterSingle<ICudafyView, CudafyView>();
          this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
 
          try
             {
-            ICudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>();
+            cudafyController = this.ServiceLocator.GetInstance<CudafyController>();
+
             CudafyView cudafyView = cudafyController.RawPluginView as CudafyView; 
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
+
+            cudafyView.TriggerLoaded();
 
             imageManagerController.AddImage(imageController);
 
@@ -374,6 +415,13 @@
          catch (ActivationException)
             {
             Assert.Fail("For unit tests the Cudafy.NET.dll needs to be registered in the GAC using: gacutil -i Cudafy.NET.dll");
+            }
+         finally
+            {
+            if (cudafyController != null)
+               {
+               cudafyController.Dispose();
+               }
             }
          }
       }

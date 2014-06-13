@@ -10,6 +10,8 @@
 
    public interface IImageManagerView
       {
+      event EventHandler ActiveImageChanged;
+
       void AddImage(IRawImageView imageView, IRawImageModel imageModel);
 
       IRawImageView GetActiveImageView();

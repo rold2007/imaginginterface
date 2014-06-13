@@ -16,15 +16,19 @@
          this.imageManagerView = imageManagerView;
          this.imageControllers = new Dictionary<IRawImageView, IImageController>();
 
+         this.imageManagerView.ActiveImageChanged += this.ImageManagerView_ActiveImageChanged;
+
          mainController.AddImageManager(this, this.imageManagerView);
          }
+
+      public event EventHandler ActiveImageChanged;
 
       public void AddImage(IImageController imageController)
          {
          imageController.Closed += this.ImageController_Closed;
 
-         this.imageManagerView.AddImage(imageController.RawImageView, imageController.RawImageModel);
          this.imageControllers.Add(imageController.RawImageView, imageController);
+         this.imageManagerView.AddImage(imageController.RawImageView, imageController.RawImageModel);
          }
 
       public IImageController GetActiveImage()
@@ -57,6 +61,14 @@
       private void ImageController_Closed(object sender, EventArgs e)
          {
          this.RemoveImage(sender as IImageController);
+         }
+
+      private void ImageManagerView_ActiveImageChanged(object sender, EventArgs e)
+         {
+         if (this.ActiveImageChanged != null)
+            {
+            this.ActiveImageChanged(this, EventArgs.Empty);
+            }
          }
       }
    }

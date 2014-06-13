@@ -22,6 +22,7 @@
          container.Register<IFileSourceModel, FileSourceModel>();
          container.Register<ICudafyModel, CudafyModel>();
          container.Register<IMemorySourceModel, MemorySourceModel>();
+         container.Register<ITaggerModel, TaggerModel>();
 
          // Controllers
          container.Register<IRotateController, RotateController>();
@@ -29,11 +30,13 @@
          container.Register<IFileSourceController, FileSourceController>();
          container.Register<ICudafyController, CudafyController>();
          container.Register<IMemorySourceController, MemorySourceController>();
+         container.Register<ITaggerController, TaggerController>();
 
          // Views
          container.Register<IRotateView, RotateView>();
          container.Register<IInvertView, InvertView>();
          container.Register<ICudafyView, CudafyView>();
+         container.Register<ITaggerView, TaggerView>();
          }
       }
    }

@@ -17,7 +17,7 @@
    using ImageProcessing.Views.EventArguments;
    using ImagingInterface.Plugins;
 
-   public class RotateController : IRotateController, IImageProcessingController
+   public class RotateController : IRotateController
       {
       private static readonly string RotateDisplayName = "Rotate"; // ncrunch: no coverage
       private IRotateView rotateView;
@@ -31,8 +31,6 @@
          this.imageManagerController = imageManagerController;
 
          this.rotateModel.DisplayName = RotateDisplayName;
-
-         this.rotateView.Rotate += this.RotateView_Rotate;
          }
 
       public event CancelEventHandler Closing;
@@ -63,6 +61,11 @@
             }
          }
 
+      public void Initialize()
+         {
+         this.rotateView.Rotate += this.RotateView_Rotate;
+         }
+
       public void Close()
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -74,6 +77,8 @@
 
          if (!cancelEventArgs.Cancel)
             {
+            this.rotateView.Rotate -= this.RotateView_Rotate;
+
             this.rotateView.Hide();
 
             this.rotateView.Close();

@@ -83,6 +83,12 @@
     <Compile Include="CudafyView.Designer.cs">
       <DependentUpon>CudafyView.cs</DependentUpon>
     </Compile>
+    <Compile Include="TaggerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TaggerView.Designer.cs">
+      <DependentUpon>TaggerView.cs</DependentUpon>
+    </Compile>
     <Compile Include="InvertView.cs">
       <SubType>UserControl</SubType>
     </Compile>

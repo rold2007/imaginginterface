@@ -11,7 +11,7 @@
    using ImageProcessing.Views.EventArguments;
    using ImagingInterface.Plugins;
 
-   public class InvertController : IInvertController, IImageProcessingController
+   public class InvertController : IInvertController
       {
       private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
       private IInvertView invertView;
@@ -25,8 +25,6 @@
          this.imageManagerController = imageManagerController;
 
          this.invertModel.DisplayName = InvertController.InvertDisplayName;
-
-         this.invertView.Invert += this.InvertView_Invert;
          }
 
       public event CancelEventHandler Closing;
@@ -57,6 +55,11 @@
             }
          }
 
+      public void Initialize()
+         {
+         this.invertView.Invert += this.InvertView_Invert;
+         }
+
       public void Close()
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -68,6 +71,8 @@
 
          if (!cancelEventArgs.Cancel)
             {
+            this.invertView.Invert -= this.InvertView_Invert;
+
             this.invertView.Hide();
 
             this.invertView.Close();

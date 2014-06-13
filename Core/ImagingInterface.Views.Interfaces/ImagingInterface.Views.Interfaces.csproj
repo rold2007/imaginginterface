@@ -80,6 +80,7 @@
     <Compile Include="EventArguments\DragDropEventArgs.cs" />
     <Compile Include="EventArguments\PixelViewChangedEventArgs.cs" />
     <Compile Include="EventArguments\PluginCreateEventArgs.cs" />
+    <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
     <Compile Include="IAboutBoxView.cs" />
     <Compile Include="IFileOperationView.cs" />
     <Compile Include="IHelpOperationView.cs" />

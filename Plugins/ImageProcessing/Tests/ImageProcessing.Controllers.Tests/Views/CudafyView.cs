@@ -30,6 +30,8 @@
 
       public event EventHandler BlockSizeYChanged;
 
+      public event EventHandler Loaded;
+
       public bool CloseCalled
          {
          get;
@@ -159,6 +161,11 @@
       public void TriggerBlockSizeYChanged()
          {
          this.BlockSizeYChanged(this, EventArgs.Empty);
+         }
+
+      public void TriggerLoaded()
+         {
+         this.Loaded(this, EventArgs.Empty);
          }
       }
    }

@@ -41,6 +41,8 @@
       public event EventHandler ZoomLevelDecreased;
 
       public event EventHandler<PixelViewChangedEventArgs> PixelViewChanged;
+      
+      public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
       public double UpdateFrequency
          {
@@ -439,15 +441,24 @@
 
       private void ManageClick(MouseEventArgs e)
          {
+         Point mouseClickPixel = this.GetPointPositionInImage(e.X, e.Y);
+         
          if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
             if (this.zoomMode)
                {
                if (this.ZoomLevelIncreased != null)
                   {
-                  this.viewCenter = this.GetPointPositionInImage(e.X, e.Y);
+                  this.viewCenter = mouseClickPixel;
 
                   this.ZoomLevelIncreased(this, EventArgs.Empty);
+                  }
+               }
+            else
+               {
+               if (this.SelectionChanged != null)
+                  {
+                  this.SelectionChanged(this, new SelectionChangedEventArgs(mouseClickPixel, true));
                   }
                }
             }
@@ -459,10 +470,17 @@
                   {
                   if (this.ZoomLevelDecreased != null)
                      {
-                     this.viewCenter = this.GetPointPositionInImage(e.X, e.Y);
+                     this.viewCenter = mouseClickPixel;
 
                      this.ZoomLevelDecreased(this, EventArgs.Empty);
                      }
+                  }
+               }
+            else
+               {
+               if (this.SelectionChanged != null)
+                  {
+                  this.SelectionChanged(this, new SelectionChangedEventArgs(mouseClickPixel, false));
                   }
                }
             }

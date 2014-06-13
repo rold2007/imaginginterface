@@ -74,6 +74,10 @@
          return memorySourceModel.ImageData;
          }
 
+      public void Initialize()
+         {
+         }
+
       public void Close()
          {
          }

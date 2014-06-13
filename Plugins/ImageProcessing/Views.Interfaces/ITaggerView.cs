@@ -1,4 +1,4 @@
-﻿namespace ImageProcessing.Controllers
+﻿namespace ImageProcessing.Views
    {
    using System;
    using System.Collections.Generic;
@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public interface ICudafyController : IImageProcessingController
+   public interface ITaggerView : IPluginView
       {
       }
    }

@@ -17,6 +17,8 @@
          this.allRawImageViews = new List<IRawImageView>();
          }
 
+      public event EventHandler ActiveImageChanged;
+
       public void AddImage(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
          this.allRawImageViews.Add(rawImageView);

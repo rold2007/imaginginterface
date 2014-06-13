@@ -55,6 +55,10 @@
          return this.ImageData;
          }
 
+      public void Initialize()
+         {
+         }
+
       public void Close()
          {
          }

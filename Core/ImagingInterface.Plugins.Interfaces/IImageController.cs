@@ -17,12 +17,19 @@
 
       event EventHandler<DisplayUpdateEventArgs> DisplayUpdated;
 
+      event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+
       IRawImageView RawImageView
          {
          get;
          }
 
       IRawImageModel RawImageModel
+         {
+         get;
+         }
+
+      string FullPath
          {
          get;
          }
