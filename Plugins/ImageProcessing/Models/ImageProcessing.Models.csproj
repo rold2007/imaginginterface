@@ -81,6 +81,7 @@
     <Compile Include="MemorySourceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateModel.cs" />
+    <Compile Include="TaggerModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">

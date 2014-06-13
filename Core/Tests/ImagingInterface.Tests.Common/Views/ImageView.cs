@@ -21,6 +21,8 @@
 
       public event EventHandler<PixelViewChangedEventArgs> PixelViewChanged;
 
+      public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+
       public IImageModel AssignedImageModel
          {
          get;

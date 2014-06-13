@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public interface IRotateController : IPluginController
+   public interface IRotateController : IImageProcessingController
       {
       }
    }

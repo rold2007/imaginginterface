@@ -34,6 +34,10 @@
             }
          }
 
+      public void Initialize()
+         {
+         }
+
       public void Close()
          {
          }

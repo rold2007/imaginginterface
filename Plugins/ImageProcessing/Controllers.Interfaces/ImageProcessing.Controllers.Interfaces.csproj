@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICudafyController.cs" />
+    <Compile Include="ITaggerController.cs" />
     <Compile Include="IInvertController.cs" />
     <Compile Include="IRotateController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

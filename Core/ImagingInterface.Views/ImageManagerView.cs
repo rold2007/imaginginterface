@@ -28,6 +28,8 @@
          this.Dock = DockStyle.Fill;
          }
 
+      public event EventHandler ActiveImageChanged;
+
       public void AddImage(IRawImageView rawImageView, IRawImageModel rawImageModel)
          {
          TabPage tabPage = new TabPage(rawImageModel.DisplayName);
@@ -98,6 +100,29 @@
          if (this.imagesTabControl.TabCount != 0 && this.imagesTabControl.SelectedTab != null)
             {
             this.UpdateImageTabPageProperties(this.imagesTabControl.SelectedTab.Controls[0] as IImageView);
+            }
+         }
+
+      private void ImagesTabControl_ControlAdded(object sender, ControlEventArgs e)
+         {
+         // Newly added images are opened in the background, don't trigger the event
+         // when an image is already open
+         if (this.rawImageViewTabPage.Count == 1)
+            {
+            this.TriggerActiveImageChanged();
+            }
+         }
+
+      private void ImagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
+         {
+         this.TriggerActiveImageChanged();
+         }
+
+      private void TriggerActiveImageChanged()
+         {
+         if (this.ActiveImageChanged != null)
+            {
+            this.ActiveImageChanged(this, EventArgs.Empty);
             }
          }
       }

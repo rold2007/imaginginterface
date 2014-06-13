@@ -66,6 +66,7 @@
          this.imageView.ZoomLevelIncreased += this.ImageView_ZoomLevelIncreased;
          this.imageView.ZoomLevelDecreased += this.ImageView_ZoomLevelDecreased;
          this.imageView.PixelViewChanged += this.ImageView_PixelViewChanged;
+         this.imageView.SelectionChanged += this.ImageView_SelectionChanged;
          }
 
       ~ImageController()
@@ -77,6 +78,8 @@
       public event EventHandler Closed;
 
       public event EventHandler<DisplayUpdateEventArgs> DisplayUpdated;
+
+      public event EventHandler<Plugins.EventArguments.SelectionChangedEventArgs> SelectionChanged;
 
       public IRawImageView RawImageView
          {
@@ -91,6 +94,14 @@
          get
             {
             return this.imageModel;
+            }
+         }
+
+      public string FullPath
+         {
+         get
+            {
+            return this.imageModel.DisplayName;
             }
          }
 
@@ -137,6 +148,11 @@
                // Make sure the display thread is finished before really closing
                if (this.lastDisplayNextImageTask == null)
                   {
+                  this.imageView.ZoomLevelIncreased -= this.ImageView_ZoomLevelIncreased;
+                  this.imageView.ZoomLevelDecreased -= this.ImageView_ZoomLevelDecreased;
+                  this.imageView.PixelViewChanged -= this.ImageView_PixelViewChanged;
+                  this.imageView.SelectionChanged -= this.ImageView_SelectionChanged;
+
                   // Prevent calling the Closed event more than once
                   this.closed = true;
 
@@ -583,6 +599,14 @@
             }
 
          this.imageView.UpdatePixelView(e.PixelPosition, gray, rgb, hsv);
+         }
+
+      private void ImageView_SelectionChanged(object sender, Views.EventArguments.SelectionChangedEventArgs e)
+         {
+         if (this.SelectionChanged != null)
+            {
+            this.SelectionChanged(this, new Plugins.EventArguments.SelectionChangedEventArgs(e.PixelPosition, e.Select));
+            }
          }
 
       private void PluginController_Closing(object sender, CancelEventArgs e)

@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public interface ICudafyController : IImageProcessingController
+   public interface ITaggerController : IImageProcessingController
       {
       }
    }

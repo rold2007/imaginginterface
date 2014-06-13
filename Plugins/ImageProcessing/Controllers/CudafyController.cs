@@ -19,7 +19,7 @@
    using ImageProcessing.Views.EventArguments;
    using ImagingInterface.Plugins;
 
-   public class CudafyController : ICudafyController, IImageProcessingController, IDisposable
+   public class CudafyController : ICudafyController, IDisposable
       {
       private static readonly string CudafyDisplayName = "Cudafy"; // ncrunch: no coverage
       private ICudafyView cudafyView;
@@ -37,19 +37,9 @@
 
          this.cudafyModel.DisplayName = CudafyController.CudafyDisplayName;
 
-         this.cudafyView.Add += this.CudafyView_Add;
-         this.cudafyView.GPUChanged += this.CudafyView_GPUChanged;
-         this.cudafyView.GridSizeChanged += this.CudafyView_GridSizeChanged;
-         this.cudafyView.BlockSizeXChanged += this.CudafyView_BlockSizeXChanged;
-         this.cudafyView.BlockSizeYChanged += this.CudafyView_BlockSizeYChanged;
-
          this.gpgpus = new Dictionary<string, GPGPU>();
          this.gpgpuProperties = new Dictionary<string, GPGPUProperties>();
          this.gpuTypes = new Dictionary<string, eGPUType>();
-
-         this.InitializeGPUs();
-
-         this.cudafyView.SetGPUs(this.gpgpus.Keys.ToList());
          }
 
       ~CudafyController()
@@ -89,6 +79,19 @@
          {
          this.Dispose(true);
          GC.SuppressFinalize(this);
+         }
+
+      public void Initialize()
+         {
+         this.InitializeGPUs();
+
+         this.cudafyView.SetGPUs(this.gpgpus.Keys.ToList());
+
+         this.cudafyView.Add += this.CudafyView_Add;
+         this.cudafyView.GPUChanged += this.CudafyView_GPUChanged;
+         this.cudafyView.GridSizeChanged += this.CudafyView_GridSizeChanged;
+         this.cudafyView.BlockSizeXChanged += this.CudafyView_BlockSizeXChanged;
+         this.cudafyView.BlockSizeYChanged += this.CudafyView_BlockSizeYChanged;
          }
 
       public void Close()
@@ -204,6 +207,12 @@
          {
          if (disposing)
             {
+            this.cudafyView.Add -= this.CudafyView_Add;
+            this.cudafyView.GPUChanged -= this.CudafyView_GPUChanged;
+            this.cudafyView.GridSizeChanged -= this.CudafyView_GridSizeChanged;
+            this.cudafyView.BlockSizeXChanged -= this.CudafyView_BlockSizeXChanged;
+            this.cudafyView.BlockSizeYChanged -= this.CudafyView_BlockSizeYChanged;
+
             foreach (KeyValuePair<string, GPGPU> gpgpu in this.gpgpus)
                {
                GPGPU currentGPGPU = gpgpu.Value;
@@ -214,6 +223,8 @@
 
             this.gpgpus.Clear();
             }
+
+         Debug.Assert(this.gpgpus.Count == 0, "The GPUs were not disposed of properly.");
          }
 
       private void CudafyView_Add(object sender, CudafyAddEventArgs e)

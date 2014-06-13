@@ -81,6 +81,7 @@
     <Compile Include="EventArguments\InvertEventArgs.cs" />
     <Compile Include="EventArguments\RotateEventArgs.cs" />
     <Compile Include="ICudafyView.cs" />
+    <Compile Include="ITaggerView.cs" />
     <Compile Include="IInvertView.cs" />
     <Compile Include="IRotateView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

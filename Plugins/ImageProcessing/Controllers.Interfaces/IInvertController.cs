@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public interface IInvertController : IPluginController
+   public interface IInvertController : IImageProcessingController
       {
       }
    }

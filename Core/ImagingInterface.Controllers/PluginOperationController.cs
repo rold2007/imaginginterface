@@ -47,6 +47,8 @@
             {
             IPluginController pluginController = this.serviceLocator.GetInstance(this.plugins[e.Name]) as IPluginController;
 
+            pluginController.Initialize();
+
             pluginManagerController.AddPlugin(pluginController);
             }
          }

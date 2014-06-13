@@ -42,6 +42,10 @@
             }
          }
 
+      public void Initialize()
+         {
+         }
+
       public void Close()
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();

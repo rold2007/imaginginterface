@@ -108,6 +108,7 @@
     <Compile Include="MemorySourceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateController.cs" />
+    <Compile Include="TaggerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
