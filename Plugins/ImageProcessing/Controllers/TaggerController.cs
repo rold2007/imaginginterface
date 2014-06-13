@@ -136,19 +136,9 @@
             {
             this.registeredImageController.SelectionChanged += this.RegisteredImageController_SelectionChanged;
 
-            string subPath = this.registeredImageController.FullPath;
+            string filename = Path.GetFileNameWithoutExtension(this.registeredImageController.FullPath);
 
-            if (Path.IsPathRooted(subPath))
-               {
-               subPath = subPath.Replace(":", string.Empty);
-
-               if (Path.HasExtension(subPath))
-                  {
-                  subPath = Path.ChangeExtension(subPath, null);
-                  }
-               }
-
-            this.tempFilename = Path.GetTempPath() + @"\Tagger\" + subPath + ".data";
+            this.tempFilename = Path.GetTempPath() + @"\Tagger\" + filename + ".imagedata";
 
             this.LoadPoints();
             }
