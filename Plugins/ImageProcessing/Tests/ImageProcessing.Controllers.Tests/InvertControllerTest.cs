@@ -86,6 +86,8 @@
 
          Assert.IsNotNull(invertView);
 
+         invertController.Initialize();
+
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
             imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);

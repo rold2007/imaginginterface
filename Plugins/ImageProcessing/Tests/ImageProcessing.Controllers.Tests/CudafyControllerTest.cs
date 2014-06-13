@@ -64,7 +64,7 @@
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
 
-            cudafyView.TriggerLoaded();
+            cudafyController.Initialize();
 
             imageManagerController.AddImage(imageController);
 
@@ -155,7 +155,7 @@
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
 
-            cudafyView.TriggerLoaded();
+            cudafyController.Initialize();
 
             imageManagerController.AddImage(imageController);
 
@@ -230,6 +230,8 @@
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
 
+            cudafyController.Initialize();
+
             imageManagerController.AddImage(imageController);
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -282,7 +284,7 @@
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
 
-            cudafyView.TriggerLoaded();
+            cudafyController.Initialize();
 
             imageManagerController.AddImage(imageController);
 
@@ -363,7 +365,7 @@
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[, ,] imageData = new byte[1, 1, 1];
 
-            cudafyView.TriggerLoaded();
+            cudafyController.Initialize();
 
             imageManagerController.AddImage(imageController);
 

@@ -31,6 +31,8 @@
             {
             captureController = this.ServiceLocator.GetInstance<ICaptureController>();
 
+            captureController.Initialize();
+
             Assert.IsTrue(captureView.AllowGrab);
             Assert.IsFalse(captureView.LiveGrabRunning);
             }
@@ -153,6 +155,8 @@
             {
             captureController = this.ServiceLocator.GetInstance<ICaptureController>();
 
+            captureController.Initialize();
+
             IImageSourceController imageSourceController = captureController as IImageSourceController;
 
             byte[, ,] imageData = imageSourceController.NextImageData(captureModel);
@@ -198,6 +202,8 @@
          try
             {
             captureController = this.ServiceLocator.GetInstance<ICaptureController>();
+
+            captureController.Initialize();
 
             IImageSourceController imageSourceController = captureController as IImageSourceController;
 
@@ -254,6 +260,8 @@
             {
             captureController = this.ServiceLocator.GetInstance<ICaptureController>();
 
+            captureController.Initialize();
+
             // Not much is tested in this test appart from making sure we have a full code coverage
             // If a bug is detected the test should be updated accordingly but note that it involves dealing
             // with multithreading...
@@ -302,6 +310,8 @@
          try
             {
             captureController = this.ServiceLocator.GetInstance<ICaptureController>();
+
+            captureController.Initialize();
 
             // Not much is tested in this test appart from making sure we have a full code coverage
             // If a bug is detected the test should be updated accordingly but note that it involves dealing
@@ -356,6 +366,8 @@
 
          using (CaptureController captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController)
             {
+            captureController.Initialize();
+
             // Not much is tested in this test appart from making sure we have a full code coverage
             // If a bug is detected the test should be updated accordingly but note that it involves dealing
             // with multithreading...
@@ -382,6 +394,8 @@
 
          using (CaptureController captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController)
             {
+            captureController.Initialize();
+
             // Make sure we can try to trigger two start in a row without crashing
             captureView.TriggerStart();
 
