@@ -84,6 +84,8 @@
 
          Assert.IsNotNull(rotateView);
 
+         rotateController.Initialize();
+
          using (Image<Rgb, byte> image = new Image<Rgb, byte>(1, 1))
             {
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))

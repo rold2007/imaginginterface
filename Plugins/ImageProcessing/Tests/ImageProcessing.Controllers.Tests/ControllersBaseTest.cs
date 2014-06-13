@@ -65,6 +65,7 @@
          this.Container.Register<IRotateView, RotateView>();
          this.Container.Register<ICudafyView, CudafyView>();
          this.Container.Register<IImageView, ImageView>();
+         this.Container.Register<ITaggerView, TaggerView>();
 
          // Controllers
          this.Container.RegisterSingle<IMainController, MainController>();
@@ -76,6 +77,7 @@
          this.Container.Register<IImageSourceController, ImageSourceController>();
          this.Container.Register<IFileSourceController, FileSourceController>();
          this.Container.Register<IMemorySourceController, MemorySourceController>();
+         this.Container.Register<ITaggerController, TaggerController>();
 
          // Models
          this.Container.Register<IInvertModel, InvertModel>();
@@ -84,6 +86,7 @@
          this.Container.Register<IImageModel, ImageModel>();
          this.Container.Register<IFileSourceModel, FileSourceModel>();
          this.Container.Register<IMemorySourceModel, MemorySourceModel>();
+         this.Container.Register<ITaggerModel, TaggerModel>();
          }
       }
    }
