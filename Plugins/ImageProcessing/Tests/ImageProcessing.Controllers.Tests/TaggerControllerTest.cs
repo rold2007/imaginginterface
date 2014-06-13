@@ -129,20 +129,10 @@
                }
 
             // Add an already tagged point
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageView.TriggerSelectionChanged(new Point(1, 1), true);
-
-               //imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            imageView.TriggerSelectionChanged(new Point(1, 1), true);
 
             // Try to untag an unexisting point
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageView.TriggerSelectionChanged(new Point(2, 2), false);
-
-               //imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            imageView.TriggerSelectionChanged(new Point(2, 2), false);
 
             imageSourceController.ImageData = new byte[10, 10, 3];
 
@@ -178,6 +168,11 @@
 
                imageControllerWrapper.WaitForDisplayUpdate();
                }
+
+            Dictionary<string, List<Point>> dataPoints = taggerController.DataPoints;
+
+            Assert.AreEqual(1, dataPoints.Count);
+            Assert.AreEqual(new Point(1, 1), dataPoints["Label"][0]);
             }
          finally
             {

@@ -20,6 +20,8 @@
       public void Constructor()
          {
          IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
+
+         fileSourceController.Initialize();
          }
 
       [Test]
