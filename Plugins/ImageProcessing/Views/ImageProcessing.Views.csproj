@@ -83,6 +83,18 @@
     <Compile Include="CudafyView.Designer.cs">
       <DependentUpon>CudafyView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectDetectionManagerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ObjectDetectionManagerView.Designer.cs">
+      <DependentUpon>ObjectDetectionManagerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectDetectionView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ObjectDetectionView.Designer.cs">
+      <DependentUpon>ObjectDetectionView.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaggerView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,8 +122,17 @@
     <EmbeddedResource Include="InvertView.resx">
       <DependentUpon>InvertView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ObjectDetectionManagerView.resx">
+      <DependentUpon>ObjectDetectionManagerView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectDetectionView.resx">
+      <DependentUpon>ObjectDetectionView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RotateView.resx">
       <DependentUpon>RotateView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TaggerView.resx">
+      <DependentUpon>TaggerView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

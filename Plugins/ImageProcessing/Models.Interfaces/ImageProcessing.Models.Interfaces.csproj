@@ -77,6 +77,8 @@
   <ItemGroup>
     <Compile Include="ICudafyModel.cs" />
     <Compile Include="IInvertModel.cs" />
+    <Compile Include="IObjectDetectionManagerModel.cs" />
+    <Compile Include="IObjectDetectionModel.cs" />
     <Compile Include="IRotateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITaggerModel.cs" />
