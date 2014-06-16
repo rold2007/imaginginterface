@@ -76,7 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventArguments\TagPointChangedEventArgs.cs" />
     <Compile Include="ICudafyController.cs" />
+    <Compile Include="IObjectDetectionController.cs" />
+    <Compile Include="IObjectDetectionManagerController.cs" />
     <Compile Include="ITaggerController.cs" />
     <Compile Include="IInvertController.cs" />
     <Compile Include="IRotateController.cs" />

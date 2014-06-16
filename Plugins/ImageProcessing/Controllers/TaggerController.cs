@@ -6,6 +6,7 @@
    using System.ComponentModel;
    using System.Drawing;
    using System.IO;
+   using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Plugins;
@@ -34,6 +35,8 @@
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
+
+      public event EventHandler<TagPointChangedEventArgs> TagPointChanged;
 
       public IRawPluginView RawPluginView
          {
@@ -246,6 +249,8 @@
 
                this.dataPointsModified = true;
 
+               this.TriggerTagPointChanged(tag, newPoint, true);
+
                return true;
                }
             else
@@ -263,6 +268,8 @@
 
             this.dataPointsModified = true;
 
+            this.TriggerTagPointChanged(tag, newPoint, true);
+
             return true;
             }
          }
@@ -279,11 +286,28 @@
 
                this.dataPointsModified = true;
 
+               this.TriggerTagPointChanged(tag, newPoint, false);
+
                return true;
                }
             }
 
          return false;
+         }
+
+      private void TriggerTagPointChanged(string label, Point tagPoint, bool added)
+         {
+         Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
+         List<Point> points = new List<Point>();
+
+         points.Add(tagPoint);
+
+         tagPoints.Add(label, points);
+
+         if (this.TagPointChanged != null)
+            {
+            this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController.FullPath, label, tagPoint, added));
+            }
          }
       }
    }

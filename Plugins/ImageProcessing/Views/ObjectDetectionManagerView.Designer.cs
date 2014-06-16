@@ -1,6 +1,6 @@
 ﻿namespace ImageProcessing.Views
    {
-   partial class TaggerView
+   partial class ObjectDetectionManagerView
       {
       /// <summary> 
       /// Required designer variable.
@@ -28,31 +28,31 @@
       /// </summary>
       private void InitializeComponent()
          {
-         this.label1 = new System.Windows.Forms.Label();
+         this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
          this.SuspendLayout();
          // 
-         // label1
+         // flowLayoutPanel
          // 
-         this.label1.AutoSize = true;
-         this.label1.Location = new System.Drawing.Point(57, 64);
-         this.label1.Name = "label1";
-         this.label1.Size = new System.Drawing.Size(41, 13);
-         this.label1.TabIndex = 0;
-         this.label1.Text = "Tagger";
+         this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+         this.flowLayoutPanel.Location = new System.Drawing.Point(0, 0);
+         this.flowLayoutPanel.Name = "flowLayoutPanel";
+         this.flowLayoutPanel.Size = new System.Drawing.Size(316, 269);
+         this.flowLayoutPanel.TabIndex = 0;
          // 
-         // TaggerView
+         // ObjectDetectionManagerView
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.Controls.Add(this.label1);
-         this.Name = "TaggerView";
+         this.Controls.Add(this.flowLayoutPanel);
+         this.Name = "ObjectDetectionManagerView";
+         this.Size = new System.Drawing.Size(316, 269);
          this.ResumeLayout(false);
-         this.PerformLayout();
 
          }
 
       #endregion
 
-      private System.Windows.Forms.Label label1;
+      private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
       }
    }

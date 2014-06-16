@@ -23,6 +23,8 @@
          container.Register<ICudafyModel, CudafyModel>();
          container.Register<IMemorySourceModel, MemorySourceModel>();
          container.Register<ITaggerModel, TaggerModel>();
+         container.Register<IObjectDetectionManagerModel, ObjectDetectionManagerModel>();
+         container.Register<IObjectDetectionModel, ObjectDetectionModel>();
 
          // Controllers
          container.Register<IRotateController, RotateController>();
@@ -31,12 +33,16 @@
          container.Register<ICudafyController, CudafyController>();
          container.Register<IMemorySourceController, MemorySourceController>();
          container.Register<ITaggerController, TaggerController>();
+         container.Register<IObjectDetectionManagerController, ObjectDetectionManagerController>();
+         container.Register<IObjectDetectionController, ObjectDetectionController>();
 
          // Views
          container.Register<IRotateView, RotateView>();
          container.Register<IInvertView, InvertView>();
          container.Register<ICudafyView, CudafyView>();
          container.Register<ITaggerView, TaggerView>();
+         container.Register<IObjectDetectionManagerView, ObjectDetectionManagerView>();
+         container.Register<IObjectDetectionView, ObjectDetectionView>();
          }
       }
    }

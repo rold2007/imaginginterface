@@ -79,6 +79,8 @@
     <Compile Include="FileSourceModel.cs" />
     <Compile Include="InvertModel.cs" />
     <Compile Include="MemorySourceModel.cs" />
+    <Compile Include="ObjectDetectionManagerModel.cs" />
+    <Compile Include="ObjectDetectionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateModel.cs" />
     <Compile Include="TaggerModel.cs" />
