@@ -13,5 +13,23 @@
          get;
          set;
          }
+
+      public string AddedLabel
+         {
+         get;
+         set;
+         }
+
+      public string SelectedLabel
+         {
+         get;
+         set;
+         }
+
+      public SortedList<string, double[]> Labels
+         {
+         get;
+         set;
+         }
       }
    }
