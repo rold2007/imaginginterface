@@ -9,6 +9,7 @@
    using System.Threading.Tasks;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
+   using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
@@ -78,7 +79,7 @@
       public void ProcessImageData()
          {
          string displayName = "temp";
-         string directory = Path.GetTempPath() + @"\Tagger\";
+         string directory = Path.GetTempPath() + @"\Tagger-Test\";
          string extension = ".imagedata";
          string tempDataFilename = directory + displayName + extension;
 
@@ -95,15 +96,14 @@
          try
             {
             this.Container.RegisterSingle<IImageView, ImageView>();
+            this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
 
             ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
-            TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+            ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
             IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
             ImageView imageView = this.Container.GetInstance<IImageView>() as ImageView;
-
-            Assert.IsNotNull(taggerView);
 
             imageSourceController.ImageData = new byte[10, 10, 1];
 
@@ -119,6 +119,9 @@
 
                imageControllerWrapper.WaitForDisplayUpdate();
                }
+
+            taggerModel.Labels.Add("Label", new double[3] { 0, 0, 0 });
+            taggerModel.SelectedLabel = "Label";
 
             // Tag a point
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))

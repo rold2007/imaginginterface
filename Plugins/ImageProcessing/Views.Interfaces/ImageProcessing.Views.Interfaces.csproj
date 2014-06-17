@@ -94,6 +94,10 @@
       <Name>ImagingInterface.Plugins.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
+      <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
+      <Name>ImageProcessing.Models.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

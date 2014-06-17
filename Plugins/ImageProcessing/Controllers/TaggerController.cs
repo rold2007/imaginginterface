@@ -30,6 +30,7 @@
 
          this.taggerModel.DisplayName = TaggerDisplayName;
          this.dataPoints = new Dictionary<string, List<Point>>();
+         this.taggerModel.Labels = new SortedList<string, double[]>();
          }
 
       public event CancelEventHandler Closing;
@@ -72,6 +73,10 @@
 
       public void Initialize()
          {
+         this.taggerView.SetTaggerModel(this.taggerModel);
+
+         this.taggerView.LabelAdded += this.TaggerView_LabelAdded;
+
          this.imageManagerController.ActiveImageChanged += this.ImageManagerController_ActiveImageChanged;
 
          this.RegisterActiveImage();
@@ -88,6 +93,8 @@
 
          if (!cancelEventArgs.Cancel)
             {
+            this.taggerView.LabelAdded -= this.TaggerView_LabelAdded;
+
             this.imageManagerController.ActiveImageChanged -= this.ImageManagerController_ActiveImageChanged;
 
             this.UnregisterActiveImage();
@@ -121,11 +128,16 @@
             {
             foreach (string tag in this.dataPoints.Keys)
                {
+               double[] rgb = this.taggerModel.Labels[tag];
+               byte red = Convert.ToByte(rgb[0]);
+               byte green = Convert.ToByte(rgb[1]);
+               byte blue = Convert.ToByte(rgb[2]);
+
                foreach (Point point in this.dataPoints[tag])
                   {
-                  image[point.Y, point.X, 0] = 0;
-                  image[point.Y, point.X, 1] = 0;
-                  image[point.Y, point.X, 2] = 255;
+                  image[point.Y, point.X, 0] = red;
+                  image[point.Y, point.X, 1] = green;
+                  image[point.Y, point.X, 2] = blue;
                   }
                }
             }
@@ -152,6 +164,8 @@
             this.tempFilename = Path.GetTempPath() + @"\Tagger\" + filename + ".imagedata";
 
             this.LoadPoints();
+
+            this.taggerView.UpdateLabelList();
             }
          }
 
@@ -170,18 +184,21 @@
 
       private void RegisteredImageController_SelectionChanged(object sender, ImagingInterface.Plugins.EventArguments.SelectionChangedEventArgs e)
          {
-         if (e.Select)
+         if (this.taggerModel.SelectedLabel != null)
             {
-            if (this.AddPoint("Label", e.PixelPosition))
+            if (e.Select)
                {
-               this.registeredImageController.AddImageProcessingController(this, this.taggerModel);
+               if (this.AddPoint(this.taggerModel.SelectedLabel, e.PixelPosition))
+                  {
+                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel);
+                  }
                }
-            }
-         else
-            {
-            if (this.RemovePoint("Label", e.PixelPosition))
+            else
                {
-               this.registeredImageController.AddImageProcessingController(this, this.taggerModel);
+               if (this.RemovePoint(this.taggerModel.SelectedLabel, e.PixelPosition))
+                  {
+                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel);
+                  }
                }
             }
          }
@@ -226,6 +243,8 @@
                   string[] lineSplits = line.Split(';');
                   string tag = lineSplits[0];
                   Point readPoint = new Point(Convert.ToInt32(lineSplits[1]), Convert.ToInt32(lineSplits[2]));
+
+                  this.AddLabel(tag);
 
                   this.AddPoint(tag, readPoint);
                   }
@@ -307,6 +326,28 @@
          if (this.TagPointChanged != null)
             {
             this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController.FullPath, label, tagPoint, added));
+            }
+         }
+
+      private void TaggerView_LabelAdded(object sender, EventArgs e)
+         {
+         this.AddLabel(this.taggerModel.AddedLabel);
+         }
+
+      private void AddLabel(string tag)
+         {
+         if (!this.taggerModel.Labels.ContainsKey(tag))
+            {
+            this.taggerModel.Labels.Add(tag, null);
+
+            for (int labelIndex = 0; labelIndex < this.taggerModel.Labels.Count; labelIndex++)
+               {
+               double hue = 360 * labelIndex / this.taggerModel.Labels.Count;
+               double[] hsv = new double[3] { hue, 1.0, 255.0 };
+               double[] rgb = ImagingInterface.Plugins.Utilities.Color.HSVToRGB(hsv);
+
+               this.taggerModel.Labels[this.taggerModel.Labels.Keys[labelIndex]] = rgb;
+               }
             }
          }
       }

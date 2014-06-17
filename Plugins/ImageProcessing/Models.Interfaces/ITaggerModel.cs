@@ -9,5 +9,22 @@
 
    public interface ITaggerModel : IRawPluginModel
       {
+      string AddedLabel
+         {
+         get;
+         set;
+         }
+
+      string SelectedLabel
+         {
+         get;
+         set;
+         }
+
+      SortedList<string, double[]> Labels
+         {
+         get;
+         set;
+         }
       }
    }
