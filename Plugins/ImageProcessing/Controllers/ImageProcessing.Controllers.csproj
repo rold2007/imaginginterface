@@ -79,6 +79,10 @@
       <HintPath>..\..\..\Libs\Emgu.CV.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Emgu.CV.ML">
+      <HintPath>..\..\..\Libs\Emgu.CV.ML.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Emgu.Util, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\Emgu.Util.dll</HintPath>

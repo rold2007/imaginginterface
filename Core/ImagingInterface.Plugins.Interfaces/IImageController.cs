@@ -29,6 +29,11 @@
          get;
          }
 
+      byte[, ,] LastDisplayedImage
+         {
+         get;
+         }
+
       string FullPath
          {
          get;

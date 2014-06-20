@@ -7,12 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class IObjectDetectionManagerModel : IRawPluginModel
+   public interface IObjectDetectionManagerModel : IRawPluginModel
       {
-      public string DisplayName
-         {
-         get;
-         set;
-         }
       }
    }

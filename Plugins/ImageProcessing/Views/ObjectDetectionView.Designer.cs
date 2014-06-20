@@ -40,6 +40,7 @@
          this.trainButton.TabIndex = 0;
          this.trainButton.Text = "Train";
          this.trainButton.UseVisualStyleBackColor = true;
+         this.trainButton.Click += new System.EventHandler(this.TrainButton_Click);
          // 
          // detectButton
          // 
@@ -49,6 +50,7 @@
          this.detectButton.TabIndex = 1;
          this.detectButton.Text = "Detect";
          this.detectButton.UseVisualStyleBackColor = true;
+         this.detectButton.Click += new System.EventHandler(this.DetectButton_Click);
          // 
          // ObjectDetectionView
          // 

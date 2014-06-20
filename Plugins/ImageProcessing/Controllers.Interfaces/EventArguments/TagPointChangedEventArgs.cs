@@ -6,18 +6,19 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
+   using ImagingInterface.Plugins;
 
    public class TagPointChangedEventArgs : EventArgs
       {
-      public TagPointChangedEventArgs(string uniqueIdentifier, string label, Point tagPoint, bool added)
+      public TagPointChangedEventArgs(IImageController imageController, string label, Point tagPoint, bool added)
          {
-         this.UniqueIdentifier = uniqueIdentifier;
+         this.ImageController = imageController;
          this.Label = label;
          this.TagPoint = tagPoint;
          this.Added = added;
          }
 
-      public string UniqueIdentifier
+      public IImageController ImageController
          {
          get;
          private set;
