@@ -190,14 +190,14 @@
                {
                if (this.AddPoint(this.taggerModel.SelectedLabel, e.PixelPosition))
                   {
-                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel);
+                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
                   }
                }
             else
                {
                if (this.RemovePoint(this.taggerModel.SelectedLabel, e.PixelPosition))
                   {
-                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel);
+                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
                   }
                }
             }
@@ -250,7 +250,7 @@
                   }
                }
 
-            this.registeredImageController.AddImageProcessingController(this, this.taggerModel);
+            this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
             }
 
          this.dataPointsModified = false;
@@ -325,7 +325,7 @@
 
          if (this.TagPointChanged != null)
             {
-            this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController.FullPath, label, tagPoint, added));
+            this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController, label, tagPoint, added));
             }
          }
 

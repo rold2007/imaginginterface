@@ -5,6 +5,10 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
+   using Emgu.CV;
+   using Emgu.CV.ML;
+   using Emgu.CV.ML.MlEnum;
+   using Emgu.CV.ML.Structure;
 
    public class ObjectDetectionModel : IObjectDetectionModel
       {
@@ -12,6 +16,17 @@
          {
          get;
          set;
+         }
+
+      public Dictionary<string, Boost> Models
+         {
+         get;
+         set;
+         }
+
+      public object Clone()
+         {
+         return this.MemberwiseClone();
          }
       }
    }

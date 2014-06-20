@@ -73,6 +73,9 @@
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\Libs\Emgu.CV.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV.ML">
+      <HintPath>..\..\..\..\Libs\Emgu.CV.ML.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\..\Libs\Emgu.Util.dll</HintPath>
     </Reference>
@@ -101,6 +104,7 @@
     <Compile Include="FileSourceControllerTest.cs" />
     <Compile Include="InvertControllerTest.cs" />
     <Compile Include="MemorySourceControllerTest.cs" />
+    <Compile Include="ObjectDetectionControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateControllerTest.cs" />
     <Compile Include="TaggerControllerTest.cs" />

@@ -17,8 +17,28 @@
          this.InitializeComponent();
          }
 
+      public event EventHandler Train;
+
+      public event EventHandler Test;
+
       public void Close()
          {
+         }
+
+      private void TrainButton_Click(object sender, EventArgs e)
+         {
+         if (this.Train != null)
+            {
+            this.Train(this, EventArgs.Empty);
+            }
+         }
+
+      private void DetectButton_Click(object sender, EventArgs e)
+         {
+         if (this.Test != null)
+            {
+            this.Test(this, EventArgs.Empty);
+            }
          }
       }
    }

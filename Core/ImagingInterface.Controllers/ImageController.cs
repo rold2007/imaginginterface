@@ -97,6 +97,14 @@
             }
          }
 
+      public byte[, ,] LastDisplayedImage
+         {
+         get
+            {
+            return this.imageModel.DisplayImageData;
+            }
+         }
+
       public string FullPath
          {
          get

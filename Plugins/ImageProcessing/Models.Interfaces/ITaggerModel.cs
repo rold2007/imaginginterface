@@ -7,7 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public interface ITaggerModel : IRawPluginModel
+   public interface ITaggerModel : IRawPluginModel, ICloneable
       {
       string AddedLabel
          {

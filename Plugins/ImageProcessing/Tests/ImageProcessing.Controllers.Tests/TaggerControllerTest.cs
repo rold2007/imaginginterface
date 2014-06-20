@@ -79,14 +79,9 @@
       public void ProcessImageData()
          {
          string displayName = "temp";
-         string directory = Path.GetTempPath() + @"\Tagger-Test\";
+         string directory = Path.GetTempPath() + @"\Tagger\";
          string extension = ".imagedata";
          string tempDataFilename = directory + displayName + extension;
-
-         if (Directory.Exists(directory))
-            {
-            Directory.Delete(directory, true);
-            }
 
          if (File.Exists(tempDataFilename))
             {
@@ -182,6 +177,11 @@
             if (File.Exists(tempDataFilename))
                {
                File.Delete(tempDataFilename);
+               }
+
+            if (Directory.Exists(directory))
+               {
+               Directory.Delete(directory, true);
                }
             }
          }

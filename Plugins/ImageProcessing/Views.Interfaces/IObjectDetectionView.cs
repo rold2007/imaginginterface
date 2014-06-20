@@ -9,5 +9,8 @@
 
    public interface IObjectDetectionView : IPluginView
       {
+      event EventHandler Train;
+
+      event EventHandler Test;
       }
    }
