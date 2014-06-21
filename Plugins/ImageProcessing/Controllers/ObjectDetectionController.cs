@@ -13,6 +13,7 @@
    using Emgu.CV.ML.MlEnum;
    using Emgu.CV.ML.Structure;
    using Emgu.CV.Structure;
+   using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Plugins;
@@ -21,7 +22,8 @@
       {
       private static readonly int WindowHalfHeight = 10;
       private static readonly int WindowHalfWidth = 10;
-      private static readonly int NumberOfFeatures = Convert.ToInt32(Math.Pow(WindowHalfHeight + WindowHalfWidth + 1, 2));
+      private static readonly int CentralHaarWindowRadius = 15;
+      private static readonly int NumberOfFeatures = Convert.ToInt32(Math.Ceiling((double)CentralHaarWindowRadius / 2) + 1);
       private IObjectDetectionView objectDetectionView;
       private IObjectDetectionModel objectDetectionModel;
       private IImageManagerController imageManagerController;
@@ -118,11 +120,13 @@
             {
             MCvSlice mcvSlice = MCvSlice.WholeSeq;
 
+            double[, ,] integral = this.ComputeIntegral(imageData);
+
             for (int y = 0; y < imageHeight; y++)
                {
                for (int x = 0; x < imageWidth; x++)
                   {
-                  float[] featuresData = this.ComputeFeatures(imageData, new Point(x, y));
+                  float[] featuresData = this.ComputeFeatures(imageData, integral, new Point(x, y));
 
                   using (Matrix<float> features = new Matrix<float>(featuresData))
                      {
@@ -142,7 +146,7 @@
          return outputImageData;
          }
 
-      private void TaggerController_TagPointChanged(object sender, EventArguments.TagPointChangedEventArgs e)
+      private void TaggerController_TagPointChanged(object sender, TagPointChangedEventArgs e)
          {
          if (e.Added)
             {
@@ -171,40 +175,99 @@
 
       private float[] ComputeFeatures(byte[, ,] imageData, Point pixelPosition)
          {
+         double[, ,] integral = this.ComputeIntegral(imageData);
+
+         return this.ComputeFeatures(imageData, integral, pixelPosition);
+         }
+
+      private float[] ComputeFeatures(byte[, ,] imageData, double[, ,] integral, Point pixelPosition)
+         {
          float[] features = new float[NumberOfFeatures];
          int featureIndex = 0;
          int imageWidth = imageData.GetLength(1);
          int imageHeight = imageData.GetLength(0);
          int channels = imageData.GetLength(2);
 
-         for (int y = pixelPosition.Y - WindowHalfHeight; y <= pixelPosition.Y + WindowHalfHeight; y++)
+         int x = pixelPosition.X;
+         int y = pixelPosition.Y;
+
+         if ((x >= 0 && x < imageWidth) && (y >= 0 && y < imageHeight))
             {
-            for (int x = pixelPosition.X - WindowHalfWidth; x <= pixelPosition.X + WindowHalfWidth; x++)
+            if (channels == 1)
                {
-               if ((x >= 0 && x < imageWidth) && (y >= 0 && y < imageHeight))
-                  {
-                  if (channels == 1)
-                     {
-                     features[featureIndex] = imageData[y, x, 0];
-                     }
-                  else
-                     {
-                     double[] rgb = new double[] { imageData[y, x, 0], imageData[y, x, 1], imageData[y, x, 2] };
-                     double[] hsv = ImagingInterface.Plugins.Utilities.Color.RGBToHSV(rgb);
-
-                     features[featureIndex] = Convert.ToSingle(hsv[2]);
-                     }
-                  }
-               else
-                  {
-                  features[featureIndex] = -1.0f;
-                  }
-
-               featureIndex++;
+               features[featureIndex] = imageData[y, x, 0];
                }
+            else
+               {
+               double[] rgb = new double[] { imageData[y, x, 0], imageData[y, x, 1], imageData[y, x, 2] };
+               double[] hsv = ImagingInterface.Plugins.Utilities.Color.RGBToHSV(rgb);
+
+               features[featureIndex] = Convert.ToSingle(hsv[2]);
+               }
+            }
+         else
+            {
+            features[featureIndex] = -1.0f;
+            }
+
+         featureIndex++;
+
+         for (int centralHaarWindowRadius = CentralHaarWindowRadius; centralHaarWindowRadius >= 1; centralHaarWindowRadius -= 2)
+            {
+            int left = x - centralHaarWindowRadius;
+            int right = x + centralHaarWindowRadius + 1;
+            int top = y - centralHaarWindowRadius;
+            int bottom = y + centralHaarWindowRadius + 1;
+
+            if ((left >= 0 && right < imageWidth) && (top >= 0 && bottom < imageHeight))
+               {
+               double sum = 0.0;
+
+               for (int channel = 0; channel < channels; channel++)
+                  {
+                  sum += integral[top, left, channel];
+                  sum += integral[bottom, right, channel];
+                  sum -= integral[top, right, channel];
+                  sum -= integral[bottom, left, channel];
+                  }
+
+               features[featureIndex] = Convert.ToSingle(sum);
+               }
+            else
+               {
+               features[featureIndex] = -1.0f;
+               }
+
+            featureIndex++;
             }
 
          return features;
+         }
+
+      private double[, ,] ComputeIntegral(byte[, ,] imageData)
+         {
+         int channels = imageData.GetLength(2);
+
+         if (channels == 1)
+            {
+            using (Image<Gray, byte> image = new Image<Gray, byte>(imageData))
+               {
+               using (Image<Gray, double> integral = image.Integral())
+                  {
+                  return integral.Data;
+                  }
+               }
+            }
+         else
+            {
+            using (Image<Rgb, byte> image = new Image<Rgb, byte>(imageData))
+               {
+               using (Image<Rgb, double> integral = image.Integral())
+                  {
+                  return integral.Data;
+                  }
+               }
+            }
          }
 
       private void ObjectDetectionView_Train(object sender, EventArgs e)
