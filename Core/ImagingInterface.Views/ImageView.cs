@@ -61,6 +61,11 @@
          {
          if (this.imageModel.DisplayImageData != null)
             {
+            if (this.glControl.Visible == false)
+               {
+               this.glControl.Visible = true;
+               }
+
             this.AdjustScrollBars();
 
             if (this.glControlSizeUpdated)

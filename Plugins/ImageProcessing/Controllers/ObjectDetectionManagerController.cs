@@ -82,6 +82,9 @@
 
             this.objectDetectionManagerView.Close();
 
+            this.taggerController.Close();
+            this.objectDetectionController.Close();
+
             if (this.Closed != null)
                {
                this.Closed(this, EventArgs.Empty);
