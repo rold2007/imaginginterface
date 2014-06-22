@@ -10,6 +10,7 @@
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Plugins.EventArguments;
 
    public class TaggerController : ITaggerController
       {
@@ -159,13 +160,15 @@
             {
             this.registeredImageController.SelectionChanged += this.RegisteredImageController_SelectionChanged;
 
-            string filename = Path.GetFileNameWithoutExtension(this.registeredImageController.FullPath);
-
-            this.tempFilename = Path.GetTempPath() + @"\Tagger\" + filename + ".imagedata";
-
-            this.LoadPoints();
-
-            this.taggerView.UpdateLabelList();
+            if (this.registeredImageController.LastDisplayedImage == null)
+               {
+               // Need to wait for the first display update
+               this.registeredImageController.DisplayUpdated += this.RegisteredImageController_DisplayUpdated;
+               }
+            else
+               {
+               this.ExtractPoints();
+               }
             }
          }
 
@@ -174,6 +177,7 @@
          if (this.registeredImageController != null)
             {
             this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
+            this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
 
             this.SavePoints();
 
@@ -182,7 +186,25 @@
             }
          }
 
-      private void RegisteredImageController_SelectionChanged(object sender, ImagingInterface.Plugins.EventArguments.SelectionChangedEventArgs e)
+      private void ExtractPoints()
+         {
+         string filename = Path.GetFileNameWithoutExtension(this.registeredImageController.FullPath);
+
+         this.tempFilename = Path.GetTempPath() + @"\Tagger\" + filename + ".imagedata";
+
+         this.LoadPoints();
+
+         this.taggerView.UpdateLabelList();
+         }
+
+      private void RegisteredImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
+         {
+         this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
+
+         this.ExtractPoints();
+         }
+
+      private void RegisteredImageController_SelectionChanged(object sender, SelectionChangedEventArgs e)
          {
          if (this.taggerModel.SelectedLabel != null)
             {

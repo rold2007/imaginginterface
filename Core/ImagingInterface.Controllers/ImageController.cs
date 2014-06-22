@@ -60,7 +60,6 @@
 
          this.closed = false;
 
-         this.imageModel.DisplayImageData = new byte[1, 1, 1];
          this.imageModel.ZoomLevel = 1.0;
 
          this.imageView.ZoomLevelIncreased += this.ImageView_ZoomLevelIncreased;

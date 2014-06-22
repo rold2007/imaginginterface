@@ -55,6 +55,7 @@
          this.glControl.Name = "glControl";
          this.glControl.Size = new System.Drawing.Size(402, 299);
          this.glControl.TabIndex = 0;
+         this.glControl.Visible = false;
          this.glControl.VSync = false;
          this.glControl.Load += new System.EventHandler(this.GLControl_Load);
          this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLControl_Paint);
@@ -98,14 +99,14 @@
          // zoomModeToolStripMenuItem
          // 
          this.zoomModeToolStripMenuItem.Name = "zoomModeToolStripMenuItem";
-         this.zoomModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+         this.zoomModeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
          this.zoomModeToolStripMenuItem.Tag = "";
          this.zoomModeToolStripMenuItem.Text = "Zoom Mode";
          // 
          // selectModeToolStripMenuItem
          // 
          this.selectModeToolStripMenuItem.Name = "selectModeToolStripMenuItem";
-         this.selectModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+         this.selectModeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
          this.selectModeToolStripMenuItem.Tag = "";
          this.selectModeToolStripMenuItem.Text = "Select Mode";
          // 
