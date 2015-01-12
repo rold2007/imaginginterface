@@ -42,7 +42,7 @@
          {
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          return imageData.Clone() as byte[, ,];
          }

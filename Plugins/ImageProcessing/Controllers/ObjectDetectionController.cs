@@ -109,18 +109,18 @@
          this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          IObjectDetectionModel objectDetectionModel = rawPluginModel as IObjectDetectionModel;
-         byte[, ,] outputImageData = imageData.Clone() as byte[, ,];
-         int imageWidth = outputImageData.GetLength(1);
-         int imageHeight = outputImageData.GetLength(0);
 
          if (objectDetectionModel.Models.Count != 0)
             {
             MCvSlice mcvSlice = MCvSlice.WholeSeq;
 
             double[, ,] integral = this.ComputeIntegral(imageData);
+            int imageWidth = imageData.GetLength(1);
+            int imageHeight = imageData.GetLength(0);
+            int imageSize = imageWidth * imageHeight;
 
             for (int y = 0; y < imageHeight; y++)
                {
@@ -134,16 +134,19 @@
 
                      if (prediction == 1.0f)
                         {
-                        outputImageData[y, x, 0] = 255;
-                        outputImageData[y, x, 1] = 0;
-                        outputImageData[y, x, 2] = 0;
+                        int pixelOffset = y * imageWidth + x;
+
+                        overlayData[pixelOffset] = 0;
+                        overlayData[pixelOffset + imageSize] = 0;
+                        overlayData[pixelOffset + (2 * imageSize)] = 255;
+                        overlayData[pixelOffset + (3 * imageSize)] = 128;
                         }
                      }
                   }
                }
             }
 
-         return outputImageData;
+         return imageData;
          }
 
       private void TaggerController_TagPointChanged(object sender, TagPointChangedEventArgs e)

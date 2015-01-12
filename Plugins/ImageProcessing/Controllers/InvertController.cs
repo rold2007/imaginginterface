@@ -84,7 +84,7 @@
             }
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          if (imageData.GetLength(2) == 1)
             {

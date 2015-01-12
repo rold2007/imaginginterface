@@ -9,6 +9,6 @@
 
    public interface IImageProcessingController : IPluginController
       {
-      byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel);
+      byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel);
       }
    }

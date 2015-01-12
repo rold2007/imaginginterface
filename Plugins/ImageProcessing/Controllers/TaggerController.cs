@@ -111,39 +111,44 @@
             }
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
-         byte[, ,] image = imageData.Clone() as byte[, ,];
+         int imageWidth = imageData.GetLength(1);
+         int imageHeight = imageData.GetLength(0);
+         int imageSize = imageWidth * imageHeight;
 
-         if (imageData.GetLength(2) == 1)
+         foreach (string tag in this.dataPoints.Keys)
             {
-            foreach (string tag in this.dataPoints.Keys)
-               {
-               foreach (Point point in this.dataPoints[tag])
-                  {
-                  image[point.Y, point.X, 0] = 255;
-                  }
-               }
-            }
-         else
-            {
-            foreach (string tag in this.dataPoints.Keys)
-               {
-               double[] rgb = this.taggerModel.Labels[tag];
-               byte red = Convert.ToByte(rgb[0]);
-               byte green = Convert.ToByte(rgb[1]);
-               byte blue = Convert.ToByte(rgb[2]);
+            double[] rgb = this.taggerModel.Labels[tag];
+            byte red = Convert.ToByte(rgb[0]);
+            byte green = Convert.ToByte(rgb[1]);
+            byte blue = Convert.ToByte(rgb[2]);
 
-               foreach (Point point in this.dataPoints[tag])
-                  {
-                  image[point.Y, point.X, 0] = red;
-                  image[point.Y, point.X, 1] = green;
-                  image[point.Y, point.X, 2] = blue;
-                  }
+            foreach (Point point in this.dataPoints[tag])
+               {
+               int pixelOffset = point.Y * imageWidth + point.X;
+
+               overlayData[pixelOffset] = red;
+               overlayData[pixelOffset + imageSize] = green;
+               overlayData[pixelOffset + (2 * imageSize)] = blue;
+               overlayData[pixelOffset + (3 * imageSize)] = 255;
                }
             }
 
-         return image;
+         //for (int y = 0; y < imageHeight; y++)
+         //   {
+         //   for (int x = 0; x < imageWidth; x++)
+         //      {
+         //      int pixelOffset = y * imageWidth + x;
+
+         //      overlayData[pixelOffset] = 255;
+         //      overlayData[pixelOffset + imageSize] = 255;
+         //      overlayData[pixelOffset + (2 * imageSize)] = 255;
+         //      overlayData[pixelOffset + (3 * imageSize)] = 255;
+         //      }
+         //   }
+
+         return imageData;
          }
 
       private void ImageManagerController_ActiveImageChanged(object sender, EventArgs e)

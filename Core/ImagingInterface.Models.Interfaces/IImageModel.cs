@@ -22,6 +22,12 @@
          set;
          }
 
+      byte[] OverlayImageData
+         {
+         get;
+         set;
+         }
+
       Size Size
          {
          get;
