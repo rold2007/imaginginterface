@@ -77,7 +77,7 @@
                imageControllerWrapper.WaitForDisplayUpdate();
                }
 
-            cudafyController.ProcessImageData(imageData, cudafyController.RawPluginModel);
+            cudafyController.ProcessImageData(imageData, null, cudafyController.RawPluginModel);
 
             cudafyView.GridSizeX = 1;
             cudafyView.GridSizeY = 1;
@@ -102,7 +102,7 @@
 
             imageData = new byte[1, 1, 3];
 
-            cudafyController.ProcessImageData(imageData, cudafyController.RawPluginModel);
+            cudafyController.ProcessImageData(imageData, null, cudafyController.RawPluginModel);
             }
          catch (ActivationException)
             {

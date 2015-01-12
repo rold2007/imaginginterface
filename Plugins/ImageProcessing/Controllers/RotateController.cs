@@ -90,7 +90,7 @@
             }
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, IRawPluginModel rawPluginModel)
+      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          IRotateModel rotateModel = rawPluginModel as IRotateModel;
 

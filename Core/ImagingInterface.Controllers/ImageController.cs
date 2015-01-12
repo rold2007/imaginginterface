@@ -233,9 +233,9 @@
          // Task needed to synchronize all the FetchNextImageFromSource and make sure only one is ran at any time and that they run in-order
          waitForFetchNextImageSourceTask.Start(TaskScheduler.Default);
 
-         MutableTuple tuple = new MutableTuple(this.imageSourceController, this.imageSourceRawPluginModel, null, waitForFetchNextImageSourceTask, null);
+         ImageProcessingAsyncData imageProcessingAsyncData = new ImageProcessingAsyncData(this.imageSourceController, this.imageSourceRawPluginModel, null, waitForFetchNextImageSourceTask, this.lastDisplayNextImageTask);
 
-         fetchNextImageFromSourceTask = new Task<byte[, ,]>(this.FetchNextImageFromSource, tuple);
+         fetchNextImageFromSourceTask = new Task<byte[, ,]>(this.FetchNextImageFromSource, imageProcessingAsyncData);
 
          fetchNextImageFromSourceTask.Start(TaskScheduler.Default);
 
@@ -245,20 +245,28 @@
 
          if (this.imageProcessingControllers.Count > 0)
             {
-            imageSourceTask = this.CreateProcessingTasks(fetchNextImageFromSourceTask);
+            List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
+            List<byte[]> overlays = new List<byte[]>();
+
+            imageProcessingAsyncData.ImageProcessingControllers = imageProcessingControllers;
+            imageProcessingAsyncData.Overlays = overlays;
+
+            imageSourceTask = this.CreateProcessingTasks(fetchNextImageFromSourceTask, imageProcessingControllers, overlays);
             }
          else
             {
             imageSourceTask = fetchNextImageFromSourceTask;
             }
 
-         Debug.Assert(this.imageProcessingControllers.Count <= 1, "Need to support a list of image processing controllers in the MutableTuple");
+         Debug.Assert(this.imageProcessingControllers.Count <= 1, "Need to support a list of image processing controllers in the ImageProcessingAsyncData");
 
-         MutableTuple waitForDisplayNextImageTuple = new MutableTuple(null, null, imageSourceTask, this.lastDisplayNextImageTask, null);
-         MutableTuple displayNextImageTuple = new MutableTuple(this.imageSourceController, this.imageSourceRawPluginModel, imageSourceTask, this.lastDisplayNextImageTask, new List<Tuple<IImageProcessingController, IRawPluginModel>>(this.imageProcessingControllers));
+         imageProcessingAsyncData.TaskByte = imageSourceTask;
+         imageProcessingAsyncData.LastDisplayNextImageTask = this.lastDisplayNextImageTask;
+         //MutableTuple waitForDisplayNextImageTuple = new MutableTuple(null, null, imageSourceTask, this.lastDisplayNextImageTask, null);
+         //MutableTuple displayNextImageTuple = new MutableTuple(this.imageSourceController, this.imageSourceRawPluginModel, imageSourceTask, this.lastDisplayNextImageTask, new List<Tuple<IImageProcessingController, IRawPluginModel>>(this.imageProcessingControllers));
 
-         Task<byte[, ,]> waitForDisplayNextImageTask = new Task<byte[, ,]>(this.WaitForDisplayNextImage, waitForDisplayNextImageTuple);
-         Task displayNextImageTask = waitForDisplayNextImageTask.ContinueWith(this.DisplayNextImage, displayNextImageTuple, taskScheduler);
+         Task<byte[, ,]> waitForDisplayNextImageTask = new Task<byte[, ,]>(this.WaitForDisplayNextImage, imageProcessingAsyncData);
+         Task displayNextImageTask = waitForDisplayNextImageTask.ContinueWith(this.DisplayNextImage, imageProcessingAsyncData, taskScheduler);
 
          waitForDisplayNextImageTask.Start(TaskScheduler.Default);
 
@@ -279,24 +287,26 @@
             }
          }
 
-      private Task<byte[, ,]> CreateProcessingTasks(Task<byte[, ,]> taskInput)
+      private Task<byte[, ,]> CreateProcessingTasks(Task<byte[, ,]> imageSourceTask, List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers, List<byte[]> overlays)
          {
          Debug.Assert(this.imageProcessingControllers.Count > 0, "CreateProcessingTasks should only be called when there is some image processing to do.");
 
-         Task<byte[, ,]> previousTask = taskInput;
-         MutableTuple tuple;
+         Task<byte[, ,]> previousTask = null;
 
          foreach (Tuple<IImageProcessingController, IRawPluginModel> imageProcessingControllerTuple in this.imageProcessingControllers)
             {
             if (!this.closingPluginControllers.Contains(imageProcessingControllerTuple.Item1))
                {
-               List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllerList = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
+               ImageProcessingAsyncData imageProcessingAsyncData = new ImageProcessingAsyncData(null, null, imageSourceTask, null, null);
 
-               imageProcessingControllerList.Add(imageProcessingControllerTuple);
+               imageProcessingAsyncData.ImageProcessingControllers = imageProcessingControllers;
+               imageProcessingAsyncData.Overlays = overlays;
 
-               tuple = new MutableTuple(null, null, previousTask, null, imageProcessingControllerList);
+               imageProcessingControllers.Add(imageProcessingControllerTuple);
 
-               previousTask = new Task<byte[, ,]>(this.ProcessImage, tuple);
+               //tuple = new MutableTuple(null, null, imageSourceTask, null, imageProcessingControllerList);
+
+               previousTask = new Task<byte[, ,]>(this.ProcessImage, imageProcessingAsyncData);
 
                previousTask.Start(TaskScheduler.Default);
 
@@ -319,9 +329,9 @@
 
       private byte[, ,] WaitForDisplayNextImage(object state)
          {
-         MutableTuple waitForDisplayNextImageTuple = state as MutableTuple;
-         Task<byte[, ,]> fetchNextImageSourceOrProcessImageTask = waitForDisplayNextImageTuple.TaskByte;
-         Task displayNextImageTask = waitForDisplayNextImageTuple.Task;
+         ImageProcessingAsyncData imageProcessingAsyncData = state as ImageProcessingAsyncData;
+         Task<byte[, ,]> fetchNextImageSourceOrProcessImageTask = imageProcessingAsyncData.TaskByte;
+         Task displayNextImageTask = imageProcessingAsyncData.LastDisplayNextImageTask;
 
          // Make sure the previous display task is completed to run them in-order
          if (displayNextImageTask != null)
@@ -335,7 +345,7 @@
 
          byte[, ,] imageData = fetchNextImageSourceOrProcessImageTask.Result;
 
-         waitForDisplayNextImageTuple.Clear();
+         //imageProcessingAsyncData.Clear();
 
          return imageData;
          }
@@ -353,10 +363,10 @@
 
       private byte[, ,] FetchNextImageFromSource(object state)
          {
-         MutableTuple tuple = state as MutableTuple;
-         IImageSourceController imageSourceController = tuple.ImageSourceController;
-         IRawPluginModel rawPluginModel = tuple.RawPluginModel;
-         Task previousFetchNextImageFromSourceTask = tuple.Task;
+         ImageProcessingAsyncData imageProcessingAsyncData = state as ImageProcessingAsyncData;
+         IImageSourceController imageSourceController = imageProcessingAsyncData.ImageSourceController;
+         IRawPluginModel rawPluginModel = imageProcessingAsyncData.RawPluginModel;
+         Task previousFetchNextImageFromSourceTask = imageProcessingAsyncData.WaitForFetchNextImageSourceTask;
 
          previousFetchNextImageFromSourceTask.Wait();
 
@@ -366,16 +376,27 @@
 
          Debug.Assert(resultImage != null, "The image source controller should always return a valid array.");
 
-         tuple.Clear();
+         //if (imageProcessingAsyncData.ImageProcessingControllers != null)
+         //   {
+         //   int width = resultImage.GetLength(1);
+         //   int height = resultImage.GetLength(0);
+         //   byte[, ,] overlay = new byte[height, width, 3];
+
+         //   imageProcessingAsyncData.Overlays.Add(overlay);
+         //   }
+
+         // Still unncessary ? Done in display update
+         //tuple.Clear();
 
          return resultImage;
          }
 
       private byte[, ,] ProcessImage(object state)
          {
-         MutableTuple tuple = state as MutableTuple;
-         Task<byte[, ,]> previousTask = tuple.TaskByte;
-         List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingController = tuple.ImageProcessingControllers;
+         ImageProcessingAsyncData imageProcessingAsyncData = state as ImageProcessingAsyncData;
+         Task<byte[, ,]> previousTask = imageProcessingAsyncData.TaskByte;
+         List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingController = imageProcessingAsyncData.ImageProcessingControllers;
+         List<byte[]> overlays = imageProcessingAsyncData.Overlays;
 
          Debug.Assert(imageProcessingController.Count == 1, "For now this list should only contain one item.");
 
@@ -386,9 +407,19 @@
 
          previousTask.Dispose();
 
-         byte[, ,] resultImage = imageProcessingController[0].Item1.ProcessImageData(previousResult, imageProcessingController[0].Item2);
+         // Prepare overlay for next processing
+         int width = previousResult.GetLength(1);
+         int height = previousResult.GetLength(0);
+         // Allocated enough for RGBA format
+         byte[] overlay = new byte[width * height * 4];
 
-         tuple.Clear();
+         overlays.Add(overlay);
+
+         Debug.Assert(overlays.Count == 1, "For now this list should only contain one item.");
+
+         byte[, ,] resultImage = imageProcessingController[0].Item1.ProcessImageData(previousResult, overlay, imageProcessingController[0].Item2);
+
+         imageProcessingAsyncData.Clear();
 
          return resultImage;
          }
@@ -415,27 +446,36 @@
             isLastUpdateQueued = false;
             }
 
-         MutableTuple displayNextImageTuple = state as MutableTuple;
+         ImageProcessingAsyncData imageProcessingAsyncData = state as ImageProcessingAsyncData;
 
          // Keep a copy of the last source image data in case the image source controller gets closed
-         this.imageModel.SourceImageData = displayNextImageTuple.TaskByte.Result;
+         this.imageModel.SourceImageData = imageProcessingAsyncData.TaskByte.Result;
 
-         displayNextImageTuple.TaskByte.Dispose();
+         imageProcessingAsyncData.TaskByte.Dispose();
 
          // This method and the closing event should run on the main thread so there is no potential concurrency issue
          if (!this.closing)
             {
             Debug.Assert(parentTask.Status == TaskStatus.RanToCompletion, string.Format("The parent task should be completed. TaskStatus: {0}", parentTask.Status.ToString()));
 
-            this.UpdateDisplayImageData(parentTask.Result, isLastUpdateQueued);
+            byte[] overlay = null;
+
+            if (imageProcessingAsyncData.Overlays != null)
+               {
+               Debug.Assert(imageProcessingAsyncData.Overlays.Count == 1, "For now only one overlay is supported.");
+
+               overlay = imageProcessingAsyncData.Overlays[0];
+               }
+
+            this.UpdateDisplayImageData(parentTask.Result, overlay, isLastUpdateQueued);
 
             if (this.DisplayUpdated != null)
                {
-               this.DisplayUpdated(this, new DisplayUpdateEventArgs(displayNextImageTuple.RawPluginModel));
+               this.DisplayUpdated(this, new DisplayUpdateEventArgs(imageProcessingAsyncData.RawPluginModel));
                }
 
             // This must be done after calling the DisplayUpdated event
-            this.ClearPluginControllers(displayNextImageTuple);
+            this.ClearPluginControllers(imageProcessingAsyncData);
             }
          else
             {
@@ -444,28 +484,31 @@
                {
                this.imageSourceController.Disconnected();
 
-               this.ClearPluginControllers(displayNextImageTuple);
+               this.ClearPluginControllers(imageProcessingAsyncData);
 
                this.Close();
                }
             else
                {
-               this.ClearPluginControllers(displayNextImageTuple);
+               this.ClearPluginControllers(imageProcessingAsyncData);
                }
             }
 
-         displayNextImageTuple.Clear();
+         imageProcessingAsyncData.Clear();
          }
 
-      private void ClearPluginControllers(MutableTuple displayNextImageTuple)
+      private void ClearPluginControllers(ImageProcessingAsyncData imageProcessingAsyncData)
          {
          // Manage closing image source controller, this must be done after calling the DisplayUpdated event
-         this.ManageClosingPluginController(displayNextImageTuple.ImageSourceController);
+         this.ManageClosingPluginController(imageProcessingAsyncData.ImageSourceController);
 
-         // Manage any closing image processing controller, this must be done after calling the DisplayUpdated event
-         foreach (Tuple<IImageProcessingController, IRawPluginModel> tuple in displayNextImageTuple.ImageProcessingControllers)
+         if (imageProcessingAsyncData.ImageProcessingControllers != null)
             {
-            this.ManageClosingPluginController(tuple.Item1);
+            // Manage any closing image processing controller, this must be done after calling the DisplayUpdated event
+            foreach (Tuple<IImageProcessingController, IRawPluginModel> tuple in imageProcessingAsyncData.ImageProcessingControllers)
+               {
+               this.ManageClosingPluginController(tuple.Item1);
+               }
             }
          }
 
@@ -501,17 +544,18 @@
             }
          }
 
-      private void UpdateDisplayImageData(byte[, ,] imageData, bool forced)
+      private void UpdateDisplayImageData(byte[, ,] imageData, byte[] overlayData, bool forced)
          {
          // Do not clone the result here. It is the responsibility of the IImageSourceController to return the same (unmodified) image
          // or a new image
-         if (this.imageModel.DisplayImageData != imageData)
+         if (this.imageModel.DisplayImageData != imageData || this.imageModel.OverlayImageData != overlayData)
             {
             long lastDisplayUpdateMilliseconds = this.lastDisplayUpdate.ElapsedMilliseconds;
 
             if (lastDisplayUpdateMilliseconds > this.updatePeriod || forced)
                {
                this.imageModel.DisplayImageData = imageData;
+               this.imageModel.OverlayImageData = overlayData;
                this.imageView.UpdateDisplay();
 
                this.lastDisplayUpdate = Stopwatch.StartNew();
@@ -635,15 +679,15 @@
             }
          }
 
-      private class MutableTuple
+      private class ImageProcessingAsyncData
          {
-         public MutableTuple(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, Task<byte[, ,]> taskByte, Task task, List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers)
+         public ImageProcessingAsyncData(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, Task<byte[, ,]> taskByte, Task waitForFetchNextImageSourceTask, Task lastDisplayNextImageTask)
             {
             this.ImageSourceController = imageSourceController;
             this.RawPluginModel = rawPluginModel;
             this.TaskByte = taskByte;
-            this.Task = task;
-            this.ImageProcessingControllers = imageProcessingControllers;
+            this.WaitForFetchNextImageSourceTask = waitForFetchNextImageSourceTask;
+            this.LastDisplayNextImageTask = lastDisplayNextImageTask;
             }
 
          public IImageSourceController ImageSourceController
@@ -661,19 +705,31 @@
          public Task<byte[, ,]> TaskByte
             {
             get;
-            private set;
+            set;
             }
 
-         public Task Task
+         public Task WaitForFetchNextImageSourceTask
             {
             get;
             private set;
+            }
+
+         public Task LastDisplayNextImageTask
+            {
+            get;
+            set;
             }
 
          public List<Tuple<IImageProcessingController, IRawPluginModel>> ImageProcessingControllers
             {
             get;
-            private set;
+            set;
+            }
+
+         public List<byte[]> Overlays
+            {
+            get;
+            set;
             }
 
          public void Clear()
@@ -681,8 +737,10 @@
             this.ImageSourceController = null;
             this.RawPluginModel = null;
             this.TaskByte = null;
-            this.Task = null;
+            this.WaitForFetchNextImageSourceTask = null;
+            this.LastDisplayNextImageTask = null;
             this.ImageProcessingControllers = null;
+            this.Overlays = null;
             }
          }
       }

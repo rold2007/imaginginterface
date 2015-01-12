@@ -13,7 +13,8 @@
    public partial class ImageView : UserControl, IImageView
       {
       private bool glControlLoaded = false;
-      private int texture;
+      private int imageTexture;
+      private int overlayTexture;
       private IImageModel imageModel;
       private bool isFirstPaint = true;
       private bool glControlSizeUpdated = true;
@@ -41,7 +42,7 @@
       public event EventHandler ZoomLevelDecreased;
 
       public event EventHandler<PixelViewChangedEventArgs> PixelViewChanged;
-      
+
       public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
       public double UpdateFrequency
@@ -75,7 +76,7 @@
                this.glControlSizeUpdated = false;
                }
 
-            this.AllocateTexture();
+            this.AllocateTextures();
 
             // The creation of the control already triggers a paint so don't force the first paint
             if (this.isFirstPaint == true)
@@ -115,11 +116,18 @@
 
       public void Close()
          {
-         if (this.texture != 0)
+         if (this.imageTexture != 0)
             {
-            GL.DeleteTexture(this.texture);
+            GL.DeleteTexture(this.imageTexture);
 
-            this.texture = 0;
+            this.imageTexture = 0;
+            }
+
+         if (this.overlayTexture != 0)
+            {
+            GL.DeleteTexture(this.overlayTexture);
+
+            this.overlayTexture = 0;
             }
 
          this.Dispose();
@@ -143,7 +151,7 @@
 
          this.PrepareView();
 
-         this.AllocateTexture();
+         this.AllocateTextures();
          }
 
       private void PrepareView()
@@ -250,43 +258,105 @@
             }
          }
 
-      private void AllocateTexture()
+      private void AllocateTextures()
          {
          if (this.glControlLoaded)
             {
-            if (this.texture != 0)
+            if (this.imageTexture != 0)
                {
-               GL.DeleteTexture(this.texture);
+               GL.DeleteTexture(this.imageTexture);
                }
 
-            this.texture = GL.GenTexture();
+            if (this.overlayTexture != 0)
+               {
+               GL.DeleteTexture(this.overlayTexture);
 
-            GL.BindTexture(TextureTarget.Texture2D, this.texture);
+               this.overlayTexture = 0;
+               }
 
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBaseLevel, 0);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, 0);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
+
+
+
+
+            this.imageTexture = GL.GenTexture();
+
+            this.InitializeTexture(this.imageTexture);
 
             int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
 
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
 
-            if (this.imageModel.IsGrayscale)
+            //if (this.imageModel.IsGrayscale)
+            //   {
+            //   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
+            //   }
+            //else
+            //   {
+            //   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
+            //   }
+
+            this.imageModel.DisplayImageData = new byte[this.imageModel.Size.Height, this.imageModel.Size.Width, 4];
+            float[, ,] displayImage = new float[this.imageModel.Size.Height, this.imageModel.Size.Width, 4];
+            float[, ,] overlay = new float[this.imageModel.Size.Height, this.imageModel.Size.Width, 4];
+
+            for (int y = 0; y < this.imageModel.Size.Height; y++)
                {
-               GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
-               }
-            else
-               {
-               GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
+               for (int x = 0; x < this.imageModel.Size.Width; x++)
+                  {
+                  displayImage[y, x, 0] = 0.75f;
+                  displayImage[y, x, 1] = 0;
+                  displayImage[y, x, 2] = 0;
+                  displayImage[y, x, 3] = 0.25f;// 255;
+
+                  overlay[y, x, 0] = 0;
+                  overlay[y, x, 1] = 0;
+                  overlay[y, x, 2] = 0;
+                  overlay[y, x, 3] = 0;
+                  }
                }
 
-            GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
+            //GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.Float, displayImage);
 
-            this.UpdateImageSize();
+            //if (this.imageModel.OverlayImageData != null)
+               {
+               this.InitializeTexture(this.overlayTexture);
+
+               this.overlayTexture = GL.GenTexture();
+
+
+               //int size = this.imageModel.OverlayImageData.Length;
+
+               //for (int i = 0; i < size; i++)
+               //   {
+               //   this.imageModel.OverlayImageData[i] = 0;
+               //   }
+
+               //GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageModel.OverlayImageData);
+               GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.Float, overlay);
+               }
+
+               GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
+
+               this.UpdateImageSize();
             }
+         }
+
+      private void InitializeTexture(int texture)
+         {
+         GL.BindTexture(TextureTarget.Texture2D, texture);
+
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBaseLevel, 0);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, 0);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
+
+
+
+         //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)All.Replace);
+         GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Modulate);
          }
 
       private void GLControl_Paint(object sender, PaintEventArgs e)
@@ -298,13 +368,34 @@
 
          this.glControl.MakeCurrent();
 
+
+         //GL.Enable(EnableCap.AlphaTest);
+
+         //GL.Enable(EnableCap.Blend);
+         ////GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.Zero);
+         //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+         //GL.Disable(EnableCap.DepthTest);
+         //GL.DepthMask(false);
+         //GL.Disable(EnableCap.CullFace);
+         ////GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Replace);
+         //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Modulate);
+
+         ////GL.Color4(1.0, 1.0, 1.0, 0.5);
+         //GL.Color4(0.25, 0.75, 1.0, 0.75);
+
+         // Mettre mes textures en float de 0.0 a 1.0 et voir si jarrive a quoi que ce soit.
+
          GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+         GL.Clear(ClearBufferMask.AccumBufferBit);
+         GL.Clear(ClearBufferMask.StencilBufferBit);
 
          GL.MatrixMode(MatrixMode.Texture);
 
          GL.Enable(EnableCap.Texture2D);
 
-         GL.BindTexture(TextureTarget.Texture2D, this.texture);
+         // Draw image
+         GL.BindTexture(TextureTarget.Texture2D, this.imageTexture);
+         GL.Color4(1.0, 1.0, 1.0, 1.0);
 
          GL.Begin(PrimitiveType.Quads);
 
@@ -319,7 +410,56 @@
 
          GL.End();
 
+         if (this.overlayTexture != 0)
+            {GL.AlphaFunc(AlphaFunction.Notequal, 0.0f);alphatest ??? Non le alpha test est tout opaque ou tout transparent. Voir Nehe
+            glActiveTextureARB(GL_TEXTURE0_ARB);
+            GL.Enable(EnableCap.Blend);
+            //GL.BlendColor(0.0f, 0.0f, 0.0f, 0.0f);
+            //GL.BlendEquation(BlendEquationMode.Max);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            //GL.BlendFunc(BlendingFactorSrc.Zero, BlendingFactorDest.DstAlpha);
+            //GL.BlendFunc(BlendingFactorSrc.Zero, BlendingFactorDest.One);
+            //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.Zero);
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.DstColor);
+            GL.Disable(EnableCap.DepthTest);
+            GL.DepthMask(false);
+            GL.Disable(EnableCap.CullFace);
+
+            //GL.Color4(0, 0, 1, 0.25f);
+            //GL.Color4(1.0, 1.0, 1.0, 0.5);
+            //GL.Color4(0.0, 1.0, 1.0, 0.25);
+            //Voir pourquoi loverlay apparait blanc quand j'enleve la couleur ici. Il faut faire apparaitre la couleur de l'overlay
+            //GL.Color4(0.25, 0.75, 1.0, 0.75);
+            //GL.Color4(1.0, 1.0, 1.0, 1.0);
+
+            // Draw overlay
+            GL.BindTexture(TextureTarget.Texture2D, this.overlayTexture);
+
+            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Replace);
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Decal);modulate
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, new Color4(0.25f, 0.25f, 0.25f, 0.25f));
+
+            GL.Begin(PrimitiveType.Quads);
+
+            double z = 1.0;
+
+            GL.TexCoord2(0, 0);
+            GL.Vertex3(0, 0, z);
+            GL.TexCoord2(1, 0);
+            GL.Vertex3(this.imageModel.Size.Width / 2, 0, z);
+            GL.TexCoord2(1, 1);
+            GL.Vertex3(this.imageModel.Size.Width / 2, this.imageModel.Size.Height, z);
+            GL.TexCoord2(0, 1);
+            GL.Vertex3(0, this.imageModel.Size.Height, z);
+
+            GL.End();
+
+            GL.Disable(EnableCap.Blend);
+            }
+
          this.glControl.SwapBuffers();
+
+         Debug.Assert(GL.GetError() == ErrorCode.NoError, "Some OpenTK/OpenGL error occured, this can cause performance problems.");
          }
 
       private void GLControl_MouseMove(object sender, MouseEventArgs e)
@@ -447,7 +587,7 @@
       private void ManageClick(MouseEventArgs e)
          {
          Point mouseClickPixel = this.GetPointPositionInImage(e.X, e.Y);
-         
+
          if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
             if (this.zoomMode)

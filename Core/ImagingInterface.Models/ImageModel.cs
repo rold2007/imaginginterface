@@ -31,6 +31,12 @@
          set;
          }
 
+      public byte[] OverlayImageData
+         {
+         get;
+         set;
+         }
+
       public Size Size
          {
          get
