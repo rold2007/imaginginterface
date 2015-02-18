@@ -175,9 +175,12 @@
 
          DiagnosticResult[] diagnosticResults = Analyzer.Analyze(container);
 
-         if (diagnosticResults.Length != 0)
+         foreach (DiagnosticResult diagnosticResult in diagnosticResults)
             {
-            throw new InvalidOperationException("IoC container was not initialized properly.");
+            if (diagnosticResult.DiagnosticType != DiagnosticType.DisposableTransientComponent)
+               {
+               throw new InvalidOperationException("IoC container was not initialized properly.");
+               }
             }
          }
 
