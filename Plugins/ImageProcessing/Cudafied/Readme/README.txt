@@ -1,6 +1,15 @@
-CUDAfy .NET SDK V1.26 - General Purpose GPU programming for .NET
-Copyright 2011-13 Hybrid DSP Systems
+CUDAfy .NET SDK V1.28 - General Purpose GPU programming for .NET
+Copyright 2011-15 Hybrid DSP Systems
 www.hybriddsp.com
+
+Quick Start
+-----------
+1) Go to bin folder and run CudafyViewer.exe. This will check your environment is set up correctly.
+2) Open, build and run the two example Visual Studio projects.
+3) Read a primer on CUDA programming such as CUDA By Example by Sanders and Kandrot. http://developer.download.nvidia.com/books/cuda-by-example/cuda-by-example-sample.pdf
+4) Read the ******* manual. https://cudafy.codeplex.com/documentation
+5) Try writing your own code.
+6) Visit the Cudafy forum on Codeplex: https://cudafy.codeplex.com/discussions
 
 Description
 -----------
@@ -21,9 +30,9 @@ The MIT license applies to Cristi Potlog's Controls for .NET used in installer.
 Installation Instructions
 -------------------------
 
-Download and install in default locations the CUDA Toolkit 5.5 from http://developer.nvidia.com/cuda-toolkit-sdk
+Download and install in default locations the CUDA Toolkit 7.0 from https://developer.nvidia.com/cuda-toolkit
 
-Demo Visual Studo 2010 projects are provided.  
+Demo Visual Studio projects are provided.  
 Cudafy by Example is based on the book CUDA By Example by Sanders and Kandrot and is copyright NVIDIA. Reading this book is 
 highly recommended.
 
@@ -32,12 +41,23 @@ CudafyModuleViewer can be used to examine Cudafy modules (*.cdfy)
 
 Releases
 --------
+V1.29 08-04-15
+	Add: Support for CUDA 7.0
+	Fix: 64-bit pointer for BLAS, SPARSE and RAND
+	Chg: Remove x86 support for BLAS, SPARSE and RAND
+	Chg: Make GPU architecture 2.0 the default 
+	Chg: Remove x86 versions of CudafyViewer.exe and cudafycl.exe
+
+V1.28 04-01-15
+	Add: Support for CUDA 6.5
+	Add: Support for latest CUDA compute capabilities
+	Fix: Show complete nvcc error message.
+
 V1.27 20-07-14
 	Fix: CUDA and OpenCL tests should handle devices with max block threads < 1024
 	Fix: Single floating point Execute called instead of double (emulator only)
 	Add: CUDA 6.0 support.
 	Add: Compute capability 5.0 support.
-	Add: CUDA 6.0 support.
 
 V1.26 25-11-13
 	Fix: Emulator
