@@ -343,6 +343,9 @@
                      try
                         {
                         CudafyTranslator.Language = language;
+
+                        // If this line fails with NCrunch/Unit tests, there probably is a new version of Cudafy.NET
+                        // and it needs to be registered in the GAC like this: gacutil -i Cudafy.NET.dll
                         CudafyModule cudafyModule = CudafyTranslator.Cudafy(eArchitecture.Unknown, typeof(Primitives));
 
                         if (!gpgpu.IsModuleLoaded(cudafyModule.Name))
