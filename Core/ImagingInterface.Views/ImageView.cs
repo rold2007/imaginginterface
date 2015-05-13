@@ -411,8 +411,16 @@
          GL.End();
 
          if (this.overlayTexture != 0)
-            {GL.AlphaFunc(AlphaFunction.Notequal, 0.0f);alphatest ??? Non le alpha test est tout opaque ou tout transparent. Voir Nehe
-            glActiveTextureARB(GL_TEXTURE0_ARB);
+            {
+            //alphatest ??? Non le alpha test est tout opaque ou tout transparent. Voir Nehe
+
+
+            GL.AlphaFunc(AlphaFunction.Notequal, 0.0f);
+
+            //GL.ActiveTexture()
+            //glActiveTextureARB(GL_TEXTURE0_ARB);
+
+
             GL.Enable(EnableCap.Blend);
             //GL.BlendColor(0.0f, 0.0f, 0.0f, 0.0f);
             //GL.BlendEquation(BlendEquationMode.Max);
@@ -436,7 +444,9 @@
             GL.BindTexture(TextureTarget.Texture2D, this.overlayTexture);
 
             //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Replace);
-            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Decal);modulate
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Decal);
+            //modulate
+
             GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, new Color4(0.25f, 0.25f, 0.25f, 0.25f));
 
             GL.Begin(PrimitiveType.Quads);
