@@ -134,12 +134,13 @@
 
                      if (prediction == 1.0f)
                         {
-                        int pixelOffset = y * imageWidth + x;
+                        int pixelOffset = (y * imageWidth * 4) + x * 4;
 
                         overlayData[pixelOffset] = 0;
-                        overlayData[pixelOffset + imageSize] = 0;
-                        overlayData[pixelOffset + (2 * imageSize)] = 255;
-                        overlayData[pixelOffset + (3 * imageSize)] = 128;
+                        overlayData[pixelOffset + 1] = 0;
+                        overlayData[pixelOffset + 2] = 255;
+                        overlayData[pixelOffset + 3] = 255;
+
                         }
                      }
                   }
