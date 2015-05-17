@@ -79,14 +79,9 @@
       public void ProcessImageData()
          {
          string displayName = "temp";
-         string directory = Path.GetTempPath() + @"\Tagger\";
+         string directory = Path.GetTempPath() + Path.GetRandomFileName() + @"\";
          string extension = ".imagedata";
          string tempDataFilename = directory + displayName + extension;
-
-         if (File.Exists(tempDataFilename))
-            {
-            File.Delete(tempDataFilename);
-            }
 
          try
             {
@@ -101,6 +96,8 @@
             ImageView imageView = this.Container.GetInstance<IImageView>() as ImageView;
 
             imageSourceController.ImageData = new byte[10, 10, 1];
+
+            taggerController.SavePath = directory;
 
             taggerController.Initialize();
 
