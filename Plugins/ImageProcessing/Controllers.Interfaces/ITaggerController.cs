@@ -17,5 +17,11 @@
          {
          get;
          }
+
+      string SavePath
+         {
+         get;
+         set;
+         }
       }
    }

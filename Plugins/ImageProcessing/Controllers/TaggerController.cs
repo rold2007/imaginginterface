@@ -32,6 +32,7 @@
          this.taggerModel.DisplayName = TaggerDisplayName;
          this.dataPoints = new Dictionary<string, List<Point>>();
          this.taggerModel.Labels = new SortedList<string, double[]>();
+         this.taggerModel.SavePath = Path.GetTempPath();
          }
 
       public event CancelEventHandler Closing;
@@ -71,6 +72,20 @@
             return new Dictionary<string, List<Point>>(this.dataPoints);
             }
          }
+
+      public string SavePath
+         {
+         get
+            {
+            return this.taggerModel.SavePath;
+            }
+
+         set
+            {
+            this.taggerModel.SavePath = value;
+            }
+         }
+
 
       public void Initialize()
          {
@@ -182,7 +197,7 @@
          {
          string filename = Path.GetFileNameWithoutExtension(this.registeredImageController.FullPath);
 
-         this.tempFilename = Path.GetTempPath() + @"\Tagger\" + filename + ".imagedata";
+         this.tempFilename = this.taggerModel.SavePath + @"\Tagger\" + filename + ".imagedata";
 
          this.LoadPoints();
 

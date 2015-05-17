@@ -32,6 +32,12 @@
          set;
          }
 
+      public string SavePath
+         {
+         get;
+         set;
+         }
+
       public object Clone()
          {
          return this.MemberwiseClone();
