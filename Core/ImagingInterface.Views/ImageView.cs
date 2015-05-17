@@ -170,6 +170,11 @@
             GL.Translate(this.translateX, this.translateY, 0);
 
             GL.Scale(this.imageModel.ZoomLevel, this.imageModel.ZoomLevel, 1.0);
+            
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+            // The alpha can be toggled to make the overlay more/less transparent
+            GL.Color4(0.0, 0.0, 0.0, 0.75);
             }
          }
 
@@ -274,17 +279,15 @@
                this.overlayTexture = 0;
                }
 
+            int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
 
-
-
+            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
 
             this.imageTexture = GL.GenTexture();
 
             this.InitializeTexture(this.imageTexture);
 
-            int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
-
-            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+            Debug.Assert(!this.imageModel.IsGrayscale, "I don't think this has really been tested.");
 
             //if (this.imageModel.IsGrayscale)
             //   {
@@ -295,50 +298,24 @@
             //   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
             //   }
 
-            this.imageModel.DisplayImageData = new byte[this.imageModel.Size.Height, this.imageModel.Size.Width, 4];
-            float[, ,] displayImage = new float[this.imageModel.Size.Height, this.imageModel.Size.Width, 4];
-            float[, ,] overlay = new float[this.imageModel.Size.Height, this.imageModel.Size.Width, 4];
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Replace);
 
-            for (int y = 0; y < this.imageModel.Size.Height; y++)
+            if (this.imageModel.OverlayImageData != null)
                {
-               for (int x = 0; x < this.imageModel.Size.Width; x++)
-                  {
-                  displayImage[y, x, 0] = 0.75f;
-                  displayImage[y, x, 1] = 0;
-                  displayImage[y, x, 2] = 0;
-                  displayImage[y, x, 3] = 0.25f;// 255;
-
-                  overlay[y, x, 0] = 0;
-                  overlay[y, x, 1] = 0;
-                  overlay[y, x, 2] = 0;
-                  overlay[y, x, 3] = 0;
-                  }
-               }
-
-            //GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.Float, displayImage);
-
-            //if (this.imageModel.OverlayImageData != null)
-               {
-               this.InitializeTexture(this.overlayTexture);
-
                this.overlayTexture = GL.GenTexture();
 
+               this.InitializeTexture(this.overlayTexture);
 
-               //int size = this.imageModel.OverlayImageData.Length;
+               GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageModel.OverlayImageData);
 
-               //for (int i = 0; i < size; i++)
-               //   {
-               //   this.imageModel.OverlayImageData[i] = 0;
-               //   }
-
-               //GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageModel.OverlayImageData);
-               GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.Float, overlay);
+               GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, Color.White);
+               GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Blend);
                }
 
-               GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
+            GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
 
-               this.UpdateImageSize();
+            this.UpdateImageSize();
             }
          }
 
@@ -352,11 +329,6 @@
          GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, 0);
          GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
          GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
-
-
-
-         //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)All.Replace);
-         GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Modulate);
          }
 
       private void GLControl_Paint(object sender, PaintEventArgs e)
@@ -368,23 +340,6 @@
 
          this.glControl.MakeCurrent();
 
-
-         //GL.Enable(EnableCap.AlphaTest);
-
-         //GL.Enable(EnableCap.Blend);
-         ////GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.Zero);
-         //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-         //GL.Disable(EnableCap.DepthTest);
-         //GL.DepthMask(false);
-         //GL.Disable(EnableCap.CullFace);
-         ////GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Replace);
-         //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Modulate);
-
-         ////GL.Color4(1.0, 1.0, 1.0, 0.5);
-         //GL.Color4(0.25, 0.75, 1.0, 0.75);
-
-         // Mettre mes textures en float de 0.0 a 1.0 et voir si jarrive a quoi que ce soit.
-
          GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
          GL.Clear(ClearBufferMask.AccumBufferBit);
          GL.Clear(ClearBufferMask.StencilBufferBit);
@@ -393,9 +348,8 @@
 
          GL.Enable(EnableCap.Texture2D);
 
-         // Draw image
+         // Draw image (underlay)
          GL.BindTexture(TextureTarget.Texture2D, this.imageTexture);
-         GL.Color4(1.0, 1.0, 1.0, 1.0);
 
          GL.Begin(PrimitiveType.Quads);
 
@@ -412,55 +366,21 @@
 
          if (this.overlayTexture != 0)
             {
-            //alphatest ??? Non le alpha test est tout opaque ou tout transparent. Voir Nehe
-
-
-            GL.AlphaFunc(AlphaFunction.Notequal, 0.0f);
-
-            //GL.ActiveTexture()
-            //glActiveTextureARB(GL_TEXTURE0_ARB);
-
-
             GL.Enable(EnableCap.Blend);
-            //GL.BlendColor(0.0f, 0.0f, 0.0f, 0.0f);
-            //GL.BlendEquation(BlendEquationMode.Max);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            //GL.BlendFunc(BlendingFactorSrc.Zero, BlendingFactorDest.DstAlpha);
-            //GL.BlendFunc(BlendingFactorSrc.Zero, BlendingFactorDest.One);
-            //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.Zero);
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.DstColor);
-            GL.Disable(EnableCap.DepthTest);
-            GL.DepthMask(false);
-            GL.Disable(EnableCap.CullFace);
 
-            //GL.Color4(0, 0, 1, 0.25f);
-            //GL.Color4(1.0, 1.0, 1.0, 0.5);
-            //GL.Color4(0.0, 1.0, 1.0, 0.25);
-            //Voir pourquoi loverlay apparait blanc quand j'enleve la couleur ici. Il faut faire apparaitre la couleur de l'overlay
-            //GL.Color4(0.25, 0.75, 1.0, 0.75);
-            //GL.Color4(1.0, 1.0, 1.0, 1.0);
-
-            // Draw overlay
+            // Draw overlay, with alpha transparency (blending)
             GL.BindTexture(TextureTarget.Texture2D, this.overlayTexture);
-
-            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Replace);
-            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)TextureEnvMode.Decal);
-            //modulate
-
-            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, new Color4(0.25f, 0.25f, 0.25f, 0.25f));
 
             GL.Begin(PrimitiveType.Quads);
 
-            double z = 1.0;
-
             GL.TexCoord2(0, 0);
-            GL.Vertex3(0, 0, z);
+            GL.Vertex2(0, 0);
             GL.TexCoord2(1, 0);
-            GL.Vertex3(this.imageModel.Size.Width / 2, 0, z);
+            GL.Vertex2(this.imageModel.Size.Width, 0);
             GL.TexCoord2(1, 1);
-            GL.Vertex3(this.imageModel.Size.Width / 2, this.imageModel.Size.Height, z);
+            GL.Vertex2(this.imageModel.Size.Width, this.imageModel.Size.Height);
             GL.TexCoord2(0, 1);
-            GL.Vertex3(0, this.imageModel.Size.Height, z);
+            GL.Vertex2(0, this.imageModel.Size.Height);
 
             GL.End();
 

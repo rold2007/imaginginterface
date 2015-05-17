@@ -126,27 +126,14 @@
 
             foreach (Point point in this.dataPoints[tag])
                {
-               int pixelOffset = point.Y * imageWidth + point.X;
+               int pixelOffset = (point.Y * imageWidth * 4) + point.X * 4;
 
                overlayData[pixelOffset] = red;
-               overlayData[pixelOffset + imageSize] = green;
-               overlayData[pixelOffset + (2 * imageSize)] = blue;
-               overlayData[pixelOffset + (3 * imageSize)] = 255;
+               overlayData[pixelOffset + 1] = green;
+               overlayData[pixelOffset + 2] = blue;
+               overlayData[pixelOffset + 3] = 255;
                }
             }
-
-         //for (int y = 0; y < imageHeight; y++)
-         //   {
-         //   for (int x = 0; x < imageWidth; x++)
-         //      {
-         //      int pixelOffset = y * imageWidth + x;
-
-         //      overlayData[pixelOffset] = 255;
-         //      overlayData[pixelOffset + imageSize] = 255;
-         //      overlayData[pixelOffset + (2 * imageSize)] = 255;
-         //      overlayData[pixelOffset + (3 * imageSize)] = 255;
-         //      }
-         //   }
 
          return imageData;
          }
