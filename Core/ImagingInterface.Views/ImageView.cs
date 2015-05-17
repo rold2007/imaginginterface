@@ -40,6 +40,8 @@
 
          this.viewModeToolStripItem = this.zoomModeToolStripMenuItem;
 
+         this.textures = new Dictionary<Texture,int>();
+
          this.ResetMousePosition();
          }
 
@@ -332,6 +334,9 @@
             return;
             }
 
+         int underlayTexture;
+         bool underlayPresent = this.textures.TryGetValue(Texture.Underlay, out underlayTexture);
+
          this.glControl.MakeCurrent();
 
          GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -343,7 +348,7 @@
          GL.Enable(EnableCap.Texture2D);
 
          // Draw image (underlay)
-         GL.BindTexture(TextureTarget.Texture2D, this.textures[Texture.Underlay]);
+         GL.BindTexture(TextureTarget.Texture2D, underlayTexture);
 
          GL.Begin(PrimitiveType.Quads);
 
