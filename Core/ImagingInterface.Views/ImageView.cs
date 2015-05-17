@@ -1,6 +1,7 @@
 ﻿namespace ImagingInterface.Views
    {
    using System;
+   using System.Collections.Generic;
    using System.Diagnostics;
    using System.Drawing;
    using System.Windows.Forms;
@@ -13,8 +14,7 @@
    public partial class ImageView : UserControl, IImageView
       {
       private bool glControlLoaded = false;
-      private int imageTexture;
-      private int overlayTexture;
+      private Dictionary<Texture, int> textures;
       private IImageModel imageModel;
       private bool isFirstPaint = true;
       private bool glControlSizeUpdated = true;
@@ -23,6 +23,12 @@
       private double translateY = 0.0;
       private ToolStripItem viewModeToolStripItem;
       private Point viewCenter;
+
+      private enum Texture
+         {
+         Underlay,
+         Overlay
+         };
 
       public ImageView()
          {
@@ -116,19 +122,7 @@
 
       public void Close()
          {
-         if (this.imageTexture != 0)
-            {
-            GL.DeleteTexture(this.imageTexture);
-
-            this.imageTexture = 0;
-            }
-
-         if (this.overlayTexture != 0)
-            {
-            GL.DeleteTexture(this.overlayTexture);
-
-            this.overlayTexture = 0;
-            }
+         this.FreeTextures();
 
          this.Dispose();
          }
@@ -267,25 +261,15 @@
          {
          if (this.glControlLoaded)
             {
-            if (this.imageTexture != 0)
-               {
-               GL.DeleteTexture(this.imageTexture);
-               }
-
-            if (this.overlayTexture != 0)
-               {
-               GL.DeleteTexture(this.overlayTexture);
-
-               this.overlayTexture = 0;
-               }
-
+            this.FreeTextures();
+            
             int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
 
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
 
-            this.imageTexture = GL.GenTexture();
+            this.textures.Add(Texture.Underlay, GL.GenTexture());
 
-            this.InitializeTexture(this.imageTexture);
+            this.InitializeTexture(this.textures[Texture.Underlay]);
 
             Debug.Assert(!this.imageModel.IsGrayscale, "I don't think this has really been tested.");
 
@@ -303,9 +287,9 @@
 
             if (this.imageModel.OverlayImageData != null)
                {
-               this.overlayTexture = GL.GenTexture();
+               this.textures.Add(Texture.Overlay, GL.GenTexture());
 
-               this.InitializeTexture(this.overlayTexture);
+               this.InitializeTexture(this.textures[Texture.Overlay]);
 
                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageModel.OverlayImageData);
 
@@ -317,6 +301,16 @@
 
             this.UpdateImageSize();
             }
+         }
+
+      private void FreeTextures()
+         {
+         foreach(int texture in this.textures.Values)
+            {
+            GL.DeleteTexture(texture);
+            }
+
+         this.textures.Clear();
          }
 
       private void InitializeTexture(int texture)
@@ -349,7 +343,7 @@
          GL.Enable(EnableCap.Texture2D);
 
          // Draw image (underlay)
-         GL.BindTexture(TextureTarget.Texture2D, this.imageTexture);
+         GL.BindTexture(TextureTarget.Texture2D, this.textures[Texture.Underlay]);
 
          GL.Begin(PrimitiveType.Quads);
 
@@ -364,12 +358,15 @@
 
          GL.End();
 
-         if (this.overlayTexture != 0)
+         int overlayTexture;
+         bool overlayPresent = this.textures.TryGetValue(Texture.Overlay, out overlayTexture);
+
+         if (overlayPresent)
             {
             GL.Enable(EnableCap.Blend);
 
             // Draw overlay, with alpha transparency (blending)
-            GL.BindTexture(TextureTarget.Texture2D, this.overlayTexture);
+            GL.BindTexture(TextureTarget.Texture2D, overlayTexture);
 
             GL.Begin(PrimitiveType.Quads);
 
