@@ -262,8 +262,6 @@
 
          imageProcessingAsyncData.TaskByte = imageSourceTask;
          imageProcessingAsyncData.LastDisplayNextImageTask = this.lastDisplayNextImageTask;
-         //MutableTuple waitForDisplayNextImageTuple = new MutableTuple(null, null, imageSourceTask, this.lastDisplayNextImageTask, null);
-         //MutableTuple displayNextImageTuple = new MutableTuple(this.imageSourceController, this.imageSourceRawPluginModel, imageSourceTask, this.lastDisplayNextImageTask, new List<Tuple<IImageProcessingController, IRawPluginModel>>(this.imageProcessingControllers));
 
          Task<byte[, ,]> waitForDisplayNextImageTask = new Task<byte[, ,]>(this.WaitForDisplayNextImage, imageProcessingAsyncData);
          Task displayNextImageTask = waitForDisplayNextImageTask.ContinueWith(this.DisplayNextImage, imageProcessingAsyncData, taskScheduler);
@@ -304,8 +302,6 @@
 
                imageProcessingControllers.Add(imageProcessingControllerTuple);
 
-               //tuple = new MutableTuple(null, null, imageSourceTask, null, imageProcessingControllerList);
-
                previousTask = new Task<byte[, ,]>(this.ProcessImage, imageProcessingAsyncData);
 
                previousTask.Start(TaskScheduler.Default);
@@ -345,8 +341,6 @@
 
          byte[, ,] imageData = fetchNextImageSourceOrProcessImageTask.Result;
 
-         //imageProcessingAsyncData.Clear();
-
          return imageData;
          }
 
@@ -375,19 +369,7 @@
          byte[, ,] resultImage = imageSourceController.NextImageData(rawPluginModel);
 
          Debug.Assert(resultImage != null, "The image source controller should always return a valid array.");
-
-         //if (imageProcessingAsyncData.ImageProcessingControllers != null)
-         //   {
-         //   int width = resultImage.GetLength(1);
-         //   int height = resultImage.GetLength(0);
-         //   byte[, ,] overlay = new byte[height, width, 3];
-
-         //   imageProcessingAsyncData.Overlays.Add(overlay);
-         //   }
-
-         // Still unncessary ? Done in display update
-         //tuple.Clear();
-
+         
          return resultImage;
          }
 
