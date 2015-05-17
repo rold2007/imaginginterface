@@ -62,6 +62,17 @@
          {
          if (disposing)
             {
+            if (this.displayUpdateCountdownEvent != null)
+               {
+               this.displayUpdateCountdownEvent.Dispose();
+               this.displayUpdateCountdownEvent = null;
+               }
+
+            if (this.closedCountdownEvent != null)
+               {
+               this.closedCountdownEvent.Dispose();
+               this.closedCountdownEvent = null;
+               }
             }
 
          this.UnregisterAllEvents();

@@ -364,8 +364,13 @@
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
 
-         using (CaptureController captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController)
+         CaptureController captureController = null;
+
+         // Use try/finally instead of using to deal with warning CA2202: Do not dispose objects multiple times
+         try
             {
+            captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController;
+
             captureController.Initialize();
 
             // Not much is tested in this test appart from making sure we have a full code coverage
@@ -378,6 +383,7 @@
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(activeImageController))
                {
                captureController.Close();
+               captureController = null;
 
                imageControllerWrapper.WaitForDisplayUpdate();
                }
@@ -391,9 +397,21 @@
                imageControllerWrapper.WaitForClosed();
                }
             }
-
-         using (CaptureController captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController)
+         finally
             {
+            if (captureController != null)
+               {
+               captureController.Dispose();
+               }
+            }
+
+         captureController = null;
+
+         // Use try/finally instead of using to deal with warning CA2202: Do not dispose objects multiple times
+         try
+            {
+            captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController;
+
             captureController.Initialize();
 
             // Make sure we can try to trigger two start in a row without crashing
@@ -407,6 +425,7 @@
                imageControllerWrapper.WaitForDisplayUpdate();
 
                captureController.Close();
+               captureController = null;
 
                activeImageController.Close();
 
@@ -414,9 +433,16 @@
                imageControllerWrapper.WaitForClosed();
                }
             }
+         finally
+            {
+            if (captureController != null)
+               {
+               captureController.Dispose();
+               }
+            }
 
          // Test some Dispose code
-         using (CaptureController captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController)
+         using (captureController = this.ServiceLocator.GetInstance<ICaptureController>() as CaptureController)
             {
             }
          }

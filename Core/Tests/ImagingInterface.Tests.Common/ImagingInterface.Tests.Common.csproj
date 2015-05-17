@@ -61,6 +61,7 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="ImageControllerWrapper.cs" />
     <Compile Include="Mocks\ImageSourceController.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="STASynchronizationContext.cs" />
     <Compile Include="Views\ImageManagerView.cs" />
     <Compile Include="Views\ImageView.cs" />
