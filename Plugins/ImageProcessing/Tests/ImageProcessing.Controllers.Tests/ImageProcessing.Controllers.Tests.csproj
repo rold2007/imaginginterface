@@ -110,6 +110,7 @@
     <Compile Include="TaggerControllerTest.cs" />
     <Compile Include="Views\CudafyView.cs" />
     <Compile Include="Views\InvertView.cs" />
+    <Compile Include="Views\ObjectDetectionView.cs" />
     <Compile Include="Views\RotateView.cs" />
     <Compile Include="Views\TaggerView.cs" />
   </ItemGroup>
