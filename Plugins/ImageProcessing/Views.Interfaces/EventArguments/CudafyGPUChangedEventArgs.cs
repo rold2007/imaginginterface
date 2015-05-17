@@ -6,7 +6,7 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public class CudafyGPUChangedEventArgs
+   public class CudafyGPUChangedEventArgs : EventArgs
       {
       public CudafyGPUChangedEventArgs(string gpuName)
          {

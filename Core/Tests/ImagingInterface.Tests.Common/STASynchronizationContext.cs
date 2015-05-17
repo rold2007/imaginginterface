@@ -47,8 +47,6 @@
 
       public void Dispose()
          {
-         Assert.AreEqual(this.mainThreadId, Thread.CurrentThread.ManagedThreadId);
-
          this.Dispose(true);
          GC.SuppressFinalize(this);
          }

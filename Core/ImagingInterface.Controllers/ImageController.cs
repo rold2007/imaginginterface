@@ -68,10 +68,6 @@
          this.imageView.SelectionChanged += this.ImageView_SelectionChanged;
          }
 
-      ~ImageController()
-         { // ncrunch: no coverage
-         } // ncrunch: no coverage
-
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
