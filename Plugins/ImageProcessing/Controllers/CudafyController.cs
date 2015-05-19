@@ -122,7 +122,7 @@
          {
          ICudafyModel cudafyModel = rawPluginModel as ICudafyModel;
 
-         if (cudafyModel.Add != 0)
+         if (cudafyModel.Add != 0 && !string.IsNullOrEmpty(cudafyModel.GPUName))
             {
             Stopwatch totalTime = Stopwatch.StartNew();
             byte[, ,] imageDataOutput;
@@ -249,14 +249,19 @@
 
       private void CudafyView_GPUChanged(object sender, CudafyGPUChangedEventArgs e)
          {
-         GPGPU gpgpu = this.gpgpus[e.GPUName];
+         SelectGPU(e.GPUName);
+         }
+
+      private void SelectGPU(string gpuName)
+         {
+         GPGPU gpgpu = this.gpgpus[gpuName];
          GPGPUProperties gpgpuProperties = gpgpu.GetDeviceProperties(true);
          dim3 maxGridSize;
          int maxThreadsPerBlock;
 
-         this.cudafyModel.GPUName = e.GPUName;
+         this.cudafyModel.GPUName = gpuName;
 
-         if (this.gpuTypes[e.GPUName] == eGPUType.Emulator)
+         if (this.gpuTypes[gpuName] == eGPUType.Emulator)
             {
             int numberOfProcessorsToUse = Math.Max(1, Environment.ProcessorCount - 1);
 

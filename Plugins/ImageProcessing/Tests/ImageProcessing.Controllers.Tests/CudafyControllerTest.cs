@@ -88,6 +88,16 @@
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
+               cudafyView.TriggerAdd(1);
+
+               // Make sure there one of the GPU is already selected upon initialization
+               cudafyController.ProcessImageData(imageData, null, cudafyController.RawPluginModel);
+               
+               imageControllerWrapper.WaitForDisplayUpdate();
+               }
+
+            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+               {
                cudafyView.TriggerGPUChanged(cudafyView.GPUS[0]);
 
                imageControllerWrapper.WaitForDisplayUpdate();
@@ -95,7 +105,7 @@
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
-               cudafyView.TriggerAdd();
+               cudafyView.TriggerAdd(2);
 
                imageControllerWrapper.WaitForDisplayUpdate();
                }
