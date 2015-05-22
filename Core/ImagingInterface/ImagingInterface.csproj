@@ -193,20 +193,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Libs\opencv_core242.dll">
-      <Link>opencv_core242.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Libs\opencv_highgui242.dll">
-      <Link>opencv_highgui242.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Libs\opencv_imgproc242.dll">
-      <Link>opencv_imgproc242.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\Libs\msvcp110.dll">
       <Link>msvcp110.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -221,12 +207,6 @@
     </None>
     <None Include="..\..\Libs\vcomp110.dll">
       <Link>vcomp110.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Libs\opencv_ml242.dll">
-      <Link>opencv_ml242.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
