@@ -71,9 +71,11 @@
   <ItemGroup>
     <Reference Include="Emgu.CV.ML">
       <HintPath>..\..\..\Libs\Emgu.CV.ML.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\Libs\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
