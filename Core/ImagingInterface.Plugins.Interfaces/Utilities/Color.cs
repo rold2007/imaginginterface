@@ -98,9 +98,9 @@
             }
          else
             {
-            Debug.Fail("Unsupported condition.");
-
             rgb = new double[3] { double.MinValue, double.MinValue, double.MinValue };
+
+            return rgb;
             }
 
          rgb[0] += m;

@@ -5,15 +5,15 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImageProcessing.Views.EventArguments;
+   using ImagingInterface.Plugins;
 
-   public class TaggerView : ITaggerView
+   public class ObjectDetectionManagerView : IObjectDetectionManagerView
       {
-      private ITaggerModel taggerModel;
-
-      public event EventHandler LabelAdded;
+      public ObjectDetectionManagerView()
+         {
+         }
 
       public bool CloseCalled
          {
@@ -21,12 +21,7 @@
          private set;
          }
 
-      public void SetTaggerModel(ITaggerModel taggerModel)
-         {
-         this.taggerModel = taggerModel;
-         }
-
-      public void UpdateLabelList()
+      public void AddView(IRawPluginView rawPluginView)
          {
          }
 
@@ -37,11 +32,6 @@
       public void Close()
          {
          this.CloseCalled = true;
-         }
-
-      public void TriggerLabelAdded()
-         {
-         this.LabelAdded(this, EventArgs.Empty);
          }
       }
    }

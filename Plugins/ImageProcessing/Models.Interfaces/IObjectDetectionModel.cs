@@ -13,10 +13,5 @@
 
    public interface IObjectDetectionModel : IRawPluginModel, ICloneable
       {
-      Dictionary<string, Boost> Models
-         {
-         get;
-         set;
-         }
       }
    }

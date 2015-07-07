@@ -78,11 +78,9 @@
       [Test]
       public void ProcessImageData()
          {
-         string displayName = "temp";
-         string directory = Path.GetTempPath() + Path.GetRandomFileName() + @"\";
-         string extension = ".imagedata";
-         string tempDataFilename = directory + displayName + extension;
-
+         string displayName = Path.GetRandomFileName();
+         string directory = Path.GetTempPath() + "Tagger" + @"\";
+         
          try
             {
             this.Container.RegisterSingle<IImageView, ImageView>();
@@ -97,8 +95,6 @@
 
             imageSourceController.ImageData = new byte[10, 10, 1];
 
-            taggerController.SavePath = directory;
-
             taggerController.Initialize();
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -112,8 +108,11 @@
                imageControllerWrapper.WaitForDisplayUpdate();
                }
 
-            taggerModel.Labels.Add("Label", new double[3] { 0, 0, 0 });
-            taggerModel.SelectedLabel = "Label";
+            string label = "Label";
+
+            taggerModel.Labels.Add(label);
+            taggerModel.LabelColors.Add(label, new double[3] { 0, 0, 0 });
+            taggerModel.SelectedLabel = label;
 
             // Tag a point
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -148,11 +147,16 @@
                }
 
             // Save points
-            imageController.Close();
+            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+               {
+               imageController.Close();
+
+               imageControllerWrapper.WaitForClosed();
+               }
 
             imageController = this.ServiceLocator.GetInstance<IImageController>();
 
-            // Load points
+            // Load points with first display update
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
                imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
@@ -164,22 +168,67 @@
                imageControllerWrapper.WaitForDisplayUpdate();
                }
 
-            Dictionary<string, List<Point>> dataPoints = taggerController.DataPoints;
+            // Close and reopen the plugin to allow to call ExtractPoints from RegisterActiveImage()
+            taggerController.Close();
 
-            Assert.AreEqual(1, dataPoints.Count);
-            Assert.AreEqual(new Point(1, 1), dataPoints["Label"][0]);
+            taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+
+            taggerModel.Labels.Add(label);
+            taggerModel.LabelColors.Add(label, new double[3] { 0, 0, 0 });
+            taggerModel.SelectedLabel = label;
+
+            taggerController.Initialize();
             }
          finally
             {
-            if (File.Exists(tempDataFilename))
-               {
-               File.Delete(tempDataFilename);
-               }
-
             if (Directory.Exists(directory))
                {
                Directory.Delete(directory, true);
                }
+            }
+         }
+
+      [Test]
+      public void LabelAdded()
+         {
+         this.Container.RegisterSingle<ITaggerView, TaggerView>();
+         this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
+
+         TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
+
+         taggerModel.AddedLabel = "AddedLabel";
+
+         taggerController.Initialize();
+
+         taggerView.TriggerLabelAdded();
+
+         Assert.AreEqual(1, taggerModel.Labels.Count());
+         Assert.AreEqual(1, taggerModel.LabelColors.Count());
+         }
+      
+      [Test]
+      public void RegisterActiveImage()
+         {
+         string displayName = "temp";
+
+         this.Container.RegisterSingle<ITaggerView, TaggerView>();
+         this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
+
+         TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
+         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+            imageController.SetDisplayName(displayName);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
             }
          }
       }

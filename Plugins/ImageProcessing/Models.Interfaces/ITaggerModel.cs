@@ -21,13 +21,13 @@
          set;
          }
 
-      SortedList<string, double[]> Labels
+      SortedSet<string> Labels
          {
          get;
          set;
          }
 
-      string SavePath
+      SortedList<string, double[]> LabelColors
          {
          get;
          set;

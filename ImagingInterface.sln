@@ -100,6 +100,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B67611
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.ObjectDetection", "Plugins\ImageProcessing\ObjectDetection\ImageProcessing.ObjectDetection.csproj", "{FED322AE-2F56-46A3-BABC-827DAF264E79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.ObjectDetection.Interfaces", "Plugins\ImageProcessing\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj", "{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.ObjectDetection.Tests", "Plugins\ImageProcessing\Tests\ImageProcessing.ObjectDetection.Tests\ImageProcessing.ObjectDetection.Tests.csproj", "{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -222,6 +226,14 @@ Global
 		{FED322AE-2F56-46A3-BABC-827DAF264E79}.Debug|x86.Build.0 = Debug|x86
 		{FED322AE-2F56-46A3-BABC-827DAF264E79}.Release|x86.ActiveCfg = Release|x86
 		{FED322AE-2F56-46A3-BABC-827DAF264E79}.Release|x86.Build.0 = Release|x86
+		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}.Debug|x86.ActiveCfg = Debug|x86
+		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}.Debug|x86.Build.0 = Debug|x86
+		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}.Release|x86.ActiveCfg = Release|x86
+		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}.Release|x86.Build.0 = Release|x86
+		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Debug|x86.ActiveCfg = Debug|x86
+		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Debug|x86.Build.0 = Debug|x86
+		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Release|x86.ActiveCfg = Release|x86
+		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -261,5 +273,7 @@ Global
 		{478E62E0-F43B-4CAE-8363-A4AAD1943513} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
 		{4049789E-8C45-4BCA-AC3F-6135787D83D6} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
 		{FED322AE-2F56-46A3-BABC-827DAF264E79} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
+		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
+		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC} = {B6881D31-4723-4A19-9E42-142D89526A4E}
 	EndGlobalSection
 EndGlobal

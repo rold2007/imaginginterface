@@ -36,13 +36,14 @@
 
          int imageIndex = 0;
 
-         foreach (KeyValuePair<string, double[]> label in this.taggerModel.Labels)
+         foreach (string label in this.taggerModel.Labels)
             {
+            double[] rgbColor = this.taggerModel.LabelColors[label];
             Bitmap bitmap = new Bitmap(16, 16, PixelFormat.Format24bppRgb);
 
             using (Graphics graphics = Graphics.FromImage(bitmap))
                {
-               Color color = Color.FromArgb(Convert.ToInt32(label.Value[0]), Convert.ToInt32(label.Value[1]), Convert.ToInt32(label.Value[2]));
+               Color color = Color.FromArgb(Convert.ToInt32(rgbColor[0]), Convert.ToInt32(rgbColor[1]), Convert.ToInt32(rgbColor[2]));
 
                using (SolidBrush solidBrush = new SolidBrush(color))
                   {
@@ -52,9 +53,9 @@
 
             this.imageList.Images.Add(bitmap);
 
-            ListViewItem listViewItem = new ListViewItem(label.Key, imageIndex);
+            ListViewItem listViewItem = new ListViewItem(label, imageIndex);
 
-            listViewItem.Name = label.Key;
+            listViewItem.Name = label;
 
             this.labelsListView.Items.Add(listViewItem);
 
