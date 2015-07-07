@@ -8,6 +8,10 @@
 
    public class TaggerModel : ITaggerModel
       {
+      public TaggerModel()
+         {
+         }
+
       public string DisplayName
          {
          get;
@@ -26,13 +30,13 @@
          set;
          }
 
-      public SortedList<string, double[]> Labels
+      public SortedSet<string> Labels
          {
          get;
          set;
          }
 
-      public string SavePath
+      public SortedList<string, double[]> LabelColors
          {
          get;
          set;

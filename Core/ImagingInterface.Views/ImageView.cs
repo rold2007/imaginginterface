@@ -24,12 +24,6 @@
       private ToolStripItem viewModeToolStripItem;
       private Point viewCenter;
 
-      private enum Texture
-         {
-         Underlay,
-         Overlay
-         };
-
       public ImageView()
          {
          this.InitializeComponent();
@@ -40,7 +34,7 @@
 
          this.viewModeToolStripItem = this.zoomModeToolStripMenuItem;
 
-         this.textures = new Dictionary<Texture,int>();
+         this.textures = new Dictionary<Texture, int>();
 
          this.ResetMousePosition();
          }
@@ -52,6 +46,20 @@
       public event EventHandler<PixelViewChangedEventArgs> PixelViewChanged;
 
       public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+
+      private enum Texture
+         {
+         /// <summary>
+         /// The underlay is the bottom-most layer
+         /// </summary>
+         Underlay,
+
+         /// <summary>
+         /// The overlay is displayed over the underlay
+         /// </summary>
+         Overlay
+
+         };
 
       public double UpdateFrequency
          {
@@ -166,7 +174,7 @@
             GL.Translate(this.translateX, this.translateY, 0);
 
             GL.Scale(this.imageModel.ZoomLevel, this.imageModel.ZoomLevel, 1.0);
-            
+
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             // The alpha can be toggled to make the overlay more/less transparent
@@ -264,7 +272,7 @@
          if (this.glControlLoaded)
             {
             this.FreeTextures();
-            
+
             int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
 
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
@@ -274,15 +282,6 @@
             this.InitializeTexture(this.textures[Texture.Underlay]);
 
             Debug.Assert(!this.imageModel.IsGrayscale, "I don't think this has really been tested.");
-
-            //if (this.imageModel.IsGrayscale)
-            //   {
-            //   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
-            //   }
-            //else
-            //   {
-            //   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
-            //   }
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
             GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Replace);
@@ -307,7 +306,7 @@
 
       private void FreeTextures()
          {
-         foreach(int texture in this.textures.Values)
+         foreach (int texture in this.textures.Values)
             {
             GL.DeleteTexture(texture);
             }

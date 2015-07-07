@@ -10,6 +10,7 @@
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Models;
+   using ImageProcessing.ObjectDetection;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
@@ -67,6 +68,7 @@
          this.Container.Register<IImageView, ImageView>();
          this.Container.Register<ITaggerView, TaggerView>();
          this.Container.Register<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.Register<IObjectDetectionManagerView, ObjectDetectionManagerView>();
 
          // Controllers
          this.Container.RegisterSingle<IMainController, MainController>();
@@ -80,6 +82,7 @@
          this.Container.Register<IMemorySourceController, MemorySourceController>();
          this.Container.Register<ITaggerController, TaggerController>();
          this.Container.Register<IObjectDetectionController, ObjectDetectionController>();
+         this.Container.Register<IObjectDetectionManagerController, ObjectDetectionManagerController>();
 
          // Models
          this.Container.Register<IInvertModel, InvertModel>();
@@ -90,6 +93,11 @@
          this.Container.Register<IMemorySourceModel, MemorySourceModel>();
          this.Container.Register<ITaggerModel, TaggerModel>();
          this.Container.Register<IObjectDetectionModel, ObjectDetectionModel>();
+         this.Container.Register<IObjectDetectionManagerModel, ObjectDetectionManagerModel>();
+
+         // Processing
+         this.Container.Register<IObjectDetector, ObjectDetector>();
+         this.Container.Register<ITagger, Tagger>();
          }
       }
    }

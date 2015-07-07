@@ -388,6 +388,7 @@
          // Prepare overlay for next processing
          int width = previousResult.GetLength(1);
          int height = previousResult.GetLength(0);
+
          // Allocated enough for RGBA format
          byte[] overlay = new byte[width * height * 4];
 

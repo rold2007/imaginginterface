@@ -46,7 +46,16 @@
          {
          IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();
 
+         bool closingCalled = false;
+         bool closedCalled = false;
+
+         memorySourceController.Closing += (sender, eventArgs) => { closingCalled = true; };
+         memorySourceController.Closed += (sender, eventArgs) => { closedCalled = true; };
+
          memorySourceController.Close();
+
+         Assert.IsTrue(closingCalled);
+         Assert.IsTrue(closedCalled);
          }
 
       [Test]

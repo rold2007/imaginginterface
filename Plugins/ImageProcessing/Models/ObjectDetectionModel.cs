@@ -18,12 +18,6 @@
          set;
          }
 
-      public Dictionary<string, Boost> Models
-         {
-         get;
-         set;
-         }
-
       public object Clone()
          {
          return this.MemberwiseClone();

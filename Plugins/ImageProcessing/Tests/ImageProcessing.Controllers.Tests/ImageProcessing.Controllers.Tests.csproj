@@ -108,11 +108,13 @@
     <Compile Include="InvertControllerTest.cs" />
     <Compile Include="MemorySourceControllerTest.cs" />
     <Compile Include="ObjectDetectionControllerTest.cs" />
+    <Compile Include="ObjectDetectionManagerControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateControllerTest.cs" />
     <Compile Include="TaggerControllerTest.cs" />
     <Compile Include="Views\CudafyView.cs" />
     <Compile Include="Views\InvertView.cs" />
+    <Compile Include="Views\ObjectDetectionManagerView.cs" />
     <Compile Include="Views\ObjectDetectionView.cs" />
     <Compile Include="Views\RotateView.cs" />
     <Compile Include="Views\TaggerView.cs" />
@@ -161,6 +163,14 @@
     <ProjectReference Include="..\..\Models\ImageProcessing.Models.csproj">
       <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
       <Name>ImageProcessing.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
+      <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
+      <Name>ImageProcessing.ObjectDetection.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ObjectDetection\ImageProcessing.ObjectDetection.csproj">
+      <Project>{fed322ae-2f56-46a3-babc-827daf264e79}</Project>
+      <Name>ImageProcessing.ObjectDetection</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj">
       <Project>{deee4845-897d-41f4-925d-4720f6f1f986}</Project>

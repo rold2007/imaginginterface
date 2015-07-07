@@ -64,6 +64,20 @@
 
       public void Close()
          {
+         CancelEventArgs cancelEventArgs = new CancelEventArgs();
+
+         if (this.Closing != null)
+            {
+            this.Closing(this, cancelEventArgs);
+            }
+
+         if (!cancelEventArgs.Cancel)
+            {
+            if (this.Closed != null)
+               {
+               this.Closed(this, EventArgs.Empty);
+               }
+            }
          }
 
       public bool IsDynamic(IRawPluginModel rawPluginModel)

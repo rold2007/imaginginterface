@@ -58,7 +58,16 @@
          {
          IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
 
+         bool closingCalled = false;
+         bool closedCalled = false;
+
+         fileSourceController.Closing += (sender, eventArgs) => { closingCalled = true; };
+         fileSourceController.Closed += (sender, eventArgs) => { closedCalled = true; };
+
          fileSourceController.Close();
+
+         Assert.IsTrue(closingCalled);
+         Assert.IsTrue(closedCalled);
          }
 
       [Test]

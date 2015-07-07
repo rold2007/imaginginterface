@@ -5,12 +5,12 @@
    using System.Collections.Generic;
    using System.ComponentModel;
    using System.Drawing;
-   using System.IO;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
+   using ImageProcessing.ObjectDetection;
 
    public class TaggerController : ITaggerController
       {
@@ -19,20 +19,18 @@
       private ITaggerModel taggerModel;
       private IImageManagerController imageManagerController;
       private IImageController registeredImageController;
-      private string tempFilename;
-      private bool dataPointsModified;
-      private Dictionary<string, List<Point>> dataPoints;
+      private ITagger tagger;
 
-      public TaggerController(ITaggerView taggerView, ITaggerModel taggerModel, IImageManagerController imageManagerController)
+      public TaggerController(ITaggerView taggerView, ITaggerModel taggerModel, ITagger tagger, IImageManagerController imageManagerController)
          {
          this.taggerView = taggerView;
          this.taggerModel = taggerModel;
+         this.tagger = tagger;
          this.imageManagerController = imageManagerController;
 
          this.taggerModel.DisplayName = TaggerDisplayName;
-         this.dataPoints = new Dictionary<string, List<Point>>();
-         this.taggerModel.Labels = new SortedList<string, double[]>();
-         this.taggerModel.SavePath = Path.GetTempPath();
+         this.taggerModel.Labels = new SortedSet<string>();
+         this.taggerModel.LabelColors = new SortedList<string, double[]>();
          }
 
       public event CancelEventHandler Closing;
@@ -64,28 +62,6 @@
             return true;
             }
          }
-
-      public Dictionary<string, List<Point>> DataPoints
-         {
-         get
-            {
-            return new Dictionary<string, List<Point>>(this.dataPoints);
-            }
-         }
-
-      public string SavePath
-         {
-         get
-            {
-            return this.taggerModel.SavePath;
-            }
-
-         set
-            {
-            this.taggerModel.SavePath = value;
-            }
-         }
-
 
       public void Initialize()
          {
@@ -132,14 +108,14 @@
          int imageHeight = imageData.GetLength(0);
          int imageSize = imageWidth * imageHeight;
 
-         foreach (string tag in this.dataPoints.Keys)
+         foreach (string tag in this.tagger.DataPoints.Keys)
             {
-            double[] rgb = this.taggerModel.Labels[tag];
+            double[] rgb = this.taggerModel.LabelColors[tag];
             byte red = Convert.ToByte(rgb[0]);
             byte green = Convert.ToByte(rgb[1]);
             byte blue = Convert.ToByte(rgb[2]);
 
-            foreach (Point point in this.dataPoints[tag])
+            foreach (Point point in this.tagger.DataPoints[tag])
                {
                int pixelOffset = (point.Y * imageWidth * 4) + point.X * 4;
 
@@ -151,6 +127,30 @@
             }
 
          return imageData;
+         }
+
+      public bool AddPoint(string tag, Point newPoint)
+         {
+         if (this.tagger.AddPoint(tag, newPoint))
+            {
+            this.TriggerTagPointChanged(tag, newPoint, true);
+
+            return true;
+            }
+
+         return false;
+         }
+
+      public bool RemovePoint(string tag, Point newPoint)
+         {
+         if (this.tagger.RemovePoint(tag, newPoint))
+            {
+            this.TriggerTagPointChanged(tag, newPoint, false);
+
+            return true;
+            }
+
+         return false;
          }
 
       private void ImageManagerController_ActiveImageChanged(object sender, EventArgs e)
@@ -186,20 +186,19 @@
             this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
             this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
 
-            this.SavePoints();
+            this.tagger.SavePoints();
 
             this.registeredImageController = null;
-            this.tempFilename = null;
             }
          }
 
       private void ExtractPoints()
          {
-         string filename = Path.GetFileNameWithoutExtension(this.registeredImageController.FullPath);
+         this.tagger.LoadPoints(this.registeredImageController.FullPath);
 
-         this.tempFilename = this.taggerModel.SavePath + @"\Tagger\" + filename + ".imagedata";
+         this.AssignColors();
 
-         this.LoadPoints();
+         this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
 
          this.taggerView.UpdateLabelList();
          }
@@ -232,117 +231,6 @@
             }
          }
 
-      private void SavePoints()
-         {
-         if (this.dataPointsModified)
-            {
-            string directory = Path.GetDirectoryName(this.tempFilename);
-
-            if (!Directory.Exists(directory))
-               {
-               Directory.CreateDirectory(directory);
-               }
-
-            using (StreamWriter streamWriter = new StreamWriter(this.tempFilename, false))
-               {
-               foreach (string tag in this.dataPoints.Keys)
-                  {
-                  foreach (Point point in this.dataPoints[tag])
-                     {
-                     streamWriter.WriteLine(string.Format("{0};{1};{2}", tag, point.X, point.Y));
-                     }
-                  }
-               }
-
-            this.dataPointsModified = false;
-            }
-         }
-
-      private void LoadPoints()
-         {
-         this.dataPoints.Clear();
-
-         if (File.Exists(this.tempFilename))
-            {
-            using (StreamReader streamReader = new StreamReader(this.tempFilename))
-               {
-               while (!streamReader.EndOfStream)
-                  {
-                  string line = streamReader.ReadLine();
-                  string[] lineSplits = line.Split(';');
-                  string tag = lineSplits[0];
-                  Point readPoint = new Point(Convert.ToInt32(lineSplits[1]), Convert.ToInt32(lineSplits[2]));
-
-                  this.AddLabel(tag);
-
-                  this.AddPoint(tag, readPoint);
-                  }
-               }
-
-            this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
-            }
-
-         this.dataPointsModified = false;
-         }
-
-      private bool AddPoint(string tag, Point newPoint)
-         {
-         List<Point> points;
-
-         if (this.dataPoints.TryGetValue(tag, out points))
-            {
-            if (!points.Contains(newPoint))
-               {
-               points.Add(newPoint);
-
-               this.dataPointsModified = true;
-
-               this.TriggerTagPointChanged(tag, newPoint, true);
-
-               return true;
-               }
-            else
-               {
-               return false;
-               }
-            }
-         else
-            {
-            points = new List<Point>();
-
-            this.dataPoints.Add(tag, points);
-
-            points.Add(newPoint);
-
-            this.dataPointsModified = true;
-
-            this.TriggerTagPointChanged(tag, newPoint, true);
-
-            return true;
-            }
-         }
-
-      private bool RemovePoint(string tag, Point newPoint)
-         {
-         List<Point> points;
-
-         if (this.dataPoints.TryGetValue(tag, out points))
-            {
-            if (points.Contains(newPoint))
-               {
-               points.Remove(newPoint);
-
-               this.dataPointsModified = true;
-
-               this.TriggerTagPointChanged(tag, newPoint, false);
-
-               return true;
-               }
-            }
-
-         return false;
-         }
-
       private void TriggerTagPointChanged(string label, Point tagPoint, bool added)
          {
          Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
@@ -357,26 +245,29 @@
             this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController, label, tagPoint, added));
             }
          }
-
+       
       private void TaggerView_LabelAdded(object sender, EventArgs e)
          {
-         this.AddLabel(this.taggerModel.AddedLabel);
+         this.tagger.AddLabel(this.taggerModel.AddedLabel);
+
+         this.taggerModel.Labels.UnionWith(this.tagger.DataPoints.Keys);
+
+         this.AssignColors();
          }
 
-      private void AddLabel(string tag)
+      private void AssignColors()
          {
-         if (!this.taggerModel.Labels.ContainsKey(tag))
+         int labelIndex = 0;
+
+         foreach (string label in this.taggerModel.Labels)
             {
-            this.taggerModel.Labels.Add(tag, null);
+            double hue = 360 * labelIndex / this.taggerModel.Labels.Count;
+            double[] hsv = new double[3] { hue, 1.0, 255.0 };
+            double[] rgb = ImagingInterface.Plugins.Utilities.Color.HSVToRGB(hsv);
 
-            for (int labelIndex = 0; labelIndex < this.taggerModel.Labels.Count; labelIndex++)
-               {
-               double hue = 360 * labelIndex / this.taggerModel.Labels.Count;
-               double[] hsv = new double[3] { hue, 1.0, 255.0 };
-               double[] rgb = ImagingInterface.Plugins.Utilities.Color.HSVToRGB(hsv);
+            this.taggerModel.LabelColors[label] = rgb;
 
-               this.taggerModel.Labels[this.taggerModel.Labels.Keys[labelIndex]] = rgb;
-               }
+            labelIndex++;
             }
          }
       }

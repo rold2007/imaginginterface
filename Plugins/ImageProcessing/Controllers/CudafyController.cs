@@ -249,7 +249,7 @@
 
       private void CudafyView_GPUChanged(object sender, CudafyGPUChangedEventArgs e)
          {
-         SelectGPU(e.GPUName);
+         this.SelectGPU(e.GPUName);
          }
 
       private void SelectGPU(string gpuName)

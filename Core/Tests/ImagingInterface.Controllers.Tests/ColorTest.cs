@@ -62,5 +62,18 @@
                }
             }
          }
+
+      [Test]
+      public void InvalidColor()
+         {
+         double[] hsv = new double[3] { 360.0, 0.0, 0.0 };
+         double[] outputRGB;
+
+         outputRGB = Color.HSVToRGB(hsv);
+
+         Assert.AreEqual(double.MinValue, outputRGB[0]);
+         Assert.AreEqual(double.MinValue, outputRGB[1]);
+         Assert.AreEqual(double.MinValue, outputRGB[2]);
+         }
       }
    }
