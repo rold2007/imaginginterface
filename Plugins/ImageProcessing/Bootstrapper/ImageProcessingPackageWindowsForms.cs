@@ -7,6 +7,7 @@
    using System.Threading.Tasks;
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
+   using ImageProcessing.ObjectDetection;
    using ImageProcessing.Views;
    using ImagingInterface.BootStrapper;
    using ImagingInterface.Plugins;
@@ -43,6 +44,10 @@
          container.Register<ITaggerView, TaggerView>();
          container.Register<IObjectDetectionManagerView, ObjectDetectionManagerView>();
          container.Register<IObjectDetectionView, ObjectDetectionView>();
+
+         // ObjectDetection
+         container.Register<IObjectDetector, ObjectDetector>();
+         container.Register<ITagger, Tagger>();
          }
       }
    }

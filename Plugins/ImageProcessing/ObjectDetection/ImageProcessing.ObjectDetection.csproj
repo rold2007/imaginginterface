@@ -53,12 +53,15 @@
   <ItemGroup>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\Libs\Emgu.CV.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.CV.ML">
       <HintPath>..\..\..\Libs\Emgu.CV.ML.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\Libs\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -79,6 +82,7 @@
     <ProjectReference Include="..\..\..\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
       <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
