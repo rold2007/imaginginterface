@@ -106,17 +106,26 @@
 
          int imageWidth = imageData.GetLength(1);
 
-         if (predictions.ContainsKey("a"))
+         foreach (string prediction in predictions.Keys)
             {
-            List<Point> predictedPoints = predictions["a"];
+            List<Point> predictedPoints = predictions[prediction];
+
+            Color tagColor = this.taggerController.TagColor(prediction);
 
             foreach (Point predictedPoint in predictedPoints)
                {
                int pixelOffset = (predictedPoint.Y * imageWidth * 4) + predictedPoint.X * 4;
 
-               overlayData[pixelOffset] = 0;
-               overlayData[pixelOffset + 1] = 0;
-               overlayData[pixelOffset + 2] = 255;
+               // Red
+               overlayData[pixelOffset] = tagColor.R;
+
+               // Green
+               overlayData[pixelOffset + 1] = tagColor.G;
+
+               // Blue
+               overlayData[pixelOffset + 2] = tagColor.B;
+
+               // Alpha
                overlayData[pixelOffset + 3] = 255;
                }
             }

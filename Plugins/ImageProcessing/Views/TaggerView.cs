@@ -38,14 +38,14 @@
 
          foreach (string label in this.taggerModel.Labels)
             {
-            double[] rgbColor = this.taggerModel.LabelColors[label];
+            Color color = this.taggerModel.LabelColors[label];
             Bitmap bitmap = new Bitmap(16, 16, PixelFormat.Format24bppRgb);
 
             using (Graphics graphics = Graphics.FromImage(bitmap))
                {
-               Color color = Color.FromArgb(Convert.ToInt32(rgbColor[0]), Convert.ToInt32(rgbColor[1]), Convert.ToInt32(rgbColor[2]));
+               Color colorWithAlpha = Color.FromArgb(255, color);
 
-               using (SolidBrush solidBrush = new SolidBrush(color))
+               using (SolidBrush solidBrush = new SolidBrush(colorWithAlpha))
                   {
                   graphics.FillRectangle(solidBrush, 0, 0, 15, 15);
                   }

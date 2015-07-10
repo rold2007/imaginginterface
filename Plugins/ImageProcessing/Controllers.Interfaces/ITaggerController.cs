@@ -16,5 +16,7 @@
       bool AddPoint(string tag, Point newPoint);
 
       bool RemovePoint(string tag, Point newPoint);
+
+      Color TagColor(string tag);
       }
    }

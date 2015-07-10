@@ -111,7 +111,7 @@
             string label = "Label";
 
             taggerModel.Labels.Add(label);
-            taggerModel.LabelColors.Add(label, new double[3] { 0, 0, 0 });
+            taggerModel.LabelColors.Add(label, Color.FromArgb(0));
             taggerModel.SelectedLabel = label;
 
             // Tag a point
@@ -174,7 +174,7 @@
             taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
 
             taggerModel.Labels.Add(label);
-            taggerModel.LabelColors.Add(label, new double[3] { 0, 0, 0 });
+            taggerModel.LabelColors.Add(label, Color.FromArgb(0));
             taggerModel.SelectedLabel = label;
 
             taggerController.Initialize();

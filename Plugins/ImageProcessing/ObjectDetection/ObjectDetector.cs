@@ -153,7 +153,11 @@
             int imageWidth = imageData.GetLength(1);
             int imageHeight = imageData.GetLength(0);
             int imageSize = imageWidth * imageHeight;
-            List<Point> predictedPoints = new List<Point>();
+
+            foreach (string model in this.models.Keys)
+               {
+               predictions.Add(model, new List<Point>());
+               }
 
             for (int y = 0; y < imageHeight; y++)
                {
@@ -163,17 +167,18 @@
 
                   using (Matrix<float> features = new Matrix<float>(featuresData))
                      {
-                     float prediction = this.models["a"].Predict(features, null, null, mcvSlice, false);
-
-                     if (prediction == 1.0f)
+                     foreach (string model in this.models.Keys)
                         {
-                        predictedPoints.Add(new Point(x, y));
+                        float prediction = this.models[model].Predict(features, null, null, mcvSlice, false);
+
+                        if (prediction == 1.0f)
+                           {
+                           predictions[model].Add(new Point(x, y));
+                           }
                         }
                      }
                   }
                }
-
-            predictions.Add("a", predictedPoints);
             }
 
          return predictions;

@@ -25,9 +25,9 @@
                for (int b = 0; b <= 256; b += 8)
                   {
                   rgb = new double[3] { Math.Min(r, 255), Math.Min(g, 255), Math.Min(b, 255) };
-                  hsv = Color.RGBToHSV(rgb);
+                  hsv = ColorConversion.RGBToHSV(rgb);
 
-                  outputRGB = Color.HSVToRGB(hsv);
+                  outputRGB = ColorConversion.HSVToRGB(hsv);
 
                   Assert.That(rgb[0], Is.EqualTo(outputRGB[0]).Within(0.01), string.Format("R: {0} G: {1} B: {2}", rgb[0], rgb[1], rgb[2]));
                   Assert.That(rgb[1], Is.EqualTo(outputRGB[1]).Within(0.01), string.Format("R: {0} G: {1} B: {2}", rgb[0], rgb[1], rgb[2]));
@@ -51,9 +51,9 @@
                for (double value = 16; value <= 255.0; value += 16.0)
                   {
                   hsv = new double[3] { hue, saturation, Math.Min(value, 255) };
-                  rgb = Color.HSVToRGB(hsv);
+                  rgb = ColorConversion.HSVToRGB(hsv);
 
-                  outputHSV = Color.RGBToHSV(rgb);
+                  outputHSV = ColorConversion.RGBToHSV(rgb);
 
                   Assert.That(hsv[0], Is.EqualTo(outputHSV[0]).Within(0.01), string.Format("Hue: {0} Saturation: {1} Value: {2}", hsv[0], hsv[1], hsv[2]));
                   Assert.That(hsv[1], Is.EqualTo(outputHSV[1]).Within(0.01), string.Format("Hue: {0} Saturation: {1} Value: {2}", hsv[0], hsv[1], hsv[2]));
@@ -69,7 +69,7 @@
          double[] hsv = new double[3] { 360.0, 0.0, 0.0 };
          double[] outputRGB;
 
-         outputRGB = Color.HSVToRGB(hsv);
+         outputRGB = ColorConversion.HSVToRGB(hsv);
 
          Assert.AreEqual(double.MinValue, outputRGB[0]);
          Assert.AreEqual(double.MinValue, outputRGB[1]);
