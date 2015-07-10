@@ -14,6 +14,7 @@
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
+   using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
@@ -81,11 +82,15 @@
       public void ProcessImageData()
          {
          this.Container.RegisterSingle<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.RegisterSingle<ITaggerView, TaggerView>();
+         this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
 
          string displayName = "temp";
          ObjectDetectionView objectDetectionView = this.ServiceLocator.GetInstance<IObjectDetectionView>() as ObjectDetectionView;
          IObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<IObjectDetectionController>();
          ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
          IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
@@ -104,6 +109,11 @@
          objectDetectionController.SetTagger(taggerController);
 
          taggerController.Initialize();
+
+         taggerModel.AddedLabel = "a";
+         taggerView.TriggerLabelAdded();
+         taggerModel.AddedLabel = "b";
+         taggerView.TriggerLabelAdded();
 
          taggerController.AddPoint("a", new Point(0, 0));
          taggerController.AddPoint("b", new Point(1, 1));
@@ -130,9 +140,9 @@
 
          objectDetectionController.ProcessImageData(imageData, overlayData, objectDetectionController.RawPluginModel);
 
-         Assert.AreEqual(0, overlayData[0]);
-         Assert.AreEqual(0, overlayData[1]);
-         Assert.AreEqual(255, overlayData[2]);
+         Assert.AreEqual(taggerModel.LabelColors["a"].R, overlayData[0]);
+         Assert.AreEqual(taggerModel.LabelColors["a"].G, overlayData[1]);
+         Assert.AreEqual(taggerModel.LabelColors["a"].B, overlayData[2]);
          Assert.AreEqual(255, overlayData[3]);
          }
 

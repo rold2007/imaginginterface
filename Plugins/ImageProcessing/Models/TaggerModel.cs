@@ -2,6 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
+   using System.Drawing;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
@@ -36,7 +37,7 @@
          set;
          }
 
-      public SortedList<string, double[]> LabelColors
+      public SortedList<string, Color> LabelColors
          {
          get;
          set;

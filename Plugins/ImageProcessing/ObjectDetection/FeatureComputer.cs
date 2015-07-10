@@ -10,6 +10,7 @@
    using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImagingInterface.Plugins.Utilities;
 
    public class FeatureComputer
       {
@@ -51,7 +52,7 @@
             else
                {
                double[] rgb = new double[] { this.imageData[y, x, 0], this.imageData[y, x, 1], this.imageData[y, x, 2] };
-               double[] hsv = ImagingInterface.Plugins.Utilities.Color.RGBToHSV(rgb);
+               double[] hsv = ColorConversion.RGBToHSV(rgb);
 
                features[featureIndex] = Convert.ToSingle(hsv[2]);
                }

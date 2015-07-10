@@ -10,6 +10,7 @@
    using ImageProcessing.Views;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
+   using ImagingInterface.Plugins.Utilities;
    using ImageProcessing.ObjectDetection;
 
    public class TaggerController : ITaggerController
@@ -30,7 +31,7 @@
 
          this.taggerModel.DisplayName = TaggerDisplayName;
          this.taggerModel.Labels = new SortedSet<string>();
-         this.taggerModel.LabelColors = new SortedList<string, double[]>();
+         this.taggerModel.LabelColors = new SortedList<string, Color>();
          }
 
       public event CancelEventHandler Closing;
@@ -110,10 +111,10 @@
 
          foreach (string tag in this.tagger.DataPoints.Keys)
             {
-            double[] rgb = this.taggerModel.LabelColors[tag];
-            byte red = Convert.ToByte(rgb[0]);
-            byte green = Convert.ToByte(rgb[1]);
-            byte blue = Convert.ToByte(rgb[2]);
+            Color color = this.taggerModel.LabelColors[tag];
+            byte red = Convert.ToByte(color.R);
+            byte green = Convert.ToByte(color.G);
+            byte blue = Convert.ToByte(color.B);
 
             foreach (Point point in this.tagger.DataPoints[tag])
                {
@@ -151,6 +152,11 @@
             }
 
          return false;
+         }
+
+      public Color TagColor(string tag)
+         {
+         return this.taggerModel.LabelColors[tag];
          }
 
       private void ImageManagerController_ActiveImageChanged(object sender, EventArgs e)
@@ -263,9 +269,10 @@
             {
             double hue = 360 * labelIndex / this.taggerModel.Labels.Count;
             double[] hsv = new double[3] { hue, 1.0, 255.0 };
-            double[] rgb = ImagingInterface.Plugins.Utilities.Color.HSVToRGB(hsv);
 
-            this.taggerModel.LabelColors[label] = rgb;
+            Color rgbColor = ColorConversion.FromHSV(hsv);
+
+            this.taggerModel.LabelColors[label] = rgbColor;
 
             labelIndex++;
             }

@@ -3,11 +3,12 @@
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
+   using System.Drawing;
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
 
-   public class Color
+   public static class ColorConversion
       {
       public static double[] RGBToHSV(double[] rgb)
          {
@@ -62,7 +63,7 @@
 
          return hsv;
          }
-
+      
       public static double[] HSVToRGB(double[] hsv)
          {
          // Based on http://en.wikipedia.org/wiki/HSL_and_HSV#Converting_to_RGB
@@ -108,6 +109,13 @@
          rgb[2] += m;
 
          return rgb;
+         }
+
+      public static Color FromHSV(double[] hsv)
+         {
+         double[] rgb = HSVToRGB(hsv);
+
+         return Color.FromArgb(Convert.ToInt32(rgb[0]), Convert.ToInt32(rgb[1]), Convert.ToInt32(rgb[2]));
          }
       }
    }
