@@ -79,7 +79,7 @@
       public void ProcessImageData()
          {
          string displayName = Path.GetRandomFileName();
-         string directory = Path.GetTempPath() + "Tagger" + @"\";
+         string directory = Path.GetTempPath() + "TaggerTest" + @"\";
          
          try
             {
