@@ -202,7 +202,7 @@
          {
          this.tagger.LoadPoints(this.registeredImageController.FullPath);
 
-         this.AssignColors();
+         this.AddLabels(this.tagger.DataPoints.Keys);
 
          this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
 
@@ -254,7 +254,15 @@
        
       private void TaggerView_LabelAdded(object sender, EventArgs e)
          {
-         this.tagger.AddLabel(this.taggerModel.AddedLabel);
+         this.AddLabels(new List<string>() { this.taggerModel.AddedLabel });
+         }
+
+      private void AddLabels(IEnumerable<string> labels)
+         {
+         foreach(string label in labels)
+            {
+            this.tagger.AddLabel(label);
+            }
 
          this.taggerModel.Labels.UnionWith(this.tagger.DataPoints.Keys);
 
