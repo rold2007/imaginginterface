@@ -58,13 +58,16 @@
 
       public void Initialize()
          {
-         this.taggerController.Initialize();
          this.objectDetectionController.Initialize();
 
          this.objectDetectionManagerView.AddView(this.taggerController.RawPluginView);
          this.objectDetectionManagerView.AddView(this.objectDetectionController.RawPluginView);
 
          this.objectDetectionController.SetTagger(this.taggerController);
+
+         // Must initialize the object detection controller first so that all points
+         // loaded by the tagger are sent to the object detection controller
+         this.taggerController.Initialize();
          }
 
       public void Close()
