@@ -207,6 +207,14 @@
          this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
 
          this.taggerView.UpdateLabelList();
+
+         foreach (string tag in this.tagger.DataPoints.Keys)
+            {
+            foreach (Point point in this.tagger.DataPoints[tag])
+               {
+               this.TriggerTagPointChanged(tag, point, true);
+               }
+            }
          }
 
       private void RegisteredImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
@@ -239,15 +247,15 @@
 
       private void TriggerTagPointChanged(string label, Point tagPoint, bool added)
          {
-         Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
-         List<Point> points = new List<Point>();
-
-         points.Add(tagPoint);
-
-         tagPoints.Add(label, points);
-
          if (this.TagPointChanged != null)
             {
+            Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
+            List<Point> points = new List<Point>();
+
+            points.Add(tagPoint);
+
+            tagPoints.Add(label, points);
+
             this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController, label, tagPoint, added));
             }
          }
