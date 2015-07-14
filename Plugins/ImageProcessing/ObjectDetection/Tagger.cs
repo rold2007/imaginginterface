@@ -94,10 +94,10 @@
             {
             string directory = Path.GetDirectoryName(this.tempFilename);
 
-            if (!Directory.Exists(directory))
-               {
-               Directory.CreateDirectory(directory);
-               }
+            if (!Directory.Exists(directory)) // ncrunch: no coverage
+               { // ncrunch: no coverage
+               Directory.CreateDirectory(directory); // ncrunch: no coverage
+               } // ncrunch: no coverage
 
             using (StreamWriter streamWriter = new StreamWriter(this.tempFilename, false))
                {

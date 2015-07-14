@@ -79,7 +79,7 @@
       public void ProcessImageData()
          {
          string displayName = Path.GetRandomFileName();
-         string directory = Path.GetTempPath() + "TaggerTest" + @"\";
+         string directory = Path.GetTempPath() + "Tagger" + @"\";
          
          try
             {
@@ -183,7 +183,7 @@
             {
             if (Directory.Exists(directory))
                {
-               Directory.Delete(directory, true);
+               File.Delete(directory + '\\' + Path.GetFileNameWithoutExtension(displayName) + ".imagedata");
                }
             }
          }
