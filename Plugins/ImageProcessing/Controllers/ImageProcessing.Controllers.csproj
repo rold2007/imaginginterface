@@ -57,7 +57,7 @@
     </Reference>
     <Reference Include="ImageProcessor, Version=2.2.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ImageProcessor.2.2.7.0\lib\net45\ImageProcessor.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -116,7 +116,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"</PostBuildEvent>
+copy "$(TargetPath)" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"
+if $(ConfigurationName) == Debug copy "$(TargetDir)$(TargetName).pdb" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
