@@ -68,7 +68,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\Video"
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\Video"</PostBuildEvent>
+copy "$(TargetPath)" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\Video"
+if $(ConfigurationName) == Debug copy "$(TargetDir)$(TargetName).pdb" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\Video"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

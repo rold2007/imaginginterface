@@ -46,6 +46,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"
+copy "$(TargetPath)" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"
+if $(ConfigurationName) == Debug copy "$(TargetDir)$(TargetName).pdb" "$(ProjectDir)..\..\..\Core\ImagingInterface\$(OutDir)Plugins\ImageProcessing"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
