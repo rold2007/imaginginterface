@@ -193,20 +193,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Libs\msvcp110.dll">
-      <Link>msvcp110.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Libs\msvcr110.dll">
-      <Link>msvcr110.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\..\Libs\tbb.dll">
       <Link>tbb.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Libs\vcomp110.dll">
-      <Link>vcomp110.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

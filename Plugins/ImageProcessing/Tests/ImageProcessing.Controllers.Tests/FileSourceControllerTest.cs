@@ -103,6 +103,7 @@
                resultImage = fileSourceController.NextImageData(fileSourceController.RawPluginModel);
 
                Assert.IsNotNull(resultImage);
+               Assert.AreEqual(3, resultImage.Length);
                }
             }
          finally
