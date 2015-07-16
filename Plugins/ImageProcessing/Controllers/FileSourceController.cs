@@ -1,13 +1,11 @@
 ﻿namespace ImageProcessing.Controllers
    {
    using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
    using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using ImageMagick;
+   using ImageProcessor;
+   using ImageProcessor.Common.Exceptions;
+   using ImageProcessor.Imaging;
    using ImagingInterface.Plugins;
 
    public class FileSourceController : IFileSourceController
@@ -103,41 +101,43 @@
 
       private void LoadImage()
          {
-         try
+         if (this.fileSourceModel.Filename != null)
             {
-            byte[] imageData;
-            Size imageSize;
-
-            using (MagickImage magickImage = new MagickImage(this.fileSourceModel.Filename))
+            try
                {
-               magickImage.Format = MagickFormat.Rgb;
-
-               imageData = magickImage.ToByteArray();
-               imageSize = new Size(magickImage.Width, magickImage.Height);
-               }
-
-            this.fileSourceModel.ImageData = new byte[imageSize.Height, imageSize.Width, 3];
-
-            int imageDataIndex = 0;
-
-            for (int y = 0; y < imageSize.Height; y++)
-               {
-               for (int x = 0; x < imageSize.Width; x++)
+               using (ImageFactory imageFactory = new ImageFactory())
                   {
-                  for (int channel = 0; channel < 3; channel++)
-                     {
-                     this.fileSourceModel.ImageData[y, x, channel] = imageData[imageDataIndex];
+                  imageFactory.Load(this.fileSourceModel.Filename);
+                  Image image = imageFactory.Image;
 
-                     imageDataIndex++;
+                  using (FastBitmap fastBitmap = new FastBitmap(image))
+                     {
+                     this.fileSourceModel.ImageData = new byte[image.Size.Height, image.Size.Width, 3];
+
+                     int imageDataIndex = 0;
+
+                     for (int y = 0; y < image.Size.Height; y++)
+                        {
+                        for (int x = 0; x < image.Size.Width; x++)
+                           {
+                           Color color = fastBitmap.GetPixel(x, y);
+
+                           this.fileSourceModel.ImageData[y, x, 0] = color.R;
+                           this.fileSourceModel.ImageData[y, x, 1] = color.G;
+                           this.fileSourceModel.ImageData[y, x, 2] = color.B;
+
+                           imageDataIndex++;
+                           }
+                        }
                      }
                   }
                }
+            catch (ImageFormatException)
+               {
+               this.fileSourceModel.ImageData = null;
+               }
             }
-         catch (ArgumentException)
-            {
-            this.fileSourceModel.ImageData = null;
-            }
-         catch (MagickMissingDelegateErrorException)
+         else
             {
             this.fileSourceModel.ImageData = null;
             }
