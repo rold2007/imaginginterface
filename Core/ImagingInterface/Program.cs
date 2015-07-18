@@ -50,7 +50,12 @@
 
             Program.Bootstrap();
 
+            ValidateAssemblyUniqueness();
+
             Application.Run(Program.serviceLocator.GetInstance<MainWindow>());
+
+            // Make sure that using the plugins we don't load some DLL from elsewhere
+            ValidateAssemblyUniqueness();
             }
          catch (Exception e)
             {
@@ -210,6 +215,30 @@
             }
 
          return false;
+         }
+
+      private static void ValidateAssemblyUniqueness()
+         {
+         // Make sure that no dependent DLL are loaded from the plugin folders
+         // This happens when a reference is added to a plugin project but the "Copy Local"
+         // property isn't set to false. Having the same DLL loaded multiple times from
+         // different paths can lead to weird crashes so it is better to avoid it.
+         Assembly[] loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+         HashSet<string> loadedAssemblyFullNames = new HashSet<string>();
+
+         foreach(Assembly loadedAssembly in loadedAssemblies)
+            {
+            string loadedAssemblyFullName = loadedAssembly.FullName;
+
+            if(loadedAssemblyFullNames.Contains(loadedAssemblyFullName))
+               {
+               // When this exception is thrown, change the "Copy Local" property of the
+               // referenced DLL for the plugin with the issue
+               throw new InvalidOperationException(string.Format("The DLL {0} was already loaded. Don't load the same DLL twice from different paths.", loadedAssemblyFullName));
+               }
+
+            loadedAssemblyFullNames.Add(loadedAssemblyFullName);
+            }
          }
       }
    }
