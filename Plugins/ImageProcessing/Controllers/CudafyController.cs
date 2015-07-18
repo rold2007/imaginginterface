@@ -85,13 +85,13 @@
          {
          this.InitializeGPUs();
 
-         this.cudafyView.SetGPUs(this.gpgpus.Keys.ToList());
-
          this.cudafyView.Add += this.CudafyView_Add;
          this.cudafyView.GPUChanged += this.CudafyView_GPUChanged;
          this.cudafyView.GridSizeChanged += this.CudafyView_GridSizeChanged;
          this.cudafyView.BlockSizeXChanged += this.CudafyView_BlockSizeXChanged;
          this.cudafyView.BlockSizeYChanged += this.CudafyView_BlockSizeYChanged;
+
+         this.cudafyView.SetGPUs(this.gpgpus.Keys.ToList());
          }
 
       public void Close()
@@ -348,6 +348,9 @@
                      try
                         {
                         CudafyTranslator.Language = language;
+
+                        // If this line fails with NCrunch/Unit tests, there probably is a new version of Cudafy.NET
+                        // and it needs to be registered in the GAC like this: gacutil -i Cudafy.NET.dll
                         CudafyModule cudafyModule = CudafyTranslator.Cudafy(eArchitecture.Unknown, typeof(Primitives));
 
                         if (!gpgpu.IsModuleLoaded(cudafyModule.Name))
