@@ -35,9 +35,9 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonServiceLocator.SimpleInjectorAdapter, Version=2.8.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\CommonServiceLocator.SimpleInjectorAdapter.2.8.0\lib\portable-net4+sl4+wp8+win8+wpa81\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
+    <Reference Include="CommonServiceLocator.SimpleInjectorAdapter, Version=2.8.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\CommonServiceLocator.SimpleInjectorAdapter.2.8.2\lib\portable-net4+sl4+wp8+win8+wpa81\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\Libs\Emgu.CV.dll</HintPath>
@@ -58,9 +58,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector, Version=2.8.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\SimpleInjector.2.8.0\lib\net45\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=2.8.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\SimpleInjector.2.8.3\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
