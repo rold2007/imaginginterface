@@ -48,9 +48,6 @@
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\..\Libs\Emgu.Util.dll</HintPath>
     </Reference>
-    <Reference Include="Magick.NET-x86">
-      <HintPath>..\..\..\..\Libs\Magick.NET-x86.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\..\..\packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
