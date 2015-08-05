@@ -15,9 +15,11 @@
          }
 
       bool AddPoint(string tag, Point newPoint);
+
       bool RemovePoint(string tag, Point newPoint);
 
       void SavePoints();
+
       void LoadPoints(string imagePath);
 
       void AddLabel(string tag);

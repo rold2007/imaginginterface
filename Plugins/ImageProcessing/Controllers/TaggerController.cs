@@ -1,17 +1,16 @@
 ﻿namespace ImageProcessing.Controllers
    {
    using System;
-   using System.Collections;
    using System.Collections.Generic;
    using System.ComponentModel;
    using System.Drawing;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
+   using ImageProcessing.ObjectDetection;
    using ImageProcessing.Views;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
    using ImagingInterface.Plugins.Utilities;
-   using ImageProcessing.ObjectDetection;
 
    public class TaggerController : ITaggerController
       {
@@ -103,7 +102,7 @@
             }
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          int imageWidth = imageData.GetLength(1);
          int imageHeight = imageData.GetLength(0);
@@ -118,7 +117,7 @@
 
             foreach (Point point in this.tagger.DataPoints[tag])
                {
-               int pixelOffset = (point.Y * imageWidth * 4) + point.X * 4;
+               int pixelOffset = (point.Y * imageWidth * 4) + (point.X * 4);
 
                overlayData[pixelOffset] = red;
                overlayData[pixelOffset + 1] = green;
@@ -259,7 +258,7 @@
             this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController, label, tagPoint, added));
             }
          }
-       
+
       private void TaggerView_LabelAdded(object sender, EventArgs e)
          {
          this.AddLabels(new List<string>() { this.taggerModel.AddedLabel });
@@ -267,7 +266,7 @@
 
       private void AddLabels(IEnumerable<string> labels)
          {
-         foreach(string label in labels)
+         foreach (string label in labels)
             {
             this.tagger.AddLabel(label);
             }
