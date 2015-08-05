@@ -95,7 +95,6 @@
          Assert.IsTrue(objectDetectionControllerClosingCalled);
          Assert.IsTrue(objectDetectionControllerClosedCalled);
          Assert.IsTrue(objectDetectionManagerView.CloseCalled);
-
          }
       }
    }
