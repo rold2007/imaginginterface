@@ -16,10 +16,12 @@
 
    public class ObjectDetector : IObjectDetector
       {
+      private Dictionary<string, List<Point>> tagPoints;
+
       public ObjectDetector()
          {
          this.tagPoints = new Dictionary<string, List<Point>>();
-         this.models = new Dictionary<string, Boost>();
+         this.Models = new Dictionary<string, Boost>();
          }
 
       ~ObjectDetector()
@@ -27,9 +29,7 @@
          this.Dispose(false); // ncrunch: no coverage
          } // ncrunch: no coverage
 
-      private Dictionary<string, List<Point>> tagPoints;
-
-      private Dictionary<string, Boost> models
+      private Dictionary<string, Boost> Models
          {
          get;
          set;
@@ -135,7 +135,7 @@
 
                   boost.Train(trainMatrix, DATA_LAYOUT_TYPE.COL_SAMPLE, trainResponses, null, null, null, null, mcvBoostParams, false);
 
-                  this.models.Add(label, boost);
+                  this.Models.Add(label, boost);
                   }
                }
             }
@@ -145,7 +145,7 @@
          {
          Dictionary<string, List<Point>> predictions = new Dictionary<string, List<Point>>();
 
-         if (this.models.Count() > 0)
+         if (this.Models.Count() > 0)
             {
             MCvSlice mcvSlice = MCvSlice.WholeSeq;
 
@@ -154,7 +154,7 @@
             int imageHeight = imageData.GetLength(0);
             int imageSize = imageWidth * imageHeight;
 
-            foreach (string model in this.models.Keys)
+            foreach (string model in this.Models.Keys)
                {
                predictions.Add(model, new List<Point>());
                }
@@ -167,9 +167,9 @@
 
                   using (Matrix<float> features = new Matrix<float>(featuresData))
                      {
-                     foreach (string model in this.models.Keys)
+                     foreach (string model in this.Models.Keys)
                         {
-                        float prediction = this.models[model].Predict(features, null, null, mcvSlice, false);
+                        float prediction = this.Models[model].Predict(features, null, null, mcvSlice, false);
 
                         if (prediction == 1.0f)
                            {
@@ -194,17 +194,17 @@
 
       private void ClearModels()
          {
-         foreach (string label in this.models.Keys)
+         foreach (string label in this.Models.Keys)
             {
             Boost boost = null;
 
-            if (this.models.TryGetValue(label, out boost))
+            if (this.Models.TryGetValue(label, out boost))
                {
                boost.Dispose();
                }
             }
 
-         this.models.Clear();
+         this.Models.Clear();
          }
       }
    }

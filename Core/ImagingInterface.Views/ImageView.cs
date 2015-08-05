@@ -13,11 +13,11 @@
 
    public partial class ImageView : UserControl, IImageView
       {
-      private bool glControlLoaded = false;
+      private bool openGLControlLoaded = false;
       private Dictionary<Texture, int> textures;
       private IImageModel imageModel;
       private bool isFirstPaint = true;
-      private bool glControlSizeUpdated = true;
+      private bool openGLControlSizeUpdated = true;
       private bool zoomMode = true;
       private double translateX = 0.0;
       private double translateY = 0.0;
@@ -58,8 +58,7 @@
          /// The overlay is displayed over the underlay
          /// </summary>
          Overlay
-
-         };
+         }
 
       public double UpdateFrequency
          {
@@ -85,11 +84,11 @@
 
             this.AdjustScrollBars();
 
-            if (this.glControlSizeUpdated)
+            if (this.openGLControlSizeUpdated)
                {
                this.PrepareView();
 
-               this.glControlSizeUpdated = false;
+               this.openGLControlSizeUpdated = false;
                }
 
             this.AllocateTextures();
@@ -139,7 +138,7 @@
 
       private void GLControl_Load(object sender, System.EventArgs e)
          {
-         this.glControlLoaded = true;
+         this.openGLControlLoaded = true;
 
          // Display a first buffer of size 1x1x1
          this.InitializeGLControl();
@@ -160,7 +159,7 @@
 
       private void PrepareView()
          {
-         if (this.glControlLoaded)
+         if (this.openGLControlLoaded)
             {
             this.glControl.MakeCurrent();
 
@@ -184,7 +183,7 @@
 
       private void AdjustScrollBars()
          {
-         if (this.glControlLoaded)
+         if (this.openGLControlLoaded)
             {
             bool horizontalScrollBarVisible = false;
             bool vertizontalScrollBarVisible = false;
@@ -269,7 +268,7 @@
 
       private void AllocateTextures()
          {
-         if (this.glControlLoaded)
+         if (this.openGLControlLoaded)
             {
             this.FreeTextures();
 
@@ -328,7 +327,7 @@
 
       private void GLControl_Paint(object sender, PaintEventArgs e)
          {
-         if (!this.glControlLoaded)
+         if (!this.openGLControlLoaded)
             {
             return;
             }
@@ -457,11 +456,11 @@
 
          this.UpdateScrollbarsPositionAndSize();
 
-         if (this.glControlSizeUpdated)
+         if (this.openGLControlSizeUpdated)
             {
             this.PrepareView();
 
-            this.glControlSizeUpdated = false;
+            this.openGLControlSizeUpdated = false;
             }
 
          this.GLControl_Paint(this, null);
@@ -706,7 +705,7 @@
 
       private void GLControl_Layout(object sender, LayoutEventArgs e)
          {
-         this.glControlSizeUpdated = true;
+         this.openGLControlSizeUpdated = true;
          }
       }
    }
