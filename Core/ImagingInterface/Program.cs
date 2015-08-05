@@ -229,11 +229,11 @@
          Assembly[] loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
          HashSet<string> loadedAssemblyFullNames = new HashSet<string>();
 
-         foreach(Assembly loadedAssembly in loadedAssemblies)
+         foreach (Assembly loadedAssembly in loadedAssemblies)
             {
             string loadedAssemblyFullName = loadedAssembly.FullName;
 
-            if(loadedAssemblyFullNames.Contains(loadedAssemblyFullName))
+            if (loadedAssemblyFullNames.Contains(loadedAssemblyFullName))
                {
                // When this exception is thrown, change the "Copy Local" property of the
                // referenced DLL for the plugin with the issue

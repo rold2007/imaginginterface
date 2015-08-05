@@ -10,8 +10,11 @@
    public interface IObjectDetector : IDisposable
       {
       void Add(string label, Point tagPoint);
+
       void Remove(string label, Point tagPoint);
+
       void Train(byte[, ,] imageData);
+
       Dictionary<string, List<Point>> Test(byte[, ,] imageData);
       }
    }

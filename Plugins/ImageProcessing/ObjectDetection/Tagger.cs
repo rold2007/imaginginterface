@@ -16,6 +16,12 @@
       private bool dataPointsModified;
       private Dictionary<string, List<Point>> dataPoints;
 
+      public Tagger()
+         {
+         this.dataPoints = new Dictionary<string, List<Point>>();
+         this.SavePath = Path.GetTempPath();
+         }
+
       public IReadOnlyDictionary<string, List<Point>> DataPoints
          {
          get
@@ -28,12 +34,6 @@
          {
          get;
          set;
-         }
-
-      public Tagger()
-         {
-         this.dataPoints = new Dictionary<string, List<Point>>();
-         this.SavePath = Path.GetTempPath();
          }
 
       public bool AddPoint(string tag, Point newPoint)
@@ -94,10 +94,12 @@
             {
             string directory = Path.GetDirectoryName(this.tempFilename);
 
-            if (!Directory.Exists(directory)) // ncrunch: no coverage
-               { // ncrunch: no coverage
-               Directory.CreateDirectory(directory); // ncrunch: no coverage
-               } // ncrunch: no coverage
+            // ncrunch: no coverage start
+            if (!Directory.Exists(directory))
+               {
+               Directory.CreateDirectory(directory);
+               }
+            //// ncrunch: no coverage
 
             using (StreamWriter streamWriter = new StreamWriter(this.tempFilename, false))
                {
