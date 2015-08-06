@@ -117,14 +117,11 @@
          // Need to register singleton instances for all things pertaining MainWindow
          container.RegisterSingle<MainWindow>();
          container.RegisterSingle<ImageManagerView>();
+         container.RegisterSingle<PluginManagerView>();
          container.RegisterSingle<IMainView>(Program.GetMainWindow);
          container.RegisterSingle<IFileOperationView>(Program.GetMainWindow);
          container.RegisterSingle<IImageManagerView>(Program.GetImageManagerView);
          container.RegisterSingle<IPluginOperationView>(Program.GetMainWindow);
-
-         // Patch for SimpleInjector 2.4.1. See bug report https://simpleinjector.codeplex.com/workitem/20732
-         container.RegisterSingle<PluginManagerView>();
-
          container.RegisterSingle<IPluginManagerView>(Program.GetPluginManagerView);
          container.RegisterSingle<IHelpOperationView>(Program.GetMainWindow);
          container.RegisterSingle<IAboutBoxView, AboutBoxView>();
