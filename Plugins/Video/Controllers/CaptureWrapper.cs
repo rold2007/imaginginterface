@@ -60,9 +60,14 @@
 
       public bool Grab()
          {
-         this.AllocateCapture();
-
-         return this.capture.Grab();
+         if (this.AllocateCapture())
+            {
+            return this.capture.Grab();
+            }
+         else
+            {
+            return false;
+            }
          }
 
       public Image<Gray, byte> RetrieveGrayFrame()
@@ -93,23 +98,32 @@
             }
          }
 
-      private void AllocateCapture()
+      private bool AllocateCapture()
          {
-         if (this.capture == null)
+         if (!this.CaptureAllocated)
             {
-            this.capture = new Capture();
-
-            double frameRate = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FPS);
-
-            if (frameRate > 0.0)
+            try
                {
-               this.framePeriod = 1000 / frameRate;
+               this.capture = new Capture();
+
+               double frameRate = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FPS);
+
+               if (frameRate > 0.0)
+                  {
+                  this.framePeriod = 1000 / frameRate;
+                  }
+               else
+                  {
+                  this.framePeriod = 1000.0 / 30.0;
+                  }
                }
-            else
+            catch (NullReferenceException)
                {
-               this.framePeriod = 1000.0 / 30.0;
+               return false;
                }
             }
+
+         return true;
          }
       }
    }
