@@ -1,13 +1,11 @@
 ﻿namespace Video.Controllers
    {
    using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
    using System.Diagnostics;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
+   using System.Drawing;
    using Emgu.CV;
+   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
@@ -124,7 +122,7 @@
          return captureModel.LiveGrabRunning;
          }
 
-      public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
+      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
          {
          Debug.Assert(rawPluginModel != null, "We should never send a null parameter to InitializeImageSourceController.");
 
@@ -140,10 +138,13 @@
                this.GrabFirstFrame();
                }
 
-            using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+            if (this.captureWrapper.CaptureAllocated)
                {
-               captureModel.LastImageData = image.Data;
-               captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
+               using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+                  {
+                  captureModel.LastImageData = image.Data;
+                  captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
+                  }
                }
             }
          else
@@ -177,7 +178,21 @@
                }
             }
 
-         return captureModel.LastImageData;
+         if (captureModel.LastImageData != null)
+            {
+            return captureModel.LastImageData;
+            }
+         else
+            {
+            using (Image<Rgb, byte> errorImage = new Image<Rgb, byte>(640, 480))
+               {
+               MCvFont font = new MCvFont(FONT.CV_FONT_HERSHEY_PLAIN, 1.0, 1.0);
+
+               errorImage.Draw("Unable to initialize camera.", ref font, new Point(0, 32), new Rgb(Color.Red));
+
+               return errorImage.Data;
+               }
+            }
          }
 
       public void Disconnected()
@@ -344,18 +359,21 @@
 
       private void GrabFirstFrame()
          {
-         // The first grab is usually blank, skip it
-         bool blank = true;
-         Stopwatch stopwatch = Stopwatch.StartNew();
-
-         // Don't wait more than a second
-         while (blank && stopwatch.ElapsedMilliseconds < 1000)
+         if (this.captureWrapper.CaptureAllocated)
             {
-            using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+            // The first grab is usually blank, skip it
+            bool blank = true;
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
+            // Don't wait more than a second
+            while (blank && stopwatch.ElapsedMilliseconds < 1000)
                {
-               if (image.GetSum().Intensity != 0)
+               using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
                   {
-                  blank = false;
+                  if (image.GetSum().Intensity != 0)
+                     {
+                     blank = false;
+                     }
                   }
                }
             }
