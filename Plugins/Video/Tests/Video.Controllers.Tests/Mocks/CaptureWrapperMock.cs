@@ -1,14 +1,8 @@
 ﻿namespace Video.Controllers.Tests.Mocks
    {
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using Emgu.CV;
-   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
-   using Emgu.Util;
    using Video.Controllers;
 
    public class CaptureWrapperMock : ICaptureWrapper
@@ -52,6 +46,12 @@
             }
          }
 
+      public bool GrabFail
+         {
+         set;
+         get;
+         }
+
       public void Dispose()
          {
          this.Dispose(true);
@@ -60,9 +60,16 @@
 
       public bool Grab()
          {
-         this.grabStarted = true;
+         if (GrabFail)
+            {
+            return false;
+            }
+         else
+            {
+            this.grabStarted = true;
 
-         return true;
+            return true;
+            }
          }
 
       public Image<Gray, byte> QueryGrayFrame()
