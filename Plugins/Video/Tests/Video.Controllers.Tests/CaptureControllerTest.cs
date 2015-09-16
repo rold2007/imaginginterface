@@ -1,17 +1,11 @@
 ﻿namespace Video.Controllers.Tests
    {
    using System;
-   using System.Collections.Generic;
-   using System.Diagnostics;
-   using System.Linq;
-   using System.Text;
    using System.Threading;
-   using System.Threading.Tasks;
-   using System.Windows.Forms;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using NUnit.Framework;
+   using Video.Controllers.Tests.Mocks;
    using Video.Controllers.Tests.Views;
    using Video.Models;
    using Video.Views;
@@ -179,6 +173,41 @@
                {
                imageControllerWrapper.WaitForDisplayUpdate();
                }
+            }
+         finally
+            {
+            if (captureController != null)
+               {
+               captureController.Close();
+               }
+            }
+         }
+
+      [Test]
+      public void NextImageDataFail()
+         {
+         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingle<ICaptureWrapper, CaptureWrapperMock>();
+
+         CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
+         ICaptureController captureController = null;
+         ICaptureModel captureModel = this.ServiceLocator.GetInstance<ICaptureModel>();
+         CaptureWrapperMock captureWrapper = this.ServiceLocator.GetInstance<ICaptureWrapper>() as CaptureWrapperMock;
+
+         captureWrapper.GrabFail = true;
+
+         try
+            {
+            captureController = this.ServiceLocator.GetInstance<ICaptureController>();
+
+            captureController.Initialize();
+
+            IImageSourceController imageSourceController = captureController as IImageSourceController;
+
+            byte[, ,] imageData = imageSourceController.NextImageData(captureModel);
+
+            Assert.AreEqual(640, imageData.GetLength(1));
+            Assert.AreEqual(480, imageData.GetLength(0));
             }
          finally
             {
