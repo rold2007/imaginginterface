@@ -48,8 +48,8 @@
 
       public bool GrabFail
          {
-         set;
          get;
+         set;
          }
 
       public void Dispose()
@@ -60,7 +60,7 @@
 
       public bool Grab()
          {
-         if (GrabFail)
+         if (this.GrabFail)
             {
             return false;
             }
