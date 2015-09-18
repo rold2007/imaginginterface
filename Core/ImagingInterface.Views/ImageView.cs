@@ -280,9 +280,17 @@
 
             this.InitializeTexture(this.textures[Texture.Underlay]);
 
-            Debug.Assert(!this.imageModel.IsGrayscale, "I don't think this has really been tested.");
+            if (this.imageModel.IsGrayscale)
+               {
+               // Camera (capture) images are retrieved as grayscale
+               GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
+               }
+            else
+               {
+               // Static images are loaded as color
+               GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
+               }
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
             GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Replace);
 
             if (this.imageModel.OverlayImageData != null)
