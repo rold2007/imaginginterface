@@ -6,6 +6,7 @@
    using System.Text;
    using System.Threading.Tasks;
    using Emgu.CV;
+   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
@@ -86,7 +87,7 @@
 
          rotateController.Initialize();
 
-         using (Image<Rgb, byte> image = new Image<Rgb, byte>(1, 1))
+         using (UMat image = new UMat(1, 1, DepthType.Cv8U, 3))
             {
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {

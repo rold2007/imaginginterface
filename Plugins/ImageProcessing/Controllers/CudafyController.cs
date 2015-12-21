@@ -132,7 +132,7 @@
 
             byte[, ,] gpuSourceData;
             byte[, ,] gpuDestinationData;
-
+            
             lock (this)
                {
                dim3 gpuDataSize = new dim3(allocatedX, allocatedY, allocatedZ);

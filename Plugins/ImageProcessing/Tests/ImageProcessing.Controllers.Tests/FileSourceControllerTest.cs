@@ -7,6 +7,7 @@
    using System.Text;
    using System.Threading.Tasks;
    using Emgu.CV;
+   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImagingInterface.Plugins;
@@ -94,7 +95,7 @@
 
             tempImageFilename = Path.GetRandomFileName() + ".png";
 
-            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
+            using (UMat image = new UMat(1, 1, DepthType.Cv8U, 1))
                {
                image.Save(tempImageFilename);
 

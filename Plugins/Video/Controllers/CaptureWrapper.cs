@@ -70,19 +70,30 @@
             }
          }
 
-      public Image<Gray, byte> RetrieveGrayFrame()
+      public UMat RetrieveFrame()
          {
-         double nextFrame = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_POS_FRAMES);
+         double nextFrame = this.capture.GetCaptureProperty(CapProp.PosFrames);
 
          // This seems to be the condition to detect if a camera is already in use by another application
          // It might not work for all types of cameras though...
          if (nextFrame == -1)
             {
-            return this.capture.RetrieveGrayFrame();
+            UMat outputImage = new UMat();
+
+            if (this.capture.Retrieve(outputImage))
+               {
+               CvInvoke.CvtColor(outputImage, outputImage, ColorConversion.Bgr2Rgb);
+
+               return outputImage;
+               }
+
+            return null;
             }
          else
             {
-            return new Image<Gray, byte>(this.Width, this.Height);
+            UMat outputImage = new UMat(this.Width, this.Height, DepthType.Cv8U, 3);
+
+            return outputImage;
             }
          }
 
@@ -106,7 +117,7 @@
                {
                this.capture = new Capture();
 
-               double frameRate = this.capture.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FPS);
+               double frameRate = this.capture.GetCaptureProperty(CapProp.Fps);
 
                if (frameRate > 0.0)
                   {

@@ -64,7 +64,7 @@
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-            byte[, ,] imageData = new byte[1, 1, 1];
+            byte[, ,] imageData = new byte[10, 10, 1];
 
             cudafyController.Initialize();
 
@@ -79,11 +79,11 @@
 
             cudafyController.ProcessImageData(imageData, null, cudafyController.RawPluginModel);
 
-            cudafyView.GridSizeX = 1;
-            cudafyView.GridSizeY = 1;
+            cudafyView.GridSizeX = 2;
+            cudafyView.GridSizeY = 2;
             cudafyView.GridSizeZ = 1;
-            cudafyView.BlockSizeX = 1;
-            cudafyView.BlockSizeY = 1;
+            cudafyView.BlockSizeX = 3;
+            cudafyView.BlockSizeY = 3;
             cudafyView.BlockSizeZ = 1;
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
