@@ -110,7 +110,7 @@
                   }
                }
             }
-         else
+         else if (channels == 3)
             {
             using (Image<Rgb, byte> image = new Image<Rgb, byte>(imageData))
                {
@@ -119,6 +119,10 @@
                   return integral.Data;
                   }
                }
+            }
+         else
+            {
+            return null;
             }
          }
       }

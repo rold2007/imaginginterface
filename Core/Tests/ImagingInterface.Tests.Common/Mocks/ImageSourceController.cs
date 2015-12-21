@@ -12,7 +12,7 @@
       {
       public ImageSourceController()
          {
-         this.ImageData = new byte[1, 1, 1];
+         this.ImageData = new byte[50, 50, 1];
          }
 
       public event CancelEventHandler Closing;

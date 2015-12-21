@@ -83,20 +83,20 @@
             {
             this.ClearModels();
 
-            MCvBoostParams mcvBoostParams = MCvBoostParams.GetDefaultParameter();
+            //// MCvBoostParams mcvBoostParams = MCvBoostParams.GetDefaultParameter();
 
-            mcvBoostParams.boostType = BOOST_TYPE.GENTLE;
-            mcvBoostParams.weakCount = 50; // Number of trees/stumps
+            //// mcvBoostParams.boostType = BOOST_TYPE.GENTLE;
+            //// mcvBoostParams.weakCount = 50; // Number of trees/stumps
 
-            // Using 0.95 slowed down the training process when I tried it, but it should have sped it...
-            mcvBoostParams.weightTrimRate = 0.0; // Default 0.95
-            mcvBoostParams.cvFolds = 0;
-            mcvBoostParams.maxDepth = 1; // Depth of trees
-            mcvBoostParams.splitCriteria = (int)BOOST_SPLIT_CREITERIA.DEFAULT; // Error computation function
-            mcvBoostParams.maxCategories = 2;
+            //// Using 0.95 slowed down the training process when I tried it, but it should have sped it...
+            //// mcvBoostParams.weightTrimRate = 0.0; // Default 0.95
+            //// mcvBoostParams.cvFolds = 0;
+            //// mcvBoostParams.maxDepth = 1; // Depth of trees
+            //// mcvBoostParams.splitCriteria = (int)BOOST_SPLIT_CREITERIA.DEFAULT; // Error computation function
+            //// mcvBoostParams.maxCategories = 2;
 
-            // Make sure we work even with a low number of samples
-            mcvBoostParams.minSampleCount = 1;
+            //// Make sure we work even with a low number of samples
+            //// mcvBoostParams.minSampleCount = 1;
 
             List<string> trueResponses = new List<string>();
 
@@ -133,7 +133,8 @@
 
                   Boost boost = new Boost();
 
-                  boost.Train(trainMatrix, DATA_LAYOUT_TYPE.COL_SAMPLE, trainResponses, null, null, null, null, mcvBoostParams, false);
+                  //// boost.Train(trainMatrix, DataLayoutType.ColSample, trainResponses, null, null, null, null, mcvBoostParams, false);
+                  ////boost.Train(trainMatrix, DataLayoutType.ColSample, trainResponses);
 
                   this.Models.Add(label, boost);
                   }
@@ -169,7 +170,9 @@
                      {
                      foreach (string model in this.Models.Keys)
                         {
-                        float prediction = this.Models[model].Predict(features, null, null, mcvSlice, false);
+                        //// float prediction = this.Models[model].Predict(features, null, null, mcvSlice, false);
+                        ////float prediction = this.Models[model].Predict(features);
+                        float prediction = 0.0f;
 
                         if (prediction == 1.0f)
                            {

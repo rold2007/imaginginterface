@@ -11,6 +11,7 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Emgu.CV;
+   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Tests.Views;
@@ -46,7 +47,7 @@
             {
             tempFileName = Path.GetRandomFileName() + ".png";
 
-            using (Image<Gray, byte> image = new Image<Gray, byte>(1, 1))
+            using (UMat image = new UMat(1, 1, DepthType.Cv8U, 1))
                {
                image.Save(tempFileName);
 

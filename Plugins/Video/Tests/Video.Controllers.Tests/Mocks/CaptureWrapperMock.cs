@@ -2,6 +2,7 @@
    {
    using System;
    using Emgu.CV;
+   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
    using Video.Controllers;
 
@@ -72,16 +73,20 @@
             }
          }
 
-      public Image<Gray, byte> QueryGrayFrame()
+      public UMat QueryGrayFrame()
          {
-         return this.RetrieveGrayFrame();
+         return this.RetrieveFrame();
          }
 
-      public Image<Gray, byte> RetrieveGrayFrame()
+      public UMat RetrieveFrame()
          {
          if (this.grabStarted)
             {
-            return new Image<Gray, byte>(1, 1, new Gray(255.0));
+            UMat image = new UMat(1, 1, DepthType.Cv8U, 3);
+
+            image.SetTo(new MCvScalar(255.0));
+
+            return image;
             }
          else
             {

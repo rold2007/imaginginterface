@@ -98,7 +98,7 @@
          else
             {
             Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
-
+            
             using (Image<Bgr, byte> invertedImage = new Image<Bgr, byte>(imageData))
                {
                invertedImage._Not();

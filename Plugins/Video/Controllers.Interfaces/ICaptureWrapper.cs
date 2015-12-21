@@ -34,6 +34,6 @@
 
       bool Grab();
 
-      Image<Gray, byte> RetrieveGrayFrame();
+      UMat RetrieveFrame();
       }
    }

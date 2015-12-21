@@ -42,12 +42,15 @@
     </Reference>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\Libs\Emgu.CV.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.CV.ML">
       <HintPath>..\..\..\..\Libs\Emgu.CV.ML.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\..\Libs\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\..\..\packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -151,66 +154,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\Libs\cvextern.dll">
-      <Link>cvextern.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_core240.dll">
-      <Link>opencv_core240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_highgui240.dll">
-      <Link>opencv_highgui240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_imgproc240.dll">
-      <Link>opencv_imgproc240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_ml240.dll">
-      <Link>opencv_ml240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\tbb.dll">
-      <Link>tbb.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_calib3d240.dll">
-      <Link>opencv_calib3d240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_features2d240.dll">
-      <Link>opencv_features2d240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_flann240.dll">
-      <Link>opencv_flann240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_legacy240.dll">
-      <Link>opencv_legacy240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_nonfree240.dll">
-      <Link>opencv_nonfree240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_objdetect240.dll">
-      <Link>opencv_objdetect240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\..\Libs\opencv_video240.dll">
-      <Link>opencv_video240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\Libs\opencv_contrib240.dll">
-      <Link>opencv_contrib240.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

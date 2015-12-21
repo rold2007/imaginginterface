@@ -122,7 +122,7 @@
          return captureModel.LiveGrabRunning;
          }
 
-      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+      public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
          {
          Debug.Assert(rawPluginModel != null, "We should never send a null parameter to InitializeImageSourceController.");
 
@@ -140,9 +140,10 @@
 
             if (this.captureWrapper.CaptureAllocated)
                {
-               using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+               using (UMat image = this.captureWrapper.RetrieveFrame())
+               using (Image<Rgb, byte> imageData = image.ToImage<Rgb, byte>())
                   {
-                  captureModel.LastImageData = image.Data;
+                  captureModel.LastImageData = imageData.Data;
                   captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
                   }
                }
@@ -157,12 +158,13 @@
 
                if (timeSinceLastGrab > this.captureWrapper.FramePeriod)
                   {
-                  using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+                  using (UMat image = this.captureWrapper.RetrieveFrame())
+                  using (Image<Rgb, byte> imageData = image.ToImage<Rgb, byte>())
                      {
                      captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
 
                      // Keep a copy of the last grabbed image to give it when when the grab is stopped and an image processing is applied
-                     captureModel.LastImageData = image.Data;
+                     captureModel.LastImageData = imageData.Data;
                      }
                   }
                else
@@ -186,9 +188,7 @@
             {
             using (Image<Rgb, byte> errorImage = new Image<Rgb, byte>(640, 480))
                {
-               MCvFont font = new MCvFont(FONT.CV_FONT_HERSHEY_PLAIN, 1.0, 1.0);
-
-               errorImage.Draw("Unable to initialize camera.", ref font, new Point(0, 32), new Rgb(Color.Red));
+               errorImage.Draw("Unable to initialize camera.", new Point(0, 32), FontFace.HersheyPlain, 1.0, new Rgb(Color.Red));
 
                return errorImage.Data;
                }
@@ -368,9 +368,11 @@
             // Don't wait more than a second
             while (blank && stopwatch.ElapsedMilliseconds < 1000)
                {
-               using (Image<Gray, byte> image = this.captureWrapper.RetrieveGrayFrame())
+               using (UMat image = this.captureWrapper.RetrieveFrame())
                   {
-                  if (image.GetSum().Intensity != 0)
+                  MCvScalar abc = CvInvoke.Sum(image);
+
+                  if (abc.V0 != 0)
                      {
                      blank = false;
                      }
