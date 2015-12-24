@@ -7,11 +7,6 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using Emgu.CV;
-   using Emgu.CV.ML;
-   using Emgu.CV.ML.MlEnum;
-   using Emgu.CV.ML.Structure;
-   using Emgu.CV.Structure;
    using ImageProcessing.ObjectDetection;
 
    public class ObjectDetector : IObjectDetector
@@ -21,7 +16,7 @@
       public ObjectDetector()
          {
          this.tagPoints = new Dictionary<string, List<Point>>();
-         this.Models = new Dictionary<string, Boost>();
+         this.Models = new Dictionary<string, object>();
          }
 
       ~ObjectDetector()
@@ -29,7 +24,7 @@
          this.Dispose(false); // ncrunch: no coverage
          } // ncrunch: no coverage
 
-      private Dictionary<string, Boost> Models
+      private Dictionary<string, object> Models
          {
          get;
          set;
@@ -99,7 +94,7 @@
             //// mcvBoostParams.minSampleCount = 1;
 
             List<string> trueResponses = new List<string>();
-
+            /*
             using (Matrix<float> trainMatrix = new Matrix<float>(FeatureComputer.NumberOfFeatures, trainSamples), trainResponses = new Matrix<float>(1, trainSamples))
                {
                // Fill the train matrix
@@ -139,6 +134,7 @@
                   this.Models.Add(label, boost);
                   }
                }
+               */
             }
          }
 
@@ -148,7 +144,7 @@
 
          if (this.Models.Count() > 0)
             {
-            MCvSlice mcvSlice = MCvSlice.WholeSeq;
+            //MCvSlice mcvSlice = MCvSlice.WholeSeq;
 
             FeatureComputer featureComputer = new FeatureComputer(imageData);
             int imageWidth = imageData.GetLength(1);
@@ -166,7 +162,7 @@
                   {
                   float[] featuresData = featureComputer.ComputeFeatures(new Point(x, y));
 
-                  using (Matrix<float> features = new Matrix<float>(featuresData))
+                  //using (Matrix<float> features = new Matrix<float>(featuresData))
                      {
                      foreach (string model in this.Models.Keys)
                         {
@@ -199,12 +195,12 @@
          {
          foreach (string label in this.Models.Keys)
             {
-            Boost boost = null;
+            //Boost boost = null;
 
-            if (this.Models.TryGetValue(label, out boost))
-               {
-               boost.Dispose();
-               }
+            //if (this.Models.TryGetValue(label, out boost))
+            //   {
+            //   boost.Dispose();
+            //   }
             }
 
          this.Models.Clear();

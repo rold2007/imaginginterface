@@ -42,15 +42,9 @@
     </Reference>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\Libs\Emgu.CV.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Emgu.CV.ML">
-      <HintPath>..\..\..\..\Libs\Emgu.CV.ML.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.Util">
       <HintPath>..\..\..\..\Libs\Emgu.Util.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\..\..\packages\Portable.CommonServiceLocator.1.2.2\lib\net35\Microsoft.Practices.ServiceLocation.dll</HintPath>
