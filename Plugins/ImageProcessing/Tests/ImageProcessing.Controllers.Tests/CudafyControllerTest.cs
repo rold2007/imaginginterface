@@ -54,8 +54,8 @@
          {
          CudafyController cudafyController = null;
 
-         this.Container.RegisterSingle<ICudafyView, CudafyView>();
-         this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
+         this.Container.RegisterSingleton<ICudafyView, CudafyView>();
+         this.Container.RegisterSingleton<IImageManagerController, ImageManagerController>();
 
          try
             {
@@ -132,7 +132,7 @@
          {
          try
             {
-            this.Container.RegisterSingle<ICudafyView, CudafyView>();
+            this.Container.RegisterSingleton<ICudafyView, CudafyView>();
 
             ICudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>();
             CudafyView cudafyView = cudafyController.RawPluginView as CudafyView;
@@ -160,8 +160,8 @@
          {
          CudafyController cudafyController = null;
 
-         this.Container.RegisterSingle<ICudafyView, CudafyView>();
-         this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
+         this.Container.RegisterSingleton<ICudafyView, CudafyView>();
+         this.Container.RegisterSingleton<ICudafyModel, CudafyModel>();
 
          try
             {
@@ -235,8 +235,8 @@
          {
          CudafyController cudafyController = null;
 
-         this.Container.RegisterSingle<ICudafyView, CudafyView>();
-         this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
+         this.Container.RegisterSingleton<ICudafyView, CudafyView>();
+         this.Container.RegisterSingleton<ICudafyModel, CudafyModel>();
 
          try
             {
@@ -289,8 +289,8 @@
          {
          CudafyController cudafyController = null;
 
-         this.Container.RegisterSingle<ICudafyView, CudafyView>();
-         this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
+         this.Container.RegisterSingleton<ICudafyView, CudafyView>();
+         this.Container.RegisterSingleton<ICudafyModel, CudafyModel>();
 
          try
             {
@@ -370,8 +370,8 @@
          {
          CudafyController cudafyController = null;
 
-         this.Container.RegisterSingle<ICudafyView, CudafyView>();
-         this.Container.RegisterSingle<ICudafyModel, CudafyModel>();
+         this.Container.RegisterSingleton<ICudafyView, CudafyView>();
+         this.Container.RegisterSingleton<ICudafyModel, CudafyModel>();
 
          try
             {

@@ -30,7 +30,7 @@
       [Test]
       public void Initialize()
          {
-         this.Container.RegisterSingle<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
 
          ObjectDetectionView objectDetectionView = this.ServiceLocator.GetInstance<IObjectDetectionView>() as ObjectDetectionView;
          IObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<IObjectDetectionController>();
@@ -47,7 +47,7 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingle<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
 
          ObjectDetectionView objectDetectionView = this.ServiceLocator.GetInstance<IObjectDetectionView>() as ObjectDetectionView;
          IObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<IObjectDetectionController>();
@@ -67,9 +67,9 @@
       [Test]
       public void ProcessImageData()
          {
-         this.Container.RegisterSingle<IObjectDetectionView, ObjectDetectionView>();
-         this.Container.RegisterSingle<ITaggerView, TaggerView>();
-         this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
+         this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
          string displayName = "temp";
          ObjectDetectionView objectDetectionView = this.ServiceLocator.GetInstance<IObjectDetectionView>() as ObjectDetectionView;
@@ -135,7 +135,7 @@
       [Test]
       public void Test()
          {
-         this.Container.RegisterSingle<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
 
          string displayName = "temp";
          ObjectDetectionView objectDetectionView = this.ServiceLocator.GetInstance<IObjectDetectionView>() as ObjectDetectionView;
@@ -194,7 +194,7 @@
       [Test]
       public void TagPointChanged()
          {
-         this.Container.RegisterSingle<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
 
          ObjectDetectionView objectDetectionView = this.ServiceLocator.GetInstance<IObjectDetectionView>() as ObjectDetectionView;
          IObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<IObjectDetectionController>();

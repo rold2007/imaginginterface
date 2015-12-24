@@ -58,7 +58,7 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingle<ITaggerView, TaggerView>();
+         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
 
          TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
          ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
@@ -83,8 +83,8 @@
          
          try
             {
-            this.Container.RegisterSingle<IImageView, ImageView>();
-            this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
+            this.Container.RegisterSingleton<IImageView, ImageView>();
+            this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
             ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
             ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
@@ -191,8 +191,8 @@
       [Test]
       public void LabelAdded()
          {
-         this.Container.RegisterSingle<ITaggerView, TaggerView>();
-         this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
+         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
          TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
          ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
@@ -213,8 +213,8 @@
          {
          string displayName = "temp";
 
-         this.Container.RegisterSingle<ITaggerView, TaggerView>();
-         this.Container.RegisterSingle<ITaggerModel, TaggerModel>();
+         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
          TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
          ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();

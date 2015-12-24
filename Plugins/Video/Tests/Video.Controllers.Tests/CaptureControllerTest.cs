@@ -16,7 +16,7 @@
       [Test]
       public void Constructor()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          ICaptureController captureController = null;
@@ -42,7 +42,7 @@
       [Test]
       public void RawPluginView()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          ICaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>();
          ICaptureController captureController = null;
@@ -65,7 +65,7 @@
       [Test]
       public void RawPluginModel()
          {
-         this.Container.RegisterSingle<ICaptureModel, CaptureModel>();
+         this.Container.RegisterSingleton<ICaptureModel, CaptureModel>();
 
          ICaptureModel captureModel = this.ServiceLocator.GetInstance<ICaptureModel>();
          ICaptureController captureController = null;
@@ -108,7 +108,7 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          bool closingCalled = false;
@@ -139,7 +139,7 @@
       [Test]
       public void NextImageData()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          ICaptureController captureController = null;
@@ -186,8 +186,8 @@
       [Test]
       public void NextImageDataFail()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
-         this.Container.RegisterSingle<ICaptureWrapper, CaptureWrapperMock>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureWrapper, CaptureWrapperMock>();
 
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          ICaptureController captureController = null;
@@ -221,7 +221,7 @@
       [Test]
       public void StartLiveGrab()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          ICaptureWrapper captureWrapper = this.ServiceLocator.GetInstance<ICaptureWrapper>();
@@ -279,7 +279,7 @@
       [Test]
       public void StopLiveGrab()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          ICaptureController captureController = null;
@@ -330,7 +330,7 @@
       [Test]
       public void SnapShot()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
@@ -388,7 +388,7 @@
       [Test]
       public void Closing()
          {
-         this.Container.RegisterSingle<ICaptureView, CaptureView>();
+         this.Container.RegisterSingleton<ICaptureView, CaptureView>();
 
          CaptureView captureView = this.ServiceLocator.GetInstance<ICaptureView>() as CaptureView;
          IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();

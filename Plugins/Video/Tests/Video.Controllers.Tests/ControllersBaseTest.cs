@@ -44,25 +44,23 @@
 
       private void Bootstrap()
          {
-         ContainerOptions containerOptions = new ContainerOptions();
+         this.Container = new Container();
 
          // This is needed for some tests to register a mock class
-         containerOptions.AllowOverridingRegistrations = true;
-
-         this.Container = new Container(containerOptions);
+         this.Container.Options.AllowOverridingRegistrations = true;
 
          // Service
-         this.Container.RegisterSingle<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
+         this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
-         this.Container.RegisterSingle<IMainView, MainView>();
-         this.Container.RegisterSingle<IImageManagerView, ImageManagerView>();
+         this.Container.RegisterSingleton<IMainView, MainView>();
+         this.Container.RegisterSingleton<IImageManagerView, ImageManagerView>();
          this.Container.Register<ICaptureView, CaptureView>();
          this.Container.Register<IImageView, ImageView>();
 
          // Controllers
-         this.Container.RegisterSingle<IMainController, MainController>();
-         this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
+         this.Container.RegisterSingleton<IMainController, MainController>();
+         this.Container.RegisterSingleton<IImageManagerController, ImageManagerController>();
          this.Container.Register<ICaptureController, CaptureController>();
          this.Container.Register<IImageController, ImageController>();
          this.Container.Register<ICaptureWrapper, CaptureWrapperMock>();

@@ -57,7 +57,7 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingle<IInvertView, InvertView>();
+         this.Container.RegisterSingleton<IInvertView, InvertView>();
 
          InvertView invertView = this.ServiceLocator.GetInstance<IInvertView>() as InvertView;
          IInvertController invertController = this.ServiceLocator.GetInstance<IInvertController>();

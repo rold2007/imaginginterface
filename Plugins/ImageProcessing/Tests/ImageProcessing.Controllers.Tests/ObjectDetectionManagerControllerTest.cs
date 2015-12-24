@@ -64,9 +64,9 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingle<IObjectDetectionManagerView, ObjectDetectionManagerView>();
-         this.Container.RegisterSingle<ITaggerController, TaggerController>();
-         this.Container.RegisterSingle<IObjectDetectionController, ObjectDetectionController>();
+         this.Container.RegisterSingleton<IObjectDetectionManagerView, ObjectDetectionManagerView>();
+         this.Container.RegisterSingleton<ITaggerController, TaggerController>();
+         this.Container.RegisterSingleton<IObjectDetectionController, ObjectDetectionController>();
 
          ObjectDetectionManagerView objectDetectionManagerView = this.ServiceLocator.GetInstance<IObjectDetectionManagerView>() as ObjectDetectionManagerView;
          ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();

@@ -49,30 +49,28 @@
 
       protected void Bootstrap()
          {
-         ContainerOptions containerOptions = new ContainerOptions();
+         this.Container = new Container();
 
          // This is needed for some tests to register a mock class
-         containerOptions.AllowOverridingRegistrations = true;
-
-         this.Container = new Container(containerOptions);
+         this.Container.Options.AllowOverridingRegistrations = true;
 
          // Service
-         this.Container.RegisterSingle<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
+         this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
-         this.Container.RegisterSingle<IMainView, MainView>();
-         this.Container.RegisterSingle<IImageManagerView, ImageManagerView>();
+         this.Container.RegisterSingleton<IMainView, MainView>();
+         this.Container.RegisterSingleton<IImageManagerView, ImageManagerView>();
          this.Container.Register<IInvertView, InvertView>();
          this.Container.Register<IRotateView, RotateView>();
          this.Container.Register<ICudafyView, CudafyView>();
          this.Container.Register<IImageView, ImageView>();
-         this.Container.Register<ITaggerView, TaggerView>();
-         this.Container.Register<IObjectDetectionView, ObjectDetectionView>();
+         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
          this.Container.Register<IObjectDetectionManagerView, ObjectDetectionManagerView>();
 
          // Controllers
-         this.Container.RegisterSingle<IMainController, MainController>();
-         this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
+         this.Container.RegisterSingleton<IMainController, MainController>();
+         this.Container.RegisterSingleton<IImageManagerController, ImageManagerController>();
          this.Container.Register<IInvertController, InvertController>();
          this.Container.Register<IRotateController, RotateController>();
          this.Container.Register<ICudafyController, CudafyController>();
@@ -91,13 +89,13 @@
          this.Container.Register<IImageModel, ImageModel>();
          this.Container.Register<IFileSourceModel, FileSourceModel>();
          this.Container.Register<IMemorySourceModel, MemorySourceModel>();
-         this.Container.Register<ITaggerModel, TaggerModel>();
-         this.Container.Register<IObjectDetectionModel, ObjectDetectionModel>();
+         this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
+         this.Container.RegisterSingleton<IObjectDetectionModel, ObjectDetectionModel>();
          this.Container.Register<IObjectDetectionManagerModel, ObjectDetectionManagerModel>();
 
          // Processing
-         this.Container.Register<IObjectDetector, ObjectDetector>();
-         this.Container.Register<ITagger, Tagger>();
+         this.Container.RegisterSingleton<IObjectDetector, ObjectDetector>();
+         this.Container.RegisterSingleton<ITagger, Tagger>();
          }
       }
    }

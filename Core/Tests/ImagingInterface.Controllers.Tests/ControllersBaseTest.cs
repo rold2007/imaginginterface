@@ -45,47 +45,47 @@
 
       private void Bootstrap()
          {
-         ContainerOptions containerOptions = new ContainerOptions();
+         this.Container = new Container();
 
          // This is needed for some tests to register a mock class
-         containerOptions.AllowOverridingRegistrations = true;
-
-         this.Container = new Container(containerOptions);
+         this.Container.Options.AllowOverridingRegistrations = true;
 
          // Service
-         this.Container.RegisterSingle<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
+         this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
-         this.Container.RegisterSingle<IMainView, MainView>();
-         this.Container.RegisterSingle<IFileOperationView, FileOperationView>();
-         this.Container.RegisterSingle<IImageManagerView, ImageManagerView>();
-         this.Container.RegisterSingle<IPluginOperationView, PluginOperationsView>();
-         this.Container.RegisterSingle<IPluginManagerView, PluginManagerView>();
-         this.Container.RegisterSingle<IHelpOperationView, HelpOperationView>();
-         this.Container.RegisterSingle<IAboutBoxView, AboutBoxView>();
+         this.Container.RegisterSingleton<IMainView, MainView>();
+         this.Container.RegisterSingleton<IFileOperationView, FileOperationView>();
+         this.Container.RegisterSingleton<IImageManagerView, ImageManagerView>();
+         this.Container.RegisterSingleton<IPluginOperationView, PluginOperationsView>();
+         this.Container.RegisterSingleton<IPluginManagerView, PluginManagerView>();
+         this.Container.RegisterSingleton<IHelpOperationView, HelpOperationView>();
+         this.Container.RegisterSingleton<IAboutBoxView, AboutBoxView>();
          this.Container.Register<IImageView, ImageView>();
-         this.Container.Register<IPluginView, PluginView>();
+         this.Container.RegisterSingleton<PluginView1>();
+         this.Container.RegisterSingleton<PluginView2>();
 
          // Controllers
-         this.Container.RegisterSingle<IMainController, MainController>();
-         this.Container.RegisterSingle<IFileOperationController, FileOperationController>();
-         this.Container.RegisterSingle<IImageManagerController, ImageManagerController>();
-         this.Container.RegisterSingle<IPluginOperationController, PluginOperationController>();
-         this.Container.RegisterSingle<IPluginManagerController, PluginManagerController>();
-         this.Container.RegisterSingle<IHelpOperationController, HelpOperationController>();
-         this.Container.RegisterSingle<IAboutBoxController, AboutBoxController>();
+         this.Container.RegisterSingleton<IMainController, MainController>();
+         this.Container.RegisterSingleton<IFileOperationController, FileOperationController>();
+         this.Container.RegisterSingleton<IImageManagerController, ImageManagerController>();
+         this.Container.RegisterSingleton<IPluginOperationController, PluginOperationController>();
+         this.Container.RegisterSingleton<IPluginManagerController, PluginManagerController>();
+         this.Container.RegisterSingleton<IHelpOperationController, HelpOperationController>();
+         this.Container.RegisterSingleton<IAboutBoxController, AboutBoxController>();
          this.Container.Register<IImageController, ImageController>();
          this.Container.Register<IImageSourceController, ImageSourceController>();
          this.Container.Register<IFileSourceController, FileSourceController>();
          this.Container.Register<IImageProcessingController, ImageProcessingController>();
 
          // Models
-         this.Container.RegisterSingle<IAboutBoxModel, AboutBoxModel>();
+         this.Container.RegisterSingleton<IAboutBoxModel, AboutBoxModel>();
          this.Container.Register<IImageModel, ImageModel>();
          this.Container.Register<IFileSourceModel, FileSourceModel>();
+         this.Container.RegisterSingleton<PluginModel1>();
 
          // Plugins
-         this.Container.RegisterAll<IPluginController>(new Type[] { typeof(PluginController1), typeof(PluginController2) });
+         this.Container.RegisterCollection<IPluginController>(new Type[] { typeof(PluginController1), typeof(PluginController2) });
          }
       }
    }
