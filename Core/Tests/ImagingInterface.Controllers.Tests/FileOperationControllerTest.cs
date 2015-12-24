@@ -39,8 +39,8 @@
       [Test]
       public void FileOpen()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IFileSourceModel, FileSourceModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IFileSourceModel, FileSourceModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          FileOperationView fileOperationView = this.ServiceLocator.GetInstance<IFileOperationView>() as FileOperationView;
@@ -171,8 +171,8 @@
       [Test]
       public void DragDrop()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IFileSourceModel, FileSourceModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IFileSourceModel, FileSourceModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageManagerController imageManagerController = this.Container.GetInstance<IImageManagerController>();

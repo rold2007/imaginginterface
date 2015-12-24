@@ -40,15 +40,9 @@
 
          Assert.AreEqual(2, pluginManagerView.RawPluginViews.Count);
 
-         // Add the same plugin a second time on purpose, for now it creates a
-         // third plugin but this may change in the future
-         pluginOperationsView.TriggerPluginCreate(pluginController2.RawPluginModel.DisplayName);
-
-         Assert.AreEqual(3, pluginManagerView.RawPluginViews.Count);
-
          pluginOperationsView.TriggerPluginCreate("Close plugin");
 
-         Assert.AreEqual(2, pluginManagerView.RawPluginViews.Count);
+         Assert.AreEqual(1, pluginManagerView.RawPluginViews.Count);
          }
       }
    }

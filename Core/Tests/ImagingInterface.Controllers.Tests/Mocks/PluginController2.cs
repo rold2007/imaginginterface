@@ -6,11 +6,12 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
+   using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Plugins;
 
    public class PluginController2 : IPluginController
       {
-      public PluginController2(IPluginView pluginView, PluginModel2 pluginModel)
+      public PluginController2(PluginView2 pluginView, PluginModel2 pluginModel)
          {
          this.RawPluginView = pluginView;
          this.RawPluginModel = pluginModel;

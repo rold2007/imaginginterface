@@ -17,10 +17,10 @@
          IAboutBoxController aboutBoxController = this.ServiceLocator.GetInstance<IAboutBoxController>();
          IAboutBoxModel aboutBoxModel = this.ServiceLocator.GetInstance<IAboutBoxModel>();
 
-         Assert.IsNotNullOrEmpty(aboutBoxModel.ProductName);
-         Assert.IsNotNullOrEmpty(aboutBoxModel.Version);
-         Assert.IsNotNullOrEmpty(aboutBoxModel.Copyright);
-         Assert.IsNotNullOrEmpty(aboutBoxModel.ProductDescription);
+         Assert.That(aboutBoxModel.ProductName, Is.Not.Null.Or.Empty);
+         Assert.That(aboutBoxModel.Version, Is.Not.Null.Or.Empty);
+         Assert.That(aboutBoxModel.Copyright, Is.Not.Null.Or.Empty);
+         Assert.That(aboutBoxModel.ProductDescription, Is.Not.Null.Or.Empty);
          }
       }
    }

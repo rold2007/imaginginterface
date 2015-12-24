@@ -111,34 +111,34 @@
          // Service
          Program.serviceLocator = new SimpleInjectorServiceLocatorAdapter(container);
 
-         container.RegisterSingle<IServiceLocator>(Program.serviceLocator);
+         container.RegisterSingleton<IServiceLocator>(Program.serviceLocator);
 
          // Views
          // Need to register singleton instances for all things pertaining MainWindow
-         container.RegisterSingle<MainWindow>();
-         container.RegisterSingle<ImageManagerView>();
-         container.RegisterSingle<PluginManagerView>();
-         container.RegisterSingle<IMainView>(Program.GetMainWindow);
-         container.RegisterSingle<IFileOperationView>(Program.GetMainWindow);
-         container.RegisterSingle<IImageManagerView>(Program.GetImageManagerView);
-         container.RegisterSingle<IPluginOperationView>(Program.GetMainWindow);
-         container.RegisterSingle<IPluginManagerView>(Program.GetPluginManagerView);
-         container.RegisterSingle<IHelpOperationView>(Program.GetMainWindow);
-         container.RegisterSingle<IAboutBoxView, AboutBoxView>();
+         container.RegisterSingleton<MainWindow>();
+         container.RegisterSingleton<ImageManagerView>();
+         container.RegisterSingleton<PluginManagerView>();
+         container.RegisterSingleton<IMainView>(Program.GetMainWindow);
+         container.RegisterSingleton<IFileOperationView>(Program.GetMainWindow);
+         container.RegisterSingleton<IImageManagerView>(Program.GetImageManagerView);
+         container.RegisterSingleton<IPluginOperationView>(Program.GetMainWindow);
+         container.RegisterSingleton<IPluginManagerView>(Program.GetPluginManagerView);
+         container.RegisterSingleton<IHelpOperationView>(Program.GetMainWindow);
+         container.RegisterSingleton<IAboutBoxView, AboutBoxView>();
          container.Register<IImageView, ImageView>();
 
          // Controllers
-         container.RegisterSingle<IMainController, MainController>();
-         container.RegisterSingle<IFileOperationController, FileOperationController>();
-         container.RegisterSingle<IImageManagerController, ImageManagerController>();
-         container.RegisterSingle<IPluginOperationController, PluginOperationController>();
-         container.RegisterSingle<IPluginManagerController, PluginManagerController>();
-         container.RegisterSingle<IHelpOperationController, HelpOperationController>();
-         container.RegisterSingle<IAboutBoxController, AboutBoxController>();
+         container.RegisterSingleton<IMainController, MainController>();
+         container.RegisterSingleton<IFileOperationController, FileOperationController>();
+         container.RegisterSingleton<IImageManagerController, ImageManagerController>();
+         container.RegisterSingleton<IPluginOperationController, PluginOperationController>();
+         container.RegisterSingleton<IPluginManagerController, PluginManagerController>();
+         container.RegisterSingleton<IHelpOperationController, HelpOperationController>();
+         container.RegisterSingleton<IAboutBoxController, AboutBoxController>();
          container.Register<IImageController, ImageController>();
 
          // Models
-         container.RegisterSingle<IAboutBoxModel, AboutBoxModel>();
+         container.RegisterSingleton<IAboutBoxModel, AboutBoxModel>();
          container.Register<IImageModel, ImageModel>();
 
          List<Type> packageWindowsFormsTypes = new List<Type>();
@@ -170,7 +170,7 @@
             packageWindowsForms.RegisterServices(container);
             }
 
-         container.RegisterAll<IPluginController>(pluginsTypes);
+         container.RegisterCollection<IPluginController>(pluginsTypes);
 
          // Verify will also create thw MainWindow and the ApplicationController
          container.Verify();

@@ -26,7 +26,7 @@
          IImageController imageController1 = this.ServiceLocator.GetInstance<IImageController>();
          IImageController imageController2 = this.ServiceLocator.GetInstance<IImageController>();
          IPluginController pluginController1 = this.ServiceLocator.GetInstance<PluginController1>();
-         IPluginController pluginController2 = this.ServiceLocator.GetInstance<PluginController1>();
+         IPluginController pluginController2 = this.ServiceLocator.GetInstance<PluginController2>();
          bool imageController1Closing = false;
          bool imageController2Closing = false;
          bool pluginController1Closing = false;
@@ -93,8 +93,8 @@
       [Test]
       public void MainView_ApplicationClosingWithImageProcessing()
          {
-         this.Container.RegisterSingle<PluginController1>();
-         this.Container.RegisterSingle<IImageView, ImageView>();
+         this.Container.RegisterSingleton<PluginController1>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
 
          MainView mainView = this.ServiceLocator.GetInstance<IMainView>() as MainView;
          IMainController mainController = this.ServiceLocator.GetInstance<IMainController>();

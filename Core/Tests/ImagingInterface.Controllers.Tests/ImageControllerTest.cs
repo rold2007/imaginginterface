@@ -36,8 +36,8 @@
       [Test]
       public void LoadFile()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
@@ -51,7 +51,7 @@
                {
                image.Save(tempFileName);
 
-               Assert.IsNullOrEmpty(imageModel.DisplayName);
+               Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
                Assert.IsNull(imageModel.DisplayImageData);
 
                ImageController imageController = this.Container.GetInstance<ImageController>();
@@ -66,7 +66,7 @@
 
                   imageControllerWrapper.WaitForDisplayUpdate();
 
-                  Assert.IsNotNullOrEmpty(imageModel.DisplayName);
+                  Assert.That(imageModel.DisplayName, Is.Not.Null.Or.Empty);
                   Assert.IsNotNull(imageModel.DisplayImageData);
                   Assert.AreSame(imageModel, imageView.AssignedImageModel);
 
@@ -99,7 +99,7 @@
             {
             tempFileName = Path.GetTempFileName();
 
-            Assert.IsNullOrEmpty(imageModel.DisplayName);
+            Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
             Assert.IsNull(imageModel.DisplayImageData);
 
             IImageController imageController = this.Container.GetInstance<IImageController>();
@@ -109,7 +109,7 @@
 
             imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
 
-            Assert.IsNullOrEmpty(imageModel.DisplayName);
+            Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
             Assert.IsNull(imageModel.DisplayImageData);
             Assert.IsNull(imageView.AssignedImageModel);
             }
@@ -125,8 +125,8 @@
       [Test]
       public void StartLiveUpdate()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
@@ -149,9 +149,9 @@
       [Test]
       public void IsGrayscale()
          {
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageSourceController, ImageSourceController>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageSourceController, ImageSourceController>();
 
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
          IImageController imageController = this.Container.GetInstance<IImageController>();
@@ -190,8 +190,8 @@
       [Test]
       public void CloseWhileStartLiveUpdate()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
@@ -224,8 +224,8 @@
       [Test]
       public void UpdatePeriod()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
 
@@ -278,8 +278,8 @@
       [Test]
       public void ZoomLevel()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
@@ -303,8 +303,8 @@
       [Test]
       public void PixelView()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();

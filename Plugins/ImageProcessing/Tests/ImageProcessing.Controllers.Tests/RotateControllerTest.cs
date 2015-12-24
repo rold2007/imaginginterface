@@ -57,7 +57,7 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingle<IRotateView, RotateView>();
+         this.Container.RegisterSingleton<IRotateView, RotateView>();
 
          RotateView rotateView = this.ServiceLocator.GetInstance<IRotateView>() as RotateView;
          IRotateController rotateController = this.ServiceLocator.GetInstance<IRotateController>();

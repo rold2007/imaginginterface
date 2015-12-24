@@ -31,8 +31,8 @@
       [Test]
       public void AddImage()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
          IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
@@ -52,8 +52,8 @@
       [Test]
       public void GetActiveImage()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          IImageController imageController = this.Container.GetInstance<IImageController>();
@@ -72,8 +72,8 @@
       [Test]
       public void RemoveImageController()
          {
-         this.Container.RegisterSingle<IImageView, ImageView>();
-         this.Container.RegisterSingle<IImageModel, ImageModel>();
+         this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
          IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
          IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
