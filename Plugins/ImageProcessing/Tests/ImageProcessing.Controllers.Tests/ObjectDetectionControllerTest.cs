@@ -126,10 +126,10 @@
 
          objectDetectionController.ProcessImageData(imageData, overlayData, objectDetectionController.RawPluginModel);
 
-         //Assert.AreEqual(taggerModel.LabelColors["a"].R, overlayData[0]);
-         //Assert.AreEqual(taggerModel.LabelColors["a"].G, overlayData[1]);
-         //Assert.AreEqual(taggerModel.LabelColors["a"].B, overlayData[2]);
-         //Assert.AreEqual(255, overlayData[3]);
+         ////Assert.AreEqual(taggerModel.LabelColors["a"].R, overlayData[0]);
+         ////Assert.AreEqual(taggerModel.LabelColors["a"].G, overlayData[1]);
+         ////Assert.AreEqual(taggerModel.LabelColors["a"].B, overlayData[2]);
+         ////Assert.AreEqual(255, overlayData[3]);
          }
 
       [Test]
