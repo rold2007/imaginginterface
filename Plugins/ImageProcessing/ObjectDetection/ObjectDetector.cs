@@ -144,7 +144,7 @@
 
          if (this.Models.Count() > 0)
             {
-            //MCvSlice mcvSlice = MCvSlice.WholeSeq;
+            ////MCvSlice mcvSlice = MCvSlice.WholeSeq;
 
             FeatureComputer featureComputer = new FeatureComputer(imageData);
             int imageWidth = imageData.GetLength(1);
@@ -162,7 +162,7 @@
                   {
                   float[] featuresData = featureComputer.ComputeFeatures(new Point(x, y));
 
-                  //using (Matrix<float> features = new Matrix<float>(featuresData))
+                  ////using (Matrix<float> features = new Matrix<float>(featuresData))
                      {
                      foreach (string model in this.Models.Keys)
                         {
@@ -195,12 +195,12 @@
          {
          foreach (string label in this.Models.Keys)
             {
-            //Boost boost = null;
+            ////Boost boost = null;
 
-            //if (this.Models.TryGetValue(label, out boost))
-            //   {
-            //   boost.Dispose();
-            //   }
+            ////if (this.Models.TryGetValue(label, out boost))
+            ////   {
+            ////   boost.Dispose();
+            ////   }
             }
 
          this.Models.Clear();

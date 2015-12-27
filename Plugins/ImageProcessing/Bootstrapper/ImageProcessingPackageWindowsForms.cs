@@ -12,6 +12,7 @@
    using ImagingInterface.BootStrapper;
    using ImagingInterface.Plugins;
    using SimpleInjector;
+   using SimpleInjector.Diagnostics;
 
    public class ImageProcessingPackageWindowsForms : IPackageWindowsForms
       {
@@ -48,6 +49,19 @@
          // ObjectDetection
          container.Register<IObjectDetector, ObjectDetector>();
          container.Register<ITagger, Tagger>();
+         }
+
+      public void SuppressDiagnosticWarning(Container container)
+         {
+         container.GetRegistration(typeof(ICudafyController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(CudafyController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ICudafyView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(IInvertView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(IObjectDetectionView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(IObjectDetector)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(IObjectDetectionManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ITaggerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(IRotateView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
          }
       }
    }
