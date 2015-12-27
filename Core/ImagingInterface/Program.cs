@@ -172,6 +172,15 @@
 
          container.RegisterCollection<IPluginController>(pluginsTypes);
 
+         foreach (Type packageWindowsFormsType in packageWindowsFormsTypes)
+            {
+            IPackageWindowsForms packageWindowsForms = Activator.CreateInstance(packageWindowsFormsType) as IPackageWindowsForms;
+
+            packageWindowsForms.SuppressDiagnosticWarning(container);
+            }
+
+         container.GetRegistration(typeof(IImageView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+
          // Verify will also create thw MainWindow and the ApplicationController
          container.Verify();
 

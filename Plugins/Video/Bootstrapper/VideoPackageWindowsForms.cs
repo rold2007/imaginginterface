@@ -7,6 +7,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.BootStrapper;
    using SimpleInjector;
+   using SimpleInjector.Diagnostics;
    using Video.Controllers;
    using Video.Models;
    using Video.Views;
@@ -24,6 +25,14 @@
 
          // Views
          container.Register<ICaptureView, CaptureView>();
+         }
+
+      public void SuppressDiagnosticWarning(Container container)
+         {
+         container.GetRegistration(typeof(ICaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(CaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ICaptureView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ICaptureWrapper)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
          }
       }
    }
