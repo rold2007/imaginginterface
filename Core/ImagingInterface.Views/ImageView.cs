@@ -7,7 +7,6 @@
    using System.Windows.Forms;
    using ImagingInterface.Models;
    using ImagingInterface.Views.EventArguments;
-   using OpenTK;
    using OpenTK.Graphics;
    using OpenTK.Graphics.OpenGL;
 
