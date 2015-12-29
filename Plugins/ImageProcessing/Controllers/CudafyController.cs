@@ -4,6 +4,7 @@
    using System.Collections.Generic;
    using System.ComponentModel;
    using System.Diagnostics;
+   using System.IO;
    using System.Linq;
    using System.Runtime.InteropServices;
    using System.Text;
@@ -345,13 +346,20 @@
 
                   foreach (eLanguage language in languages)
                      {
+                     string cudaRandomFilename = Path.GetRandomFileName();
+
                      try
                         {
                         CudafyTranslator.Language = language;
 
+                        CompileProperties compileProperties = CompilerHelper.Create(ePlatform.Auto, eArchitecture.Unknown, eCudafyCompileMode.Default, CudafyTranslator.WorkingDirectory, CudafyTranslator.GenerateDebug);
+
+                        // Use a random filename to prevent conflict on default temp file when multithreading (unit tests)
+                        compileProperties.InputFile = cudaRandomFilename;
+
                         // If this line fails with NCrunch/Unit tests, there probably is a new version of Cudafy.NET
                         // and it needs to be registered in the GAC like this: gacutil -i Cudafy.NET.dll
-                        CudafyModule cudafyModule = CudafyTranslator.Cudafy(eArchitecture.Unknown, typeof(Primitives));
+                        CudafyModule cudafyModule = CudafyTranslator.Cudafy(compileProperties, typeof(Primitives));
 
                         if (!gpgpu.IsModuleLoaded(cudafyModule.Name))
                            {
@@ -371,6 +379,10 @@
                         // Language not supported
 
                         // ncrunch: no coverage start
+                        }
+                     finally
+                        {
+                        File.Delete(cudaRandomFilename);
                         }
                      }
                   }
