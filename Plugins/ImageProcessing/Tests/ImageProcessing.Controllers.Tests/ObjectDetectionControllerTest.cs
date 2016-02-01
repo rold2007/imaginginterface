@@ -80,8 +80,13 @@
          IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
          IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
          ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
-         byte[, ,] imageData = new byte[1, 1, 1];
-         byte[] overlayData = new byte[4];
+         byte[, ,] imageData = new byte[100, 100, 1];
+         byte[] overlayData = new byte[100 * 100 * 4];
+
+         for (int imageIndex = 0; imageIndex < 100; imageIndex++)
+            {
+            imageData[imageIndex, imageIndex, 0] = (byte)(imageIndex + 1);
+            }
 
          objectDetectionController.Initialize();
 
@@ -101,10 +106,15 @@
          taggerModel.AddedLabel = "b";
          taggerView.TriggerLabelAdded();
 
-         taggerController.AddPoint("a", new Point(0, 0));
-         taggerController.AddPoint("b", new Point(1, 1));
+         taggerController.AddPoint("a", new Point(49, 49));
+         taggerController.AddPoint("b", new Point(50, 50));
 
-         imageSourceController.ImageData = new byte[1, 1, 1];
+         imageSourceController.ImageData = new byte[100, 100, 1];
+
+         for (int imageIndex = 0; imageIndex < 100; imageIndex++)
+            {
+            imageSourceController.ImageData[imageIndex, imageIndex, 0] = (byte)(imageIndex + 1);
+            }
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
@@ -126,10 +136,17 @@
 
          objectDetectionController.ProcessImageData(imageData, overlayData, objectDetectionController.RawPluginModel);
 
-         ////Assert.AreEqual(taggerModel.LabelColors["a"].R, overlayData[0]);
-         ////Assert.AreEqual(taggerModel.LabelColors["a"].G, overlayData[1]);
-         ////Assert.AreEqual(taggerModel.LabelColors["a"].B, overlayData[2]);
-         ////Assert.AreEqual(255, overlayData[3]);
+         int pixelOffset = (49 * 100 * 4) + (49 * 4);
+         Assert.AreEqual(taggerModel.LabelColors["a"].R, overlayData[pixelOffset]);
+         Assert.AreEqual(taggerModel.LabelColors["a"].G, overlayData[pixelOffset + 1]);
+         Assert.AreEqual(taggerModel.LabelColors["a"].B, overlayData[pixelOffset + 2]);
+         Assert.AreEqual(255, overlayData[pixelOffset + 3]);
+
+         pixelOffset = (50 * 100 * 4) + (50 * 4);
+         Assert.AreEqual(taggerModel.LabelColors["b"].R, overlayData[pixelOffset]);
+         Assert.AreEqual(taggerModel.LabelColors["b"].G, overlayData[pixelOffset + 1]);
+         Assert.AreEqual(taggerModel.LabelColors["b"].B, overlayData[pixelOffset + 2]);
+         Assert.AreEqual(255, overlayData[pixelOffset + 3]);
          }
 
       [Test]

@@ -7,6 +7,9 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
+   using Accord.MachineLearning.DecisionTrees;
+   using Accord.MachineLearning.DecisionTrees.Learning;
+   using Accord.Math;
    using ImageProcessing.ObjectDetection;
 
    public class ObjectDetector : IObjectDetector
@@ -16,7 +19,7 @@
       public ObjectDetector()
          {
          this.tagPoints = new Dictionary<string, List<Point>>();
-         this.Models = new Dictionary<string, object>();
+         this.Models = new Dictionary<string, DecisionTree>();
          }
 
       ~ObjectDetector()
@@ -24,7 +27,7 @@
          this.Dispose(false); // ncrunch: no coverage
          } // ncrunch: no coverage
 
-      private Dictionary<string, object> Models
+      private Dictionary<string, DecisionTree> Models
          {
          get;
          set;
@@ -76,65 +79,59 @@
 
          if (trainSamples > 0)
             {
+            double[][] inputs = new double[trainSamples][];
+            int[] outputs = new int[trainSamples];
+
             this.ClearModels();
 
-            //// MCvBoostParams mcvBoostParams = MCvBoostParams.GetDefaultParameter();
-
-            //// mcvBoostParams.boostType = BOOST_TYPE.GENTLE;
-            //// mcvBoostParams.weakCount = 50; // Number of trees/stumps
-
-            //// Using 0.95 slowed down the training process when I tried it, but it should have sped it...
-            //// mcvBoostParams.weightTrimRate = 0.0; // Default 0.95
-            //// mcvBoostParams.cvFolds = 0;
-            //// mcvBoostParams.maxDepth = 1; // Depth of trees
-            //// mcvBoostParams.splitCriteria = (int)BOOST_SPLIT_CREITERIA.DEFAULT; // Error computation function
-            //// mcvBoostParams.maxCategories = 2;
-
-            //// Make sure we work even with a low number of samples
-            //// mcvBoostParams.minSampleCount = 1;
-
             List<string> trueResponses = new List<string>();
-            /*
-            using (Matrix<float> trainMatrix = new Matrix<float>(FeatureComputer.NumberOfFeatures, trainSamples), trainResponses = new Matrix<float>(1, trainSamples))
+            List<DecisionVariable> attributes = new List<DecisionVariable>(FeatureComputer.NumberOfFeatures);
+
+            for (int i = 0; i < FeatureComputer.NumberOfFeatures; i++)
                {
-               // Fill the train matrix
-               foreach (string label in this.tagPoints.Keys)
+               string columnName = "Feature" + i.ToString();
+
+               attributes.Add(new DecisionVariable(columnName, new AForge.DoubleRange(double.MinValue, double.MaxValue)));
+               }
+
+            int trainSampleIndex = 0;
+
+            // Fill the train matrix
+            foreach (string label in this.tagPoints.Keys)
+               {
+               foreach (Point tagPoint in this.tagPoints[label])
                   {
-                  foreach (Point tagPoint in this.tagPoints[label])
-                     {
-                     float[] trainingData = featureComputer.ComputeFeatures(tagPoint);
+                  float[] trainingData = featureComputer.ComputeFeatures(tagPoint);
 
-                     using (Matrix<float> source = new Matrix<float>(trainingData), destination = trainMatrix.GetCol(trueResponses.Count))
-                        {
-                        source.CopyTo(destination);
-                        }
+                  inputs[trainSampleIndex] = new double[FeatureComputer.NumberOfFeatures];
+                  Array.Copy(trainingData, inputs[trainSampleIndex], FeatureComputer.NumberOfFeatures);
 
-                     trueResponses.Add(label);
-                     }
-                  }
+                  trueResponses.Add(label);
 
-               // Train the models
-               foreach (string label in this.tagPoints.Keys)
-                  {
-                  int responseIndex = 0;
-
-                  // Prepare the responses matrix
-                  foreach (string responseLabel in trueResponses)
-                     {
-                     trainResponses[0, responseIndex] = (responseLabel == label) ? 1.0f : 0.0f;
-
-                     responseIndex++;
-                     }
-
-                  Boost boost = new Boost();
-
-                  //// boost.Train(trainMatrix, DataLayoutType.ColSample, trainResponses, null, null, null, null, mcvBoostParams, false);
-                  ////boost.Train(trainMatrix, DataLayoutType.ColSample, trainResponses);
-
-                  this.Models.Add(label, boost);
+                  trainSampleIndex++;
                   }
                }
-               */
+
+            // Train the models
+            foreach (string label in this.tagPoints.Keys)
+               {
+               int responseIndex = 0;
+
+               // Prepare the responses matrix
+               foreach (string responseLabel in trueResponses)
+                  {
+                  outputs[responseIndex] = (responseLabel == label) ? 1 : 0;
+
+                  responseIndex++;
+                  }
+
+               DecisionTree decisionTree = new DecisionTree(attributes, this.tagPoints.Count());
+               C45Learning c45Learning = new C45Learning(decisionTree);
+
+               c45Learning.Run(inputs, outputs);
+
+               this.Models.Add(label, decisionTree);
+               }
             }
          }
 
@@ -144,8 +141,6 @@
 
          if (this.Models.Count() > 0)
             {
-            ////MCvSlice mcvSlice = MCvSlice.WholeSeq;
-
             FeatureComputer featureComputer = new FeatureComputer(imageData);
             int imageWidth = imageData.GetLength(1);
             int imageHeight = imageData.GetLength(0);
@@ -161,19 +156,17 @@
                for (int x = 0; x < imageWidth; x++)
                   {
                   float[] featuresData = featureComputer.ComputeFeatures(new Point(x, y));
+                  double[] input = new double[FeatureComputer.NumberOfFeatures];
 
-                  ////using (Matrix<float> features = new Matrix<float>(featuresData))
+                  Array.Copy(featuresData, input, FeatureComputer.NumberOfFeatures);
+
+                  foreach (string model in this.Models.Keys)
                      {
-                     foreach (string model in this.Models.Keys)
-                        {
-                        //// float prediction = this.Models[model].Predict(features, null, null, mcvSlice, false);
-                        ////float prediction = this.Models[model].Predict(features);
-                        float prediction = 0.0f;
+                     int prediction = this.Models[model].Compute(input);
 
-                        if (prediction == 1.0f)
-                           {
-                           predictions[model].Add(new Point(x, y));
-                           }
+                     if (prediction == 1)
+                        {
+                        predictions[model].Add(new Point(x, y));
                         }
                      }
                   }
