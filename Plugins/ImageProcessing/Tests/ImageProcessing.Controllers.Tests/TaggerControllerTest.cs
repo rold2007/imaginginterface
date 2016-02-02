@@ -48,6 +48,17 @@
          }
 
       [Test]
+      public void DisplayName()
+         {
+         this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
+
+         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
+
+         Assert.AreEqual("Tagger", taggerModel.DisplayName);
+         }
+
+      [Test]
       public void Active()
          {
          ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();

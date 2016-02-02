@@ -9,6 +9,7 @@
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
+   using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
@@ -44,6 +45,17 @@
          IRawPluginModel rawPluginModel = invertController.RawPluginModel;
 
          Assert.IsNotNull(rawPluginModel);
+         }
+
+      [Test]
+      public void DisplayName()
+         {
+         this.Container.RegisterSingleton<IInvertModel, InvertModel>();
+
+         IInvertController invertController = this.ServiceLocator.GetInstance<IInvertController>();
+         IInvertModel invertModel = this.ServiceLocator.GetInstance<IInvertModel>();
+
+         Assert.AreEqual("Invert", invertModel.DisplayName);
          }
 
       [Test]

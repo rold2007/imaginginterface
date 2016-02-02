@@ -377,12 +377,12 @@
                      catch (CudafyCompileException)
                         {
                         // Language not supported
-
-                        // ncrunch: no coverage start
                         }
                      finally
                         {
                         File.Delete(cudaRandomFilename);
+
+                        // ncrunch: no coverage start
                         }
                      }
                   }

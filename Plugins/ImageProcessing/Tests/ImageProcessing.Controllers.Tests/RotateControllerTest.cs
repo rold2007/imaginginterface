@@ -10,6 +10,7 @@
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
+   using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
@@ -44,6 +45,17 @@
          IRawPluginModel rawPluginModel = rotateController.RawPluginModel;
 
          Assert.IsNotNull(rawPluginModel);
+         }
+
+      [Test]
+      public void DisplayName()
+         {
+         this.Container.RegisterSingleton<IRotateModel, RotateModel>();
+
+         IRotateController rotateController = this.ServiceLocator.GetInstance<IRotateController>();
+         IRotateModel rotateModel = this.ServiceLocator.GetInstance<IRotateModel>();
+
+         Assert.AreEqual("Rotate", rotateModel.DisplayName);
          }
 
       [Test]

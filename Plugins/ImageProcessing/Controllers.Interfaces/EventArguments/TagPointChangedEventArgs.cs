@@ -20,7 +20,7 @@
 
       public IImageController ImageController
          {
-         get;
+         get; // ncrunch: no coverage
          private set;
          }
 

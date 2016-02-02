@@ -277,7 +277,7 @@
          IImageController imageController = sender as IImageController;
 
          this.SnapShotFinished(imageController);
-         } // ncrunch: no coverage
+         }
 
       private void SnapShot_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
          {
