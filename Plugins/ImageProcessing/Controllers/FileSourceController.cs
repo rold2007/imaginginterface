@@ -23,8 +23,8 @@
 
       public IRawPluginView RawPluginView
          {
-         get;
-         private set;
+         get; // ncrunch: no coverage
+         private set; // ncrunch: no coverage
          }
 
       public IRawPluginModel RawPluginModel

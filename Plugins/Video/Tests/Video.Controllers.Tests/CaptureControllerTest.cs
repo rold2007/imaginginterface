@@ -86,6 +86,17 @@
          }
 
       [Test]
+      public void DisplayName()
+         {
+         this.Container.RegisterSingleton<ICaptureModel, CaptureModel>();
+
+         ICaptureController captureController = this.ServiceLocator.GetInstance<ICaptureController>();
+         ICaptureModel captureModel = this.ServiceLocator.GetInstance<ICaptureModel>();
+
+         Assert.AreEqual("Capture", captureModel.DisplayName);
+         }
+
+      [Test]
       public void Active()
          {
          ICaptureController captureController = null;

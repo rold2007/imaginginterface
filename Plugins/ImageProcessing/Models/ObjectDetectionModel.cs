@@ -10,8 +10,8 @@
       {
       public string DisplayName
          {
-         get;
-         set;
+         get; // ncrunch: no coverage
+         set; // ncrunch: no coverage
          }
 
       public object Clone()

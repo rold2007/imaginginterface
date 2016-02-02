@@ -35,6 +35,17 @@
          }
 
       [Test]
+      public void DisplayName()
+         {
+         this.Container.RegisterSingleton<ICudafyModel, CudafyModel>();
+
+         ICudafyController cudafyController = this.ServiceLocator.GetInstance<ICudafyController>();
+         ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
+
+         Assert.AreEqual("Cudafy", cudafyModel.DisplayName);
+         }
+
+      [Test]
       public void Active()
          {
          try
@@ -64,7 +75,7 @@
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-            byte[, ,] imageData = new byte[10, 10, 1];
+            byte[,,] imageData = new byte[10, 10, 1];
 
             cudafyController.Initialize();
 
@@ -92,7 +103,7 @@
 
                // Make sure there one of the GPU is already selected upon initialization
                cudafyController.ProcessImageData(imageData, null, cudafyController.RawPluginModel);
-               
+
                imageControllerWrapper.WaitForDisplayUpdate();
                }
 
@@ -172,7 +183,7 @@
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-            byte[, ,] imageData = new byte[1, 1, 1];
+            byte[,,] imageData = new byte[1, 1, 1];
 
             cudafyController.Initialize();
 
@@ -247,7 +258,7 @@
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-            byte[, ,] imageData = new byte[1, 1, 1];
+            byte[,,] imageData = new byte[1, 1, 1];
 
             cudafyController.Initialize();
 
@@ -301,7 +312,7 @@
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-            byte[, ,] imageData = new byte[1, 1, 1];
+            byte[,,] imageData = new byte[1, 1, 1];
 
             cudafyController.Initialize();
 
@@ -382,7 +393,7 @@
             IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-            byte[, ,] imageData = new byte[1, 1, 1];
+            byte[,,] imageData = new byte[1, 1, 1];
 
             cudafyController.Initialize();
 

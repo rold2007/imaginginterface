@@ -9,6 +9,7 @@
    using System.Threading.Tasks;
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Tests.Views;
+   using ImageProcessing.Models;
    using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
@@ -43,6 +44,17 @@
          IRawPluginView rawPluginView = objectDetectionManagerController.RawPluginView;
 
          Assert.IsNotNull(rawPluginView);
+         }
+
+      [Test]
+      public void DisplayName()
+         {
+         this.Container.RegisterSingleton<IObjectDetectionManagerModel, ObjectDetectionManagerModel>();
+
+         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
+         IObjectDetectionManagerModel objectDetectionManagerModel = this.ServiceLocator.GetInstance<IObjectDetectionManagerModel>();
+
+         Assert.AreEqual("Object detection", objectDetectionManagerModel.DisplayName);
          }
 
       [Test]
