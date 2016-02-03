@@ -227,7 +227,7 @@
 
          if (this.Add != null)
             {
-            this.Add(this, new CudafyAddEventArgs(add, new int[3] { this.GridSizeX, this.GridSizeY, this.GridSizeZ }, new int[3] { this.BlockSizeX, this.BlockSizeY, this.BlockSizeZ }));
+            this.Add(this, new CudafyAddEventArgs(add));
             }
          }
 

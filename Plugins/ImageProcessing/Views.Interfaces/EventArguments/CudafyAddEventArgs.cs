@@ -8,26 +8,12 @@
 
    public class CudafyAddEventArgs : EventArgs
       {
-      public CudafyAddEventArgs(int add, int[] gridSize, int[] blockSize)
+      public CudafyAddEventArgs(int add)
          {
          this.Add = add;
-         this.GridSize = gridSize;
-         this.BlockSize = blockSize;
          }
 
       public int Add
-         {
-         get;
-         private set;
-         }
-
-      public int[] GridSize
-         {
-         get;
-         private set;
-         }
-
-      public int[] BlockSize
          {
          get;
          private set;
