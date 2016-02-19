@@ -17,22 +17,22 @@
       public void RegisterServices(Container container)
          {
          // Models
-         container.Register<ICaptureModel, CaptureModel>();
+         container.Register<CaptureModel>();
 
          // Controllers
-         container.Register<ICaptureController, CaptureController>();
-         container.Register<ICaptureWrapper, CaptureWrapper>();
+         container.Register<CaptureController>();
+         container.Register<CaptureWrapper>();
 
          // Views
-         container.Register<ICaptureView, CaptureView>();
+         container.Register<CaptureView>();
          }
 
       public void SuppressDiagnosticWarning(Container container)
          {
-         container.GetRegistration(typeof(ICaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(CaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(ICaptureView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(ICaptureWrapper)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(ICaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(CaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(ICaptureView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(ICaptureWrapper)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
          }
       }
    }

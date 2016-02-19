@@ -6,21 +6,21 @@
    using System.Drawing;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
-   using ImageProcessing.Views;
-   using ImageProcessing.Views.EventArguments;
+   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class InvertController : IInvertController
+   public class InvertController : IImageProcessingController
       {
       private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
-      private IInvertView invertView;
+      ////private IInvertView invertView;
       private IInvertModel invertModel;
-      private IImageManagerController imageManagerController;
+      private ImageManagerController imageManagerController;
 
-      public InvertController(IInvertView invertView, IInvertModel invertModel, IImageManagerController imageManagerController)
+      public InvertController(IInvertModel invertModel, ImageManagerController imageManagerController)
          {
-         this.invertView = invertView;
+         ////this.invertView = invertView;
          this.invertModel = invertModel;
          this.imageManagerController = imageManagerController;
 
@@ -31,13 +31,13 @@
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get
-            {
-            return this.invertView;
-            }
-         }
+      ////public IRawPluginView RawPluginView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.invertView;
+      ////      }
+      ////   }
 
       public IRawPluginModel RawPluginModel
          {
@@ -57,7 +57,7 @@
 
       public void Initialize()
          {
-         this.invertView.Invert += this.InvertView_Invert;
+         ////this.invertView.Invert += this.InvertView_Invert;
          }
 
       public void Close()
@@ -71,11 +71,11 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            this.invertView.Invert -= this.InvertView_Invert;
+            ////this.invertView.Invert -= this.InvertView_Invert;
 
-            this.invertView.Hide();
+            ////this.invertView.Hide();
 
-            this.invertView.Close();
+            ////this.invertView.Close();
 
             if (this.Closed != null)
                {
@@ -84,7 +84,7 @@
             }
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          if (imageData.GetLength(2) == 1)
             {
@@ -98,7 +98,7 @@
          else
             {
             Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
-            
+
             using (Image<Bgr, byte> invertedImage = new Image<Bgr, byte>(imageData))
                {
                invertedImage._Not();
@@ -110,7 +110,7 @@
 
       private void InvertView_Invert(object sender, InvertEventArgs e)
          {
-         IImageController imageController = this.imageManagerController.GetActiveImage();
+         ImageController imageController = this.imageManagerController.GetActiveImage();
 
          if (imageController != null)
             {

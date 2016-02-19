@@ -1,53 +1,52 @@
 ﻿namespace ImagingInterface.Controllers
    {
    using System;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Views;
-   using ImagingInterface.Views.EventArguments;
    using Microsoft.Practices.ServiceLocation;
 
-   public class FileOperationController : IFileOperationController
+   public class FileOperationController
       {
-      private readonly IFileOperationView fileOperationView;
+      ////private readonly IFileOperationView fileOperationView;
       private IServiceLocator serviceLocator;
 
-      public FileOperationController(IFileOperationView fileOperationView, IServiceLocator serviceLocator)
+      public FileOperationController(IServiceLocator serviceLocator)
          {
-         this.fileOperationView = fileOperationView;
+         ////this.fileOperationView = fileOperationView;
          this.serviceLocator = serviceLocator;
 
-         this.fileOperationView.FileOpen += this.FileOpen;
-         this.fileOperationView.FileClose += this.FileClose;
-         this.fileOperationView.FileCloseAll += this.FileCloseAll;
-         this.fileOperationView.DragDropFile += this.DragDropFile;
+         ////this.fileOperationView.FileOpen += this.FileOpen;
+         ////this.fileOperationView.FileClose += this.FileClose;
+         ////this.fileOperationView.FileCloseAll += this.FileCloseAll;
+         ////this.fileOperationView.DragDropFile += this.DragDropFile;
          }
 
       private void FileOpen(object sender, EventArgs e)
          {
-         string[] files = this.fileOperationView.OpenFile();
+         ////string[] files = this.fileOperationView.OpenFile();
 
-         if (files != null && files.Length != 0)
-            {
-            foreach (string file in files)
-               {
-               IFileSourceController fileSourceController = this.serviceLocator.GetInstance<IFileSourceController>();
-               IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
-               IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+         ////if (files != null && files.Length != 0)
+         ////   {
+         ////   foreach (string file in files)
+         ////      {
+         ////      IFileSourceController fileSourceController = this.serviceLocator.GetInstance<IFileSourceController>();
+         ////      ImageController imageController = this.serviceLocator.GetInstance<ImageController>();
+         ////      ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
-               fileSourceController.Filename = file;
-               imageController.SetDisplayName(file);
+         ////      fileSourceController.Filename = file;
+         ////      imageController.SetDisplayName(file);
 
-               imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
+         ////      imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
 
-               imageManagerController.AddImage(imageController);
-               }
-            }
+         ////      imageManagerController.AddImage(imageController);
+         ////      }
+         ////   }
          }
 
       private void FileClose(object sender, EventArgs e)
          {
-         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
-         IImageController activeImageController = imageViewManagerController.GetActiveImage();
+         ImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
+         ImageController activeImageController = imageViewManagerController.GetActiveImage();
 
          if (activeImageController != null)
             {
@@ -57,9 +56,9 @@
 
       private void FileCloseAll(object sender, EventArgs e)
          {
-         IImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+         ImageManagerController imageViewManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
-         foreach (IImageController imageController in imageViewManagerController.GetAllImages())
+         foreach (ImageController imageController in imageViewManagerController.GetAllImages())
             {
             imageController.Close();
             }
@@ -74,8 +73,8 @@
             foreach (string file in e.Data)
                {
                IFileSourceController fileSourceController = this.serviceLocator.GetInstance<IFileSourceController>();
-               IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
-               IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+               ImageController imageController = this.serviceLocator.GetInstance<ImageController>();
+               ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
                fileSourceController.Filename = file;
                imageController.SetDisplayName(file);

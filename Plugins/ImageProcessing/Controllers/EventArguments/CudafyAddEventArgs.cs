@@ -1,4 +1,4 @@
-﻿namespace ImageProcessing.Views.EventArguments
+﻿namespace ImageProcessing.Controllers.EventArguments
    {
    using System;
    using System.Collections.Generic;
@@ -6,14 +6,14 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public class InvertEventArgs : EventArgs
+   public class CudafyAddEventArgs : EventArgs
       {
-      public InvertEventArgs(bool invert)
+      public CudafyAddEventArgs(int add)
          {
-         this.Invert = invert;
+         this.Add = add;
          }
 
-      public bool Invert
+      public int Add
          {
          get;
          private set;

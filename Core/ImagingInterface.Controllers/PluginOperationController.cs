@@ -5,43 +5,42 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Views;
-   using ImagingInterface.Views.EventArguments;
    using Microsoft.Practices.ServiceLocation;
 
-   public class PluginOperationController : IPluginOperationController
+   public class PluginOperationController
       {
       private static string closePluginName = "Close plugin"; // ncrunch: no coverage
       private IServiceLocator serviceLocator;
       private SortedDictionary<string, Type> plugins;
+      private PluginManagerController pluginManagerController;
 
-      public PluginOperationController(IPluginOperationView pluginOperationView, IEnumerable<IPluginController> plugins, IServiceLocator serviceLocator)
+      public PluginOperationController(IEnumerable<IPluginController> plugins, IServiceLocator serviceLocator, PluginManagerController pluginManagerController)
          {
          this.plugins = new SortedDictionary<string, Type>();
          this.serviceLocator = serviceLocator;
+         this.pluginManagerController = pluginManagerController;
 
          foreach (IPluginController plugin in plugins)
             {
             if (plugin.Active)
                {
                this.plugins.Add(plugin.RawPluginModel.DisplayName, plugin.GetType());
-               pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
+               ////pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
                }
             }
 
-         pluginOperationView.AddPlugin(PluginOperationController.closePluginName);
+         ////pluginOperationView.AddPlugin(PluginOperationController.closePluginName);
 
-         pluginOperationView.PluginCreate += this.PluginCreate;
+         ////pluginOperationView.PluginCreate += this.PluginCreate;
          }
 
       private void PluginCreate(object sender, PluginCreateEventArgs e)
          {
-         IPluginManagerController pluginManagerController = this.serviceLocator.GetInstance<IPluginManagerController>();
-
          if (e.Name == PluginOperationController.closePluginName)
             {
-            pluginManagerController.CloseActivePlugin();
+            this.pluginManagerController.CloseActivePlugin();
             }
          else
             {
@@ -49,7 +48,7 @@
 
             pluginController.Initialize();
 
-            pluginManagerController.AddPlugin(pluginController);
+            this.pluginManagerController.AddPlugin(pluginController);
             }
          }
       }

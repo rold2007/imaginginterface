@@ -8,16 +8,15 @@
    using System.Drawing;
    using System.Threading;
    using System.Threading.Tasks;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
-   using ImagingInterface.Views;
-   using ImagingInterface.Views.EventArguments;
    using Microsoft.Practices.ServiceLocation;
 
-   public class ImageController : IImageController
+   public class ImageController
       {
-      private IImageView imageView;
+      ////private IImageView imageView;
       private IImageModel imageModel;
       private IServiceLocator serviceLocator;
       private bool closing;
@@ -32,9 +31,9 @@
       private Dictionary<IPluginController, int> asyncPluginControllers;
       private HashSet<IPluginController> closingPluginControllers;
 
-      public ImageController(IImageView imageView, IImageModel imageModel, IServiceLocator serviceLocator)
+      public ImageController(IImageModel imageModel, IServiceLocator serviceLocator)
          {
-         this.imageView = imageView;
+         ////this.imageView = imageView;
          this.imageModel = imageModel;
          this.serviceLocator = serviceLocator;
          this.imageProcessingControllers = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
@@ -43,29 +42,29 @@
          this.asyncPluginControllers = new Dictionary<IPluginController, int>();
          this.closingPluginControllers = new HashSet<IPluginController>();
 
-         this.imageView.AssignImageModel(this.imageModel);
+         ////this.imageView.AssignImageModel(this.imageModel);
 
          this.lastDisplayUpdate = Stopwatch.StartNew();
 
-         double updateFrequency = this.imageView.UpdateFrequency;
+         ////double updateFrequency = this.imageView.UpdateFrequency;
 
-         if (updateFrequency != 0.0)
-            {
-            this.updatePeriod = 1000 / this.imageView.UpdateFrequency;
-            }
-         else
-            {
-            this.updatePeriod = -1.0;
-            }
+         ////if (updateFrequency != 0.0)
+         ////   {
+         ////   this.updatePeriod = 1000 / this.imageView.UpdateFrequency;
+         ////   }
+         ////else
+         ////   {
+         ////   this.updatePeriod = -1.0;
+         ////   }
 
          this.closed = false;
 
          this.imageModel.ZoomLevel = 1.0;
 
-         this.imageView.ZoomLevelIncreased += this.ImageView_ZoomLevelIncreased;
-         this.imageView.ZoomLevelDecreased += this.ImageView_ZoomLevelDecreased;
-         this.imageView.PixelViewChanged += this.ImageView_PixelViewChanged;
-         this.imageView.SelectionChanged += this.ImageView_SelectionChanged;
+         ////this.imageView.ZoomLevelIncreased += this.ImageView_ZoomLevelIncreased;
+         ////this.imageView.ZoomLevelDecreased += this.ImageView_ZoomLevelDecreased;
+         ////this.imageView.PixelViewChanged += this.ImageView_PixelViewChanged;
+         ////this.imageView.SelectionChanged += this.ImageView_SelectionChanged;
          }
 
       public event CancelEventHandler Closing;
@@ -76,13 +75,13 @@
 
       public event EventHandler<Plugins.EventArguments.SelectionChangedEventArgs> SelectionChanged;
 
-      public IRawImageView RawImageView
-         {
-         get
-            {
-            return this.imageView;
-            }
-         }
+      ////public IRawImageView RawImageView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.imageView;
+      ////      }
+      ////   }
 
       public IRawImageModel RawImageModel
          {
@@ -151,16 +150,16 @@
                // Make sure the display thread is finished before really closing
                if (this.lastDisplayNextImageTask == null)
                   {
-                  this.imageView.ZoomLevelIncreased -= this.ImageView_ZoomLevelIncreased;
-                  this.imageView.ZoomLevelDecreased -= this.ImageView_ZoomLevelDecreased;
-                  this.imageView.PixelViewChanged -= this.ImageView_PixelViewChanged;
-                  this.imageView.SelectionChanged -= this.ImageView_SelectionChanged;
+                  ////this.imageView.ZoomLevelIncreased -= this.ImageView_ZoomLevelIncreased;
+                  ////this.imageView.ZoomLevelDecreased -= this.ImageView_ZoomLevelDecreased;
+                  ////this.imageView.PixelViewChanged -= this.ImageView_PixelViewChanged;
+                  ////this.imageView.SelectionChanged -= this.ImageView_SelectionChanged;
 
                   // Prevent calling the Closed event more than once
                   this.closed = true;
 
-                  this.imageView.Hide();
-                  this.imageView.Close();
+                  ////this.imageView.Hide();
+                  ////this.imageView.Close();
                   this.imageModel.DisplayImageData = null;
 
                   if (this.Closed != null)
@@ -169,7 +168,7 @@
                      }
 
                   // The image view is used by some Closed events
-                  this.imageView = null;
+                  ////this.imageView = null;
                   }
                }
             }
@@ -535,7 +534,7 @@
                {
                this.imageModel.DisplayImageData = imageData;
                this.imageModel.OverlayImageData = overlayData;
-               this.imageView.UpdateDisplay();
+               ////this.imageView.UpdateDisplay();
 
                this.lastDisplayUpdate = Stopwatch.StartNew();
                }
@@ -550,14 +549,14 @@
          {
          this.imageModel.ZoomLevel *= 2.0;
 
-         this.imageView.UpdateZoomLevel();
+         ////this.imageView.UpdateZoomLevel();
          }
 
       private void ImageView_ZoomLevelDecreased(object sender, EventArgs e)
          {
          this.imageModel.ZoomLevel *= 0.5;
 
-         this.imageView.UpdateZoomLevel();
+         ////this.imageView.UpdateZoomLevel();
          }
 
       private void ImageView_PixelViewChanged(object sender, PixelViewChangedEventArgs e)
@@ -628,10 +627,10 @@
                }
             }
 
-         this.imageView.UpdatePixelView(e.PixelPosition, gray, rgb, hsv);
+         ////this.imageView.UpdatePixelView(e.PixelPosition, gray, rgb, hsv);
          }
 
-      private void ImageView_SelectionChanged(object sender, Views.EventArguments.SelectionChangedEventArgs e)
+      private void ImageView_SelectionChanged(object sender, ImagingInterface.Controllers.EventArguments.SelectionChangedEventArgs e)
          {
          if (this.SelectionChanged != null)
             {

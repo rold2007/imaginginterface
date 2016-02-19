@@ -6,11 +6,11 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Plugins;
+   using ImagingInterface.Controllers;
 
    public class TagPointChangedEventArgs : EventArgs
       {
-      public TagPointChangedEventArgs(IImageController imageController, string label, Point tagPoint, bool added)
+      public TagPointChangedEventArgs(ImageController imageController, string label, Point tagPoint, bool added)
          {
          this.ImageController = imageController;
          this.Label = label;
@@ -18,7 +18,7 @@
          this.Added = added;
          }
 
-      public IImageController ImageController
+      public ImageController ImageController
          {
          get; // ncrunch: no coverage
          private set;

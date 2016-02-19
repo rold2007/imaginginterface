@@ -44,12 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAboutBoxController.cs" />
-    <Compile Include="IFileOperationController.cs" />
-    <Compile Include="IHelpOperationController.cs" />
-    <Compile Include="IMainController.cs" />
-    <Compile Include="IPluginOperationController.cs" />
-    <Compile Include="IPluginManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,10 +54,6 @@
     <ProjectReference Include="..\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
-      <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
-      <Name>ImagingInterface.Views.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

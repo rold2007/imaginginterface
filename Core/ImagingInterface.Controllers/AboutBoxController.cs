@@ -7,27 +7,30 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Models;
-   using ImagingInterface.Views;
 
-   public class AboutBoxController : IAboutBoxController
+   public class AboutBoxController
       {
-      private IAboutBoxView aboutBoxView;
-      private IAboutBoxModel aboutBoxModel;
-
-      public AboutBoxController(IAboutBoxView aboutBoxView, IAboutBoxModel aboutBoxModel)
+      public AboutBoxController(AboutBoxModel aboutBoxModel)
          {
          this.InitializeModel(aboutBoxModel);
 
-         this.aboutBoxView = aboutBoxView;
-         this.aboutBoxModel = aboutBoxModel;
+         this.AboutBoxModel = aboutBoxModel;
          }
 
-      public void Show()
+      public event EventHandler Display;
+
+      public IAboutBoxModel AboutBoxModel
          {
-         this.aboutBoxView.Display(this.aboutBoxModel);
+         get;
+         private set;
          }
 
-      private void InitializeModel(IAboutBoxModel aboutBoxModel)
+      public void DisplayView()
+         {
+         this.Display(this, EventArgs.Empty);
+         }
+
+      private void InitializeModel(AboutBoxModel aboutBoxModel)
          {
          Assembly executable = Assembly.GetEntryAssembly();
 

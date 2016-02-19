@@ -6,38 +6,37 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Views;
 
-   public class PluginManagerController : IPluginManagerController
+   public class PluginManagerController
       {
-      private IPluginManagerView pluginManagerView;
+      ////private IPluginManagerView pluginManagerView;
       private Dictionary<IRawPluginView, IPluginController> pluginControllers;
 
-      public PluginManagerController(IPluginManagerView pluginManagerView, IMainController mainController)
+      public PluginManagerController(MainController mainController)
          {
-         this.pluginManagerView = pluginManagerView;
+         ////this.pluginManagerView = pluginManagerView;
          this.pluginControllers = new Dictionary<IRawPluginView, IPluginController>();
 
-         mainController.AddPluginManager(this, this.pluginManagerView);
+         mainController.AddPluginManager(this);
          }
 
       public void AddPlugin(IPluginController pluginController)
          {
          pluginController.Closed += this.PluginController_Closed;
 
-         this.pluginManagerView.AddPlugin(pluginController.RawPluginView, pluginController.RawPluginModel);
-         this.pluginControllers.Add(pluginController.RawPluginView, pluginController);
+         ////this.pluginManagerView.AddPlugin(pluginController.RawPluginView, pluginController.RawPluginModel);
+         ////this.pluginControllers.Add(pluginController.RawPluginView, pluginController);
          }
 
       public IPluginController GetActivePlugin()
          {
-         IRawPluginView activeRawPluginView = this.pluginManagerView.GetActivePlugin();
+         ////IRawPluginView activeRawPluginView = this.pluginManagerView.GetActivePlugin();
 
-         if (activeRawPluginView != null)
-            {
-            return this.pluginControllers[activeRawPluginView];
-            }
-         else
+         ////if (activeRawPluginView != null)
+         ////   {
+         ////   return this.pluginControllers[activeRawPluginView];
+         ////   }
+         ////else
             {
             return null;
             }
@@ -62,8 +61,8 @@
          {
          pluginController.Closed -= this.PluginController_Closed;
 
-         this.pluginManagerView.RemovePlugin(pluginController.RawPluginView);
-         this.pluginControllers.Remove(pluginController.RawPluginView);
+         ////this.pluginManagerView.RemovePlugin(pluginController.RawPluginView);
+         ////this.pluginControllers.Remove(pluginController.RawPluginView);
          }
 
       private void PluginController_Closed(object sender, EventArgs e)

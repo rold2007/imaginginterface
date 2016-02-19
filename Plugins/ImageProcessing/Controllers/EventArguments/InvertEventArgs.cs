@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Views.EventArguments
+﻿namespace ImageProcessing.Controllers.EventArguments
    {
    using System;
    using System.Collections.Generic;
@@ -6,14 +6,14 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public class PluginCreateEventArgs : EventArgs
+   public class InvertEventArgs : EventArgs
       {
-      public PluginCreateEventArgs(string name)
+      public InvertEventArgs(bool invert)
          {
-         this.Name = name;
+         this.Invert = invert;
          }
 
-      public string Name
+      public bool Invert
          {
          get;
          private set;

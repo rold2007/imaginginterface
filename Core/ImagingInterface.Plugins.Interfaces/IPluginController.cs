@@ -13,10 +13,10 @@
 
       event EventHandler Closed;
 
-      IRawPluginView RawPluginView
-         {
-         get;
-         }
+      ////IRawPluginView RawPluginView
+      ////   {
+      ////   get;
+      ////   }
 
       IRawPluginModel RawPluginModel
          {

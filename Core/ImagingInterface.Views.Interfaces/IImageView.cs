@@ -6,9 +6,9 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Views.EventArguments;
 
    public interface IImageView : IRawImageView
       {

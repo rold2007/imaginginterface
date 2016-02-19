@@ -7,23 +7,23 @@
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
-   using ImageProcessing.Views;
+   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
    using ImagingInterface.Plugins.Utilities;
 
-   public class TaggerController : ITaggerController
+   public class TaggerController : IImageProcessingController
       {
       private static readonly string TaggerDisplayName = "Tagger"; // ncrunch: no coverage
-      private ITaggerView taggerView;
+      ////private ITaggerView taggerView;
       private ITaggerModel taggerModel;
-      private IImageManagerController imageManagerController;
-      private IImageController registeredImageController;
+      private ImageManagerController imageManagerController;
+      private ImageController registeredImageController;
       private ITagger tagger;
 
-      public TaggerController(ITaggerView taggerView, ITaggerModel taggerModel, ITagger tagger, IImageManagerController imageManagerController)
+      public TaggerController(ITaggerModel taggerModel, ITagger tagger, ImageManagerController imageManagerController)
          {
-         this.taggerView = taggerView;
+         ////this.taggerView = taggerView;
          this.taggerModel = taggerModel;
          this.tagger = tagger;
          this.imageManagerController = imageManagerController;
@@ -39,13 +39,13 @@
 
       public event EventHandler<TagPointChangedEventArgs> TagPointChanged;
 
-      public IRawPluginView RawPluginView
-         {
-         get
-            {
-            return this.taggerView;
-            }
-         }
+      ////public IRawPluginView RawPluginView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.taggerView;
+      ////      }
+      ////   }
 
       public IRawPluginModel RawPluginModel
          {
@@ -65,9 +65,9 @@
 
       public void Initialize()
          {
-         this.taggerView.SetTaggerModel(this.taggerModel);
+         ////this.taggerView.SetTaggerModel(this.taggerModel);
 
-         this.taggerView.LabelAdded += this.TaggerView_LabelAdded;
+         ////this.taggerView.LabelAdded += this.TaggerView_LabelAdded;
 
          this.imageManagerController.ActiveImageChanged += this.ImageManagerController_ActiveImageChanged;
 
@@ -85,15 +85,15 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            this.taggerView.LabelAdded -= this.TaggerView_LabelAdded;
+            ////this.taggerView.LabelAdded -= this.TaggerView_LabelAdded;
 
             this.imageManagerController.ActiveImageChanged -= this.ImageManagerController_ActiveImageChanged;
 
             this.UnregisterActiveImage();
 
-            this.taggerView.Hide();
+            ////this.taggerView.Hide();
 
-            this.taggerView.Close();
+            ////this.taggerView.Close();
 
             if (this.Closed != null)
                {
@@ -205,7 +205,7 @@
 
          this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
 
-         this.taggerView.UpdateLabelList();
+         ////this.taggerView.UpdateLabelList();
 
          foreach (string tag in this.tagger.DataPoints.Keys)
             {
