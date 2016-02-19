@@ -21,8 +21,8 @@
       private IServiceLocator serviceLocator;
       private ICaptureWrapper captureWrapper;
       private IImageController liveGrabImageController;
-      private bool isGrabbingLive;
-      private bool isStopping;
+      private bool grabbingLive;
+      private bool stopping;
 
       public CaptureController(ICaptureView captureView, ICaptureModel captureModel, IServiceLocator serviceLocator, ICaptureWrapper captureWrapper)
          {
@@ -93,7 +93,7 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            Debug.Assert(this.isGrabbingLive == false, "The grab live should have been stopped by the image controller.");
+            Debug.Assert(this.grabbingLive == false, "The grab live should have been stopped by the image controller.");
 
             if (this.Closed != null)
                {
@@ -221,9 +221,9 @@
 
       private void CaptureView_Start(object sender, EventArgs e)
          {
-         if (!this.isGrabbingLive)
+         if (!this.grabbingLive)
             {
-            this.isGrabbingLive = true;
+            this.grabbingLive = true;
 
             this.captureView.UpdateLiveGrabStatus(false, true);
 
@@ -261,8 +261,8 @@
 
       private void ResetGrabLive()
          {
-         this.isGrabbingLive = false;
-         this.isStopping = false;
+         this.grabbingLive = false;
+         this.stopping = false;
 
          if (this.liveGrabImageController != null)
             {
@@ -315,9 +315,9 @@
 
       private void StopLiveGrab()
          {
-         if (this.isGrabbingLive)
+         if (this.grabbingLive)
             {
-            if (!this.isStopping)
+            if (!this.stopping)
                {
                this.liveGrabImageController.DisplayUpdated += this.LiveGrabImageController_DisplayUpdated;
 
@@ -330,7 +330,7 @@
                this.liveGrabImageController.InitializeImageSourceController(this, liveGrabCaptureModel);
                }
 
-            this.isStopping = true;
+            this.stopping = true;
             }
          }
 
