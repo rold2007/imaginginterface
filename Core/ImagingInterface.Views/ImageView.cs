@@ -15,7 +15,7 @@
       private bool openGLControlLoaded = false;
       private Dictionary<Texture, int> textures;
       private IImageModel imageModel;
-      private bool isFirstPaint = true;
+      private bool firstPaint = true;
       private bool openGLControlSizeUpdated = true;
       private bool zoomMode = true;
       private double translateX = 0.0;
@@ -93,9 +93,9 @@
             this.AllocateTextures();
 
             // The creation of the control already triggers a paint so don't force the first paint
-            if (this.isFirstPaint == true)
+            if (this.firstPaint == true)
                {
-               this.isFirstPaint = false;
+               this.firstPaint = false;
 
                this.glControl.Invalidate();
                }

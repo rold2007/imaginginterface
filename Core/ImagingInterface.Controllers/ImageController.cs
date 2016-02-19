@@ -210,9 +210,9 @@
 
       private void CreateDynamicUpdateTasks(TaskScheduler taskScheduler)
          {
-         bool isDynamic = this.imageSourceController.IsDynamic(this.imageSourceRawPluginModel);
+         bool dynamic = this.imageSourceController.IsDynamic(this.imageSourceRawPluginModel);
 
-         this.CreateLiveUpdateTask(taskScheduler, isDynamic);
+         this.CreateLiveUpdateTask(taskScheduler, dynamic);
          }
 
       private void CreateLiveUpdateTask(TaskScheduler taskScheduler, bool launchHeartBeat)
@@ -411,18 +411,18 @@
          Debug.Assert(this != null, "Protect the next assert.");
          Debug.Assert(this.lastDisplayNextImageTask != null, "The last display task should not be set to null if another task is still running.");
 
-         bool isLastUpdateQueued;
+         bool lastUpdateQueued;
 
          if (Task.CurrentId == this.lastDisplayNextImageTask.Id)
             {
             this.lastDisplayNextImageTask = null;
             this.lastFetchNextImageFromSourceTask = null;
 
-            isLastUpdateQueued = true;
+            lastUpdateQueued = true;
             }
          else
             {
-            isLastUpdateQueued = false;
+            lastUpdateQueued = false;
             }
 
          ImageProcessingAsyncData imageProcessingAsyncData = state as ImageProcessingAsyncData;
@@ -446,7 +446,7 @@
                overlay = imageProcessingAsyncData.Overlays[0];
                }
 
-            this.UpdateDisplayImageData(parentTask.Result, overlay, isLastUpdateQueued);
+            this.UpdateDisplayImageData(parentTask.Result, overlay, lastUpdateQueued);
 
             if (this.DisplayUpdated != null)
                {
