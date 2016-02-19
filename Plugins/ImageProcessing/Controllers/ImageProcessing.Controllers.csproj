@@ -70,6 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CudafyController.cs" />
+    <Compile Include="EventArguments\CudafyAddEventArgs.cs" />
+    <Compile Include="EventArguments\CudafyGPUChangedEventArgs.cs" />
+    <Compile Include="EventArguments\CudafyGridSizeChangedEventArgs.cs" />
+    <Compile Include="EventArguments\InvertEventArgs.cs" />
+    <Compile Include="EventArguments\RotateEventArgs.cs" />
     <Compile Include="FileSourceController.cs" />
     <Compile Include="InvertController.cs" />
     <Compile Include="MemorySourceController.cs" />
@@ -80,6 +85,11 @@
     <Compile Include="TaggerController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">
+      <Project>{b8c42917-287b-4b21-afe9-9a121163adb2}</Project>
+      <Name>ImagingInterface.Controllers</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
@@ -100,10 +110,6 @@
     <ProjectReference Include="..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
       <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
       <Name>ImageProcessing.ObjectDetection.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj">
-      <Project>{deee4845-897d-41f4-925d-4720f6f1f986}</Project>
-      <Name>ImageProcessing.Views.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

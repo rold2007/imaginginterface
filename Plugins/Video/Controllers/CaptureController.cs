@@ -7,26 +7,26 @@
    using Emgu.CV;
    using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
+   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
    using Microsoft.Practices.ServiceLocation;
    using Video.Models;
-   using Video.Views;
 
-   public class CaptureController : ICaptureController, IImageSourceController, IDisposable
+   public class CaptureController : IImageSourceController, IDisposable
       {
       private static readonly string CaptureDisplayName = "Capture"; // ncrunch: no coverage
-      private ICaptureView captureView;
+      ////private ICaptureView captureView;
       private ICaptureModel captureModel;
       private IServiceLocator serviceLocator;
       private ICaptureWrapper captureWrapper;
-      private IImageController liveGrabImageController;
+      private ImageController liveGrabImageController;
       private bool isGrabbingLive;
       private bool isStopping;
 
-      public CaptureController(ICaptureView captureView, ICaptureModel captureModel, IServiceLocator serviceLocator, ICaptureWrapper captureWrapper)
+      public CaptureController(ICaptureModel captureModel, IServiceLocator serviceLocator, ICaptureWrapper captureWrapper)
          {
-         this.captureView = captureView;
+         ////this.captureView = captureView;
          this.captureModel = captureModel;
          this.serviceLocator = serviceLocator;
          this.captureWrapper = captureWrapper;
@@ -43,13 +43,13 @@
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get
-            {
-            return this.captureView;
-            }
-         }
+      ////public IRawPluginView RawPluginView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.captureView;
+      ////      }
+      ////   }
 
       public IRawPluginModel RawPluginModel
          {
@@ -75,11 +75,11 @@
 
       public void Initialize()
          {
-         this.captureView.Start += this.CaptureView_Start;
-         this.captureView.Stop += this.CaptureView_Stop;
-         this.captureView.SnapShot += this.CaptureView_SnapShot;
+         ////this.captureView.Start += this.CaptureView_Start;
+         ////this.captureView.Stop += this.CaptureView_Stop;
+         ////this.captureView.SnapShot += this.CaptureView_SnapShot;
 
-         this.captureView.UpdateLiveGrabStatus(true, false);
+         ////this.captureView.UpdateLiveGrabStatus(true, false);
          }
 
       public void Close()
@@ -108,9 +108,9 @@
 
             // Do not reset this.captureView before calling the Closed event as objects
             // registered to this event may depend on this.captureView
-            this.captureView.Close();
+            ////this.captureView.Close();
             this.UnregisterCaptureViewEvents();
-            this.captureView = null;
+            ////this.captureView = null;
             this.Dispose();
             }
          }
@@ -210,11 +210,11 @@
                this.captureWrapper = null;
                }
 
-            if (this.captureView != null)
+            ////if (this.captureView != null)
                {
                this.UnregisterCaptureViewEvents();
 
-               this.captureView = null;
+               ////this.captureView = null;
                }
             }
          }
@@ -225,17 +225,17 @@
             {
             this.isGrabbingLive = true;
 
-            this.captureView.UpdateLiveGrabStatus(false, true);
+            ////this.captureView.UpdateLiveGrabStatus(false, true);
 
             if (this.liveGrabImageController == null)
                {
-               this.liveGrabImageController = this.serviceLocator.GetInstance<IImageController>();
+               this.liveGrabImageController = this.serviceLocator.GetInstance<ImageController>();
 
                this.liveGrabImageController.Closed += this.LiveGrabImageController_Closed;
 
                this.liveGrabImageController.SetDisplayName("LiveGrab");
 
-               IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+               ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
                imageManagerController.AddImage(this.liveGrabImageController);
                }
@@ -269,36 +269,36 @@
             this.liveGrabImageController.DisplayUpdated -= this.LiveGrabImageController_DisplayUpdated;
             }
 
-         this.captureView.UpdateLiveGrabStatus(true, false);
+         ////this.captureView.UpdateLiveGrabStatus(true, false);
          }
 
       private void SnapShot_Closed(object sender, EventArgs e)
          {
-         IImageController imageController = sender as IImageController;
+         ImageController imageController = sender as ImageController;
 
          this.SnapShotFinished(imageController);
          }
 
       private void SnapShot_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
          {
-         IImageController imageController = sender as IImageController;
+         ImageController imageController = sender as ImageController;
 
          this.SnapShotFinished(imageController);
          }
 
-      private void SnapShotFinished(IImageController imageController)
+      private void SnapShotFinished(ImageController imageController)
          {
          imageController.Closed -= this.SnapShot_Closed;
          imageController.DisplayUpdated -= this.SnapShot_DisplayUpdated;
 
-         this.captureView.UpdateLiveGrabStatus(true, false);
+         ////this.captureView.UpdateLiveGrabStatus(true, false);
          }
 
       private void UnregisterCaptureViewEvents()
          {
-         this.captureView.Start -= this.CaptureView_Start;
-         this.captureView.Stop -= this.CaptureView_Stop;
-         this.captureView.SnapShot -= this.CaptureView_SnapShot;
+         ////this.captureView.Start -= this.CaptureView_Start;
+         ////this.captureView.Stop -= this.CaptureView_Stop;
+         ////this.captureView.SnapShot -= this.CaptureView_SnapShot;
          }
 
       private void LiveGrabImageController_Closed(object sender, EventArgs e)
@@ -321,7 +321,7 @@
                {
                this.liveGrabImageController.DisplayUpdated += this.LiveGrabImageController_DisplayUpdated;
 
-               this.captureView.UpdateLiveGrabStatus(false, false);
+               ////this.captureView.UpdateLiveGrabStatus(false, false);
 
                ICaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<ICaptureModel>();
 
@@ -340,12 +340,12 @@
 
          captureModel.LiveGrabRunning = false;
 
-         IImageController imageController = this.serviceLocator.GetInstance<IImageController>();
+         ImageController imageController = this.serviceLocator.GetInstance<ImageController>();
 
          imageController.SetDisplayName("Snapshot");
          imageController.InitializeImageSourceController(this, captureModel);
 
-         IImageManagerController imageManagerController = this.serviceLocator.GetInstance<IImageManagerController>();
+         ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
          imageManagerController.AddImage(imageController);
 
@@ -354,7 +354,7 @@
          imageController.DisplayUpdated += this.SnapShot_DisplayUpdated;
 
          // Prevent any other grab until snapshot is finished to prevent many thread calling NextImageData
-         this.captureView.UpdateLiveGrabStatus(false, false);
+         ////this.captureView.UpdateLiveGrabStatus(false, false);
          }
 
       private void GrabFirstFrame()

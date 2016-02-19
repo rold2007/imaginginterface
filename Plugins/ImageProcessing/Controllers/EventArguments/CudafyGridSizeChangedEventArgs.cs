@@ -1,4 +1,4 @@
-﻿namespace ImageProcessing.Views.EventArguments
+﻿namespace ImageProcessing.Controllers.EventArguments
    {
    using System;
    using System.Collections.Generic;

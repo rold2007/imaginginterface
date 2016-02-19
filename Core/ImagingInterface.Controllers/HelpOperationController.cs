@@ -5,25 +5,39 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
 
-   public class HelpOperationController : IHelpOperationController
+   public class HelpOperationController
       {
-      private IServiceLocator serviceLocator;
-      
-      public HelpOperationController(IHelpOperationView helpOperationView, IServiceLocator serviceLocator)
-         {
-         this.serviceLocator = serviceLocator;
+      ////private IServiceLocator serviceLocator;
 
-         helpOperationView.HelpAbout += this.HelpOperationView_HelpAbout;
+      public HelpOperationController(/*IServiceLocator serviceLocator*/)
+         {
+         ////this.serviceLocator = serviceLocator;
+
+         ////helpOperationView.HelpAbout += this.HelpOperationView_HelpAbout;
          }
 
-      private void HelpOperationView_HelpAbout(object sender, EventArgs e)
-         {
-         IAboutBoxController aboutBoxController = this.serviceLocator.GetInstance<IAboutBoxController>();
+      public event EventHandler DisplayAbouxBox;
 
-         aboutBoxController.Show();
+      public void RequestDisplayAbouxBox()
+         {
+         if (this.DisplayAbouxBox != null)
+            {
+            this.DisplayAbouxBox(this, EventArgs.Empty);
+            }
          }
+
+      ////private void HelpOperationView_HelpAbout(object sender, EventArgs e)
+      ////{
+      ////IAboutBoxView aboutBoxView = this.serviceLocator.GetInstance<IAboutBoxView>();
+
+      ////aboutBoxView.Display();
+
+      ////this.ShowAboutBox(this, EventArgs.Empty);
+      ////AboutBoxController aboutBoxController = this.serviceLocator.GetInstance<AboutBoxController>();
+
+      ////aboutBoxController.Show();
+      ////}
       }
    }

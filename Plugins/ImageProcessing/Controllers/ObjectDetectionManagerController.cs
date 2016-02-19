@@ -7,20 +7,19 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImageProcessing.Models;
-   using ImageProcessing.Views;
    using ImagingInterface.Plugins;
 
-   public class ObjectDetectionManagerController : IObjectDetectionManagerController
+   public class ObjectDetectionManagerController
       {
       private static readonly string ObjectDetectionDisplayName = "Object detection"; // ncrunch: no coverage
-      private IObjectDetectionManagerView objectDetectionManagerView;
+      ////private IObjectDetectionManagerView objectDetectionManagerView;
       private IObjectDetectionManagerModel objectDetectionManagerModel;
-      private ITaggerController taggerController;
-      private IObjectDetectionController objectDetectionController;
+      private TaggerController taggerController;
+      private ObjectDetectionController objectDetectionController;
 
-      public ObjectDetectionManagerController(IObjectDetectionManagerView objectDetectionManagerView, IObjectDetectionManagerModel objectDetectionManagerModel, ITaggerController taggerController, IObjectDetectionController objectDetectionController)
+      public ObjectDetectionManagerController(IObjectDetectionManagerModel objectDetectionManagerModel, TaggerController taggerController, ObjectDetectionController objectDetectionController)
          {
-         this.objectDetectionManagerView = objectDetectionManagerView;
+         ////this.objectDetectionManagerView = objectDetectionManagerView;
          this.objectDetectionManagerModel = objectDetectionManagerModel;
          this.taggerController = taggerController;
          this.objectDetectionController = objectDetectionController;
@@ -32,13 +31,13 @@
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get
-            {
-            return this.objectDetectionManagerView;
-            }
-         }
+      ////public IRawPluginView RawPluginView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.objectDetectionManagerView;
+      ////      }
+      ////   }
 
       public IRawPluginModel RawPluginModel
          {
@@ -60,8 +59,8 @@
          {
          this.objectDetectionController.Initialize();
 
-         this.objectDetectionManagerView.AddView(this.taggerController.RawPluginView);
-         this.objectDetectionManagerView.AddView(this.objectDetectionController.RawPluginView);
+         ////this.objectDetectionManagerView.AddView(this.taggerController.RawPluginView);
+         ////this.objectDetectionManagerView.AddView(this.objectDetectionController.RawPluginView);
 
          this.objectDetectionController.SetTagger(this.taggerController);
 
@@ -81,9 +80,9 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            this.objectDetectionManagerView.Hide();
+            ////this.objectDetectionManagerView.Hide();
 
-            this.objectDetectionManagerView.Close();
+            ////this.objectDetectionManagerView.Close();
 
             this.taggerController.Close();
             this.objectDetectionController.Close();

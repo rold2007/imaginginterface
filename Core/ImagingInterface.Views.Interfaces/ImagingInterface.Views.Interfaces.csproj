@@ -46,10 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventArguments\DragDropEventArgs.cs" />
-    <Compile Include="EventArguments\PixelViewChangedEventArgs.cs" />
-    <Compile Include="EventArguments\PluginCreateEventArgs.cs" />
-    <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
     <Compile Include="IAboutBoxView.cs" />
     <Compile Include="IFileOperationView.cs" />
     <Compile Include="IHelpOperationView.cs" />
@@ -61,6 +57,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">
+      <Project>{b8c42917-287b-4b21-afe9-9a121163adb2}</Project>
+      <Name>ImagingInterface.Controllers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Models.Interfaces\ImagingInterface.Models.Interfaces.csproj">
       <Project>{8bd0f4ed-a5a9-40fd-9343-b41299204193}</Project>
       <Name>ImagingInterface.Models.Interfaces</Name>

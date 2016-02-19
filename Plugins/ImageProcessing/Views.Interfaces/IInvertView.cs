@@ -5,7 +5,7 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImageProcessing.Views.EventArguments;
+   using ImageProcessing.Controllers.EventArguments;
    using ImagingInterface.Plugins;
 
    public interface IInvertView : IPluginView

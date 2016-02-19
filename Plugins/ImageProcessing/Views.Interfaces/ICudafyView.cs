@@ -2,7 +2,7 @@
    {
    using System;
    using System.Collections.Generic;
-   using ImageProcessing.Views.EventArguments;
+   using ImageProcessing.Controllers.EventArguments;
    using ImagingInterface.Plugins;
 
    public interface ICudafyView : IPluginView

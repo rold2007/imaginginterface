@@ -7,20 +7,20 @@
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
-   using ImageProcessing.Views;
+   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class ObjectDetectionController : IObjectDetectionController
+   public class ObjectDetectionController : IImageProcessingController
       {
-      private IObjectDetectionView objectDetectionView;
+      ////private IObjectDetectionView objectDetectionView;
       private IObjectDetectionModel objectDetectionModel;
-      private IImageManagerController imageManagerController;
-      private ITaggerController taggerController;
+      private ImageManagerController imageManagerController;
+      private TaggerController taggerController;
       private IObjectDetector objectDetector;
 
-      public ObjectDetectionController(IObjectDetectionView objectDetectionView, IObjectDetectionModel objectDetectionModel, IObjectDetector objectDetection, IImageManagerController imageManagerController)
+      public ObjectDetectionController(IObjectDetectionModel objectDetectionModel, IObjectDetector objectDetection, ImageManagerController imageManagerController)
          {
-         this.objectDetectionView = objectDetectionView;
+         ////this.objectDetectionView = objectDetectionView;
          this.objectDetectionModel = objectDetectionModel;
          this.objectDetector = objectDetection;
          this.imageManagerController = imageManagerController;
@@ -30,13 +30,13 @@
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get
-            {
-            return this.objectDetectionView;
-            }
-         }
+      ////public IRawPluginView RawPluginView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.objectDetectionView;
+      ////      }
+      ////   }
 
       public IRawPluginModel RawPluginModel
          {
@@ -56,9 +56,9 @@
 
       public void Initialize()
          {
-         this.objectDetectionView.Train += this.ObjectDetectionView_Train;
+         ////this.objectDetectionView.Train += this.ObjectDetectionView_Train;
 
-         this.objectDetectionView.Test += this.ObjectDetectionView_Test;
+         ////this.objectDetectionView.Test += this.ObjectDetectionView_Test;
          }
 
       public void Close()
@@ -72,15 +72,15 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            this.objectDetectionView.Train -= this.ObjectDetectionView_Train;
-            this.objectDetectionView.Test -= this.ObjectDetectionView_Test;
+            ////this.objectDetectionView.Train -= this.ObjectDetectionView_Train;
+            ////this.objectDetectionView.Test -= this.ObjectDetectionView_Test;
 
             this.objectDetector.Dispose();
             this.objectDetector = null;
 
-            this.objectDetectionView.Hide();
+            ////this.objectDetectionView.Hide();
 
-            this.objectDetectionView.Close();
+            ////this.objectDetectionView.Close();
 
             if (this.Closed != null)
                {
@@ -89,7 +89,7 @@
             }
          }
 
-      public void SetTagger(ITaggerController taggerController)
+      public void SetTagger(TaggerController taggerController)
          {
          this.taggerController = taggerController;
 
@@ -143,7 +143,7 @@
 
       private void ObjectDetectionView_Train(object sender, EventArgs e)
          {
-         IImageController imageController = this.imageManagerController.GetActiveImage();
+         ImageController imageController = this.imageManagerController.GetActiveImage();
 
          if (imageController != null)
             {
@@ -153,7 +153,7 @@
 
       private void ObjectDetectionView_Test(object sender, EventArgs e)
          {
-         IImageController imageController = this.imageManagerController.GetActiveImage();
+         ImageController imageController = this.imageManagerController.GetActiveImage();
 
          if (imageController != null)
             {

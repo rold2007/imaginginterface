@@ -12,21 +12,21 @@
    using Emgu.CV.Structure;
    using Emgu.Util;
    using ImageProcessing.Controllers;
+   using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
-   using ImageProcessing.Views;
-   using ImageProcessing.Views.EventArguments;
+   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class RotateController : IRotateController
+   public class RotateController : IImageProcessingController
       {
       private static readonly string RotateDisplayName = "Rotate"; // ncrunch: no coverage
-      private IRotateView rotateView;
+      ////private IRotateView rotateView;
       private IRotateModel rotateModel;
-      private IImageManagerController imageManagerController;
+      private ImageManagerController imageManagerController;
 
-      public RotateController(IRotateView rotateView, IRotateModel rotateModel, IImageManagerController imageManagerController)
+      public RotateController(IRotateModel rotateModel, ImageManagerController imageManagerController)
          {
-         this.rotateView = rotateView;
+         ////this.rotateView = rotateView;
          this.rotateModel = rotateModel;
          this.imageManagerController = imageManagerController;
 
@@ -37,13 +37,13 @@
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get
-            {
-            return this.rotateView;
-            }
-         }
+      ////public IRawPluginView RawPluginView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.rotateView;
+      ////      }
+      ////   }
 
       public IRawPluginModel RawPluginModel
          {
@@ -63,7 +63,7 @@
 
       public void Initialize()
          {
-         this.rotateView.Rotate += this.RotateView_Rotate;
+         ////this.rotateView.Rotate += this.RotateView_Rotate;
          }
 
       public void Close()
@@ -77,11 +77,11 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            this.rotateView.Rotate -= this.RotateView_Rotate;
+            ////this.rotateView.Rotate -= this.RotateView_Rotate;
 
-            this.rotateView.Hide();
+            ////this.rotateView.Hide();
 
-            this.rotateView.Close();
+            ////this.rotateView.Close();
 
             if (this.Closed != null)
                {
@@ -118,7 +118,7 @@
             {
             this.rotateModel.Angle = e.Angle;
 
-            IImageController imageController = this.imageManagerController.GetActiveImage();
+            ImageController imageController = this.imageManagerController.GetActiveImage();
 
             if (imageController != null)
                {

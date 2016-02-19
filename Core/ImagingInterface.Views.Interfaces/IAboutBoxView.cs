@@ -9,6 +9,6 @@
 
    public interface IAboutBoxView
       {
-      void Display(IAboutBoxModel aboutBoxModel);
+      void Display();
       }
    }

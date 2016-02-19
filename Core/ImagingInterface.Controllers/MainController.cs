@@ -7,46 +7,45 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Views;
 
-   public class MainController : IMainController
+   public class MainController
       {
-      private IMainView mainView;
-      private IImageManagerController imageManagerController;
-      private IPluginManagerController pluginManagerController;
+      ////private IMainView mainView;
+      private ImageManagerController imageManagerController;
+      private PluginManagerController pluginManagerController;
 
-      public MainController(IMainView mainView)
+      public MainController()
          {
-         this.mainView = mainView;
+         ////this.mainView = mainView;
 
-         this.mainView.ApplicationClosing += this.MainView_ApplicationClosing;
+         ////this.mainView.ApplicationClosing += this.MainView_ApplicationClosing;
          }
 
-      public void AddImageManager(IImageManagerController imageManagerController, IImageManagerView imageManagerView)
+      public void AddImageManager(ImageManagerController imageManagerController)
          {
          this.imageManagerController = imageManagerController;
 
-         this.mainView.AddImageManagerView(imageManagerView);
+         ////this.mainView.AddImageManagerView(imageManagerView);
          }
 
-      public void AddPluginManager(IPluginManagerController pluginManagerController, IPluginManagerView pluginManagerView)
+      public void AddPluginManager(PluginManagerController pluginManagerController)
          {
          this.pluginManagerController = pluginManagerController;
 
-         this.mainView.AddPluginManagerView(pluginManagerView);
+         ////this.mainView.AddPluginManagerView(pluginManagerView);
          }
 
       private void MainView_ApplicationClosing(object sender, CancelEventArgs e)
          {
          if (this.imageManagerController != null)
             {
-            IList<IImageController> imageControllers = this.imageManagerController.GetAllImages();
+            IList<ImageController> imageControllers = this.imageManagerController.GetAllImages();
 
             if (imageControllers != null)
                {
                if (imageControllers.Count != 0)
                   {
-                  foreach (IImageController imageController in imageControllers)
+                  foreach (ImageController imageController in imageControllers)
                      {
                      imageController.Closed += this.ImageController_Closed;
                      imageController.Close();
@@ -79,11 +78,11 @@
 
       private void ImageController_Closed(object sender, EventArgs e)
          {
-         IImageController imageController = sender as IImageController;
+         ImageController imageController = sender as ImageController;
 
          imageController.Closed -= this.ImageController_Closed;
 
-         IImageController activeImageController = this.imageManagerController.GetActiveImage();
+         ImageController activeImageController = this.imageManagerController.GetActiveImage();
 
          if (activeImageController == null)
             {
@@ -91,7 +90,7 @@
 
             if (activePluginController == null)
                {
-               this.mainView.Close();
+               ////this.mainView.Close();
                }
             }
          }
@@ -106,11 +105,11 @@
          
          if (activePluginController == null)
             {
-            IImageController activeImageController = this.imageManagerController.GetActiveImage();
+            ImageController activeImageController = this.imageManagerController.GetActiveImage();
 
             if (activeImageController == null)
                {
-               this.mainView.Close();
+               ////this.mainView.Close();
                }
             }
          }

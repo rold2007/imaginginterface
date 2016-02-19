@@ -5,8 +5,8 @@
    using System.Diagnostics;
    using System.Drawing;
    using System.Windows.Forms;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
-   using ImagingInterface.Views.EventArguments;
    using OpenTK.Graphics;
    using OpenTK.Graphics.OpenGL;
 

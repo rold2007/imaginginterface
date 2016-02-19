@@ -10,9 +10,9 @@
    using System.Text;
    using System.Threading.Tasks;
    using System.Windows.Forms;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Views.EventArguments;
 
    public partial class PluginManagerView : UserControl, IPluginManagerView
       {

@@ -4,7 +4,7 @@
    using System.Collections.Generic;
    using System.Drawing;
    using System.Windows.Forms;
-   using ImageProcessing.Views.EventArguments;
+   using ImageProcessing.Controllers.EventArguments;
 
    public partial class CudafyView : UserControl, ICudafyView
       {

@@ -7,14 +7,17 @@
    using System.Drawing;
    using System.Linq;
    using System.Windows.Forms;
-   using ImagingInterface.Models;
-   using ImagingInterface.Views.EventArguments;
+   using ImagingInterface.Controllers;
+   using ImagingInterface.Controllers.EventArguments;
+
+   using SimpleInjector;
 
    public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationView, IHelpOperationView
       {
       private static bool checkSingleton = false;
+      private HelpOperationController helpOperationController;
 
-      public MainWindow()
+      public MainWindow(HelpOperationController helpOperationController)
          {
          // This help detect misconfiguration in IoC
          Debug.Assert(MainWindow.checkSingleton == false, "A singleton shoudn't be constructed twice.");
@@ -22,6 +25,16 @@
          MainWindow.checkSingleton = true;
 
          this.InitializeComponent();
+
+         ////Register to HelpAboutBoxController event
+         ////In the event callback, instanciate the about box view and Show it
+         ////Need to figure out how the AboutBoxController will call AboutBoxView.Display with the model pointer...
+
+         //// No, maybe I simply need to allow the HelpOperationController create an AboutBoxView using an IAboutBoxView
+         //// registered through injection
+
+         this.helpOperationController = helpOperationController;
+         this.helpOperationController.DisplayAbouxBox += this.HelpOperationController_DisplayAboutBox;
          }
 
       public event CancelEventHandler ApplicationClosing;
@@ -127,10 +140,7 @@
 
       private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         if (this.HelpAbout != null)
-            {
-            this.HelpAbout(this, EventArgs.Empty);
-            }
+         ////this.helpOperationController = this.helpOperationController;
          }
 
       private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,6 +245,15 @@
             }
 
          e.Cancel = cancelEventArgs.Cancel;
+         }
+
+      private void HelpOperationController_DisplayAboutBox(object sender, EventArgs e)
+         {
+         //// Instanciate about box view, WITH using statement !
+
+         //// using()
+         //// ...
+         throw new NotImplementedException();
          }
       }
    }

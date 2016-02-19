@@ -17,6 +17,8 @@
    using SimpleInjector;
    using SimpleInjector.Diagnostics;
 
+   ////using SimpleInjector.Extensions.LifetimeScoping;
+
    public static class Program
       {
       private static readonly string PluginsRootFolderName = "Plugins";
@@ -52,7 +54,10 @@
 
             ValidateAssemblyUniqueness();
 
-            Application.Run(Program.serviceLocator.GetInstance<MainWindow>());
+            using (MainWindow mainWindow = Program.serviceLocator.GetInstance<MainWindow>())
+               {
+               Application.Run(mainWindow);
+               }
 
             // Make sure that using the plugins we don't load some DLL from elsewhere
             ValidateAssemblyUniqueness();
@@ -113,33 +118,36 @@
 
          container.RegisterSingleton<IServiceLocator>(Program.serviceLocator);
 
+         ////LifetimeScopeLifestyle aboutBoxLifetimeScopeLifestyle = new LifetimeScopeLifestyle(true);
+
          // Views
          // Need to register singleton instances for all things pertaining MainWindow
-         container.RegisterSingleton<MainWindow>();
-         container.RegisterSingleton<ImageManagerView>();
-         container.RegisterSingleton<PluginManagerView>();
-         container.RegisterSingleton<IMainView>(Program.GetMainWindow);
-         container.RegisterSingleton<IFileOperationView>(Program.GetMainWindow);
-         container.RegisterSingleton<IImageManagerView>(Program.GetImageManagerView);
-         container.RegisterSingleton<IPluginOperationView>(Program.GetMainWindow);
-         container.RegisterSingleton<IPluginManagerView>(Program.GetPluginManagerView);
-         container.RegisterSingleton<IHelpOperationView>(Program.GetMainWindow);
-         container.RegisterSingleton<IAboutBoxView, AboutBoxView>();
-         container.Register<IImageView, ImageView>();
+         container.Register<MainWindow>();
+         container.Register<ImageManagerView>();
+         container.Register<PluginManagerView>();
+         ////container.RegisterSingleton<IMainView>(Program.GetMainWindow);
+         ////container.RegisterSingleton<IFileOperationView>(Program.GetMainWindow);
+         ////container.RegisterSingleton<IImageManagerView>(Program.GetImageManagerView);
+         ////container.RegisterSingleton<IPluginOperationView>(Program.GetMainWindow);
+         ////container.RegisterSingleton<IPluginManagerView>(Program.GetPluginManagerView);
+         ////container.RegisterSingleton<IHelpOperationView>(Program.GetMainWindow);
+         ////container.Register<AboutBoxView>(aboutBoxLifetimeScopeLifestyle);
+         container.Register<AboutBoxView>();
+         container.Register<ImageView>();
 
          // Controllers
-         container.RegisterSingleton<IMainController, MainController>();
-         container.RegisterSingleton<IFileOperationController, FileOperationController>();
-         container.RegisterSingleton<IImageManagerController, ImageManagerController>();
-         container.RegisterSingleton<IPluginOperationController, PluginOperationController>();
-         container.RegisterSingleton<IPluginManagerController, PluginManagerController>();
-         container.RegisterSingleton<IHelpOperationController, HelpOperationController>();
-         container.RegisterSingleton<IAboutBoxController, AboutBoxController>();
-         container.Register<IImageController, ImageController>();
+         container.Register<MainController>();
+         container.Register<FileOperationController>();
+         container.Register<ImageManagerController>();
+         container.Register<PluginOperationController>();
+         container.Register<PluginManagerController>();
+         container.Register<HelpOperationController>();
+         container.Register<AboutBoxController>();
+         container.Register<ImageController>();
 
          // Models
-         container.RegisterSingleton<IAboutBoxModel, AboutBoxModel>();
-         container.Register<IImageModel, ImageModel>();
+         container.Register<AboutBoxModel>();
+         container.Register<ImageModel>();
 
          List<Type> packageWindowsFormsTypes = new List<Type>();
          List<Type> pluginsTypes = new List<Type>();
@@ -179,7 +187,12 @@
             packageWindowsForms.SuppressDiagnosticWarning(container);
             }
 
-         container.GetRegistration(typeof(IImageView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(IImageView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(IAboutBoxView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(AboutBoxView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(AboutBoxController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(IAboutBoxModel)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         ////container.GetRegistration(typeof(AboutBoxModel)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
 
          // Verify will also create thw MainWindow and the ApplicationController
          container.Verify();
@@ -195,20 +208,20 @@
             }
          }
 
-      private static MainWindow GetMainWindow()
-         {
-         return Program.serviceLocator.GetInstance<MainWindow>();
-         }
+      ////private static MainWindow GetMainWindow()
+      ////   {
+      ////   return Program.serviceLocator.GetInstance<MainWindow>();
+      ////   }
 
-      private static ImageManagerView GetImageManagerView()
-         {
-         return Program.serviceLocator.GetInstance<ImageManagerView>();
-         }
+      ////private static ImageManagerView GetImageManagerView()
+      ////   {
+      ////   return Program.serviceLocator.GetInstance<ImageManagerView>();
+      ////   }
 
-      private static PluginManagerView GetPluginManagerView()
-         {
-         return Program.serviceLocator.GetInstance<PluginManagerView>();
-         }
+      ////private static PluginManagerView GetPluginManagerView()
+      ////   {
+      ////   return Program.serviceLocator.GetInstance<PluginManagerView>();
+      ////   }
 
       private static bool TypeValid(Type currentType, Type validationType)
          {

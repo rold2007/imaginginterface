@@ -1,4 +1,4 @@
-﻿namespace ImageProcessing.Views.EventArguments
+﻿namespace ImagingInterface.Controllers.EventArguments
    {
    using System;
    using System.Collections.Generic;
@@ -6,14 +6,14 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public class CudafyAddEventArgs : EventArgs
+   public class PluginCreateEventArgs : EventArgs
       {
-      public CudafyAddEventArgs(int add)
+      public PluginCreateEventArgs(string name)
          {
-         this.Add = add;
+         this.Name = name;
          }
 
-      public int Add
+      public string Name
          {
          get;
          private set;

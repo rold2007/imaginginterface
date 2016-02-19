@@ -5,34 +5,31 @@
    using System.ComponentModel;
    using System.Diagnostics;
    using System.IO;
-   using System.Linq;
    using System.Runtime.InteropServices;
-   using System.Text;
-   using System.Threading.Tasks;
    using Cudafy;
    using Cudafy.Host;
    using Cudafy.Translator;
    using Emgu.CV;
    using Emgu.CV.Structure;
+   using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Cudafied;
    using ImageProcessing.Models;
-   using ImageProcessing.Views;
-   using ImageProcessing.Views.EventArguments;
+   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class CudafyController : ICudafyController, IDisposable
+   public class CudafyController : IImageProcessingController, IDisposable
       {
       private static readonly string CudafyDisplayName = "Cudafy"; // ncrunch: no coverage
-      private ICudafyView cudafyView;
+      ////private ICudafyView cudafyView;
       private ICudafyModel cudafyModel;
-      private IImageManagerController imageManagerController;
+      private ImageManagerController imageManagerController;
       private Dictionary<string, GPGPU> gpgpus;
       private Dictionary<string, GPGPUProperties> gpgpuProperties;
       private Dictionary<string, eGPUType> gpuTypes;
 
-      public CudafyController(ICudafyView cudafyView, ICudafyModel cudafyModel, IImageManagerController imageManagerController)
+      public CudafyController(ICudafyModel cudafyModel, ImageManagerController imageManagerController)
          {
-         this.cudafyView = cudafyView;
+         ////this.cudafyView = cudafyView;
          this.cudafyModel = cudafyModel;
          this.imageManagerController = imageManagerController;
 
@@ -52,13 +49,13 @@
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get
-            {
-            return this.cudafyView;
-            }
-         }
+      ////public IRawPluginView RawPluginView
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.cudafyView;
+      ////      }
+      ////   }
 
       public IRawPluginModel RawPluginModel
          {
@@ -86,13 +83,13 @@
          {
          this.InitializeGPUs();
 
-         this.cudafyView.Add += this.CudafyView_Add;
-         this.cudafyView.GPUChanged += this.CudafyView_GPUChanged;
-         this.cudafyView.GridSizeChanged += this.CudafyView_GridSizeChanged;
-         this.cudafyView.BlockSizeXChanged += this.CudafyView_BlockSizeXChanged;
-         this.cudafyView.BlockSizeYChanged += this.CudafyView_BlockSizeYChanged;
+         ////this.cudafyView.Add += this.CudafyView_Add;
+         ////this.cudafyView.GPUChanged += this.CudafyView_GPUChanged;
+         ////this.cudafyView.GridSizeChanged += this.CudafyView_GridSizeChanged;
+         ////this.cudafyView.BlockSizeXChanged += this.CudafyView_BlockSizeXChanged;
+         ////this.cudafyView.BlockSizeYChanged += this.CudafyView_BlockSizeYChanged;
 
-         this.cudafyView.SetGPUs(this.gpgpus.Keys.ToList());
+         ////this.cudafyView.SetGPUs(this.gpgpus.Keys.ToList());
          }
 
       public void Close()
@@ -106,9 +103,9 @@
 
          if (!cancelEventArgs.Cancel)
             {
-            this.cudafyView.Hide();
+            ////this.cudafyView.Hide();
 
-            this.cudafyView.Close();
+            ////this.cudafyView.Close();
 
             if (this.Closed != null)
                {
@@ -119,21 +116,21 @@
             }
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          ICudafyModel cudafyModel = rawPluginModel as ICudafyModel;
 
          if (cudafyModel.Add != 0 && !string.IsNullOrEmpty(cudafyModel.GPUName))
             {
             Stopwatch totalTime = Stopwatch.StartNew();
-            byte[, ,] imageDataOutput;
+            byte[,,] imageDataOutput;
             int allocatedX = imageData.GetLength(1);
             int allocatedY = imageData.GetLength(0);
             int allocatedZ = imageData.GetLength(2);
 
-            byte[, ,] gpuSourceData;
-            byte[, ,] gpuDestinationData;
-            
+            byte[,,] gpuSourceData;
+            byte[,,] gpuDestinationData;
+
             lock (this)
                {
                dim3 gpuDataSize = new dim3(allocatedX, allocatedY, allocatedZ);
@@ -193,14 +190,14 @@
 
             openCVBenchmark.Stop();
 
-            this.cudafyView.SetBenchmarkAddCudafy(totalTime.ElapsedMilliseconds);
-            this.cudafyView.SetBenchmarkAddOpenCV(openCVBenchmark.ElapsedMilliseconds);
+            ////this.cudafyView.SetBenchmarkAddCudafy(totalTime.ElapsedMilliseconds);
+            ////this.cudafyView.SetBenchmarkAddOpenCV(openCVBenchmark.ElapsedMilliseconds);
 
             return imageDataOutput;
             }
          else
             {
-            return imageData.Clone() as byte[, ,];
+            return imageData.Clone() as byte[,,];
             }
          }
 
@@ -208,11 +205,11 @@
          {
          if (disposing)
             {
-            this.cudafyView.Add -= this.CudafyView_Add;
-            this.cudafyView.GPUChanged -= this.CudafyView_GPUChanged;
-            this.cudafyView.GridSizeChanged -= this.CudafyView_GridSizeChanged;
-            this.cudafyView.BlockSizeXChanged -= this.CudafyView_BlockSizeXChanged;
-            this.cudafyView.BlockSizeYChanged -= this.CudafyView_BlockSizeYChanged;
+            ////this.cudafyView.Add -= this.CudafyView_Add;
+            ////this.cudafyView.GPUChanged -= this.CudafyView_GPUChanged;
+            ////this.cudafyView.GridSizeChanged -= this.CudafyView_GridSizeChanged;
+            ////this.cudafyView.BlockSizeXChanged -= this.CudafyView_BlockSizeXChanged;
+            ////this.cudafyView.BlockSizeYChanged -= this.CudafyView_BlockSizeYChanged;
 
             foreach (KeyValuePair<string, GPGPU> gpgpu in this.gpgpus)
                {
@@ -240,7 +237,7 @@
 
       private void TriggerAddProcessing()
          {
-         IImageController imageController = this.imageManagerController.GetActiveImage();
+         ImageController imageController = this.imageManagerController.GetActiveImage();
 
          if (imageController != null)
             {
@@ -275,22 +272,22 @@
             maxThreadsPerBlock = gpgpuProperties.MaxThreadsPerBlock;
             }
 
-         this.cudafyView.MaxGridSizeX = maxGridSize.x;
-         this.cudafyView.MaxGridSizeY = maxGridSize.y;
-         this.cudafyView.MaxGridSizeZ = maxGridSize.z;
+         ////this.cudafyView.MaxGridSizeX = maxGridSize.x;
+         ////this.cudafyView.MaxGridSizeY = maxGridSize.y;
+         ////this.cudafyView.MaxGridSizeZ = maxGridSize.z;
 
-         this.cudafyView.MaxBlockSizeX = maxThreadsPerBlock;
-         this.cudafyView.MaxBlockSizeY = maxThreadsPerBlock;
-         this.cudafyView.MaxBlockSizeZ = maxThreadsPerBlock;
+         ////this.cudafyView.MaxBlockSizeX = maxThreadsPerBlock;
+         ////this.cudafyView.MaxBlockSizeY = maxThreadsPerBlock;
+         ////this.cudafyView.MaxBlockSizeZ = maxThreadsPerBlock;
 
-         this.cudafyModel.GridSize = new int[] { this.cudafyView.GridSizeX, this.cudafyView.GridSizeY, this.cudafyView.GridSizeZ };
-         this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
+         ////this.cudafyModel.GridSize = new int[] { this.cudafyView.GridSizeX, this.cudafyView.GridSizeY, this.cudafyView.GridSizeZ };
+         ////this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
 
          long totalBlockThreads = this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2];
 
          if (totalBlockThreads > gpgpuProperties.MaxThreadsPerBlock)
             {
-            this.cudafyView.BlockSizeY = Convert.ToInt32(Math.Floor((double)gpgpuProperties.MaxThreadsPerBlock / this.cudafyModel.BlockSize[0]));
+            ////this.cudafyView.BlockSizeY = Convert.ToInt32(Math.Floor((double)gpgpuProperties.MaxThreadsPerBlock / this.cudafyModel.BlockSize[0]));
             }
 
          this.TriggerAddProcessing();
@@ -305,24 +302,24 @@
 
       private void CudafyView_BlockSizeXChanged(object sender, EventArgs e)
          {
-         if (this.cudafyView.BlockSizeX * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
-            {
-            this.cudafyView.BlockSizeY = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / this.cudafyView.BlockSizeX));
-            }
+         ////if (this.cudafyView.BlockSizeX * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
+         ////   {
+         ////   this.cudafyView.BlockSizeY = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / this.cudafyView.BlockSizeX));
+         ////   }
 
-         this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
+         ////this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
 
          this.TriggerAddProcessing();
          }
 
       private void CudafyView_BlockSizeYChanged(object sender, EventArgs e)
          {
-         if (this.cudafyView.BlockSizeY * this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
-            {
-            this.cudafyView.BlockSizeX = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / this.cudafyView.BlockSizeY));
-            }
+         ////if (this.cudafyView.BlockSizeY * this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[2] > this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock)
+         ////   {
+         ////   this.cudafyView.BlockSizeX = Convert.ToInt32(Math.Floor((double)this.gpgpuProperties[this.cudafyModel.GPUName].MaxThreadsPerBlock / this.cudafyView.BlockSizeY));
+         ////   }
 
-         this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
+         ////this.cudafyModel.BlockSize = new int[] { this.cudafyView.BlockSizeX, this.cudafyView.BlockSizeY, this.cudafyView.BlockSizeZ };
 
          this.TriggerAddProcessing();
          }
