@@ -14,8 +14,8 @@
       [Test]
       public void Constructor()
          {
-         IAboutBoxController aboutBoxController = this.ServiceLocator.GetInstance<IAboutBoxController>();
-         IAboutBoxModel aboutBoxModel = this.ServiceLocator.GetInstance<IAboutBoxModel>();
+         AboutBoxController aboutBoxController = this.ServiceLocator.GetInstance<AboutBoxController>();
+         IAboutBoxModel aboutBoxModel = aboutBoxController.AboutBoxModel;
 
          Assert.That(aboutBoxModel.ProductName, Is.Not.Null.Or.Empty);
          Assert.That(aboutBoxModel.Version, Is.Not.Null.Or.Empty);

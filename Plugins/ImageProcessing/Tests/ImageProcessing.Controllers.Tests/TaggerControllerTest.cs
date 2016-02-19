@@ -8,15 +8,11 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImageProcessing.Controllers;
-   using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Models;
-   using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using ImagingInterface.Tests.Common.Mocks;
-   using ImagingInterface.Tests.Common.Views;
-   using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
@@ -26,22 +22,22 @@
       [Test]
       public void Constructor()
          {
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
          }
 
       [Test]
       public void RawPluginView()
          {
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
-         IRawPluginView rotateView = taggerController.RawPluginView;
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ////IRawPluginView rotateView = taggerController.RawPluginView;
 
-         Assert.IsNotNull(rotateView);
+         ////Assert.IsNotNull(rotateView);
          }
 
       [Test]
       public void RawPluginModel()
          {
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
          IRawPluginModel rawPluginModel = taggerController.RawPluginModel;
 
          Assert.IsNotNull(rawPluginModel);
@@ -52,7 +48,7 @@
          {
          this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
          ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
 
          Assert.AreEqual("Tagger", taggerModel.DisplayName);
@@ -61,7 +57,7 @@
       [Test]
       public void Active()
          {
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
 
          Assert.IsTrue(taggerController.Active);
          }
@@ -69,10 +65,10 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
 
-         TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         ////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
          bool closingCalled = false;
          bool closedCalled = false;
 
@@ -83,7 +79,7 @@
 
          Assert.IsTrue(closingCalled);
          Assert.IsTrue(closedCalled);
-         Assert.IsTrue(taggerView.CloseCalled);
+         ////Assert.IsTrue(taggerView.CloseCalled);
          }
 
       [Test]
@@ -94,15 +90,15 @@
          
          try
             {
-            this.Container.RegisterSingleton<IImageView, ImageView>();
+            ////this.Container.RegisterSingleton<IImageView, ImageView>();
             this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-            ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+            TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
             ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
-            IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
-            IImageManagerController imageManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
+            ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+            ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
             ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
-            ImageView imageView = this.Container.GetInstance<IImageView>() as ImageView;
+            ////ImageView imageView = this.Container.GetInstance<IImageView>() as ImageView;
 
             imageSourceController.ImageData = new byte[10, 10, 1];
 
@@ -128,23 +124,23 @@
             // Tag a point
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
-               imageView.TriggerSelectionChanged(new Point(1, 1), true);
+               ////imageView.TriggerSelectionChanged(new Point(1, 1), true);
 
                imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             // Add an already tagged point
-            imageView.TriggerSelectionChanged(new Point(1, 1), true);
+            ////imageView.TriggerSelectionChanged(new Point(1, 1), true);
 
             // Try to untag an unexisting point
-            imageView.TriggerSelectionChanged(new Point(2, 2), false);
+            ////imageView.TriggerSelectionChanged(new Point(2, 2), false);
 
             imageSourceController.ImageData = new byte[10, 10, 3];
 
             // Tag a point in a 3-channels image
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
-               imageView.TriggerSelectionChanged(new Point(2, 2), true);
+               ////imageView.TriggerSelectionChanged(new Point(2, 2), true);
 
                imageControllerWrapper.WaitForDisplayUpdate();
                }
@@ -152,7 +148,7 @@
             // Untag a point
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
-               imageView.TriggerSelectionChanged(new Point(2, 2), false);
+               ////imageView.TriggerSelectionChanged(new Point(2, 2), false);
 
                imageControllerWrapper.WaitForDisplayUpdate();
                }
@@ -165,7 +161,7 @@
                imageControllerWrapper.WaitForClosed();
                }
 
-            imageController = this.ServiceLocator.GetInstance<IImageController>();
+            imageController = this.ServiceLocator.GetInstance<ImageController>();
 
             // Load points with first display update
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -182,7 +178,7 @@
             // Close and reopen the plugin to allow to call ExtractPoints from RegisterActiveImage()
             taggerController.Close();
 
-            taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+            taggerController = this.ServiceLocator.GetInstance<TaggerController>();
 
             taggerModel.Labels.Add(label);
             taggerModel.LabelColors.Add(label, Color.FromArgb(0));
@@ -202,18 +198,18 @@
       [Test]
       public void LabelAdded()
          {
-         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
          this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-         TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         ////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
          ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
 
          taggerModel.AddedLabel = "AddedLabel";
 
          taggerController.Initialize();
 
-         taggerView.TriggerLabelAdded();
+         ////taggerView.TriggerLabelAdded();
 
          Assert.AreEqual(1, taggerModel.Labels.Count());
          Assert.AreEqual(1, taggerModel.LabelColors.Count());
@@ -224,13 +220,13 @@
          {
          string displayName = "temp";
 
-         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
          this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-         TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
+         ////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
          ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
-         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
          ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))

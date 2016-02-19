@@ -13,11 +13,11 @@
 
    public class ImageControllerWrapper : IDisposable
       {
-      private List<IImageController> imageControllers = new List<IImageController>();
+      private List<ImageController> imageControllers = new List<ImageController>();
       private CountdownEvent displayUpdateCountdownEvent;
       private CountdownEvent closedCountdownEvent;
 
-      public ImageControllerWrapper(IImageController imageController)
+      public ImageControllerWrapper(ImageController imageController)
          {
          this.imageControllers.Add(imageController);
 
@@ -27,7 +27,7 @@
          this.RegisterAllEvents();
          }
 
-      public ImageControllerWrapper(IEnumerable<IImageController> imageControllers)
+      public ImageControllerWrapper(IEnumerable<ImageController> imageControllers)
          {
          this.imageControllers.AddRange(imageControllers);
 
@@ -90,7 +90,7 @@
 
       private void RegisterAllEvents()
          {
-         foreach (IImageController imageController in this.imageControllers)
+         foreach (ImageController imageController in this.imageControllers)
             {
             imageController.DisplayUpdated += this.ImageController_DisplayUpdated;
             imageController.Closed += this.ImageController_Closed;
@@ -99,13 +99,13 @@
 
       private void UnregisterAllEvents()
          {
-         foreach (IImageController imageController in this.imageControllers)
+         foreach (ImageController imageController in this.imageControllers)
             {
             this.UnregisterEvents(imageController);
             }
          }
 
-      private void UnregisterEvents(IImageController imageController)
+      private void UnregisterEvents(ImageController imageController)
          {
          imageController.DisplayUpdated -= this.ImageController_DisplayUpdated;
          imageController.Closed -= this.ImageController_Closed;
@@ -113,7 +113,7 @@
 
       private void ImageController_Closed(object sender, EventArgs e)
          {
-         IImageController imageController = sender as IImageController;
+         ImageController imageController = sender as ImageController;
 
          this.closedCountdownEvent.Signal();
 
@@ -122,7 +122,7 @@
 
       private void ImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
          {
-         IImageController imageController = sender as IImageController;
+         ImageController imageController = sender as ImageController;
 
          this.displayUpdateCountdownEvent.Signal();
 

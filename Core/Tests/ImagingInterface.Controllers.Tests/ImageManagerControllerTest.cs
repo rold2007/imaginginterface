@@ -8,12 +8,9 @@
    using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
-   using ImagingInterface.Controllers.Tests.Views;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Tests.Common.Views;
-   using ImagingInterface.Views;
-   using ImagingInterface.Views.EventArguments;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
@@ -23,7 +20,7 @@
       [Test]
       public void Constructor()
          {
-         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
+         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
 
          Assert.IsNotNull(imageViewManagerController);
          }
@@ -31,32 +28,32 @@
       [Test]
       public void AddImage()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
-         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
-         IImageView imageView = this.Container.GetInstance<IImageView>();
-         IImageController imageController = this.Container.GetInstance<IImageController>();
+         ////IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
+         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+         ////IImageView imageView = this.Container.GetInstance<IImageView>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
          IImageModel imageModel = this.Container.GetInstance<IImageModel>();
 
-         Assert.IsNull(imageManagerView.GetActiveImageView());
+         ////Assert.IsNull(imageManagerView.GetActiveImageView());
          Assert.IsNull(imageViewManagerController.GetActiveImage());
 
          imageViewManagerController.AddImage(imageController);
 
-         Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
+         ////Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
          Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
          }
 
       [Test]
       public void GetActiveImage()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
-         IImageController imageController = this.Container.GetInstance<IImageController>();
+         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
 
          Assert.IsNull(imageViewManagerController.GetActiveImage());
 
@@ -72,22 +69,22 @@
       [Test]
       public void RemoveImageController()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
-         IImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<IImageManagerController>();
-         IImageView imageView = this.Container.GetInstance<IImageView>();
-         IImageController imageController = this.Container.GetInstance<IImageController>();
+         ////IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
+         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+         ////IImageView imageView = this.Container.GetInstance<IImageView>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
 
          imageViewManagerController.AddImage(imageController);
 
-         Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
+         ////Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
          Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
 
          imageController.Close();
 
-         Assert.IsNull(imageManagerView.GetActiveImageView());
+         ////Assert.IsNull(imageManagerView.GetActiveImageView());
          Assert.IsNull(imageViewManagerController.GetActiveImage());
          }
       }

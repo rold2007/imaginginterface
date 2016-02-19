@@ -8,14 +8,11 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImageProcessing.Controllers;
-   using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Models;
-   using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using ImagingInterface.Tests.Common.Mocks;
-   using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
@@ -25,13 +22,13 @@
       [Test]
       public void Constructor()
          {
-         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
+         ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
          }
 
       [Test]
       public void RawPluginModel()
          {
-         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
+         ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
          IRawPluginModel rawPluginModel = objectDetectionManagerController.RawPluginModel;
 
          Assert.IsNotNull(rawPluginModel);
@@ -40,10 +37,10 @@
       [Test]
       public void RawPluginView()
          {
-         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
-         IRawPluginView rawPluginView = objectDetectionManagerController.RawPluginView;
+         ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
+         ////IRawPluginView rawPluginView = objectDetectionManagerController.RawPluginView;
 
-         Assert.IsNotNull(rawPluginView);
+         ////Assert.IsNotNull(rawPluginView);
          }
 
       [Test]
@@ -51,7 +48,7 @@
          {
          this.Container.RegisterSingleton<IObjectDetectionManagerModel, ObjectDetectionManagerModel>();
 
-         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
+         ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
          IObjectDetectionManagerModel objectDetectionManagerModel = this.ServiceLocator.GetInstance<IObjectDetectionManagerModel>();
 
          Assert.AreEqual("Object detection", objectDetectionManagerModel.DisplayName);
@@ -60,7 +57,7 @@
       [Test]
       public void Active()
          {
-         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
+         ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
 
          Assert.IsTrue(objectDetectionManagerController.Active);
          }
@@ -68,7 +65,7 @@
       [Test]
       public void Initialize()
          {
-         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
+         ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
 
          objectDetectionManagerController.Initialize();
          }
@@ -76,14 +73,14 @@
       [Test]
       public void Close()
          {
-         this.Container.RegisterSingleton<IObjectDetectionManagerView, ObjectDetectionManagerView>();
-         this.Container.RegisterSingleton<ITaggerController, TaggerController>();
-         this.Container.RegisterSingleton<IObjectDetectionController, ObjectDetectionController>();
+         ////this.Container.RegisterSingleton<IObjectDetectionManagerView, ObjectDetectionManagerView>();
+         this.Container.RegisterSingleton<TaggerController>();
+         this.Container.RegisterSingleton<ObjectDetectionController>();
 
-         ObjectDetectionManagerView objectDetectionManagerView = this.ServiceLocator.GetInstance<IObjectDetectionManagerView>() as ObjectDetectionManagerView;
-         ITaggerController taggerController = this.ServiceLocator.GetInstance<ITaggerController>();
-         IObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<IObjectDetectionController>();
-         IObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<IObjectDetectionManagerController>();
+         ////ObjectDetectionManagerView objectDetectionManagerView = this.ServiceLocator.GetInstance<IObjectDetectionManagerView>() as ObjectDetectionManagerView;
+         TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<ObjectDetectionController>();
+         ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
          bool objectDetectionManagerControllerClosingCalled = false;
          bool objectDetectionManagerControllerClosedCalled = false;
          bool taggerControllerClosingCalled = false;
@@ -106,7 +103,7 @@
          Assert.IsTrue(taggerControllerClosedCalled);
          Assert.IsTrue(objectDetectionControllerClosingCalled);
          Assert.IsTrue(objectDetectionControllerClosedCalled);
-         Assert.IsTrue(objectDetectionManagerView.CloseCalled);
+         ////Assert.IsTrue(objectDetectionManagerView.CloseCalled);
          }
       }
    }

@@ -13,15 +13,12 @@
    using Emgu.CV;
    using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Controllers.Tests.Mocks;
-   using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using ImagingInterface.Tests.Common.Mocks;
-   using ImagingInterface.Tests.Common.Views;
-   using ImagingInterface.Views;
-   using ImagingInterface.Views.EventArguments;
    using NUnit.Framework;
 
    [TestFixture]
@@ -30,16 +27,16 @@
       [Test]
       public void Constructor()
          {
-         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
          }
 
       [Test]
       public void LoadFile()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
          string tempFileName = string.Empty;
 
@@ -68,7 +65,7 @@
 
                   Assert.That(imageModel.DisplayName, Is.Not.Null.Or.Empty);
                   Assert.IsNotNull(imageModel.DisplayImageData);
-                  Assert.AreSame(imageModel, imageView.AssignedImageModel);
+                  ////Assert.AreSame(imageModel, imageView.AssignedImageModel);
 
                   imageController.Close();
 
@@ -91,7 +88,7 @@
       [Test]
       public void LoadFileInvalid()
          {
-         ImageView imageView = new ImageView();
+         ////ImageView imageView = new ImageView();
          ImageModel imageModel = new ImageModel();
          string tempFileName = string.Empty;
 
@@ -102,7 +99,7 @@
             Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
             Assert.IsNull(imageModel.DisplayImageData);
 
-            IImageController imageController = this.Container.GetInstance<IImageController>();
+            ImageController imageController = this.Container.GetInstance<ImageController>();
             IFileSourceController fileSourceController = this.Container.GetInstance<IFileSourceController>();
 
             fileSourceController.Filename = tempFileName;
@@ -111,7 +108,7 @@
 
             Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
             Assert.IsNull(imageModel.DisplayImageData);
-            Assert.IsNull(imageView.AssignedImageModel);
+            ////Assert.IsNull(imageView.AssignedImageModel);
             }
          finally
             {
@@ -125,15 +122,15 @@
       [Test]
       public void StartLiveUpdate()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-         IImageController imageController = this.Container.GetInstance<IImageController>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
 
-         Assert.IsNotNull(imageView.AssignedImageModel);
+         ////Assert.IsNotNull(imageView.AssignedImageModel);
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
@@ -142,19 +139,19 @@
             imageControllerWrapper.WaitForDisplayUpdate();
             }
 
-         Assert.IsNotNull(imageView.AssignedImageModel);
-         Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+         ////Assert.IsNotNull(imageView.AssignedImageModel);
+         ////Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
          }
 
       [Test]
       public void IsGrayscale()
          {
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageSourceController, ImageSourceController>();
 
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-         IImageController imageController = this.Container.GetInstance<IImageController>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -190,15 +187,15 @@
       [Test]
       public void CloseWhileStartLiveUpdate()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-         IImageController imageController = this.Container.GetInstance<IImageController>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
 
-         Assert.IsNotNull(imageView.AssignedImageModel);
+         ////Assert.IsNotNull(imageView.AssignedImageModel);
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
@@ -206,8 +203,8 @@
 
             imageControllerWrapper.WaitForDisplayUpdate();
 
-            Assert.IsNotNull(imageView.AssignedImageModel);
-            Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+            ////Assert.IsNotNull(imageView.AssignedImageModel);
+            ////Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
 
             imageController.Closing += this.ImageController_Closing;
 
@@ -224,14 +221,14 @@
       [Test]
       public void UpdatePeriod()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
 
-         imageView.UpdateFrequency = 30;
+         ////imageView.UpdateFrequency = 30;
 
-         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
          ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -241,7 +238,7 @@
             imageControllerWrapper.WaitForDisplayUpdate();
             }
 
-         Thread.Sleep(Convert.ToInt32(2 * 1000 / imageView.UpdateFrequency));
+         ////Thread.Sleep(Convert.ToInt32(2 * 1000 / imageView.UpdateFrequency));
 
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
             {
@@ -251,8 +248,8 @@
             }
 
          imageSourceController.ImageData = new byte[1, 1, 1];
-         imageView.UpdateFrequency = double.Epsilon;
-         imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ////imageView.UpdateFrequency = double.Epsilon;
+         imageController = this.ServiceLocator.GetInstance<ImageController>();
 
          // Let the UpdateDisplayImageData() skip a frame
          using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -278,24 +275,24 @@
       [Test]
       public void ZoomLevel()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
-         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
 
          Assert.AreEqual(1, imageModel.ZoomLevel);
 
-         imageView.TriggerZoomLevelIncreased();
+         ////imageView.TriggerZoomLevelIncreased();
 
          Assert.AreEqual(2.0, imageModel.ZoomLevel);
 
-         imageView.TriggerZoomLevelDecreased();
+         ////imageView.TriggerZoomLevelDecreased();
 
          Assert.AreEqual(1.0, imageModel.ZoomLevel);
 
-         imageView.TriggerZoomLevelDecreased();
+         ////imageView.TriggerZoomLevelDecreased();
 
          Assert.AreEqual(0.5, imageModel.ZoomLevel);
          }
@@ -303,11 +300,11 @@
       [Test]
       public void PixelView()
          {
-         this.Container.RegisterSingleton<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-         ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
-         IImageController imageController = this.ServiceLocator.GetInstance<IImageController>();
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
          Point pixelPosition = new Point();
 
@@ -315,21 +312,21 @@
 
          imageModel.DisplayImageData[1, 1, 0] = 255;
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(0, imageView.Gray);
-         Assert.IsNull(imageView.RGB);
-         Assert.IsNull(imageView.HSV);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.IsNull(imageView.RGB);
+         ////Assert.IsNull(imageView.HSV);
 
          pixelPosition = new Point(1, 1);
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(255, imageView.Gray);
-         Assert.IsNull(imageView.RGB);
-         Assert.IsNull(imageView.HSV);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(255, imageView.Gray);
+         ////Assert.IsNull(imageView.RGB);
+         ////Assert.IsNull(imageView.HSV);
 
          imageModel.DisplayImageData = new byte[3, 3, 3];
 
@@ -351,81 +348,81 @@
 
          pixelPosition = new Point(0, 0);
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(0, imageView.Gray);
-         Assert.AreEqual(0, imageView.RGB[0]);
-         Assert.AreEqual(0, imageView.RGB[1]);
-         Assert.AreEqual(0, imageView.RGB[2]);
-         Assert.AreEqual(0.0, imageView.HSV[0]);
-         Assert.AreEqual(0.0, imageView.HSV[1]);
-         Assert.AreEqual(0.0, imageView.HSV[2]);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(0, imageView.RGB[0]);
+         ////Assert.AreEqual(0, imageView.RGB[1]);
+         ////Assert.AreEqual(0, imageView.RGB[2]);
+         ////Assert.AreEqual(0.0, imageView.HSV[0]);
+         ////Assert.AreEqual(0.0, imageView.HSV[1]);
+         ////Assert.AreEqual(0.0, imageView.HSV[2]);
 
          pixelPosition = new Point(1, 0);
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(0, imageView.Gray);
-         Assert.AreEqual(0, imageView.RGB[0]);
-         Assert.AreEqual(0, imageView.RGB[1]);
-         Assert.AreEqual(255, imageView.RGB[2]);
-         Assert.AreEqual(240.0, imageView.HSV[0]);
-         Assert.AreEqual(1.0, imageView.HSV[1]);
-         Assert.AreEqual(255.0, imageView.HSV[2]);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(0, imageView.RGB[0]);
+         ////Assert.AreEqual(0, imageView.RGB[1]);
+         ////Assert.AreEqual(255, imageView.RGB[2]);
+         ////Assert.AreEqual(240.0, imageView.HSV[0]);
+         ////Assert.AreEqual(1.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
 
          pixelPosition = new Point(0, 1);
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(0, imageView.Gray);
-         Assert.AreEqual(0, imageView.RGB[0]);
-         Assert.AreEqual(255, imageView.RGB[1]);
-         Assert.AreEqual(0, imageView.RGB[2]);
-         Assert.AreEqual(120.0, imageView.HSV[0]);
-         Assert.AreEqual(1.0, imageView.HSV[1]);
-         Assert.AreEqual(255.0, imageView.HSV[2]);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(0, imageView.RGB[0]);
+         ////Assert.AreEqual(255, imageView.RGB[1]);
+         ////Assert.AreEqual(0, imageView.RGB[2]);
+         ////Assert.AreEqual(120.0, imageView.HSV[0]);
+         ////Assert.AreEqual(1.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
 
          pixelPosition = new Point(1, 1);
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(0, imageView.Gray);
-         Assert.AreEqual(255, imageView.RGB[0]);
-         Assert.AreEqual(255, imageView.RGB[1]);
-         Assert.AreEqual(255, imageView.RGB[2]);
-         Assert.AreEqual(0.0, imageView.HSV[0]);
-         Assert.AreEqual(0.0, imageView.HSV[1]);
-         Assert.AreEqual(255.0, imageView.HSV[2]);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(255, imageView.RGB[0]);
+         ////Assert.AreEqual(255, imageView.RGB[1]);
+         ////Assert.AreEqual(255, imageView.RGB[2]);
+         ////Assert.AreEqual(0.0, imageView.HSV[0]);
+         ////Assert.AreEqual(0.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
 
          pixelPosition = new Point(2, 0);
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(0, imageView.Gray);
-         Assert.AreEqual(255, imageView.RGB[0]);
-         Assert.AreEqual(0, imageView.RGB[1]);
-         Assert.AreEqual(0, imageView.RGB[2]);
-         Assert.AreEqual(0.0, imageView.HSV[0]);
-         Assert.AreEqual(1.0, imageView.HSV[1]);
-         Assert.AreEqual(255.0, imageView.HSV[2]);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(255, imageView.RGB[0]);
+         ////Assert.AreEqual(0, imageView.RGB[1]);
+         ////Assert.AreEqual(0, imageView.RGB[2]);
+         ////Assert.AreEqual(0.0, imageView.HSV[0]);
+         ////Assert.AreEqual(1.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
 
          pixelPosition = new Point(2, 1);
 
-         imageView.TriggerPixelViewChanged(pixelPosition);
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
 
-         Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-         Assert.AreEqual(0, imageView.Gray);
-         Assert.AreEqual(255, imageView.RGB[0]);
-         Assert.AreEqual(64, imageView.RGB[1]);
-         Assert.AreEqual(128, imageView.RGB[2]);
-         Assert.AreEqual(340.0, imageView.HSV[0]);
-         Assert.AreEqual(0.749, imageView.HSV[1], 0.01);
-         Assert.AreEqual(255.0, imageView.HSV[2]);
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(255, imageView.RGB[0]);
+         ////Assert.AreEqual(64, imageView.RGB[1]);
+         ////Assert.AreEqual(128, imageView.RGB[2]);
+         ////Assert.AreEqual(340.0, imageView.HSV[0]);
+         ////Assert.AreEqual(0.749, imageView.HSV[1], 0.01);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
          }
 
       private void ImageController_Closing(object sender, CancelEventArgs e)

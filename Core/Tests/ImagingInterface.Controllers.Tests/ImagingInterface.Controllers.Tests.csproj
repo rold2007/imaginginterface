@@ -83,13 +83,6 @@
     <Compile Include="Mocks\PluginModel2.cs" />
     <Compile Include="PluginOperationControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\AboutBoxView.cs" />
-    <Compile Include="Views\FileOperationView.cs" />
-    <Compile Include="Views\HelpOperationView.cs" />
-    <Compile Include="Views\PluginManagerView.cs" />
-    <Compile Include="Views\PluginOperationsView.cs" />
-    <Compile Include="Views\PluginView1.cs" />
-    <Compile Include="Views\PluginView2.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ImagingInterface.Controllers.Interfaces\ImagingInterface.Controllers.Interfaces.csproj">
@@ -111,10 +104,6 @@
     <ProjectReference Include="..\..\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
-      <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
-      <Name>ImagingInterface.Views.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj">
       <Project>{1692fc94-ec70-44c5-b856-694648bafa73}</Project>
