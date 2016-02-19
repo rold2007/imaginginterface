@@ -7,14 +7,13 @@
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using ImagingInterface.Controllers.Tests.Views;
    using ImagingInterface.Plugins;
 
    public class PluginController1 : IPluginController, IImageProcessingController
       {
-      public PluginController1(PluginView1 pluginView, PluginModel1 pluginModel)
+      public PluginController1(PluginModel1 pluginModel)
          {
-         this.RawPluginView = pluginView;
+         ////this.RawPluginView = pluginView;
          this.RawPluginModel = pluginModel;
 
          this.RawPluginModel.DisplayName = "Plugin1";

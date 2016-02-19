@@ -8,17 +8,13 @@
    using System.Threading.Tasks;
    using CommonServiceLocator.SimpleInjectorAdapter;
    using ImageProcessing.Controllers;
-   using ImageProcessing.Controllers.Tests.Views;
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
-   using ImageProcessing.Views;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using ImagingInterface.Tests.Common.Mocks;
-   using ImagingInterface.Tests.Common.Views;
-   using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
    using SimpleInjector;
@@ -58,29 +54,29 @@
          this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
-         this.Container.RegisterSingleton<IMainView, MainView>();
-         this.Container.RegisterSingleton<IImageManagerView, ImageManagerView>();
-         this.Container.Register<IInvertView, InvertView>();
-         this.Container.Register<IRotateView, RotateView>();
-         this.Container.Register<ICudafyView, CudafyView>();
-         this.Container.Register<IImageView, ImageView>();
-         this.Container.RegisterSingleton<ITaggerView, TaggerView>();
-         this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
-         this.Container.Register<IObjectDetectionManagerView, ObjectDetectionManagerView>();
+         ////this.Container.RegisterSingleton<IMainView, MainView>();
+         ////this.Container.RegisterSingleton<IImageManagerView, ImageManagerView>();
+         ////this.Container.Register<IInvertView, InvertView>();
+         ////this.Container.Register<IRotateView, RotateView>();
+         ////this.Container.Register<ICudafyView, CudafyView>();
+         ////this.Container.Register<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         ////this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
+         ////this.Container.Register<IObjectDetectionManagerView, ObjectDetectionManagerView>();
 
          // Controllers
-         this.Container.RegisterSingleton<IMainController, MainController>();
-         this.Container.RegisterSingleton<IImageManagerController, ImageManagerController>();
-         this.Container.Register<IInvertController, InvertController>();
-         this.Container.Register<IRotateController, RotateController>();
-         this.Container.Register<ICudafyController, CudafyController>();
-         this.Container.Register<IImageController, ImageController>();
+         this.Container.Register<MainController>();
+         this.Container.Register<ImageManagerController>();
+         this.Container.Register<InvertController>();
+         this.Container.Register<RotateController>();
+         this.Container.Register<CudafyController>();
+         this.Container.Register<ImageController>();
          this.Container.Register<IImageSourceController, ImageSourceController>();
          this.Container.Register<IFileSourceController, FileSourceController>();
          this.Container.Register<IMemorySourceController, MemorySourceController>();
-         this.Container.Register<ITaggerController, TaggerController>();
-         this.Container.Register<IObjectDetectionController, ObjectDetectionController>();
-         this.Container.Register<IObjectDetectionManagerController, ObjectDetectionManagerController>();
+         this.Container.Register<TaggerController>();
+         this.Container.Register<ObjectDetectionController>();
+         this.Container.Register<ObjectDetectionManagerController>();
 
          // Models
          this.Container.Register<IInvertModel, InvertModel>();

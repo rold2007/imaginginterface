@@ -7,16 +7,12 @@
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
-   using ImagingInterface.Tests.Common.Views;
-   using ImagingInterface.Views;
    using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
    using SimpleInjector;
    using Video.Controllers;
    using Video.Controllers.Tests.Mocks;
-   using Video.Controllers.Tests.Views;
    using Video.Models;
-   using Video.Views;
 
    public abstract class ControllersBaseTest : BaseTest
       {
@@ -53,16 +49,16 @@
          this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
-         this.Container.RegisterSingleton<IMainView, MainView>();
-         this.Container.RegisterSingleton<IImageManagerView, ImageManagerView>();
-         this.Container.Register<ICaptureView, CaptureView>();
-         this.Container.Register<IImageView, ImageView>();
+         ////this.Container.RegisterSingleton<IMainView, MainView>();
+         ////this.Container.RegisterSingleton<IImageManagerView, ImageManagerView>();
+         ////this.Container.Register<ICaptureView, CaptureView>();
+         ////this.Container.Register<IImageView, ImageView>();
 
          // Controllers
-         this.Container.RegisterSingleton<IMainController, MainController>();
-         this.Container.RegisterSingleton<IImageManagerController, ImageManagerController>();
-         this.Container.Register<ICaptureController, CaptureController>();
-         this.Container.Register<IImageController, ImageController>();
+         this.Container.Register<MainController>();
+         this.Container.Register<ImageManagerController>();
+         this.Container.Register<CaptureController>();
+         this.Container.Register<ImageController>();
          this.Container.Register<ICaptureWrapper, CaptureWrapperMock>();
          this.Container.Register<IMemorySourceController, MemorySourceController>();
 
