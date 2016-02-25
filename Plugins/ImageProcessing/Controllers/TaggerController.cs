@@ -170,14 +170,14 @@
 
          if (this.registeredImageController != null)
             {
-            this.registeredImageController.SelectionChanged += this.RegisteredImageController_SelectionChanged;
+            ////this.registeredImageController.SelectionChanged += this.RegisteredImageController_SelectionChanged;
 
-            if (this.registeredImageController.LastDisplayedImage == null)
+            ////if (this.registeredImageController.LastDisplayedImage == null)
                {
                // Need to wait for the first display update
-               this.registeredImageController.DisplayUpdated += this.RegisteredImageController_DisplayUpdated;
+               ////this.registeredImageController.DisplayUpdated += this.RegisteredImageController_DisplayUpdated;
                }
-            else
+            ////else
                {
                this.ExtractPoints();
                }
@@ -188,8 +188,8 @@
          {
          if (this.registeredImageController != null)
             {
-            this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
-            this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
+            ////this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
+            ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
 
             this.tagger.SavePoints();
 
@@ -203,7 +203,7 @@
 
          this.AddLabels(this.tagger.DataPoints.Keys);
 
-         this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
+         ////this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
 
          ////this.taggerView.UpdateLabelList();
 
@@ -218,7 +218,7 @@
 
       private void RegisteredImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
          {
-         this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
+         ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
 
          this.ExtractPoints();
          }
@@ -231,14 +231,14 @@
                {
                if (this.AddPoint(this.taggerModel.SelectedLabel, e.PixelPosition))
                   {
-                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
+                  ////this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
                   }
                }
             else
                {
                if (this.RemovePoint(this.taggerModel.SelectedLabel, e.PixelPosition))
                   {
-                  this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
+                  ////this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
                   }
                }
             }

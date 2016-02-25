@@ -1,28 +1,27 @@
 ﻿namespace ImagingInterface.Views
    {
    using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
    using System.Diagnostics;
-   using System.Drawing;
-   using System.Linq;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
+   using Microsoft.Practices.ServiceLocation;
 
-   using SimpleInjector;
-
-   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationView, IHelpOperationView
+   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationView
       {
-      private static bool checkSingleton = false;
-      private HelpOperationController helpOperationController;
+      ////private static bool checkSingleton = false;
+      private IServiceLocator serviceLocator;
+      ////private HelpOperationController helpOperationController;
 
-      public MainWindow(HelpOperationController helpOperationController)
+      public MainWindow(IServiceLocator serviceLocator/*, HelpOperationController helpOperationController*/)
          {
          // This help detect misconfiguration in IoC
-         Debug.Assert(MainWindow.checkSingleton == false, "A singleton shoudn't be constructed twice.");
+         ////Debug.Assert(MainWindow.checkSingleton == false, "A singleton shoudn't be constructed twice.");
 
-         MainWindow.checkSingleton = true;
+         ////MainWindow.checkSingleton = true;
+
+         this.serviceLocator = serviceLocator;
 
          this.InitializeComponent();
 
@@ -33,8 +32,8 @@
          //// No, maybe I simply need to allow the HelpOperationController create an AboutBoxView using an IAboutBoxView
          //// registered through injection
 
-         this.helpOperationController = helpOperationController;
-         this.helpOperationController.DisplayAbouxBox += this.HelpOperationController_DisplayAboutBox;
+         ////this.helpOperationController = helpOperationController;
+         ////this.helpOperationController.DisplayAbouxBox += this.HelpOperationController_DisplayAboutBox;
          }
 
       public event CancelEventHandler ApplicationClosing;
@@ -48,8 +47,6 @@
       public event EventHandler<DragDropEventArgs> DragDropFile;
 
       public event EventHandler<PluginCreateEventArgs> PluginCreate;
-
-      public event EventHandler HelpAbout;
 
       public string[] OpenFile()
          {
@@ -140,7 +137,10 @@
 
       private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         ////this.helpOperationController = this.helpOperationController;
+         using (AboutBoxView aboutBoxView = this.serviceLocator.GetInstance<AboutBoxView>())
+            {
+            aboutBoxView.ShowDialog();
+            }
          }
 
       private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -245,15 +245,6 @@
             }
 
          e.Cancel = cancelEventArgs.Cancel;
-         }
-
-      private void HelpOperationController_DisplayAboutBox(object sender, EventArgs e)
-         {
-         //// Instanciate about box view, WITH using statement !
-
-         //// using()
-         //// ...
-         throw new NotImplementedException();
          }
       }
    }

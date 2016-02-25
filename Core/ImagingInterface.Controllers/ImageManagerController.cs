@@ -2,34 +2,37 @@
    {
    using System;
    using System.Collections.Generic;
-   using System.Linq;
-   using ImagingInterface.Plugins;
+   using ImagingInterface.Models;
 
    public class ImageManagerController
       {
-      ////private IImageManagerView imageManagerView;
-      private Dictionary<IRawImageView, ImageController> imageControllers;
+      private ImageManagerModel imageManagerModel;
 
-      public ImageManagerController(MainController mainController)
+      public ImageManagerController(ImageManagerModel imageManagerModel/*, MainController mainController*/)
          {
          ////this.imageManagerView = imageManagerView;
-         this.imageControllers = new Dictionary<IRawImageView, ImageController>();
+         ////this.imageControllers = new Dictionary<IRawImageView, ImageController>();
+         this.imageManagerModel = imageManagerModel;
 
          ////this.imageManagerView.ActiveImageChanged += this.ImageManagerView_ActiveImageChanged;
 
-         mainController.AddImageManager(this);
+         ////mainController.AddImageManager(this);
          }
 
       public event EventHandler ActiveImageChanged;
 
       public void AddImage(ImageController imageController)
          {
-         imageController.Closed += this.ImageController_Closed;
+         ////imageController.Closed += this.ImageController_Closed;
 
          ////this.imageControllers.Add(imageController.RawImageView, imageController);
          ////this.imageManagerView.AddImage(imageController.RawImageView, imageController.RawImageModel);
+
+         this.imageManagerModel.ImageControllers.Add(imageController);
+         ////this.imageManagerModel.ActiveImageController = imageController;
          }
 
+      /*
       public ImageController GetActiveImage()
          {
          ////IRawImageView activeRawImageView = this.imageManagerView.GetActiveImageView();
@@ -40,21 +43,23 @@
          ////   }
          ////else
             {
-            return null;
+            return this.imageManagerModel.ActiveImageController;
             }
-         }
+         }*/
 
       public IList<ImageController> GetAllImages()
          {
-         return this.imageControllers.Values.ToList();
+         return null;
+         ////return this.imageControllers.Values.ToList();
          }
 
-      private void RemoveImage(ImageController imageController)
+      public void RemoveImage(ImageController imageController)
          {
-         imageController.Closed -= this.ImageController_Closed;
+         ////imageController.Closed -= this.ImageController_Closed;
 
          ////this.imageManagerView.RemoveImage(imageController.RawImageView);
          ////this.imageControllers.Remove(imageController.RawImageView);
+         this.imageManagerModel.ImageControllers.Remove(imageController);
          }
 
       private void ImageController_Closed(object sender, EventArgs e)

@@ -26,66 +26,43 @@
          }
 
       [Test]
-      public void AddImage()
+      public void AddRemoveImage()
          {
-         ////this.Container.RegisterSingleton<IImageView, ImageView>();
-         this.Container.RegisterSingleton<IImageModel, ImageModel>();
-
          ////IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
-         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+
+         ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+
          ////IImageView imageView = this.Container.GetInstance<IImageView>();
+
          ImageController imageController = this.Container.GetInstance<ImageController>();
-         IImageModel imageModel = this.Container.GetInstance<IImageModel>();
+         ////IImageModel imageModel = this.Container.GetInstance<IImageModel>();
 
          ////Assert.IsNull(imageManagerView.GetActiveImageView());
-         Assert.IsNull(imageViewManagerController.GetActiveImage());
+         ////Assert.IsNull(imageManagerController.GetActiveImage());
 
-         imageViewManagerController.AddImage(imageController);
-
-         ////Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
-         Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
-         }
-
-      [Test]
-      public void GetActiveImage()
-         {
-         ////this.Container.RegisterSingleton<IImageView, ImageView>();
-         this.Container.RegisterSingleton<IImageModel, ImageModel>();
-
-         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-         ImageController imageController = this.Container.GetInstance<ImageController>();
-
-         Assert.IsNull(imageViewManagerController.GetActiveImage());
-
-         imageViewManagerController.AddImage(imageController);
-
-         Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
-
-         imageController.Close();
-
-         Assert.IsNull(imageViewManagerController.GetActiveImage());
-         }
-
-      [Test]
-      public void RemoveImageController()
-         {
-         ////this.Container.RegisterSingleton<IImageView, ImageView>();
-         this.Container.RegisterSingleton<IImageModel, ImageModel>();
-
-         ////IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
-         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-         ////IImageView imageView = this.Container.GetInstance<IImageView>();
-         ImageController imageController = this.Container.GetInstance<ImageController>();
-
-         imageViewManagerController.AddImage(imageController);
+         imageManagerController.AddImage(imageController);
 
          ////Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
-         Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
+         ////Assert.AreSame(imageController, imageManagerController.GetActiveImage());
 
-         imageController.Close();
-
-         ////Assert.IsNull(imageManagerView.GetActiveImageView());
-         Assert.IsNull(imageViewManagerController.GetActiveImage());
+         imageManagerController.RemoveImage(imageController);
          }
+
+      ////[Test]
+      ////public void GetActiveImage()
+      ////   {
+      ////   ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+      ////   ImageController imageController = this.Container.GetInstance<ImageController>();
+
+      ////   Assert.IsNull(imageViewManagerController.GetActiveImage());
+
+      ////   imageViewManagerController.AddImage(imageController);
+
+      ////   Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
+
+      ////   imageController.Close();
+
+      ////   Assert.IsNull(imageViewManagerController.GetActiveImage());
+      ////   }
       }
    }

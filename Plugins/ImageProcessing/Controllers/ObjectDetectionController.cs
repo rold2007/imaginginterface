@@ -147,7 +147,7 @@
 
          if (imageController != null)
             {
-            this.objectDetector.Train(imageController.LastDisplayedImage);
+            ////this.objectDetector.Train(imageController.LastDisplayedImage);
             }
          }
 
@@ -157,7 +157,7 @@
 
          if (imageController != null)
             {
-            imageController.AddImageProcessingController(this, this.objectDetectionModel.Clone() as IRawPluginModel);
+            ////imageController.AddImageProcessingController(this, this.objectDetectionModel.Clone() as IRawPluginModel);
             }
          }
       }

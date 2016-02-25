@@ -1,11 +1,6 @@
 ﻿namespace ImagingInterface.Controllers
    {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
    using System.Reflection;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImagingInterface.Models;
 
    public class AboutBoxController
@@ -17,17 +12,10 @@
          this.AboutBoxModel = aboutBoxModel;
          }
 
-      public event EventHandler Display;
-
       public IAboutBoxModel AboutBoxModel
          {
          get;
          private set;
-         }
-
-      public void DisplayView()
-         {
-         this.Display(this, EventArgs.Empty);
          }
 
       private void InitializeModel(AboutBoxModel aboutBoxModel)

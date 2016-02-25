@@ -1,24 +1,15 @@
 ﻿namespace ImagingInterface.Controllers.Tests
    {
-   using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
-   using System.Diagnostics;
    using System.Drawing;
    using System.IO;
-   using System.Linq;
-   using System.Text;
-   using System.Threading;
-   using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.CvEnum;
-   using Emgu.CV.Structure;
-   using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using ImagingInterface.Tests.Common.Mocks;
+   using Mocks;
    using NUnit.Framework;
 
    [TestFixture]
@@ -30,6 +21,38 @@
          ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
          }
 
+      [Test]
+      public void InitializeImageSourceController()
+         {
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+         FileSourceController fileSourceController = this.ServiceLocator.GetInstance<FileSourceController>();
+
+         imageController.InitializeImageSourceController(fileSourceController);
+         }
+
+      [Test]
+      public void Close()
+         {
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+
+         imageController.Close();
+         }
+
+      [Test]
+      public void FullPath()
+         {
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+
+         Assert.IsNull(imageController.FullPath);
+
+         string displayName = "DisplayName";
+
+         imageController.SetDisplayName(displayName);
+
+         Assert.AreEqual(displayName, imageController.FullPath);
+         }
+
+      /*
       [Test]
       public void LoadFile()
          {
@@ -429,5 +452,6 @@
          {
          e.Cancel = true;
          }
+      */
       }
    }

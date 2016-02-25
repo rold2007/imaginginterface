@@ -122,7 +122,7 @@
 
             if (imageController != null)
                {
-               imageController.AddImageProcessingController(this, this.rotateModel.Clone() as IRawPluginModel);
+               ////imageController.AddImageProcessingController(this, this.rotateModel.Clone() as IRawPluginModel);
                }
             }
          }

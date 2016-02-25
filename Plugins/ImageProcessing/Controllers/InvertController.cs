@@ -116,11 +116,11 @@
             {
             if (e.Invert)
                {
-               imageController.AddImageProcessingController(this, null);
+               ////imageController.AddImageProcessingController(this, null);
                }
             else
                {
-               imageController.RemoveImageProcessingController(this, null);
+               ////imageController.RemoveImageProcessingController(this, null);
                }
             }
          }

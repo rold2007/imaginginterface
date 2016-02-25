@@ -92,8 +92,8 @@
          {
          foreach (ImageController imageController in this.imageControllers)
             {
-            imageController.DisplayUpdated += this.ImageController_DisplayUpdated;
-            imageController.Closed += this.ImageController_Closed;
+            ////imageController.DisplayUpdated += this.ImageController_DisplayUpdated;
+            ////imageController.Closed += this.ImageController_Closed;
             }
          }
 
@@ -107,8 +107,8 @@
 
       private void UnregisterEvents(ImageController imageController)
          {
-         imageController.DisplayUpdated -= this.ImageController_DisplayUpdated;
-         imageController.Closed -= this.ImageController_Closed;
+         ////imageController.DisplayUpdated -= this.ImageController_DisplayUpdated;
+         ////imageController.Closed -= this.ImageController_Closed;
          }
 
       private void ImageController_Closed(object sender, EventArgs e)
@@ -117,7 +117,7 @@
 
          this.closedCountdownEvent.Signal();
 
-         imageController.Closed -= this.ImageController_Closed;
+         ////imageController.Closed -= this.ImageController_Closed;
          }
 
       private void ImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
@@ -126,7 +126,7 @@
 
          this.displayUpdateCountdownEvent.Signal();
 
-         imageController.DisplayUpdated -= this.ImageController_DisplayUpdated;
+         ////imageController.DisplayUpdated -= this.ImageController_DisplayUpdated;
          }
       }
    }
