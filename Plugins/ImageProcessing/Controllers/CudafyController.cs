@@ -241,7 +241,7 @@
 
          if (imageController != null)
             {
-            imageController.AddImageProcessingController(this, this.cudafyModel.Clone() as IRawPluginModel);
+            ////imageController.AddImageProcessingController(this, this.cudafyModel.Clone() as IRawPluginModel);
             }
          }
 

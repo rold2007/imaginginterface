@@ -11,25 +11,21 @@
       string ProductName
          {
          get;
-         set;
          }
 
       string Version
          {
          get;
-         set;
          }
 
       string Copyright
          {
          get;
-         set;
          }
 
       string ProductDescription
          {
          get;
-         set;
          }
       }
    }

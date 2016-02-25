@@ -12,12 +12,12 @@
       ////private IPluginManagerView pluginManagerView;
       private Dictionary<IRawPluginView, IPluginController> pluginControllers;
 
-      public PluginManagerController(MainController mainController)
+      public PluginManagerController(/*MainController mainController*/)
          {
          ////this.pluginManagerView = pluginManagerView;
          this.pluginControllers = new Dictionary<IRawPluginView, IPluginController>();
 
-         mainController.AddPluginManager(this);
+         ////mainController.AddPluginManager(this);
          }
 
       public void AddPlugin(IPluginController pluginController)

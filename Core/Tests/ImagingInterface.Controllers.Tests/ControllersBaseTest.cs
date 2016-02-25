@@ -67,7 +67,7 @@
          this.Container.Register<ImageManagerController>();
          this.Container.Register<PluginOperationController>();
          this.Container.Register<PluginManagerController>();
-         this.Container.Register<HelpOperationController>();
+         ////this.Container.Register<HelpOperationController>();
          this.Container.Register<AboutBoxController>();
          this.Container.Register<ImageController>();
          this.Container.Register<IImageSourceController, ImageSourceController>();

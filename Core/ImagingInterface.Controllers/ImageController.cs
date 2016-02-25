@@ -1,12 +1,9 @@
 ﻿namespace ImagingInterface.Controllers
    {
    using System;
-   using System.Collections;
    using System.Collections.Generic;
    using System.ComponentModel;
    using System.Diagnostics;
-   using System.Drawing;
-   using System.Threading;
    using System.Threading.Tasks;
    using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
@@ -16,9 +13,8 @@
 
    public class ImageController
       {
-      ////private IImageView imageView;
       private IImageModel imageModel;
-      private IServiceLocator serviceLocator;
+      ////private IServiceLocator serviceLocator;
       private bool closing;
       private bool closed;
       private List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers;
@@ -31,18 +27,15 @@
       private Dictionary<IPluginController, int> asyncPluginControllers;
       private HashSet<IPluginController> closingPluginControllers;
 
-      public ImageController(IImageModel imageModel, IServiceLocator serviceLocator)
+      public ImageController(ImageModel imageModel/*, IServiceLocator serviceLocator*/)
          {
-         ////this.imageView = imageView;
          this.imageModel = imageModel;
-         this.serviceLocator = serviceLocator;
+         ////this.serviceLocator = serviceLocator;
          this.imageProcessingControllers = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
          this.lastFetchNextImageFromSourceTask = null;
          this.lastDisplayNextImageTask = null;
          this.asyncPluginControllers = new Dictionary<IPluginController, int>();
          this.closingPluginControllers = new HashSet<IPluginController>();
-
-         ////this.imageView.AssignImageModel(this.imageModel);
 
          this.lastDisplayUpdate = Stopwatch.StartNew();
 
@@ -67,13 +60,13 @@
          ////this.imageView.SelectionChanged += this.ImageView_SelectionChanged;
          }
 
-      public event CancelEventHandler Closing;
+      ////public event CancelEventHandler Closing;
 
-      public event EventHandler Closed;
+      ////public event EventHandler Closed;
 
-      public event EventHandler<DisplayUpdateEventArgs> DisplayUpdated;
+      ////public event EventHandler<DisplayUpdateEventArgs> DisplayUpdated;
 
-      public event EventHandler<Plugins.EventArguments.SelectionChangedEventArgs> SelectionChanged;
+      ////public event EventHandler<Plugins.EventArguments.SelectionChangedEventArgs> SelectionChanged;
 
       ////public IRawImageView RawImageView
       ////   {
@@ -83,21 +76,21 @@
       ////      }
       ////   }
 
-      public IRawImageModel RawImageModel
-         {
-         get
-            {
-            return this.imageModel;
-            }
-         }
+      ////public IRawImageModel RawImageModel
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.imageModel;
+      ////      }
+      ////   }
 
-      public byte[, ,] LastDisplayedImage
-         {
-         get
-            {
-            return this.imageModel.DisplayImageData;
-            }
-         }
+      ////public byte[, ,] LastDisplayedImage
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.imageModel.DisplayImageData;
+      ////      }
+      ////   }
 
       public string FullPath
          {
@@ -112,24 +105,25 @@
          this.imageModel.DisplayName = displayName;
          }
 
-      public void InitializeImageSourceController(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel)
+      public void InitializeImageSourceController(IImageSourceController imageSourceController)
          {
-         if (!this.closing)
-            {
-            if (!this.closingPluginControllers.Contains(imageSourceController))
-               {
-               this.imageSourceController = imageSourceController;
-               this.imageSourceRawPluginModel = rawPluginModel;
+         ////if (!this.closing)
+         ////   {
+         ////   if (!this.closingPluginControllers.Contains(imageSourceController))
+         ////      {
+         ////      this.imageSourceController = imageSourceController;
+         ////      this.imageSourceRawPluginModel = rawPluginModel;
 
-               // If an assert pops here while running a unit test with NCrunch, you need to use
-               // the STASynchronizationContext class to initialize a proper SynchronizationContext
-               this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
-               }
-            }
+         ////      // If an assert pops here while running a unit test with NCrunch, you need to use
+         ////      // the STASynchronizationContext class to initialize a proper SynchronizationContext
+         ////      this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
+         ////      }
+         ////   }
          }
 
       public void Close()
          {
+         /*
          if (!this.closed)
             {
             CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -171,9 +165,10 @@
                   ////this.imageView = null;
                   }
                }
-            }
+            }*/
          }
 
+      /*
       public void AddImageProcessingController(IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
          {
          if (!this.closing)
@@ -206,7 +201,8 @@
             this.CreateLiveUpdateTask(TaskScheduler.FromCurrentSynchronizationContext(), false);
             }
          }
-
+      */
+      /*
       private void CreateDynamicUpdateTasks(TaskScheduler taskScheduler)
          {
          bool dynamic = this.imageSourceController.IsDynamic(this.imageSourceRawPluginModel);
@@ -544,7 +540,8 @@
                }
             }
          }
-
+      */
+      /*
       private void ImageView_ZoomLevelIncreased(object sender, EventArgs e)
          {
          this.imageModel.ZoomLevel *= 2.0;
@@ -637,7 +634,8 @@
             this.SelectionChanged(this, new Plugins.EventArguments.SelectionChangedEventArgs(e.PixelPosition, e.Select));
             }
          }
-
+      */
+      /*
       private void PluginController_Closing(object sender, CancelEventArgs e)
          {
          IPluginController pluginController = sender as IPluginController;
@@ -656,7 +654,8 @@
                }
             }
          }
-
+      */
+      /*
       private class ImageProcessingAsyncData
          {
          public ImageProcessingAsyncData(IImageSourceController imageSourceController, IRawPluginModel rawPluginModel, Task<byte[, ,]> taskByte, Task waitForFetchNextImageSourceTask, Task lastDisplayNextImageTask)
@@ -720,6 +719,6 @@
             this.ImageProcessingControllers = null;
             this.Overlays = null;
             }
-         }
+         }*/
       }
    }

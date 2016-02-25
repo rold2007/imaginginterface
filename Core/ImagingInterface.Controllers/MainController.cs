@@ -11,8 +11,8 @@
    public class MainController
       {
       ////private IMainView mainView;
-      private ImageManagerController imageManagerController;
-      private PluginManagerController pluginManagerController;
+      ////private ImageManagerController imageManagerController;
+      ////private PluginManagerController pluginManagerController;
 
       public MainController()
          {
@@ -21,6 +21,7 @@
          ////this.mainView.ApplicationClosing += this.MainView_ApplicationClosing;
          }
 
+      /*
       public void AddImageManager(ImageManagerController imageManagerController)
          {
          this.imageManagerController = imageManagerController;
@@ -34,7 +35,8 @@
 
          ////this.mainView.AddPluginManagerView(pluginManagerView);
          }
-
+*/
+/*
       private void MainView_ApplicationClosing(object sender, CancelEventArgs e)
          {
          if (this.imageManagerController != null)
@@ -47,7 +49,7 @@
                   {
                   foreach (ImageController imageController in imageControllers)
                      {
-                     imageController.Closed += this.ImageController_Closed;
+                     ////imageController.Closed += this.ImageController_Closed;
                      imageController.Close();
                      }
 
@@ -80,11 +82,11 @@
          {
          ImageController imageController = sender as ImageController;
 
-         imageController.Closed -= this.ImageController_Closed;
+         ////imageController.Closed -= this.ImageController_Closed;
 
-         ImageController activeImageController = this.imageManagerController.GetActiveImage();
+         ////ImageController activeImageController = this.imageManagerController.GetActiveImage();
 
-         if (activeImageController == null)
+         ////if (activeImageController == null)
             {
             IPluginController activePluginController = this.pluginManagerController.GetActivePlugin();
 
@@ -105,13 +107,14 @@
          
          if (activePluginController == null)
             {
-            ImageController activeImageController = this.imageManagerController.GetActiveImage();
+            ////ImageController activeImageController = this.imageManagerController.GetActiveImage();
 
-            if (activeImageController == null)
+            ////if (activeImageController == null)
                {
                ////this.mainView.Close();
                }
             }
          }
+         */
       }
    }
