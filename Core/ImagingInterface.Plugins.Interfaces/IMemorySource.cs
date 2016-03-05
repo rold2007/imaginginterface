@@ -6,12 +6,11 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public interface IFileSourceController : IImageSourceController
+   public interface IMemorySource : IImageSource
       {
-      string Filename
+      byte[, ,] ImageData
          {
          get;
-         set;
          }
       }
    }

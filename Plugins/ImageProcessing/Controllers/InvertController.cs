@@ -18,7 +18,7 @@
       private IInvertModel invertModel;
       private ImageManagerController imageManagerController;
 
-      public InvertController(IInvertModel invertModel, ImageManagerController imageManagerController)
+      public InvertController(InvertModel invertModel, ImageManagerController imageManagerController)
          {
          ////this.invertView = invertView;
          this.invertModel = invertModel;
@@ -110,9 +110,9 @@
 
       private void InvertView_Invert(object sender, InvertEventArgs e)
          {
-         ImageController imageController = this.imageManagerController.GetActiveImage();
+         ////ImageController imageController = this.imageManagerController.GetActiveImage();
 
-         if (imageController != null)
+         ////if (imageController != null)
             {
             if (e.Invert)
                {

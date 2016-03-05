@@ -21,9 +21,7 @@
          // Models
          container.Register<RotateModel>();
          container.Register<InvertModel>();
-         container.Register<FileSourceModel>();
          container.Register<CudafyModel>();
-         container.Register<MemorySourceModel>();
          container.Register<TaggerModel>();
          container.Register<ObjectDetectionManagerModel>();
          container.Register<ObjectDetectionModel>();
@@ -31,9 +29,9 @@
          // Controllers
          container.Register<RotateController>();
          container.Register<InvertController>();
-         container.Register<FileSourceController>();
+         container.Register<IFileSource, FileSource>();
          container.Register<CudafyController>();
-         container.Register<MemorySourceController>();
+         container.Register<IMemorySource, MemorySource>();
          container.Register<TaggerController>();
          container.Register<ObjectDetectionManagerController>();
          container.Register<ObjectDetectionController>();
@@ -54,14 +52,15 @@
       public void SuppressDiagnosticWarning(Container container)
          {
          ////container.GetRegistration(typeof(ICudafyController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(CudafyController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(ICudafyView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(IInvertView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(IObjectDetectionView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(IObjectDetector)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(IObjectDetectionManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(ITaggerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(IRotateView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(CudafyController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(CudafyView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(InvertView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ObjectDetectionView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(IObjectDetector)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ObjectDetector)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ObjectDetectionManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(TaggerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(RotateView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
          }
       }
    }

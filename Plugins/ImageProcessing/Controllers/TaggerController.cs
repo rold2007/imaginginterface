@@ -21,7 +21,7 @@
       private ImageController registeredImageController;
       private ITagger tagger;
 
-      public TaggerController(ITaggerModel taggerModel, ITagger tagger, ImageManagerController imageManagerController)
+      public TaggerController(TaggerModel taggerModel, ITagger tagger, ImageManagerController imageManagerController)
          {
          ////this.taggerView = taggerView;
          this.taggerModel = taggerModel;
@@ -69,7 +69,7 @@
 
          ////this.taggerView.LabelAdded += this.TaggerView_LabelAdded;
 
-         this.imageManagerController.ActiveImageChanged += this.ImageManagerController_ActiveImageChanged;
+         ////this.imageManagerController.ActiveImageChanged += this.ImageManagerController_ActiveImageChanged;
 
          this.RegisterActiveImage();
          }
@@ -87,7 +87,7 @@
             {
             ////this.taggerView.LabelAdded -= this.TaggerView_LabelAdded;
 
-            this.imageManagerController.ActiveImageChanged -= this.ImageManagerController_ActiveImageChanged;
+            ////this.imageManagerController.ActiveImageChanged -= this.ImageManagerController_ActiveImageChanged;
 
             this.UnregisterActiveImage();
 
@@ -166,9 +166,9 @@
 
       private void RegisterActiveImage()
          {
-         this.registeredImageController = this.imageManagerController.GetActiveImage();
+         ////this.registeredImageController = this.imageManagerController.GetActiveImage();
 
-         if (this.registeredImageController != null)
+         ////if (this.registeredImageController != null)
             {
             ////this.registeredImageController.SelectionChanged += this.RegisteredImageController_SelectionChanged;
 
@@ -199,7 +199,7 @@
 
       private void ExtractPoints()
          {
-         this.tagger.LoadPoints(this.registeredImageController.FullPath);
+         this.tagger.LoadPoints(this.registeredImageController.DisplayName);
 
          this.AddLabels(this.tagger.DataPoints.Keys);
 

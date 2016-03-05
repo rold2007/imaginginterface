@@ -13,14 +13,14 @@
 
    public class ImageController
       {
-      private IImageModel imageModel;
+      private ImageModel imageModel;
       ////private IServiceLocator serviceLocator;
       private bool closing;
       private bool closed;
       private List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers;
       private Task<byte[, ,]> lastFetchNextImageFromSourceTask;
       private Task lastDisplayNextImageTask;
-      private IImageSourceController imageSourceController;
+      private IImageSource imageSourceController;
       private IRawPluginModel imageSourceRawPluginModel;
       private Stopwatch lastDisplayUpdate;
       private double updatePeriod;
@@ -92,7 +92,7 @@
       ////      }
       ////   }
 
-      public string FullPath
+      public string DisplayName
          {
          get
             {
@@ -100,12 +100,7 @@
             }
          }
 
-      public void SetDisplayName(string displayName)
-         {
-         this.imageModel.DisplayName = displayName;
-         }
-
-      public void InitializeImageSourceController(IImageSourceController imageSourceController)
+      public void InitializeImageSourceController(IImageSource imageSourceController)
          {
          ////if (!this.closing)
          ////   {

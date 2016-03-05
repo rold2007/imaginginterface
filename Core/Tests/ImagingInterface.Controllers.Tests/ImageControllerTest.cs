@@ -43,13 +43,7 @@
          {
          ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
 
-         Assert.IsNull(imageController.FullPath);
-
-         string displayName = "DisplayName";
-
-         imageController.SetDisplayName(displayName);
-
-         Assert.AreEqual(displayName, imageController.FullPath);
+         Assert.IsNull(imageController.DisplayName);
          }
 
       /*

@@ -10,13 +10,22 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class MemorySourceController : IMemorySourceController
+   public class MemorySource : IMemorySource
       {
-      private IMemorySourceModel memorySourceModel;
+      ////public string DisplayName
+      ////   {
+      ////   get; // ncrunch: no coverage
+      ////   set; // ncrunch: no coverage
+      ////   }
 
-      public MemorySourceController(IMemorySourceModel memorySourceModel)
+      ////public byte[,,] ImageData
+      ////   {
+      ////   get;
+      ////   set;
+      ////   }
+
+      public MemorySource()
          {
-         this.memorySourceModel = memorySourceModel;
          }
 
       public event CancelEventHandler Closing;
@@ -29,13 +38,13 @@
          private set; // ncrunch: no coverage
          }
 
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.memorySourceModel;
-            }
-         }
+      ////public IRawPluginModel RawPluginModel
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.memorySourceModel;
+      ////      }
+      ////   }
 
       public bool Active
          {
@@ -47,17 +56,8 @@
 
       public byte[, ,] ImageData
          {
-         get
-            {
-            return this.memorySourceModel.ImageData;
-            }
-
-         set
-            {
-            Debug.Assert(value != null, "ImageData cannot be null.");
-
-            this.memorySourceModel.ImageData = value;
-            }
+         get;
+         private set;
          }
 
       public bool IsDynamic(IRawPluginModel rawPluginModel)
@@ -67,11 +67,12 @@
 
       public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
          {
-         IMemorySourceModel memorySourceModel = rawPluginModel as IMemorySourceModel;
+         ////IMemorySourceModel memorySourceModel = rawPluginModel as IMemorySourceModel;
 
-         Debug.Assert(memorySourceModel.ImageData != null, "The image data should never be null.");
+         ////Debug.Assert(memorySourceModel.ImageData != null, "The image data should never be null.");
 
-         return memorySourceModel.ImageData;
+         ////return memorySourceModel.ImageData;
+         return null;
          }
 
       public void Initialize()

@@ -1,61 +1,38 @@
 ﻿namespace ImagingInterface.Views
    {
    using System;
+   using System.Collections.Generic;
    using System.ComponentModel;
    using System.Diagnostics;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
    using Microsoft.Practices.ServiceLocation;
+   using Plugins;
 
-   public partial class MainWindow : Form, IMainView, IFileOperationView, IPluginOperationView
+   public partial class MainWindow : Form
       {
-      ////private static bool checkSingleton = false;
       private IServiceLocator serviceLocator;
-      ////private HelpOperationController helpOperationController;
+      private FileOperationController fileOperationController;
+      private ImageManagerView imageManagerView;
+      private PluginManagerView pluginManagerView;
 
-      public MainWindow(IServiceLocator serviceLocator/*, HelpOperationController helpOperationController*/)
+      public MainWindow(IServiceLocator serviceLocator, FileOperationController fileOperationController, ImageManagerView imageManagerView, PluginManagerView pluginManagerView)
          {
-         // This help detect misconfiguration in IoC
-         ////Debug.Assert(MainWindow.checkSingleton == false, "A singleton shoudn't be constructed twice.");
-
-         ////MainWindow.checkSingleton = true;
-
          this.serviceLocator = serviceLocator;
+         this.fileOperationController = fileOperationController;
+         this.imageManagerView = imageManagerView;
+         this.pluginManagerView = pluginManagerView;
 
          this.InitializeComponent();
 
-         ////Register to HelpAboutBoxController event
-         ////In the event callback, instanciate the about box view and Show it
-         ////Need to figure out how the AboutBoxController will call AboutBoxView.Display with the model pointer...
-
-         //// No, maybe I simply need to allow the HelpOperationController create an AboutBoxView using an IAboutBoxView
-         //// registered through injection
-
-         ////this.helpOperationController = helpOperationController;
-         ////this.helpOperationController.DisplayAbouxBox += this.HelpOperationController_DisplayAboutBox;
+         this.mainSplitContainer.Panel1.Controls.Add(this.imageManagerView);
+         this.mainSplitContainer.Panel2.Controls.Add(this.pluginManagerView);
          }
 
       public event CancelEventHandler ApplicationClosing;
 
-      public event EventHandler FileOpen;
-
-      public event EventHandler FileClose;
-
-      public event EventHandler FileCloseAll;
-
-      public event EventHandler<DragDropEventArgs> DragDropFile;
-
       public event EventHandler<PluginCreateEventArgs> PluginCreate;
-
-      public string[] OpenFile()
-         {
-         OpenFileDialog openFileDialog = new OpenFileDialog();
-
-         DialogResult dialogResult = openFileDialog.ShowDialog();
-
-         return openFileDialog.FileNames;
-         }
 
       public void AddPlugin(string name)
          {
@@ -65,16 +42,6 @@
          toolStripMenuItem.Click += this.PluginClick;
 
          this.pluginsToolStripMenuItem.DropDownItems.Add(toolStripMenuItem);
-         }
-
-      public void AddImageManagerView(IImageManagerView imageManagerView)
-         {
-         this.mainSplitContainer.Panel1.Controls.Add(imageManagerView as Control);
-         }
-
-      public void AddPluginManagerView(IPluginManagerView pluginManagerView)
-         {
-         this.mainSplitContainer.Panel2.Controls.Add(pluginManagerView as Control);
          }
 
       public new void Close()
@@ -96,12 +63,9 @@
          {
          if (this.DragEventValid(e))
             {
-            if (this.DragDropFile != null)
-               {
-               string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
+            string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
 
-               this.DragDropFile(sender, new DragDropEventArgs(data));
-               }
+            this.fileOperationController.OpenFiles(data);
             }
          }
 
@@ -150,26 +114,33 @@
 
       private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         if (this.FileOpen != null)
+         OpenFileDialog openFileDialog = new OpenFileDialog();
+
+         DialogResult dialogResult = openFileDialog.ShowDialog();
+
+         IList<IFileSource> fileSources = this.fileOperationController.OpenFiles(openFileDialog.FileNames);
+
+         foreach (IFileSource fileSource in fileSources)
             {
-            this.FileOpen(this, EventArgs.Empty);
+            ImageView imageView = this.serviceLocator.GetInstance<ImageView>();
+
+            imageView.SetImageSource(fileSource);
+
+            this.imageManagerView.AddImageView(imageView);
             }
          }
 
       private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         if (this.FileClose != null)
-            {
-            this.FileClose(this, EventArgs.Empty);
-            }
+         this.imageManagerView.RemoveActiveImageView();
          }
 
       private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         if (this.FileCloseAll != null)
-            {
-            this.FileCloseAll(this, EventArgs.Empty);
-            }
+         ////if (this.FileCloseAll != null)
+         ////   {
+         ////   this.FileCloseAll(this, EventArgs.Empty);
+         ////   }
          }
 
       // Based on http://stackoverflow.com/questions/6521731/refresh-the-panels-of-a-splitcontainer-as-the-splitter-moves

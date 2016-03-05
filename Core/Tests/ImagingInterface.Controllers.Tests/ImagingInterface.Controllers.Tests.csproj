@@ -73,8 +73,7 @@
     <Compile Include="ImageControllerTest.cs" />
     <Compile Include="ImageManagerControllerTest.cs" />
     <Compile Include="MainControllerTest.cs" />
-    <Compile Include="Mocks\FileSourceController.cs" />
-    <Compile Include="Mocks\FileSourceModel.cs" />
+    <Compile Include="Mocks\FileSource.cs" />
     <Compile Include="Mocks\ImageProcessingController.cs" />
     <Compile Include="Mocks\PluginController1.cs" />
     <Compile Include="Mocks\PluginController2.cs" />

@@ -8,32 +8,23 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class FileSourceController : IFileSourceController
+   public class FileSourceController : IFileSource
       {
-      private IFileSourceModel fileSourceModel;
-
-      public FileSourceController(IFileSourceModel fileSourceModel)
+      public FileSourceController()
          {
-         this.fileSourceModel = fileSourceModel;
          }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get;
-         private set;
-         }
-
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.fileSourceModel;
-            }
-         }
+      ////public IRawPluginModel RawPluginModel
+      ////   {
+      ////   get
+      ////      {
+      ////      return this.fileSourceModel;
+      ////      }
+      ////   }
 
       public bool Active
          {
@@ -45,18 +36,15 @@
 
       public string Filename
          {
-         get
-            {
-            return this.fileSourceModel.DisplayName;
-            }
-
-         set
-            {
-            this.fileSourceModel.DisplayName = value;
-            }
+         get;
+         private set;
          }
 
       public void Initialize()
+         {
+         }
+
+      public void SetImageSource(string file)
          {
          }
 
@@ -85,12 +73,13 @@
 
       public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
          {
-         if (this.fileSourceModel.ImageData == null)
-            {
-            this.fileSourceModel.ImageData = new byte[1, 1, 1];
-            }
+         ////if (this.fileSourceModel.ImageData == null)
+         ////   {
+         ////   this.fileSourceModel.ImageData = new byte[1, 1, 1];
+         ////   }
 
-         return this.fileSourceModel.ImageData;
+         ////return this.fileSourceModel.ImageData;
+         return null;
          }
 
       public void Disconnected()

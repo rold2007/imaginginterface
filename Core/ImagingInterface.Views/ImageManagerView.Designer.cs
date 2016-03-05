@@ -41,7 +41,6 @@
          this.imagesTabControl.Size = new System.Drawing.Size(746, 404);
          this.imagesTabControl.TabIndex = 1;
          this.imagesTabControl.SelectedIndexChanged += new System.EventHandler(this.ImagesTabControl_SelectedIndexChanged);
-         this.imagesTabControl.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.ImagesTabControl_ControlAdded);
          // 
          // ImageManagerView
          // 

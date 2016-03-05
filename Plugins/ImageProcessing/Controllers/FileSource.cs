@@ -2,38 +2,34 @@
    {
    using System;
    using System.ComponentModel;
+   using System.Diagnostics;
    using System.Drawing;
    using ImageProcessor;
    using ImageProcessor.Common.Exceptions;
    using ImageProcessor.Imaging;
    using ImagingInterface.Plugins;
 
-   public class FileSourceController : IFileSourceController
+   public class FileSource : IFileSource
       {
-      private IFileSourceModel fileSourceModel;
+      ////public string DisplayName
+      ////   {
+      ////   get; // ncrunch: no coverage
+      ////   set; // ncrunch: no coverage
+      ////   }
 
-      public FileSourceController(IFileSourceModel fileSourceModel)
+      ////public string Filename
+      ////   {
+      ////   get;
+      ////   set;
+      ////   }
+
+      public FileSource()
          {
-         this.fileSourceModel = fileSourceModel;
          }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
-
-      public IRawPluginView RawPluginView
-         {
-         get; // ncrunch: no coverage
-         private set; // ncrunch: no coverage
-         }
-
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.fileSourceModel;
-            }
-         }
 
       public bool Active
          {
@@ -45,19 +41,29 @@
 
       public string Filename
          {
-         get
-            {
-            return this.fileSourceModel.Filename;
-            }
+         get;
+         private set;
+         }
 
-         set
-            {
-            this.fileSourceModel.Filename = value;
-            }
+      public byte[,,] ImageData
+         {
+         get;
+         set;
          }
 
       public void Initialize()
          {
+         }
+
+      public void SetImageSource(string file)
+         {
+         Debug.Assert(this.Filename == null, "The source has already been initialized.");
+
+         this.Filename = file;
+
+         // This FileSource class directly loads the image. If this causes performance issues at some point
+         //  new FileSource class should be created with some kind of "delay load".
+         this.LoadImage();
          }
 
       public void Close()
@@ -85,14 +91,15 @@
 
       public byte[, ,] NextImageData(IRawPluginModel rawPluginModel)
          {
-         IFileSourceModel fileSourceModel = rawPluginModel as IFileSourceModel;
+         ////IFileSourceModel fileSourceModel = rawPluginModel as IFileSourceModel;
 
-         if (fileSourceModel.ImageData == null)
-            {
-            this.LoadImage();
-            }
+         ////if (fileSourceModel.ImageData == null)
+         ////   {
+         ////   this.LoadImage();
+         ////   }
 
-         return fileSourceModel.ImageData;
+         ////return fileSourceModel.ImageData;
+         return null;
          }
 
       public void Disconnected()
@@ -101,18 +108,18 @@
 
       private void LoadImage()
          {
-         if (this.fileSourceModel.Filename != null)
+         if (this.Filename != null)
             {
             try
                {
                using (ImageFactory imageFactory = new ImageFactory())
                   {
-                  imageFactory.Load(this.fileSourceModel.Filename);
+                  imageFactory.Load(this.Filename);
                   Image image = imageFactory.Image;
 
                   using (FastBitmap fastBitmap = new FastBitmap(image))
                      {
-                     this.fileSourceModel.ImageData = new byte[image.Size.Height, image.Size.Width, 3];
+                     this.ImageData = new byte[image.Size.Height, image.Size.Width, 3];
 
                      int imageDataIndex = 0;
 
@@ -122,9 +129,9 @@
                            {
                            Color color = fastBitmap.GetPixel(x, y);
 
-                           this.fileSourceModel.ImageData[y, x, 0] = color.R;
-                           this.fileSourceModel.ImageData[y, x, 1] = color.G;
-                           this.fileSourceModel.ImageData[y, x, 2] = color.B;
+                           this.ImageData[y, x, 0] = color.R;
+                           this.ImageData[y, x, 1] = color.G;
+                           this.ImageData[y, x, 2] = color.B;
 
                            imageDataIndex++;
                            }
@@ -134,12 +141,12 @@
                }
             catch (ImageFormatException)
                {
-               this.fileSourceModel.ImageData = null;
+               this.ImageData = null;
                }
             }
          else
             {
-            this.fileSourceModel.ImageData = null;
+            this.ImageData = null;
             }
          }
       }

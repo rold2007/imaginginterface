@@ -3,67 +3,58 @@
    using System;
    using System.Collections.Generic;
    using ImagingInterface.Controllers.EventArguments;
+   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using Microsoft.Practices.ServiceLocation;
 
    public class FileOperationController
       {
-      private IServiceLocator serviceLocator;
+      private FileOperationModel fileOperationModel;
 
-      public FileOperationController(IServiceLocator serviceLocator)
+      public FileOperationController(FileOperationModel fileOperationModel)
          {
-         this.serviceLocator = serviceLocator;
+         this.fileOperationModel = fileOperationModel;
          }
 
-      public event EventHandler<OpenFileEventArgs> OpenFile;
-
-      public event EventHandler CloseFile;
-
-      public event EventHandler CloseAllFiles;
-
-      public void RequestOpenFile(string[] files)
+      public IList<IFileSource> OpenFiles(string[] files)
          {
+         List<IFileSource> fileSourceControllers = null;
+
          if (files != null && files.Length != 0)
             {
-            List<IFileSourceController> fileSourceControllers = new List<IFileSourceController>();
+            fileSourceControllers = new List<IFileSource>();
 
             foreach (string file in files)
                {
-               IFileSourceController fileSourceController = this.serviceLocator.GetInstance<IFileSourceController>();
-
-               fileSourceController.Filename = file;
+               IFileSource fileSourceController = this.fileOperationModel.OpenFile(file);
 
                fileSourceControllers.Add(fileSourceController);
                }
-
-            if (this.OpenFile != null)
-               {
-               this.OpenFile(this, new OpenFileEventArgs(fileSourceControllers));
-               }
             }
+
+         return fileSourceControllers;
          }
 
       public void RequestCloseFile()
          {
-         if (this.CloseFile != null)
-            {
-            this.CloseFile(this, EventArgs.Empty);
-            }
+         ////if (this.CloseFile != null)
+         ////   {
+         ////   this.CloseFile(this, EventArgs.Empty);
+         ////   }
          }
 
       public void RequestCloseAllFiles()
          {
-         if (this.CloseAllFiles != null)
-            {
-            this.CloseAllFiles(this, EventArgs.Empty);
+         ////if (this.CloseAllFiles != null)
+         ////   {
+         ////   this.CloseAllFiles(this, EventArgs.Empty);
 
-            GC.Collect();
-            }
+         ////   GC.Collect();
+         ////   }
          }
 
       public void RequestDragDropFile(string[] data)
          {
-         this.RequestOpenFile(data);
+         this.OpenFiles(data);
          }
       }
    }

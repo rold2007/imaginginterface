@@ -17,7 +17,7 @@
       private TaggerController taggerController;
       private ObjectDetectionController objectDetectionController;
 
-      public ObjectDetectionManagerController(IObjectDetectionManagerModel objectDetectionManagerModel, TaggerController taggerController, ObjectDetectionController objectDetectionController)
+      public ObjectDetectionManagerController(ObjectDetectionManagerModel objectDetectionManagerModel, TaggerController taggerController, ObjectDetectionController objectDetectionController)
          {
          ////this.objectDetectionManagerView = objectDetectionManagerView;
          this.objectDetectionManagerModel = objectDetectionManagerModel;

@@ -122,36 +122,28 @@
 
          // Views
          // Need to register singleton instances for all things pertaining MainWindow
-         container.Register<MainWindow>();
-         container.Register<ImageManagerView>();
-         ////container.Register<PluginManagerView>();
-         ////container.RegisterSingleton<IMainView>(Program.GetMainWindow);
-         ////container.RegisterSingleton<IFileOperationView>(Program.GetMainWindow);
-         ////container.RegisterSingleton<IImageManagerView>(Program.GetImageManagerView);
-         ////container.RegisterSingleton<IPluginOperationView>(Program.GetMainWindow);
-         ////container.RegisterSingleton<IPluginManagerView>(Program.GetPluginManagerView);
-         ////container.RegisterSingleton<IHelpOperationView>(Program.GetMainWindow);
-         ////container.Register<AboutBoxView>(aboutBoxLifetimeScopeLifestyle);
          container.Register<AboutBoxView>();
+         container.Register<ImageManagerView>();
          container.Register<ImageView>();
+         container.Register<MainWindow>();
+         container.Register<PluginManagerView>();
 
          // Controllers
          container.Register<MainController>();
          container.Register<FileOperationController>();
          container.Register<ImageManagerController>();
-         ////container.Register<PluginOperationController>();
-         ////container.Register<PluginManagerController>();
          container.Register<AboutBoxController>();
          container.Register<ImageController>();
 
          // Models
          container.Register<AboutBoxModel>();
+         container.Register<FileOperationModel>();
          container.Register<ImageManagerModel>();
          container.Register<ImageModel>();
 
-         /*
          List<Type> packageWindowsFormsTypes = new List<Type>();
-         List<Type> pluginsTypes = new List<Type>();
+         List<Type> pluginControllerTypes = new List<Type>();
+         List<Type> imageSourceTypes = new List<Type>();
 
          foreach (string libraryFile in Program.pluginLibraries)
             {
@@ -167,7 +159,12 @@
 
                if (Program.TypeValid(exportedType, typeof(IPluginController)))
                   {
-                  pluginsTypes.Add(exportedType);
+                  pluginControllerTypes.Add(exportedType);
+                  }
+
+               if (Program.TypeValid(exportedType, typeof(IImageSource)))
+                  {
+                  imageSourceTypes.Add(exportedType);
                   }
                }
             }
@@ -179,7 +176,8 @@
             packageWindowsForms.RegisterServices(container);
             }
 
-         container.RegisterCollection<IPluginController>(pluginsTypes);
+         container.RegisterCollection<IPluginController>(pluginControllerTypes);
+         container.RegisterCollection<IImageSource>(imageSourceTypes);
 
          foreach (Type packageWindowsFormsType in packageWindowsFormsTypes)
             {
@@ -187,19 +185,12 @@
 
             packageWindowsForms.SuppressDiagnosticWarning(container);
             }
-         */
 
-         container.GetRegistration(typeof(MainWindow)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(ImageManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
          container.GetRegistration(typeof(AboutBoxView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(ImageManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
          container.GetRegistration(typeof(ImageView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-
-         ////container.GetRegistration(typeof(IImageView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(IAboutBoxView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(AboutBoxView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(AboutBoxController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(IAboutBoxModel)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(AboutBoxModel)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(MainWindow)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(PluginManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
 
          // Verify will also create thw MainWindow and the ApplicationController
          container.Verify();
@@ -214,21 +205,6 @@
                }
             }
          }
-
-      ////private static MainWindow GetMainWindow()
-      ////   {
-      ////   return Program.serviceLocator.GetInstance<MainWindow>();
-      ////   }
-
-      ////private static ImageManagerView GetImageManagerView()
-      ////   {
-      ////   return Program.serviceLocator.GetInstance<ImageManagerView>();
-      ////   }
-
-      ////private static PluginManagerView GetPluginManagerView()
-      ////   {
-      ////   return Program.serviceLocator.GetInstance<PluginManagerView>();
-      ////   }
 
       private static bool TypeValid(Type currentType, Type validationType)
          {

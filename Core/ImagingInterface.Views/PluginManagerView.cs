@@ -14,18 +14,18 @@
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
 
-   public partial class PluginManagerView : UserControl, IPluginManagerView
+   public partial class PluginManagerView : UserControl
       {
-      private static bool checkSingleton = false;
+      ////private static bool checkSingleton = false;
       private Dictionary<IRawPluginView, TabPage> pluginViewTabPage;
       private Dictionary<IRawPluginView, ToolTip> pluginViewToolTip;
 
       public PluginManagerView()
          {
          // This help detect misconfiguration in IoC
-         Debug.Assert(PluginManagerView.checkSingleton == false, "A singleton shoudn't be constructed twice.");
+         ////Debug.Assert(PluginManagerView.checkSingleton == false, "A singleton shoudn't be constructed twice.");
 
-         PluginManagerView.checkSingleton = true;
+         ////PluginManagerView.checkSingleton = true;
 
          this.InitializeComponent();
 

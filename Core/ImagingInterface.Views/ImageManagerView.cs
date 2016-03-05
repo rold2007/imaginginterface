@@ -2,49 +2,74 @@
    {
    using System;
    using System.Collections.Generic;
-   using System.Diagnostics;
    using System.Drawing;
    using System.Windows.Forms;
-   using ImagingInterface.Plugins;
+   using ImagingInterface.Controllers;
 
-   public partial class ImageManagerView : UserControl, IImageManagerView
+   public partial class ImageManagerView : UserControl
       {
-      private static bool checkSingleton = false;
-      private Dictionary<IRawImageView, TabPage> rawImageViewTabPage;
-      private Dictionary<IRawImageView, ToolTip> rawImageViewToolTip;
+      private List<ImageView> imageViews;
+      private Dictionary<ImageView, TabPage> imageViewTabPage;
+      private Dictionary<ImageView, ToolTip> imageViewToolTip;
+      private ImageManagerController imageManagerController;
 
-      public ImageManagerView()
+      public ImageManagerView(ImageManagerController imageManagerController)
          {
-         // This help detect misconfiguration in IoC
-         Debug.Assert(ImageManagerView.checkSingleton == false, "A singleton shoudn't be constructed twice.");
-
-         ImageManagerView.checkSingleton = true;
-
          this.InitializeComponent();
 
-         this.rawImageViewTabPage = new Dictionary<IRawImageView, TabPage>();
-         this.rawImageViewToolTip = new Dictionary<IRawImageView, ToolTip>();
+         this.imageViews = new List<ImageView>();
+         this.imageViewTabPage = new Dictionary<ImageView, TabPage>();
+         this.imageViewToolTip = new Dictionary<ImageView, ToolTip>();
 
          this.Dock = DockStyle.Fill;
+
+         this.imageManagerController = imageManagerController;
+         this.imageManagerController.ActiveImageChanged += this.ImageManagerModel_ActiveImageChanged;
+         this.imageManagerController.RemoveActiveImageIndex += this.ImageManagerController_RemoveActiveImageIndex;
          }
 
-      public event EventHandler ActiveImageChanged;
-
-      public void AddImage(IRawImageView rawImageView, IRawImageModel rawImageModel)
+      public void AddImageView(ImageView imageView)
          {
-         TabPage tabPage = new TabPage(rawImageModel.DisplayName);
+         this.AddImageToNewtab(imageView);
+
+         this.imageManagerController.AddImage();
+         }
+
+      ////public ImageView GetActiveImageView()
+      ////   {
+         ////if (this.imagesTabControl.IsHandleCreated)
+         ////   {
+         ////   if (this.imagesTabControl.SelectedTab != null)
+         ////      {
+         ////      if (this.imagesTabControl.SelectedTab.Controls.Count > 0)
+         ////         {
+         ////         return this.imagesTabControl.SelectedTab.Controls[0] as ImageView;
+         ////         }
+         ////      }
+         ////   }
+
+         ////return null;
+         ////}
+
+      public void RemoveActiveImageView()
+         {
+         this.imageManagerController.RemoveActiveImage();
+         }
+
+      private void AddImageToNewtab(ImageView imageView)
+         {
+         TabPage tabPage = new TabPage(imageView.DisplayName);
          ToolTip toolTip = new ToolTip();
 
-         this.rawImageViewTabPage.Add(rawImageView, tabPage);
-         this.rawImageViewToolTip.Add(rawImageView, toolTip);
+         this.imageViews.Add(imageView);
+         this.imageViewTabPage.Add(imageView, tabPage);
+         this.imageViewToolTip.Add(imageView, toolTip);
 
          // Attach a new ToolTip because there's no way to detach a global (form) ToolTip
          // when closing the image
-         toolTip.SetToolTip(tabPage, rawImageModel.DisplayName);
+         toolTip.SetToolTip(tabPage, imageView.DisplayName);
 
-         Control imageViewControl = rawImageView as Control;
-
-         tabPage.Controls.Add(imageViewControl);
+         tabPage.Controls.Add(imageView);
 
          Size tabPageSize = this.imagesTabControl.DisplayRectangle.Size;
 
@@ -52,77 +77,49 @@
 
          tabPage.Size = tabPageSize;
 
-         this.UpdateImageTabPageProperties(rawImageView);
+         this.UpdateImageTabPageProperties(imageView);
 
          this.imagesTabControl.Controls.Add(tabPage);
          }
 
-      public IRawImageView GetActiveImageView()
+      private void UpdateImageTabPageProperties(ImageView imageView)
          {
-         if (this.imagesTabControl.IsHandleCreated)
-            {
-            if (this.imagesTabControl.SelectedTab != null)
-               {
-               if (this.imagesTabControl.SelectedTab.Controls.Count > 0)
-                  {
-                  return this.imagesTabControl.SelectedTab.Controls[0] as IRawImageView;
-                  }
-               }
-            }
-
-         return null;
-         }
-
-      public void RemoveImage(IRawImageView rawImageView)
-         {
-         TabPage tabPage = this.rawImageViewTabPage[rawImageView];
-         ToolTip toolTip = this.rawImageViewToolTip[rawImageView];
-
-         this.imagesTabControl.Controls.Remove(tabPage);
-         this.rawImageViewTabPage.Remove(rawImageView);
-         this.rawImageViewToolTip.Remove(rawImageView);
-
-         tabPage.Dispose();
-         toolTip.Dispose();
-         }
-
-      private void UpdateImageTabPageProperties(IRawImageView rawImageView)
-         {
-         TabPage tabPage = this.rawImageViewTabPage[rawImageView];
+         TabPage tabPage = this.imageViewTabPage[imageView];
          Size size = tabPage.ClientSize;
-         Control imageViewControl = rawImageView as Control;
 
-         imageViewControl.Size = size;
+         imageView.Size = size;
          }
 
       private void ImagesTabControl_SizeChanged(object sender, EventArgs e)
          {
          if (this.imagesTabControl.TabCount != 0 && this.imagesTabControl.SelectedTab != null)
             {
-            this.UpdateImageTabPageProperties(this.imagesTabControl.SelectedTab.Controls[0] as IImageView);
-            }
-         }
-
-      private void ImagesTabControl_ControlAdded(object sender, ControlEventArgs e)
-         {
-         // Newly added images are opened in the background, don't trigger the event
-         // when an image is already open
-         if (this.rawImageViewTabPage.Count == 1)
-            {
-            this.TriggerActiveImageChanged();
+            this.UpdateImageTabPageProperties(this.imagesTabControl.SelectedTab.Controls[0] as ImageView);
             }
          }
 
       private void ImagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
          {
-         this.TriggerActiveImageChanged();
+         this.imageManagerController.SetActiveImageIndex(this.imagesTabControl.SelectedIndex);
          }
 
-      private void TriggerActiveImageChanged()
+      private void ImageManagerModel_ActiveImageChanged(object sender, EventArgs e)
          {
-         if (this.ActiveImageChanged != null)
+         this.imagesTabControl.SelectedIndex = this.imageManagerController.ImageManagerModel.ActiveImageIndex;
+         }
+
+      private void ImageManagerController_RemoveActiveImageIndex(object sender, EventArgs e)
+         {
+         int activeImageIndex = this.imageManagerController.ImageManagerModel.ActiveImageIndex;
+
+         using (ImageView activeImageView = this.imageViews[activeImageIndex])
+         using (TabPage tabPage = this.imageViewTabPage[activeImageView])
+         using (ToolTip toolTip = this.imageViewToolTip[activeImageView])
             {
-            this.ActiveImageChanged(this, EventArgs.Empty);
+            this.imagesTabControl.Controls.Remove(tabPage);
+            this.imageViews.RemoveAt(activeImageIndex);
+            this.imageViewTabPage.Remove(activeImageView);
+            this.imageViewToolTip.Remove(activeImageView);
             }
          }
       }
