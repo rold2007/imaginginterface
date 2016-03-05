@@ -24,7 +24,7 @@
       private IRotateModel rotateModel;
       private ImageManagerController imageManagerController;
 
-      public RotateController(IRotateModel rotateModel, ImageManagerController imageManagerController)
+      public RotateController(RotateModel rotateModel, ImageManagerController imageManagerController)
          {
          ////this.rotateView = rotateView;
          this.rotateModel = rotateModel;
@@ -118,9 +118,9 @@
             {
             this.rotateModel.Angle = e.Angle;
 
-            ImageController imageController = this.imageManagerController.GetActiveImage();
+            ////ImageController imageController = this.imageManagerController.GetActiveImage();
 
-            if (imageController != null)
+            ////if (imageController != null)
                {
                ////imageController.AddImageProcessingController(this, this.rotateModel.Clone() as IRawPluginModel);
                }

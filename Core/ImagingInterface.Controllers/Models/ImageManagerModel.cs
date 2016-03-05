@@ -1,32 +1,74 @@
 ﻿namespace ImagingInterface.Models
    {
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using ImagingInterface.Controllers;
+   using System.Diagnostics;
 
-   public class ImageManagerModel
+   public class ImageManagerModel : IImageManagerModel
       {
-      ////private HashSet<ImageController> imageControllers;
-      ////private 
+      private int activeImageIndex;
 
       public ImageManagerModel()
          {
-         this.ImageControllers = new HashSet<ImageController>();
+         this.ImageCount = 0;
+         this.ActiveImageIndex = -1;
          }
 
-      public ICollection<ImageController> ImageControllers
+      public int ActiveImageIndex
+         {
+         get
+            {
+            return this.activeImageIndex;
+            }
+
+         set
+            {
+            if (this.ImageCount == 0)
+               {
+               if (value != -1)
+                  {
+                  throw new ArgumentOutOfRangeException();
+                  }
+               }
+            else if (value < 0 || value >= this.ImageCount)
+               {
+               throw new ArgumentOutOfRangeException();
+               }
+
+            this.activeImageIndex = value;
+            }
+         }
+
+      public int ImageCount
          {
          get;
          private set;
          }
 
-      ////public ImageController ActiveImageController
-      ////   {
-      ////   get;
-      ////   set;
-      ////   }
+      public int AddImage()
+         {
+         this.ImageCount++;
+         this.ActiveImageIndex = this.ImageCount - 1;
+
+         return this.ActiveImageIndex;
+         }
+
+      public void RemoveActiveImage()
+         {
+         this.ImageCount--;
+
+         Debug.Assert(this.ImageCount >= 0, "Invalid image count.");
+         }
+
+      public void TryUpdateActiveImageIndex()
+         {
+         if (this.ImageCount == 0)
+            {
+            this.ActiveImageIndex = -1;
+            }
+         else
+            {
+            this.ActiveImageIndex = Math.Min(this.ActiveImageIndex, this.ImageCount - 1);
+            }
+         }
       }
    }

@@ -10,7 +10,7 @@
       [Test]
       public void Constructor()
          {
-         FileOperationController fileOperationController = new FileOperationController(this.ServiceLocator);
+         FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
 
          Assert.IsNotNull(fileOperationController);
          }
@@ -21,11 +21,9 @@
          FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
 
          string[] files = new string[1] { "ValidFile" };
-         List<IFileSourceController> imageSourceControllers = new List<IFileSourceController>();
+         IList<IFileSource> imageSourceControllers = null;
 
-         fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
-
-         fileOperationController.RequestOpenFile(files);
+         imageSourceControllers = fileOperationController.OpenFiles(files);
 
          Assert.AreEqual(1, imageSourceControllers.Count);
          Assert.AreEqual(files[0], imageSourceControllers[0].Filename);
@@ -34,14 +32,14 @@
          files = null;
 
          // Make sure it doesn't crash with these parameters
-         fileOperationController.RequestOpenFile(files);
+         fileOperationController.OpenFiles(files);
 
          Assert.AreEqual(0, imageSourceControllers.Count);
 
          files = new string[0];
 
          // Make sure it doesn't crash with these parameters
-         fileOperationController.RequestOpenFile(files);
+         fileOperationController.OpenFiles(files);
 
          Assert.AreEqual(0, imageSourceControllers.Count);
          }
@@ -52,13 +50,13 @@
          FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
 
          string[] files = new string[1] { "ValidFile" };
-         List<IFileSourceController> imageSourceControllers = new List<IFileSourceController>();
+         List<IFileSource> imageSourceControllers = new List<IFileSource>();
          bool fileClosed = false;
 
-         fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
-         fileOperationController.CloseFile += (sender, eventArgs) => { fileClosed = true; };
+         ////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
+         ////fileOperationController.CloseFile += (sender, eventArgs) => { fileClosed = true; };
 
-         fileOperationController.RequestOpenFile(files);
+         fileOperationController.OpenFiles(files);
          fileOperationController.RequestCloseFile();
 
          Assert.IsTrue(fileClosed);
@@ -70,13 +68,13 @@
          FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
 
          string[] files = new string[1] { "ValidFile" };
-         List<IFileSourceController> imageSourceControllers = new List<IFileSourceController>();
+         List<IFileSource> imageSourceControllers = new List<IFileSource>();
          bool fileClosed = false;
 
-         fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
-         fileOperationController.CloseAllFiles += (sender, eventArgs) => { fileClosed = true; };
+         ////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
+         ////fileOperationController.CloseAllFiles += (sender, eventArgs) => { fileClosed = true; };
 
-         fileOperationController.RequestOpenFile(files);
+         fileOperationController.OpenFiles(files);
          fileOperationController.RequestCloseAllFiles();
 
          Assert.IsTrue(fileClosed);
@@ -88,9 +86,9 @@
          FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
 
          string[] files = new string[1] { "ValidFile" };
-         List<IFileSourceController> imageSourceControllers = new List<IFileSourceController>();
+         IList<IFileSource> imageSourceControllers = new List<IFileSource>();
 
-         fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
+         imageSourceControllers = fileOperationController.OpenFiles(files);
 
          fileOperationController.RequestDragDropFile(files);
 

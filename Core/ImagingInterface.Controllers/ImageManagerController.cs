@@ -8,44 +8,29 @@
       {
       private ImageManagerModel imageManagerModel;
 
-      public ImageManagerController(ImageManagerModel imageManagerModel/*, MainController mainController*/)
+      public ImageManagerController(ImageManagerModel imageManagerModel)
          {
-         ////this.imageManagerView = imageManagerView;
-         ////this.imageControllers = new Dictionary<IRawImageView, ImageController>();
          this.imageManagerModel = imageManagerModel;
-
-         ////this.imageManagerView.ActiveImageChanged += this.ImageManagerView_ActiveImageChanged;
-
-         ////mainController.AddImageManager(this);
          }
 
       public event EventHandler ActiveImageChanged;
 
-      public void AddImage(ImageController imageController)
+      public event EventHandler RemoveActiveImageIndex;
+
+      public IImageManagerModel ImageManagerModel
          {
-         ////imageController.Closed += this.ImageController_Closed;
-
-         ////this.imageControllers.Add(imageController.RawImageView, imageController);
-         ////this.imageManagerView.AddImage(imageController.RawImageView, imageController.RawImageModel);
-
-         this.imageManagerModel.ImageControllers.Add(imageController);
-         ////this.imageManagerModel.ActiveImageController = imageController;
+         get
+            {
+            return this.imageManagerModel;
+            }
          }
 
-      /*
-      public ImageController GetActiveImage()
+      public void AddImage()
          {
-         ////IRawImageView activeRawImageView = this.imageManagerView.GetActiveImageView();
+         this.imageManagerModel.AddImage();
 
-         ////if (activeRawImageView != null)
-         ////   {
-         ////   return this.imageControllers[activeRawImageView];
-         ////   }
-         ////else
-            {
-            return this.imageManagerModel.ActiveImageController;
-            }
-         }*/
+         this.TriggerActiveImageIndexChanged();
+         }
 
       public IList<ImageController> GetAllImages()
          {
@@ -53,25 +38,40 @@
          ////return this.imageControllers.Values.ToList();
          }
 
-      public void RemoveImage(ImageController imageController)
+      public void RemoveActiveImage()
          {
-         ////imageController.Closed -= this.ImageController_Closed;
+         int activeImageIndex = this.imageManagerModel.ActiveImageIndex;
 
-         ////this.imageManagerView.RemoveImage(imageController.RawImageView);
-         ////this.imageControllers.Remove(imageController.RawImageView);
-         this.imageManagerModel.ImageControllers.Remove(imageController);
+         this.imageManagerModel.RemoveActiveImage();
+
+         this.TriggerRemoveActiveImageIndex();
+
+         activeImageIndex = Math.Min(activeImageIndex, this.imageManagerModel.ImageCount - 1);
+
+         // Restore the expected active image index as the removal could have changed it
+         this.imageManagerModel.ActiveImageIndex = activeImageIndex;
+
+         this.TriggerActiveImageIndexChanged();
          }
 
-      private void ImageController_Closed(object sender, EventArgs e)
+      public void SetActiveImageIndex(int activeImageIndex)
          {
-         this.RemoveImage(sender as ImageController);
+         this.imageManagerModel.ActiveImageIndex = activeImageIndex;
          }
 
-      private void ImageManagerView_ActiveImageChanged(object sender, EventArgs e)
+      private void TriggerActiveImageIndexChanged()
          {
          if (this.ActiveImageChanged != null)
             {
             this.ActiveImageChanged(this, EventArgs.Empty);
+            }
+         }
+
+      private void TriggerRemoveActiveImageIndex()
+         {
+         if (this.RemoveActiveImageIndex != null)
+            {
+            this.RemoveActiveImageIndex(this, EventArgs.Empty);
             }
          }
       }

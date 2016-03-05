@@ -26,26 +26,47 @@
          }
 
       [Test]
+      public void AddImage()
+         {
+         ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
+
+         Assert.AreEqual(-1, imageManagerController.ImageManagerModel.ActiveImageIndex);
+
+         imageManagerController.AddImage();
+
+         Assert.AreEqual(0, imageManagerController.ImageManagerModel.ActiveImageIndex);
+         }
+
+      [Test]
       public void AddRemoveImage()
          {
-         ////IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
-
          ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-
-         ////IImageView imageView = this.Container.GetInstance<IImageView>();
-
          ImageController imageController = this.Container.GetInstance<ImageController>();
-         ////IImageModel imageModel = this.Container.GetInstance<IImageModel>();
 
-         ////Assert.IsNull(imageManagerView.GetActiveImageView());
-         ////Assert.IsNull(imageManagerController.GetActiveImage());
+         imageManagerController.AddImage();
+         imageManagerController.AddImage();
+         Assert.AreEqual(1, imageManagerController.ImageManagerModel.ActiveImageIndex);
 
-         imageManagerController.AddImage(imageController);
+         imageManagerController.AddImage();
+         Assert.AreEqual(2, imageManagerController.ImageManagerModel.ActiveImageIndex);
 
-         ////Assert.AreSame(imageView, imageManagerView.GetActiveImageView());
-         ////Assert.AreSame(imageController, imageManagerController.GetActiveImage());
+         imageManagerController.RemoveActiveImage();
+         Assert.AreEqual(1, imageManagerController.ImageManagerModel.ActiveImageIndex);
 
-         imageManagerController.RemoveImage(imageController);
+         imageManagerController.AddImage();
+         Assert.AreEqual(2, imageManagerController.ImageManagerModel.ActiveImageIndex);
+
+         imageManagerController.SetActiveImageIndex(1);
+         Assert.AreEqual(1, imageManagerController.ImageManagerModel.ActiveImageIndex);
+         imageManagerController.RemoveActiveImage();
+         Assert.AreEqual(1, imageManagerController.ImageManagerModel.ActiveImageIndex);
+
+         imageManagerController.RemoveActiveImage();
+         Assert.AreEqual(0, imageManagerController.ImageManagerModel.ActiveImageIndex);
+
+         imageManagerController.RemoveActiveImage();
+         Assert.AreEqual(-1, imageManagerController.ImageManagerModel.ActiveImageIndex);
          }
 
       ////[Test]

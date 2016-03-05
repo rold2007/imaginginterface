@@ -1,35 +1,61 @@
 ﻿namespace ImagingInterface.Models
    {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
+   using System.Reflection;
 
    public class AboutBoxModel : IAboutBoxModel
       {
+      public AboutBoxModel()
+         {
+         this.InitializeApplicationProperties();
+         }
+
       public string ProductName
          {
          get;
-         set;
+         private set;
          }
 
       public string Version
          {
          get;
-         set;
+         private set;
          }
 
       public string Copyright
          {
          get;
-         set;
+         private set;
          }
 
       public string ProductDescription
          {
          get;
-         set;
+         private set;
+         }
+
+      private void InitializeApplicationProperties()
+         {
+         Assembly executable = Assembly.GetEntryAssembly();
+
+         if (executable == null)
+            {
+            executable = Assembly.GetExecutingAssembly();
+            }
+
+         object[] attributes;
+
+         attributes = executable.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+
+         this.ProductName = ((AssemblyProductAttribute)attributes[0]).Product;
+         this.Version = executable.GetName().Version.ToString();
+
+         attributes = executable.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+
+         this.Copyright = ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+
+         attributes = executable.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+
+         this.ProductDescription = ((AssemblyDescriptionAttribute)attributes[0]).Description;
          }
       }
    }

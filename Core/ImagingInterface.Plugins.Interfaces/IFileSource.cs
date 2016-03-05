@@ -6,7 +6,13 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public interface IRawImageView
+   public interface IFileSource : IImageSource
       {
+      string Filename
+         {
+         get;
+         }
+
+      void SetImageSource(string file);
       }
    }

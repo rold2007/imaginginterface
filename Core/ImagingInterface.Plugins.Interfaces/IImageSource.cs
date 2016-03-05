@@ -6,12 +6,12 @@
    using System.Text;
    using System.Threading.Tasks;
 
-   public interface IRawImageModel
+   public interface IImageSource
       {
-      string DisplayName
-         {
-         get;
-         set;
-         }
+      bool IsDynamic(IRawPluginModel rawPluginModel);
+
+      byte[, ,] NextImageData(IRawPluginModel rawPluginModel);
+
+      void Disconnected();
       }
    }

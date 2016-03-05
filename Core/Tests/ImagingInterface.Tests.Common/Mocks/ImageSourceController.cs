@@ -8,7 +8,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class ImageSourceController : IImageSourceController
+   public class ImageSourceController : IImageSource
       {
       public ImageSourceController()
          {

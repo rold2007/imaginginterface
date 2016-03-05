@@ -18,7 +18,7 @@
       private TaggerController taggerController;
       private IObjectDetector objectDetector;
 
-      public ObjectDetectionController(IObjectDetectionModel objectDetectionModel, IObjectDetector objectDetection, ImageManagerController imageManagerController)
+      public ObjectDetectionController(ObjectDetectionModel objectDetectionModel, IObjectDetector objectDetection, ImageManagerController imageManagerController)
          {
          ////this.objectDetectionView = objectDetectionView;
          this.objectDetectionModel = objectDetectionModel;
@@ -143,9 +143,9 @@
 
       private void ObjectDetectionView_Train(object sender, EventArgs e)
          {
-         ImageController imageController = this.imageManagerController.GetActiveImage();
+         ////ImageController imageController = this.imageManagerController.GetActiveImage();
 
-         if (imageController != null)
+         ////if (imageController != null)
             {
             ////this.objectDetector.Train(imageController.LastDisplayedImage);
             }
@@ -153,9 +153,9 @@
 
       private void ObjectDetectionView_Test(object sender, EventArgs e)
          {
-         ImageController imageController = this.imageManagerController.GetActiveImage();
+         ////ImageController imageController = this.imageManagerController.GetActiveImage();
 
-         if (imageController != null)
+         ////if (imageController != null)
             {
             ////imageController.AddImageProcessingController(this, this.objectDetectionModel.Clone() as IRawPluginModel);
             }

@@ -67,17 +67,15 @@
          this.Container.Register<ImageManagerController>();
          this.Container.Register<PluginOperationController>();
          this.Container.Register<PluginManagerController>();
-         ////this.Container.Register<HelpOperationController>();
          this.Container.Register<AboutBoxController>();
          this.Container.Register<ImageController>();
-         this.Container.Register<IImageSourceController, ImageSourceController>();
-         this.Container.Register<IFileSourceController, FileSourceController>();
+         this.Container.Register<IImageSource, ImageSourceController>();
+         this.Container.Register<IFileSource, FileSourceController>();
          this.Container.Register<IImageProcessingController, ImageProcessingController>();
 
          // Models
          this.Container.Register<AboutBoxModel>();
          this.Container.Register<IImageModel, ImageModel>();
-         this.Container.Register<IFileSourceModel, FileSourceModel>();
          this.Container.Register<PluginModel1>();
 
          // Plugins

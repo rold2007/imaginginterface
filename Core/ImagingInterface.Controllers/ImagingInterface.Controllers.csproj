@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="AboutBoxController.cs" />
     <Compile Include="EventArguments\DragDropEventArgs.cs" />
-    <Compile Include="EventArguments\OpenFileEventArgs.cs" />
     <Compile Include="EventArguments\PixelViewChangedEventArgs.cs" />
     <Compile Include="EventArguments\PluginCreateEventArgs.cs" />
     <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
@@ -60,7 +59,10 @@
     <Compile Include="ImageManagerController.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="Models\AboutBoxModel.cs" />
+    <Compile Include="Models\FileOperationModel.cs" />
     <Compile Include="Models\IAboutBoxModel.cs" />
+    <Compile Include="Models\IFileOperationModel.cs" />
+    <Compile Include="Models\IImageManagerModel.cs" />
     <Compile Include="Models\IImageModel.cs" />
     <Compile Include="Models\ImageManagerModel.cs" />
     <Compile Include="Models\ImageModel.cs" />

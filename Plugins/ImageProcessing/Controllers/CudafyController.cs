@@ -27,7 +27,7 @@
       private Dictionary<string, GPGPUProperties> gpgpuProperties;
       private Dictionary<string, eGPUType> gpuTypes;
 
-      public CudafyController(ICudafyModel cudafyModel, ImageManagerController imageManagerController)
+      public CudafyController(CudafyModel cudafyModel, ImageManagerController imageManagerController)
          {
          ////this.cudafyView = cudafyView;
          this.cudafyModel = cudafyModel;
@@ -237,9 +237,9 @@
 
       private void TriggerAddProcessing()
          {
-         ImageController imageController = this.imageManagerController.GetActiveImage();
+         ////ImageController imageController = this.imageManagerController.GetActiveImage();
 
-         if (imageController != null)
+         ////if (imageController != null)
             {
             ////imageController.AddImageProcessingController(this, this.cudafyModel.Clone() as IRawPluginModel);
             }

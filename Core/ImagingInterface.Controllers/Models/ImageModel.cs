@@ -16,7 +16,7 @@
       public string DisplayName
          {
          get;
-         set;
+         private set;
          }
 
       public byte[, ,] SourceImageData
