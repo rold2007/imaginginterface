@@ -6,5 +6,10 @@
          {
          get;
          }
+
+      int ImageCount
+         {
+         get;
+         }
       }
    }

@@ -13,7 +13,7 @@
    using Microsoft.Practices.ServiceLocation;
    using Video.Models;
 
-   public class CaptureController : IImageSourceController, IDisposable
+   public class CaptureController : /*IImageSourceController,*/ IDisposable
       {
       private static readonly string CaptureDisplayName = "Capture"; // ncrunch: no coverage
       ////private ICaptureView captureView;
@@ -102,7 +102,7 @@
 
             if (this.liveGrabImageController != null)
                {
-               this.liveGrabImageController.Closed -= this.LiveGrabImageController_Closed;
+               ////this.liveGrabImageController.Closed -= this.LiveGrabImageController_Closed;
                this.liveGrabImageController = null;
                }
 
@@ -231,13 +231,13 @@
                {
                this.liveGrabImageController = this.serviceLocator.GetInstance<ImageController>();
 
-               this.liveGrabImageController.Closed += this.LiveGrabImageController_Closed;
+               ////this.liveGrabImageController.Closed += this.LiveGrabImageController_Closed;
 
-               this.liveGrabImageController.SetDisplayName("LiveGrab");
+               ////this.liveGrabImageController.SetDisplayName("LiveGrab");
 
                ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
-               imageManagerController.AddImage(this.liveGrabImageController);
+               ////imageManagerController.AddImage(this.liveGrabImageController);
                }
 
             ICaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<ICaptureModel>();

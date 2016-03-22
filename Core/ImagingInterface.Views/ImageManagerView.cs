@@ -56,6 +56,11 @@
          this.imageManagerController.RemoveActiveImage();
          }
 
+      public void RemoveAllImageViews()
+         {
+         this.imageManagerController.RemoveAllImages();
+         }
+
       private void AddImageToNewtab(ImageView imageView)
          {
          TabPage tabPage = new TabPage(imageView.DisplayName);

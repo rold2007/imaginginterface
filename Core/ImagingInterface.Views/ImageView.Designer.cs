@@ -58,7 +58,6 @@
          this.glControl.Visible = false;
          this.glControl.VSync = false;
          this.glControl.Load += new System.EventHandler(this.GLControl_Load);
-         this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLControl_Paint);
          this.glControl.Layout += new System.Windows.Forms.LayoutEventHandler(this.GLControl_Layout);
          this.glControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GLControl_MouseClick);
          this.glControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GLControl_MouseDoubleClick);

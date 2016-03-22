@@ -14,11 +14,10 @@
    public class ImageController
       {
       private ImageModel imageModel;
-      ////private IServiceLocator serviceLocator;
       private bool closing;
       private bool closed;
       private List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers;
-      private Task<byte[, ,]> lastFetchNextImageFromSourceTask;
+      private Task<byte[,,]> lastFetchNextImageFromSourceTask;
       private Task lastDisplayNextImageTask;
       private IImageSource imageSourceController;
       private IRawPluginModel imageSourceRawPluginModel;
@@ -27,7 +26,7 @@
       private Dictionary<IPluginController, int> asyncPluginControllers;
       private HashSet<IPluginController> closingPluginControllers;
 
-      public ImageController(ImageModel imageModel/*, IServiceLocator serviceLocator*/)
+      public ImageController(ImageModel imageModel)
          {
          this.imageModel = imageModel;
          ////this.serviceLocator = serviceLocator;
@@ -52,8 +51,6 @@
 
          this.closed = false;
 
-         this.imageModel.ZoomLevel = 1.0;
-
          ////this.imageView.ZoomLevelIncreased += this.ImageView_ZoomLevelIncreased;
          ////this.imageView.ZoomLevelDecreased += this.ImageView_ZoomLevelDecreased;
          ////this.imageView.PixelViewChanged += this.ImageView_PixelViewChanged;
@@ -68,6 +65,17 @@
 
       ////public event EventHandler<Plugins.EventArguments.SelectionChangedEventArgs> SelectionChanged;
 
+      public event EventHandler UpdateDisplay;
+
+      public event EventHandler ZoomLevelUpdated;
+
+      public IImageModel ImageModel
+         {
+         get
+            {
+            return this.imageModel;
+            }
+         }
       ////public IRawImageView RawImageView
       ////   {
       ////   get
@@ -114,6 +122,26 @@
          ////      this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
          ////      }
          ////   }
+         }
+
+      public void SetImageSource(IImageSource imageSource)
+         {
+         this.imageModel.ImageSource = imageSource;
+
+         if (this.UpdateDisplay != null)
+            {
+            this.UpdateDisplay(this, EventArgs.Empty);
+            }
+         }
+
+      public void UpdateZoomLevel(double zoomLevel)
+         {
+         this.imageModel.ZoomLevel = zoomLevel;
+
+         if (this.ZoomLevelUpdated != null)
+            {
+            this.ZoomLevelUpdated(this, EventArgs.Empty);
+            }
          }
 
       public void Close()

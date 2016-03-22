@@ -139,10 +139,6 @@
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Views.Interfaces\ImagingInterface.Views.Interfaces.csproj">
-      <Project>{7b65e2d3-cc7f-44a7-b569-94b40dc97ff2}</Project>
-      <Name>ImagingInterface.Views.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Views\ImagingInterface.Views.csproj">
       <Project>{bcadab9c-63d4-4a71-ada1-98be02ea9d33}</Project>
       <Name>ImagingInterface.Views</Name>

@@ -8,6 +8,11 @@
 
    public interface IImageSource
       {
+      byte[,,] ImageData
+         {
+         get;
+         }
+
       bool IsDynamic(IRawPluginModel rawPluginModel);
 
       byte[, ,] NextImageData(IRawPluginModel rawPluginModel);
