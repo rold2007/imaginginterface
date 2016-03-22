@@ -137,10 +137,7 @@
 
       private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
          {
-         ////if (this.FileCloseAll != null)
-         ////   {
-         ////   this.FileCloseAll(this, EventArgs.Empty);
-         ////   }
+         this.imageManagerView.RemoveAllImageViews();
          }
 
       // Based on http://stackoverflow.com/questions/6521731/refresh-the-panels-of-a-splitcontainer-as-the-splitter-moves

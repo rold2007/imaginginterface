@@ -54,6 +54,14 @@
          this.TriggerActiveImageIndexChanged();
          }
 
+      public void RemoveAllImages()
+         {
+         while (this.imageManagerModel.ImageCount > 0)
+            {
+            this.RemoveActiveImage();
+            }
+         }
+
       public void SetActiveImageIndex(int activeImageIndex)
          {
          this.imageManagerModel.ActiveImageIndex = activeImageIndex;

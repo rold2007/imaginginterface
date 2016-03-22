@@ -5,22 +5,20 @@
    using System.Diagnostics;
    using System.Drawing;
    using System.Windows.Forms;
+   using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using OpenTK.Graphics;
    using OpenTK.Graphics.OpenGL;
 
    public partial class ImageView : UserControl
       {
-      private bool openGLControlLoaded = false;
       private Dictionary<Texture, int> textures;
       private ImageController imageController;
-      private IImageSource imageSource;
       private bool firstPaint = true;
-      private bool openGLControlSizeUpdated = true;
       private bool zoomMode = true;
+      private bool openGLControlSizeUpdated = true;
       private double translateX = 0.0;
       private double translateY = 0.0;
       private ToolStripItem viewModeToolStripItem;
@@ -41,15 +39,20 @@
          this.ResetMousePosition();
 
          this.imageController = imageController;
+
+         this.imageController.UpdateDisplay += this.ImageController_UpdateDisplay;
+         this.imageController.ZoomLevelUpdated += this.ImageController_ZoomLevelUpdated;
          }
 
-      public event EventHandler ZoomLevelIncreased;
-
-      public event EventHandler ZoomLevelDecreased;
-
-      public event EventHandler<PixelViewChangedEventArgs> PixelViewChanged;
-
       public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+
+      private event EventHandler PrepareViewNeeded;
+
+      private event EventHandler AdjustScrollBarsNeeded;
+
+      private event EventHandler AllocateTexturesNeeded;
+
+      private event PaintEventHandler GLControlPaintNeeded;
 
       private enum Texture
          {
@@ -82,47 +85,12 @@
 
       public void SetImageSource(IImageSource imageSource)
          {
-         this.imageSource = imageSource;
-         }
-
-      public void UpdateDisplay()
-         {
-         ////if (this.imageModel.DisplayImageData != null)
-            {
-            if (this.glControl.Visible == false)
-               {
-               this.glControl.Visible = true;
-               }
-
-            this.AdjustScrollBars();
-
-            if (this.openGLControlSizeUpdated)
-               {
-               this.PrepareView();
-
-               this.openGLControlSizeUpdated = false;
-               }
-
-            this.AllocateTextures();
-
-            // The creation of the control already triggers a paint so don't force the first paint
-            if (this.firstPaint == true)
-               {
-               this.firstPaint = false;
-
-               this.glControl.Invalidate();
-               }
-            else
-               {
-               // Optimization suggested in OpenTK forum instead of calling this.glControl.Invalidate()
-               this.GLControl_Paint(this, null);
-               }
-            }
+         this.imageController.SetImageSource(imageSource);
          }
 
       public void UpdateZoomLevel()
          {
-         ////this.zoomLevelToolStripStatusLabel.Text = string.Format("{0}x", this.imageModel.ZoomLevel);
+         this.zoomLevelToolStripStatusLabel.Text = string.Format("{0}x", this.imageController.ImageModel.ZoomLevel);
 
          this.UpdateStatusStripSeparators();
 
@@ -132,13 +100,16 @@
 
          this.PrepareView();
 
-         this.GLControl_Paint(this, null);
+         this.ForceGLControlPaint();
          }
 
-      public void UpdatePixelView(Point pixelPosition, int gray, int[] rgb, double[] hsv)
+      public void UpdatePixelView(Point pixelPosition)
          {
          this.UpdateMousePosition(pixelPosition);
-         this.UpdatePixelColor(pixelPosition, gray, rgb, hsv);
+
+         RgbaColor rgbaColor = this.imageController.ImageModel.GetRgbaPixel(pixelPosition);
+
+         this.UpdatePixelColor(pixelPosition, rgbaColor);
          }
 
       public void Close()
@@ -148,9 +119,53 @@
          this.Dispose();
          }
 
+      private void ImageController_UpdateDisplay(object sender, EventArgs e)
+         {
+         if (this.glControl.Visible == false)
+            {
+            this.glControl.Visible = true;
+            }
+
+         this.AdjustScrollBars();
+
+         if (this.openGLControlSizeUpdated)
+            {
+            this.PrepareView();
+
+            this.openGLControlSizeUpdated = false;
+            }
+
+         this.AllocateTextures();
+
+         // The creation of the control already triggers a paint so don't force the first paint
+         if (this.firstPaint == true)
+            {
+            this.firstPaint = false;
+
+            this.glControl.Invalidate();
+            }
+         else
+            {
+            // Optimization suggested in OpenTK forum instead of calling this.glControl.Invalidate()
+            this.ForceGLControlPaint();
+            }
+         }
+
+      private void ImageController_ZoomLevelUpdated(object sender, EventArgs e)
+         {
+         this.UpdateZoomLevel();
+         }
+
       private void GLControl_Load(object sender, System.EventArgs e)
          {
-         this.openGLControlLoaded = true;
+         this.PrepareViewNeeded += this.ImageView_PrepareViewNeeded;
+
+         this.AdjustScrollBarsNeeded += this.ImageView_AdjustScrollBarsNeeded;
+
+         this.AllocateTexturesNeeded += this.ImageView_AllocateTexturesNeeded;
+
+         this.GLControlPaintNeeded += this.GLControl_Paint;
+         this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLControl_Paint);
 
          // Display a first buffer of size 1x1x1
          this.InitializeGLControl();
@@ -171,95 +186,105 @@
 
       private void PrepareView()
          {
-         if (this.openGLControlLoaded)
+         if (this.PrepareViewNeeded != null)
             {
-            this.glControl.MakeCurrent();
-
-            GL.ClearColor(SystemColors.Control);
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(0.0, this.glControl.Width, this.glControl.Height, 0.0, -1.0, 1.0);
-            GL.Viewport(0, 0, this.glControl.Width, this.glControl.Height);
-
-            GL.Translate(this.translateX, this.translateY, 0);
-
-            ////GL.Scale(this.imageModel.ZoomLevel, this.imageModel.ZoomLevel, 1.0);
-
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
-            // The alpha can be toggled to make the overlay more/less transparent
-            GL.Color4(0.0, 0.0, 0.0, 0.75);
+            this.PrepareViewNeeded(this, EventArgs.Empty);
             }
+         }
+
+      private void ImageView_PrepareViewNeeded(object sender, EventArgs e)
+         {
+         this.glControl.MakeCurrent();
+
+         GL.ClearColor(SystemColors.Control);
+
+         GL.MatrixMode(MatrixMode.Projection);
+         GL.LoadIdentity();
+         GL.Ortho(0.0, this.glControl.Width, this.glControl.Height, 0.0, -1.0, 1.0);
+         GL.Viewport(0, 0, this.glControl.Width, this.glControl.Height);
+
+         GL.Translate(this.translateX, this.translateY, 0);
+
+         GL.Scale(this.imageController.ImageModel.ZoomLevel, this.imageController.ImageModel.ZoomLevel, 1.0);
+
+         GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+         // The alpha can be toggled to make the overlay more/less transparent
+         GL.Color4(0.0, 0.0, 0.0, 0.75);
          }
 
       private void AdjustScrollBars()
          {
-         if (this.openGLControlLoaded)
+         if (this.AdjustScrollBarsNeeded != null)
             {
-            ////bool horizontalScrollBarVisible = false;
-            ////bool vertizontalScrollBarVisible = false;
-            ////Size neededViewSize = new Size(Convert.ToInt32(this.imageModel.Size.Width * this.imageModel.ZoomLevel), Convert.ToInt32(this.imageModel.Size.Height * this.imageModel.ZoomLevel));
-            ////Size clientSize = this.ToolStripContainer.ContentPanel.ClientSize;
-
-            ////if (neededViewSize.Width > clientSize.Width)
-            ////   {
-            ////   horizontalScrollBarVisible = true;
-
-            ////   clientSize.Height -= this.horizontalScrollBar.Height;
-
-            ////   if (neededViewSize.Height > clientSize.Height)
-            ////      {
-            ////      vertizontalScrollBarVisible = true;
-
-            ////      clientSize.Width -= this.verticalScrollBar.Width;
-            ////      }
-            ////   }
-            ////else
-            ////   {
-            ////   if (neededViewSize.Height > clientSize.Height)
-            ////      {
-            ////      vertizontalScrollBarVisible = true;
-
-            ////      clientSize.Width -= this.verticalScrollBar.Width;
-
-            ////      // Manage horizontal scrollbar hiding part of the image
-            ////      if (neededViewSize.Width > clientSize.Width)
-            ////         {
-            ////         horizontalScrollBarVisible = true;
-
-            ////         clientSize.Height -= this.horizontalScrollBar.Height;
-            ////         }
-            ////      }
-            ////   }
-
-            ////this.horizontalScrollBar.Visible = horizontalScrollBarVisible;
-            ////this.verticalScrollBar.Visible = vertizontalScrollBarVisible;
-
-            ////if (horizontalScrollBarVisible)
-            ////   {
-            ////   int missingWidth = neededViewSize.Width - clientSize.Width;
-
-            ////   this.UpdateScrollbarValueAndMaximum(missingWidth, this.horizontalScrollBar);
-            ////   }
-            ////else
-            ////   {
-            ////   this.translateX = 0.0;
-            ////   }
-
-            ////if (vertizontalScrollBarVisible)
-            ////   {
-            ////   int missingHeight = neededViewSize.Height - clientSize.Height;
-
-            ////   this.UpdateScrollbarValueAndMaximum(missingHeight, this.verticalScrollBar);
-            ////   }
-            ////else
-            ////   {
-            ////   this.translateY = 0.0;
-            ////   }
-
-            ////this.glControl.Size = new Size(Math.Min(neededViewSize.Width, clientSize.Width), Math.Min(neededViewSize.Height, clientSize.Height));
+            this.AdjustScrollBarsNeeded(this, EventArgs.Empty);
             }
+         }
+
+      private void ImageView_AdjustScrollBarsNeeded(object sender, EventArgs e)
+         {
+         bool horizontalScrollBarVisible = false;
+         bool vertizontalScrollBarVisible = false;
+         Size neededViewSize = new Size(Convert.ToInt32(this.imageController.ImageModel.Size.Width * this.imageController.ImageModel.ZoomLevel), Convert.ToInt32(this.imageController.ImageModel.Size.Height * this.imageController.ImageModel.ZoomLevel));
+         Size clientSize = this.ToolStripContainer.ContentPanel.ClientSize;
+
+         if (neededViewSize.Width > clientSize.Width)
+            {
+            horizontalScrollBarVisible = true;
+
+            clientSize.Height -= this.horizontalScrollBar.Height;
+
+            if (neededViewSize.Height > clientSize.Height)
+               {
+               vertizontalScrollBarVisible = true;
+
+               clientSize.Width -= this.verticalScrollBar.Width;
+               }
+            }
+         else
+            {
+            if (neededViewSize.Height > clientSize.Height)
+               {
+               vertizontalScrollBarVisible = true;
+
+               clientSize.Width -= this.verticalScrollBar.Width;
+
+               // Manage horizontal scrollbar hiding part of the image
+               if (neededViewSize.Width > clientSize.Width)
+                  {
+                  horizontalScrollBarVisible = true;
+
+                  clientSize.Height -= this.horizontalScrollBar.Height;
+                  }
+               }
+            }
+
+         this.horizontalScrollBar.Visible = horizontalScrollBarVisible;
+         this.verticalScrollBar.Visible = vertizontalScrollBarVisible;
+
+         if (horizontalScrollBarVisible)
+            {
+            int missingWidth = neededViewSize.Width - clientSize.Width;
+
+            this.UpdateScrollbarValueAndMaximum(missingWidth, this.horizontalScrollBar);
+            }
+         else
+            {
+            this.translateX = 0.0;
+            }
+
+         if (vertizontalScrollBarVisible)
+            {
+            int missingHeight = neededViewSize.Height - clientSize.Height;
+
+            this.UpdateScrollbarValueAndMaximum(missingHeight, this.verticalScrollBar);
+            }
+         else
+            {
+            this.translateY = 0.0;
+            }
+
+         this.glControl.Size = new Size(Math.Min(neededViewSize.Width, clientSize.Width), Math.Min(neededViewSize.Height, clientSize.Height));
          }
 
       private void UpdateScrollbarValueAndMaximum(int missingSize, ScrollBar scrollBar)
@@ -280,47 +305,52 @@
 
       private void AllocateTextures()
          {
-         if (this.openGLControlLoaded)
+         if (this.AllocateTexturesNeeded != null)
             {
-            this.FreeTextures();
-
-            int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
-
-            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
-
-            this.textures.Add(Texture.Underlay, GL.GenTexture());
-
-            this.InitializeTexture(this.textures[Texture.Underlay]);
-
-            ////if (this.imageModel.IsGrayscale)
-            ////   {
-            ////   // Camera (capture) images are retrieved as grayscale
-            ////   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
-            ////   }
-            ////else
-            ////   {
-            ////   // Static images are loaded as color
-            ////   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageModel.DisplayImageData);
-            ////   }
-
-            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Replace);
-
-            ////if (this.imageModel.OverlayImageData != null)
-               {
-               this.textures.Add(Texture.Overlay, GL.GenTexture());
-
-               this.InitializeTexture(this.textures[Texture.Overlay]);
-
-               ////GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageModel.Size.Width, this.imageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageModel.OverlayImageData);
-
-               GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, Color.White);
-               GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Blend);
-               }
-
-            GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
-
-            this.UpdateImageSize();
+            this.AllocateTexturesNeeded(this, EventArgs.Empty);
             }
+         }
+
+      private void ImageView_AllocateTexturesNeeded(object sender, EventArgs e)
+         {
+         this.FreeTextures();
+
+         int unpackAlignment = GL.GetInteger(GetPName.UnpackAlignment);
+
+         GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+
+         this.textures.Add(Texture.Underlay, GL.GenTexture());
+
+         this.InitializeTexture(this.textures[Texture.Underlay]);
+
+         if (this.imageController.ImageModel.IsGrayscale)
+            {
+            // Camera (capture) images are retrieved as grayscale
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Luminance, this.imageController.ImageModel.Size.Width, this.imageController.ImageModel.Size.Height, 0, PixelFormat.Luminance, PixelType.UnsignedByte, this.imageController.ImageModel.DisplayImageData);
+            }
+         else
+            {
+            // Static images are loaded as color
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageController.ImageModel.Size.Width, this.imageController.ImageModel.Size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, this.imageController.ImageModel.DisplayImageData);
+            }
+
+         GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Replace);
+
+         ////if (this.imageController.ImageModel.OverlayImageData != null)
+         ////   {
+         ////   this.textures.Add(Texture.Overlay, GL.GenTexture());
+
+         ////   this.InitializeTexture(this.textures[Texture.Overlay]);
+
+         ////   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageController.ImageModel.Size.Width, this.imageController.ImageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageController.ImageModel.OverlayImageData);
+
+         ////   GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, Color.White);
+         ////   GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Blend);
+         ////   }
+
+         GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
+
+         this.UpdateImageSize();
          }
 
       private void FreeTextures()
@@ -345,13 +375,16 @@
          GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
          }
 
+      private void ForceGLControlPaint()
+         {
+         if (this.GLControlPaintNeeded != null)
+            {
+            this.GLControlPaintNeeded(this, null);
+            }
+         }
+
       private void GLControl_Paint(object sender, PaintEventArgs e)
          {
-         if (!this.openGLControlLoaded)
-            {
-            return;
-            }
-
          int underlayTexture;
          bool underlayPresent = this.textures.TryGetValue(Texture.Underlay, out underlayTexture);
 
@@ -373,11 +406,11 @@
          GL.TexCoord2(0, 0);
          GL.Vertex2(0, 0);
          GL.TexCoord2(1, 0);
-         ////GL.Vertex2(this.imageModel.Size.Width, 0);
+         GL.Vertex2(this.imageController.ImageModel.Size.Width, 0);
          GL.TexCoord2(1, 1);
-         ////GL.Vertex2(this.imageModel.Size.Width, this.imageModel.Size.Height);
+         GL.Vertex2(this.imageController.ImageModel.Size.Width, this.imageController.ImageModel.Size.Height);
          GL.TexCoord2(0, 1);
-         ////GL.Vertex2(0, this.imageModel.Size.Height);
+         GL.Vertex2(0, this.imageController.ImageModel.Size.Height);
 
          GL.End();
 
@@ -396,11 +429,11 @@
             GL.TexCoord2(0, 0);
             GL.Vertex2(0, 0);
             GL.TexCoord2(1, 0);
-            ////GL.Vertex2(this.imageModel.Size.Width, 0);
+            GL.Vertex2(this.imageController.ImageModel.Size.Width, 0);
             GL.TexCoord2(1, 1);
-            ////GL.Vertex2(this.imageModel.Size.Width, this.imageModel.Size.Height);
+            GL.Vertex2(this.imageController.ImageModel.Size.Width, this.imageController.ImageModel.Size.Height);
             GL.TexCoord2(0, 1);
-            ////GL.Vertex2(0, this.imageModel.Size.Height);
+            GL.Vertex2(0, this.imageController.ImageModel.Size.Height);
 
             GL.End();
 
@@ -417,10 +450,7 @@
          Point mousePosition = new Point(e.X, e.Y);
          Point pixelPosition = this.GetPointPositionInImage(mousePosition.X, mousePosition.Y);
 
-         if (this.PixelViewChanged != null)
-            {
-            this.PixelViewChanged(this, new PixelViewChangedEventArgs(pixelPosition));
-            }
+         this.UpdatePixelView(pixelPosition);
          }
 
       private void GLControl_MouseClick(object sender, MouseEventArgs e)
@@ -483,7 +513,7 @@
             this.openGLControlSizeUpdated = false;
             }
 
-         this.GLControl_Paint(this, null);
+         this.ForceGLControlPaint();
          }
 
       private void UpdateScrollbarsPositionAndSize()
@@ -512,7 +542,7 @@
 
          this.PrepareView();
 
-         this.GLControl_Paint(this, null);
+         this.ForceGLControlPaint();
          }
 
       private void VerticalScrollBar_ValueChanged(object sender, EventArgs e)
@@ -521,7 +551,7 @@
 
          this.PrepareView();
 
-         this.GLControl_Paint(this, null);
+         this.ForceGLControlPaint();
          }
 
       private void ToolStripContainer_ContentPanel_MouseClick(object sender, MouseEventArgs e)
@@ -542,12 +572,9 @@
             {
             if (this.zoomMode)
                {
-               if (this.ZoomLevelIncreased != null)
-                  {
-                  this.viewCenter = mouseClickPixel;
+               this.viewCenter = mouseClickPixel;
 
-                  this.ZoomLevelIncreased(this, EventArgs.Empty);
-                  }
+               this.imageController.UpdateZoomLevel(this.imageController.ImageModel.ZoomLevel * 2.0);
                }
             else
                {
@@ -563,59 +590,55 @@
                {
                if (this.glControl.Size.Width > 1 && this.glControl.Size.Height > 1)
                   {
-                  if (this.ZoomLevelDecreased != null)
-                     {
-                     this.viewCenter = mouseClickPixel;
+                  this.viewCenter = mouseClickPixel;
 
-                     this.ZoomLevelDecreased(this, EventArgs.Empty);
-                     }
+                  this.imageController.UpdateZoomLevel(this.imageController.ImageModel.ZoomLevel * 0.5);
                   }
                }
-            else
+            }
+         else
+            {
+            if (this.SelectionChanged != null)
                {
-               if (this.SelectionChanged != null)
-                  {
-                  this.SelectionChanged(this, new SelectionChangedEventArgs(mouseClickPixel, false));
-                  }
+               this.SelectionChanged(this, new SelectionChangedEventArgs(mouseClickPixel, false));
                }
             }
          }
 
       private Point GetPointPositionInImage(int mouseX, int mouseY)
          {
-         ////int imageX;
-         ////int imageY;
+         int imageX;
+         int imageY;
 
-         ////if (mouseX > this.glControl.Width)
-         ////   {
-         ////   imageX = this.imageModel.Size.Width - 1;
-         ////   }
-         ////else
-         ////   {
-         ////   imageX = Convert.ToInt32(((mouseX - this.translateX) / this.imageModel.ZoomLevel) - 0.5);
-         ////   }
+         if (mouseX > this.glControl.Width)
+            {
+            imageX = this.imageController.ImageModel.Size.Width - 1;
+            }
+         else
+            {
+            imageX = Convert.ToInt32(((mouseX - this.translateX) / this.imageController.ImageModel.ZoomLevel) - 0.5);
+            }
 
-         ////if (mouseY > this.glControl.Height)
-         ////   {
-         ////   imageY = this.imageModel.Size.Height - 1;
-         ////   }
-         ////else
-         ////   {
-         ////   imageY = Convert.ToInt32(((mouseY - this.translateY) / this.imageModel.ZoomLevel) - 0.5);
-         ////   }
+         if (mouseY > this.glControl.Height)
+            {
+            imageY = this.imageController.ImageModel.Size.Height - 1;
+            }
+         else
+            {
+            imageY = Convert.ToInt32(((mouseY - this.translateY) / this.imageController.ImageModel.ZoomLevel) - 0.5);
+            }
 
-         ////return new Point(imageX, imageY);
-         return new Point();
+         return new Point(imageX, imageY);
          }
 
       private void CenterView(Point center)
          {
          if (this.horizontalScrollBar.Visible)
             {
-            ////double horizontalTranslation = ((center.X + 0.5) * this.imageModel.ZoomLevel) - (this.glControl.Width / 2);
+            double horizontalTranslation = ((center.X + 0.5) * this.imageController.ImageModel.ZoomLevel) - (this.glControl.Width / 2);
 
-            ////// The maximum value of a scroll bar using user interaction is Maximum-LargeChange+1. (see http://msdn.microsoft.com/en-us/library/system.windows.forms.scrollbar.maximum.aspx)
-            ////this.horizontalScrollBar.Value = Convert.ToInt32(Math.Max(0, Math.Min(horizontalTranslation, this.horizontalScrollBar.Maximum - this.horizontalScrollBar.LargeChange + 1)));
+            // The maximum value of a scroll bar using user interaction is Maximum-LargeChange+1. (see http://msdn.microsoft.com/en-us/library/system.windows.forms.scrollbar.maximum.aspx)
+            this.horizontalScrollBar.Value = Convert.ToInt32(Math.Max(0, Math.Min(horizontalTranslation, this.horizontalScrollBar.Maximum - this.horizontalScrollBar.LargeChange + 1)));
             }
          else
             {
@@ -624,10 +647,10 @@
 
          if (this.verticalScrollBar.Visible)
             {
-            ////double verticalTranslation = ((center.Y + 0.5) * this.imageModel.ZoomLevel) - (this.glControl.Height / 2);
+            double verticalTranslation = ((center.Y + 0.5) * this.imageController.ImageModel.ZoomLevel) - (this.glControl.Height / 2);
 
-            ////// The maximum value of a scroll bar using user interaction is Maximum-LargeChange+1. (see http://msdn.microsoft.com/en-us/library/system.windows.forms.scrollbar.maximum.aspx)
-            ////this.verticalScrollBar.Value = Convert.ToInt32(Math.Max(0, Math.Min(verticalTranslation, this.verticalScrollBar.Maximum - this.verticalScrollBar.LargeChange + 1)));
+            // The maximum value of a scroll bar using user interaction is Maximum-LargeChange+1. (see http://msdn.microsoft.com/en-us/library/system.windows.forms.scrollbar.maximum.aspx)
+            this.verticalScrollBar.Value = Convert.ToInt32(Math.Max(0, Math.Min(verticalTranslation, this.verticalScrollBar.Maximum - this.verticalScrollBar.LargeChange + 1)));
             }
          else
             {
@@ -655,18 +678,21 @@
          this.UpdateStatusStripSeparators();
          }
 
-      private void UpdatePixelColor(Point pixelPosition, int gray, int[] rgb, double[] hsv)
+      private void UpdatePixelColor(Point pixelPosition, RgbaColor rgbaColor)
          {
-         ////if (this.imageModel.IsGrayscale)
-         ////   {
-         ////   this.rgbGrayColorToolStripStatusLabel.Text = string.Format("Gray: {0} ", gray);
-         ////   this.hsvColorToolStripStatusLabel.Text = string.Empty;
-         ////   }
-         ////else
-         ////   {
-         ////   this.rgbGrayColorToolStripStatusLabel.Text = string.Format("R: {0} G: {1} B: {2}", rgb[0], rgb[1], rgb[2]);
-         ////   this.hsvColorToolStripStatusLabel.Text = string.Format("H: {0} S: {1} V: {2}", hsv[0], hsv[1], hsv[2]);
-         ////   }
+         if (this.imageController.ImageModel.IsGrayscale)
+            {
+            this.rgbGrayColorToolStripStatusLabel.Text = string.Format("Gray: {0} ", rgbaColor.R.ToString());
+            this.hsvColorToolStripStatusLabel.Text = string.Empty;
+            }
+         else
+            {
+            this.rgbGrayColorToolStripStatusLabel.Text = rgbaColor.ToString();
+
+            HslaColor hslaColor = rgbaColor;
+
+            this.hsvColorToolStripStatusLabel.Text = hslaColor.ToString();
+            }
 
          this.UpdateStatusStripSeparators();
          }
@@ -681,7 +707,7 @@
 
       private void UpdateImageSize()
          {
-         ////this.imageSizeToolStripStatusLabel.Text = string.Format("({0}x{1})", this.imageModel.Size.Width, this.imageModel.Size.Height);
+         this.imageSizeToolStripStatusLabel.Text = string.Format("({0}x{1})", this.imageController.ImageModel.Size.Width, this.imageController.ImageModel.Size.Height);
 
          this.UpdateStatusStripSeparators();
          }
@@ -722,6 +748,8 @@
                showNextSeparator = false;
                }
             }
+
+         this.statusStrip.Update();
          }
 
       private void GLControl_Layout(object sender, LayoutEventArgs e)

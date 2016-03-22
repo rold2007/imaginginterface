@@ -1,6 +1,7 @@
 ﻿namespace ImagingInterface.Models
    {
    using System.Drawing;
+   using ImageProcessor.Imaging.Colors;
 
    public interface IImageModel
       {
@@ -9,23 +10,23 @@
          get;
          }
 
-      byte[, ,] SourceImageData
+      ////byte[, ,] SourceImageData
+      ////   {
+      ////   get;
+      ////   set;
+      ////   }
+
+      byte[,,] DisplayImageData
          {
          get;
-         set;
+         ////set;
          }
 
-      byte[, ,] DisplayImageData
-         {
-         get;
-         set;
-         }
-
-      byte[] OverlayImageData
-         {
-         get;
-         set;
-         }
+      ////byte[] OverlayImageData
+      ////   {
+      ////   get;
+      ////   set;
+      ////   }
 
       Size Size
          {
@@ -40,7 +41,8 @@
       double ZoomLevel
          {
          get;
-         set;
          }
+
+      RgbaColor GetRgbaPixel(Point pixelPosition);
       }
    }

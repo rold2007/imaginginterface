@@ -26,6 +26,11 @@
       ////      }
       ////   }
 
+      public byte[,,] ImageData
+         {
+         get;
+         }
+
       public bool Active
          {
          get

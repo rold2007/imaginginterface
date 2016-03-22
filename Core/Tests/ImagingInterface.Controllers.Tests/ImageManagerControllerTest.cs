@@ -42,7 +42,6 @@
       public void AddRemoveImage()
          {
          ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-         ImageController imageController = this.Container.GetInstance<ImageController>();
 
          imageManagerController.AddImage();
          imageManagerController.AddImage();
@@ -67,6 +66,19 @@
 
          imageManagerController.RemoveActiveImage();
          Assert.AreEqual(-1, imageManagerController.ImageManagerModel.ActiveImageIndex);
+         }
+
+      [Test]
+      public void RemoveAllImages()
+         {
+         ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+
+         imageManagerController.AddImage();
+         imageManagerController.AddImage();
+
+         imageManagerController.RemoveAllImages();
+
+         Assert.AreEqual(0, imageManagerController.ImageManagerModel.ImageCount);
          }
 
       ////[Test]
