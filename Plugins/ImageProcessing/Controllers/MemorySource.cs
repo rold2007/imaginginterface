@@ -60,6 +60,14 @@
          private set;
          }
 
+      public string ImageName
+         {
+         get
+            {
+            return "Memory";
+            }
+         }
+
       public bool IsDynamic(IRawPluginModel rawPluginModel)
          {
          return false;

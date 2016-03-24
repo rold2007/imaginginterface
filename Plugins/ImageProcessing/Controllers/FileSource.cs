@@ -51,6 +51,14 @@
          set;
          }
 
+      public string ImageName
+         {
+         get
+            {
+            return this.Filename;
+            }
+         }
+
       public void Initialize()
          {
          }

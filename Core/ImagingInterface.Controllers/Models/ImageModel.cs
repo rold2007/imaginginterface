@@ -40,8 +40,10 @@
 
       public string DisplayName
          {
-         get;
-         private set;
+         get
+            {
+            return this.ImageSource.ImageName;
+            }
          }
 
       ////public byte[,,] SourceImageData

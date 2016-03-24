@@ -13,6 +13,11 @@
          get;
          }
 
+      string ImageName
+         {
+         get;
+         }
+
       bool IsDynamic(IRawPluginModel rawPluginModel);
 
       byte[, ,] NextImageData(IRawPluginModel rawPluginModel);
