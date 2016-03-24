@@ -31,6 +31,14 @@
          get;
          }
 
+      public string ImageName
+         {
+         get
+            {
+            return "Mock";
+            }
+         }
+
       public bool Active
          {
          get

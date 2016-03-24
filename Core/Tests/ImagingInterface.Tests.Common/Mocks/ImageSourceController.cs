@@ -25,6 +25,14 @@
          set;
          }
 
+      public string ImageName
+         {
+         get
+            {
+            return "Mock";
+            }
+         }
+
       public IRawPluginView RawPluginView
          {
          get;
