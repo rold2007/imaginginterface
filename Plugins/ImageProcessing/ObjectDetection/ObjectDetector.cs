@@ -91,7 +91,7 @@
                {
                string columnName = "Feature" + i.ToString();
 
-               attributes.Add(new DecisionVariable(columnName, new AForge.DoubleRange(double.MinValue, double.MaxValue)));
+               attributes.Add(new DecisionVariable(columnName, new Accord.DoubleRange(double.MinValue, double.MaxValue)));
                }
 
             int trainSampleIndex = 0;
