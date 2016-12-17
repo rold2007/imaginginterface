@@ -244,7 +244,7 @@
 
             liveGrabCaptureModel.LiveGrabRunning = true;
 
-            this.liveGrabImageController.InitializeImageSourceController(this, liveGrabCaptureModel);
+            ////this.liveGrabImageController.InitializeImageSourceController(this, liveGrabCaptureModel);
             }
          }
 
@@ -264,10 +264,10 @@
          this.grabbingLive = false;
          this.stopping = false;
 
-         if (this.liveGrabImageController != null)
-            {
-            this.liveGrabImageController.DisplayUpdated -= this.LiveGrabImageController_DisplayUpdated;
-            }
+         ////if (this.liveGrabImageController != null)
+         ////   {
+         ////   this.liveGrabImageController.DisplayUpdated -= this.LiveGrabImageController_DisplayUpdated;
+         ////   }
 
          ////this.captureView.UpdateLiveGrabStatus(true, false);
          }
@@ -288,8 +288,8 @@
 
       private void SnapShotFinished(ImageController imageController)
          {
-         imageController.Closed -= this.SnapShot_Closed;
-         imageController.DisplayUpdated -= this.SnapShot_DisplayUpdated;
+         ////imageController.Closed -= this.SnapShot_Closed;
+         ////imageController.DisplayUpdated -= this.SnapShot_DisplayUpdated;
 
          ////this.captureView.UpdateLiveGrabStatus(true, false);
          }
@@ -303,7 +303,7 @@
 
       private void LiveGrabImageController_Closed(object sender, EventArgs e)
          {
-         this.liveGrabImageController.Closed -= this.LiveGrabImageController_Closed;
+         ////this.liveGrabImageController.Closed -= this.LiveGrabImageController_Closed;
 
          this.liveGrabImageController = null;
          }
@@ -319,7 +319,7 @@
             {
             if (!this.stopping)
                {
-               this.liveGrabImageController.DisplayUpdated += this.LiveGrabImageController_DisplayUpdated;
+               ////this.liveGrabImageController.DisplayUpdated += this.LiveGrabImageController_DisplayUpdated;
 
                ////this.captureView.UpdateLiveGrabStatus(false, false);
 
@@ -327,7 +327,7 @@
 
                liveGrabCaptureModel.LiveGrabRunning = false;
 
-               this.liveGrabImageController.InitializeImageSourceController(this, liveGrabCaptureModel);
+               ////this.liveGrabImageController.InitializeImageSourceController(this, liveGrabCaptureModel);
                }
 
             this.stopping = true;
@@ -342,16 +342,16 @@
 
          ImageController imageController = this.serviceLocator.GetInstance<ImageController>();
 
-         imageController.SetDisplayName("Snapshot");
-         imageController.InitializeImageSourceController(this, captureModel);
+         ////imageController.SetDisplayName("Snapshot");
+         ////imageController.InitializeImageSourceController(this, captureModel);
 
          ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
-         imageManagerController.AddImage(imageController);
+         ////imageManagerController.AddImage(imageController);
 
          // Register the closed event because the image controller can be closed without a last display update
-         imageController.Closed += this.SnapShot_Closed;
-         imageController.DisplayUpdated += this.SnapShot_DisplayUpdated;
+         ////imageController.Closed += this.SnapShot_Closed;
+         ////imageController.DisplayUpdated += this.SnapShot_DisplayUpdated;
 
          // Prevent any other grab until snapshot is finished to prevent many thread calling NextImageData
          ////this.captureView.UpdateLiveGrabStatus(false, false);
