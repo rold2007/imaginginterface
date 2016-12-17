@@ -1,0 +1,26 @@
+﻿<SolutionConfiguration>
+  <Settings>
+    <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>CaptureWrapper.cs:Plugins\Video\Controllers\Video.Controllers.csproj</Value>
+      <Value>Core\Tests\ImagingInterface.Controllers.Tests\ImagingInterface.Controllers.Tests.csproj</Value>
+      <Value>Core\Tests\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj</Value>
+      <Value>ImagingInterface.Controllers.Tests\ImagingInterface.Controllers.Tests.csproj</Value>
+      <Value>ImagingInterface.Views\ImagingInterface.Views.csproj</Value>
+      <Value>ImagingInterface\ImagingInterface.csproj\Properties</Value>
+      <Value>Plugins\ImageProcessing\Bootstrapper\ImageProcessing.Bootstrapper.csproj</Value>
+      <Value>Plugins\ImageProcessing\Tests\ImageProcessing.Controllers.Tests\ImageProcessing.Controllers.Tests.csproj</Value>
+      <Value>Plugins\Video\Bootstrapper\Video.Bootstrapper.csproj</Value>
+      <Value>Plugins\Video\Tests\Video.Controllers.Tests\Video.Controllers.Tests.csproj</Value>
+    </MetricsExclusionList>
+    <SolutionConfigured>True</SolutionConfigured>
+  </Settings>
+  <EngineModes>
+    <EngineMode>
+      <Name>Run impacted tests automatically, others manually (experimental!)</Name>
+      <Settings>
+        <TestsToExecuteAutomatically>IsImpacted</TestsToExecuteAutomatically>
+      </Settings>
+    </EngineMode>
+  </EngineModes>
+</SolutionConfiguration>
