@@ -30,9 +30,9 @@
       public void SuppressDiagnosticWarning(Container container)
          {
          ////container.GetRegistration(typeof(ICaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(CaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(ICaptureView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         ////container.GetRegistration(typeof(ICaptureWrapper)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         }
+         container.GetRegistration(typeof(CaptureController)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(CaptureView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         container.GetRegistration(typeof(CaptureWrapper)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
       }
+   }
    }

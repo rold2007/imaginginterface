@@ -17,14 +17,14 @@
       {
       private static readonly string CaptureDisplayName = "Capture"; // ncrunch: no coverage
       ////private ICaptureView captureView;
-      private ICaptureModel captureModel;
+      private CaptureModel captureModel;
       private IServiceLocator serviceLocator;
-      private ICaptureWrapper captureWrapper;
+      private CaptureWrapper captureWrapper;
       private ImageController liveGrabImageController;
       private bool grabbingLive;
       private bool stopping;
 
-      public CaptureController(ICaptureModel captureModel, IServiceLocator serviceLocator, ICaptureWrapper captureWrapper)
+      public CaptureController(CaptureModel captureModel, IServiceLocator serviceLocator, CaptureWrapper captureWrapper)
          {
          ////this.captureView = captureView;
          this.captureModel = captureModel;
@@ -117,7 +117,7 @@
 
       public bool IsDynamic(IRawPluginModel rawPluginModel)
          {
-         ICaptureModel captureModel = rawPluginModel as ICaptureModel;
+         CaptureModel captureModel = rawPluginModel as CaptureModel;
 
          return captureModel.LiveGrabRunning;
          }
@@ -126,7 +126,7 @@
          {
          Debug.Assert(rawPluginModel != null, "We should never send a null parameter to InitializeImageSourceController.");
 
-         ICaptureModel captureModel = rawPluginModel as ICaptureModel;
+         CaptureModel captureModel = rawPluginModel as CaptureModel;
 
          Debug.Assert(captureModel != null, "Something went wrong with the cast.");
 
@@ -240,7 +240,7 @@
                ////imageManagerController.AddImage(this.liveGrabImageController);
                }
 
-            ICaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<ICaptureModel>();
+            CaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<CaptureModel>();
 
             liveGrabCaptureModel.LiveGrabRunning = true;
 
@@ -250,7 +250,7 @@
 
       private void LiveGrabImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
          {
-         ICaptureModel captureModel = e.RawPluginModel as ICaptureModel;
+         CaptureModel captureModel = e.RawPluginModel as CaptureModel;
 
          // Received the new model indicating there will be no more live update
          if (!captureModel.LiveGrabRunning)
@@ -323,7 +323,7 @@
 
                ////this.captureView.UpdateLiveGrabStatus(false, false);
 
-               ICaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<ICaptureModel>();
+               CaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<CaptureModel>();
 
                liveGrabCaptureModel.LiveGrabRunning = false;
 
@@ -336,7 +336,7 @@
 
       private void CaptureView_SnapShot(object sender, EventArgs e)
          {
-         ICaptureModel captureModel = this.serviceLocator.GetInstance<ICaptureModel>();
+         CaptureModel captureModel = this.serviceLocator.GetInstance<CaptureModel>();
 
          captureModel.LiveGrabRunning = false;
 
