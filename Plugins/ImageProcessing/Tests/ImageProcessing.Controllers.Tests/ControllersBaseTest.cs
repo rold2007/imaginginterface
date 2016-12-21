@@ -71,9 +71,9 @@
          this.Container.Register<RotateController>();
          this.Container.Register<CudafyController>();
          this.Container.Register<ImageController>();
-         this.Container.Register<IImageSourceController, ImageSourceController>();
-         this.Container.Register<IFileSourceController, FileSourceController>();
-         this.Container.Register<IMemorySourceController, MemorySourceController>();
+         ////this.Container.Register<IImageSourceController, ImageSourceController>();
+         ////this.Container.Register<IFileSourceController, FileSourceController>();
+         ////this.Container.Register<IMemorySourceController, MemorySourceController>();
          this.Container.Register<TaggerController>();
          this.Container.Register<ObjectDetectionController>();
          this.Container.Register<ObjectDetectionManagerController>();
@@ -83,8 +83,8 @@
          this.Container.Register<IRotateModel, RotateModel>();
          this.Container.Register<ICudafyModel, CudafyModel>();
          this.Container.Register<IImageModel, ImageModel>();
-         this.Container.Register<IFileSourceModel, FileSourceModel>();
-         this.Container.Register<IMemorySourceModel, MemorySourceModel>();
+         ////this.Container.Register<IFileSourceModel, FileSourceModel>();
+         ////this.Container.Register<IMemorySourceModel, MemorySourceModel>();
          this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
          this.Container.RegisterSingleton<IObjectDetectionModel, ObjectDetectionModel>();
          this.Container.Register<IObjectDetectionManagerModel, ObjectDetectionManagerModel>();

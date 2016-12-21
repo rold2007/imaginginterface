@@ -70,19 +70,19 @@
             ////CudafyView cudafyView = cudafyController.RawPluginView as CudafyView;
             ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-            ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+            ////ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[,,] imageData = new byte[10, 10, 1];
 
             cudafyController.Initialize();
 
-            imageManagerController.AddImage(imageController);
+            ////imageManagerController.AddImage(imageController);
 
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            ////   {
+            ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            ////   imageControllerWrapper.WaitForDisplayUpdate();
+            ////   }
 
             cudafyController.ProcessImageData(imageData, null, cudafyController.RawPluginModel);
 
@@ -178,19 +178,19 @@
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-            ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+            ////ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[,,] imageData = new byte[1, 1, 1];
 
-            cudafyController.Initialize();
+            ////cudafyController.Initialize();
 
-            imageManagerController.AddImage(imageController);
+            ////imageManagerController.AddImage(imageController);
 
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            ////   {
+            ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            ////   imageControllerWrapper.WaitForDisplayUpdate();
+            ////   }
 
             ////foreach (string gpu in cudafyView.GPUS)
             ////   {
@@ -208,7 +208,7 @@
                {
                ////cudafyView.TriggerGPUChanged(cudafyView.GPUS[0]);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             ////cudafyView.BlockSizeX = cudafyView.MaxBlockSizeX;
@@ -253,25 +253,25 @@
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-            ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+            ////ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[,,] imageData = new byte[1, 1, 1];
 
-            cudafyController.Initialize();
+            ////cudafyController.Initialize();
 
-            imageManagerController.AddImage(imageController);
+            ////imageManagerController.AddImage(imageController);
 
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            ////   {
+            ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            ////   imageControllerWrapper.WaitForDisplayUpdate();
+            ////   }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
                ////cudafyView.TriggerGridSizeChanged(3, 4, 5);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             Assert.AreEqual(3, cudafyModel.GridSize[0]);
@@ -307,25 +307,25 @@
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-            ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+            ////ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[,,] imageData = new byte[1, 1, 1];
 
-            cudafyController.Initialize();
+            ////cudafyController.Initialize();
 
-            imageManagerController.AddImage(imageController);
+            ////imageManagerController.AddImage(imageController);
 
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            ////   {
+            ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            ////   imageControllerWrapper.WaitForDisplayUpdate();
+            ////   }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
                ////cudafyView.TriggerGPUChanged(cudafyView.GPUS[0]);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -333,7 +333,7 @@
                ////cudafyView.BlockSizeX = 3;
                ////cudafyView.TriggerBlockSizeXChanged();
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             Assert.AreEqual(3, cudafyModel.BlockSize[0]);
@@ -344,7 +344,7 @@
 
                ////cudafyView.TriggerBlockSizeYChanged();
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -353,7 +353,7 @@
 
                ////cudafyView.TriggerBlockSizeXChanged();
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             ////Assert.AreEqual(cudafyView.MaxBlockSizeX, cudafyModel.BlockSize[0]);
@@ -388,25 +388,25 @@
             ICudafyModel cudafyModel = this.ServiceLocator.GetInstance<ICudafyModel>();
             ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
             ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-            ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+            ////ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
             byte[,,] imageData = new byte[1, 1, 1];
 
-            cudafyController.Initialize();
+            ////cudafyController.Initialize();
 
-            imageManagerController.AddImage(imageController);
+            ////imageManagerController.AddImage(imageController);
 
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            ////   {
+            ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            ////   imageControllerWrapper.WaitForDisplayUpdate();
+            ////   }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
                ////cudafyView.TriggerGPUChanged(cudafyView.GPUS[0]);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -414,7 +414,7 @@
                ////cudafyView.BlockSizeY = 4;
                ////cudafyView.TriggerBlockSizeYChanged();
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             Assert.AreEqual(4, cudafyModel.BlockSize[1]);
@@ -425,7 +425,7 @@
 
                ////cudafyView.TriggerBlockSizeXChanged();
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -434,7 +434,7 @@
 
                ////cudafyView.TriggerBlockSizeYChanged();
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             Assert.AreEqual(1, cudafyModel.BlockSize[0]);

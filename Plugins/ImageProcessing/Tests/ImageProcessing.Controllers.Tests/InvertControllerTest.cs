@@ -90,47 +90,47 @@
          ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
          ////IImageManagerView imageManagerView = this.ServiceLocator.GetInstance<IImageManagerView>();
          ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+         ////ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
 
          ////Assert.IsNotNull(invertView);
 
          invertController.Initialize();
 
-         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            {
-            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   {
+         ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-            imageManagerController.AddImage(imageController);
+         ////   imageManagerController.AddImage(imageController);
 
             ////ImageView imageView = imageManagerView.GetActiveImageView() as ImageView;
 
-            imageControllerWrapper.WaitForDisplayUpdate();
-            }
+            ////imageControllerWrapper.WaitForDisplayUpdate();
+            ////}
 
-         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            {
+         ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   {
             ////invertView.TriggerInvert(true);
 
-            imageControllerWrapper.WaitForDisplayUpdate();
-            }
+            ////imageControllerWrapper.WaitForDisplayUpdate();
+            ////}
 
-         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            {
+         ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   {
             // Test the 3 channels code
-            imageSourceController.ImageData = new byte[1, 1, 3];
+            ////imageSourceController.ImageData = new byte[1, 1, 3];
 
             ////invertView.TriggerInvert(true);
 
-            imageControllerWrapper.WaitForDisplayUpdate();
-            }
+            ////imageControllerWrapper.WaitForDisplayUpdate();
+            ////}
 
          // Test removing the invert processing
-         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            {
+         ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   {
             ////invertView.TriggerInvert(false);
 
-            imageControllerWrapper.WaitForDisplayUpdate();
-            }
+            ////imageControllerWrapper.WaitForDisplayUpdate();
+            ////}
          }
       }
    }

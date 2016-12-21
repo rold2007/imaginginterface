@@ -41,9 +41,9 @@
       [Test]
       public void FullPath()
          {
-         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+         ////ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
 
-         Assert.IsNull(imageController.DisplayName);
+         ////Assert.IsNull(imageController.DisplayName);
          }
 
       /*

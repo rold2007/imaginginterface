@@ -98,20 +98,20 @@
 
          using (UMat image = new UMat(1, 1, DepthType.Cv8U, 3))
             {
-            using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-               {
-               imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            ////   {
+            ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-               imageManagerController.AddImage(imageController);
+            ////   imageManagerController.AddImage(imageController);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
-               }
+            ////   imageControllerWrapper.WaitForDisplayUpdate();
+            ////   }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
                {
                ////rotateView.TriggerRotate(42.54);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
 
             using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
@@ -121,7 +121,7 @@
                // Change the angle to make sur the rotate executes itself
                ////rotateView.TriggerRotate(90);
 
-               imageControllerWrapper.WaitForDisplayUpdate();
+               ////imageControllerWrapper.WaitForDisplayUpdate();
                }
             }
          }
