@@ -1,0 +1,10 @@
+﻿<ProjectConfiguration>
+  <Settings>
+    <IgnoredTests>
+      <AllTestsSelector />
+    </IgnoredTests>
+    <IncludeStaticReferencesInWorkspace>False</IncludeStaticReferencesInWorkspace>
+    <InstrumentOutputAssembly>False</InstrumentOutputAssembly>
+    <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>
+  </Settings>
+</ProjectConfiguration>
