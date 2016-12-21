@@ -60,12 +60,12 @@
          this.Container.Register<CaptureController>();
          this.Container.Register<ImageController>();
          this.Container.Register<ICaptureWrapper, CaptureWrapperMock>();
-         this.Container.Register<IMemorySourceController, MemorySourceController>();
+         ////this.Container.Register<IMemorySourceController, MemorySourceController>();
 
          // Models
-         this.Container.Register<ICaptureModel, CaptureModel>();
+         this.Container.Register<CaptureModel, CaptureModel>();
          this.Container.Register<IImageModel, ImageModel>();
-         this.Container.Register<IMemorySourceModel, MemorySourceModel>();
+         ////this.Container.Register<IMemorySourceModel, MemorySourceModel>();
          }
       }
    }

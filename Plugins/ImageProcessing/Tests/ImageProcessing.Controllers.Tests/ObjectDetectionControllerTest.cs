@@ -115,16 +115,16 @@
             imageSourceController.ImageData[imageIndex, imageIndex, 0] = (byte)(imageIndex + 1);
             }
 
-         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            {
-            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   {
+         ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-            imageController.SetDisplayName(displayName);
+         ////   imageController.SetDisplayName(displayName);
 
-            imageManagerController.AddImage(imageController);
+         ////   imageManagerController.AddImage(imageController);
 
-            imageControllerWrapper.WaitForDisplayUpdate();
-            }
+         ////   imageControllerWrapper.WaitForDisplayUpdate();
+         ////   }
 
          ////objectDetectionView.TriggerTrain();
 
@@ -166,18 +166,18 @@
          ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
          ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
 
-         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            {
-            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   {
+         ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-            imageController.SetDisplayName(displayName);
+         ////   imageController.SetDisplayName(displayName);
 
-            imageManagerController.AddImage(imageController);
+         ////   imageManagerController.AddImage(imageController);
 
             ////objectDetectionView.TriggerTest();
 
-            imageControllerWrapper.WaitForDisplayUpdate();
-            }
+            ////imageControllerWrapper.WaitForDisplayUpdate();
+            ////}
          }
 
       [Test]
