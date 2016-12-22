@@ -18,31 +18,31 @@
       [Test]
       public void FileOpen()
          {
-         ////FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
+         FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
 
-         ////string[] files = new string[1] { "ValidFile" };
-         ////IList<IFileSource> imageSourceControllers = null;
+         string[] files = new string[3] { "ValidFile", "InvalidFile", "ValidFile" };
+         IList<IFileSource> imageSourceControllers = null;
 
-         ////imageSourceControllers = fileOperationController.OpenFiles(files);
+         imageSourceControllers = fileOperationController.OpenFiles(files);
 
-         ////Assert.AreEqual(1, imageSourceControllers.Count);
-         ////Assert.AreEqual(files[0], imageSourceControllers[0].Filename);
+         Assert.AreEqual(2, imageSourceControllers.Count);
+         Assert.AreEqual(files[0], imageSourceControllers[0].Filename);
 
-         ////imageSourceControllers.Clear();
-         ////files = null;
+         imageSourceControllers.Clear();
+         files = null;
 
-         ////// Make sure it doesn't crash with these parameters
-         ////fileOperationController.OpenFiles(files);
+         // Make sure it doesn't crash with these parameters
+         fileOperationController.OpenFiles(files);
 
-         ////Assert.AreEqual(0, imageSourceControllers.Count);
+         Assert.AreEqual(0, imageSourceControllers.Count);
 
-         ////files = new string[0];
+         files = new string[0];
 
-         ////// Make sure it doesn't crash with these parameters
-         ////fileOperationController.OpenFiles(files);
+         // Make sure it doesn't crash with these parameters
+         fileOperationController.OpenFiles(files);
 
-         ////Assert.AreEqual(0, imageSourceControllers.Count);
-         }
+         Assert.AreEqual(0, imageSourceControllers.Count);
+      }
 
       [Test]
       public void FileClose()
