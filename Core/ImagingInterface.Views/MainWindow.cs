@@ -127,7 +127,7 @@
             fileSources = this.fileOperationController.OpenFiles(openFileDialog.FileNames);
          }
 
-         this.OpenAllImages(fileSources);
+         this  . OpenAllImages (fileSources);
       }
 
       private void OpenAllImages(IList<IFileSource> fileSources)
