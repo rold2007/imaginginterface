@@ -29,7 +29,7 @@
          // Controllers
          container.Register<RotateController>();
          container.Register<InvertController>();
-         container.Register<IFileSource, FileSource>();
+         container.Register<IFileSource, ImageProcessorFileSource>();
          container.Register<CudafyController>();
          container.Register<IMemorySource, MemorySource>();
          container.Register<TaggerController>();

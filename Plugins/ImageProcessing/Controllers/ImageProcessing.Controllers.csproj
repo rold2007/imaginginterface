@@ -75,7 +75,7 @@
     <Compile Include="EventArguments\CudafyGridSizeChangedEventArgs.cs" />
     <Compile Include="EventArguments\InvertEventArgs.cs" />
     <Compile Include="EventArguments\RotateEventArgs.cs" />
-    <Compile Include="FileSource.cs" />
+    <Compile Include="ImageProcessorFileSource.cs" />
     <Compile Include="InvertController.cs" />
     <Compile Include="MemorySource.cs" />
     <Compile Include="ObjectDetectionController.cs" />

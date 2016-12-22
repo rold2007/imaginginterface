@@ -7,12 +7,12 @@
    using System.Threading.Tasks;
 
    public interface IFileSource : IImageSource
-      {
+   {
       string Filename
-         {
+      {
          get;
-         }
-
-      void SetImageSource(string file);
       }
+
+      bool LoadFile(string file);
    }
+}

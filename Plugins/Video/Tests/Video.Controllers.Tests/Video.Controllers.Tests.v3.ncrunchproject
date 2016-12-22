@@ -1,0 +1,13 @@
+﻿<ProjectConfiguration>
+  <Settings>
+    <IgnoredTests>
+      <NamedTestSelector>
+        <TestName>Video.Controllers.Tests.CaptureControllerTest.StartLiveGrab2</TestName>
+      </NamedTestSelector>
+      <AllTestsSelector />
+    </IgnoredTests>
+    <IncludeStaticReferencesInWorkspace>False</IncludeStaticReferencesInWorkspace>
+    <PreloadReferencedAssemblies>True</PreloadReferencedAssemblies>
+    <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>
+  </Settings>
+</ProjectConfiguration>
