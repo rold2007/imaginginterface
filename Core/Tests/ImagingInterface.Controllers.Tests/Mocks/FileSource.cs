@@ -58,9 +58,18 @@
          }
 
       public bool LoadFile(string file)
+      {
+         if (file == "ValidFile")
          {
-         return false;
+            this.Filename = file;
+
+            return true;
          }
+         else
+         {
+            return false;
+         }
+      }
 
       public void Close()
          {
