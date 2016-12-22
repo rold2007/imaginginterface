@@ -1,7 +1,10 @@
 ﻿<ProjectConfiguration>
   <Settings>
+    <IgnoredTests>
+      <AllTestsSelector />
+    </IgnoredTests>
     <IncludeStaticReferencesInWorkspace>False</IncludeStaticReferencesInWorkspace>
-    <InstrumentOutputAssembly>False</InstrumentOutputAssembly>
+    <PreloadReferencedAssemblies>True</PreloadReferencedAssemblies>
     <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>
   </Settings>
 </ProjectConfiguration>

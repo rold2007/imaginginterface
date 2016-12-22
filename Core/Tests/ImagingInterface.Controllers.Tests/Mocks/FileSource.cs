@@ -57,8 +57,9 @@
          {
          }
 
-      public void SetImageSource(string file)
+      public bool LoadFile(string file)
          {
+         return false;
          }
 
       public void Close()

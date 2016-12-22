@@ -8,25 +8,9 @@
    using ImagingInterface.Plugins;
    using Microsoft.Practices.ServiceLocation;
 
-   public class FileOperationModel : IFileOperationModel
+   public class FileOperationModel
       {
-      private IServiceLocator serviceLocator;
-
-      public FileOperationModel(IServiceLocator serviceLocator)
-         {
-         this.serviceLocator = serviceLocator;
-         }
-
-      public IFileSource OpenFile(string file)
-         {
-         IFileSource fileSource = this.serviceLocator.GetInstance<IFileSource>();
-
-         fileSource.SetImageSource(file);
-
-         return fileSource;
-         }
-
-      public void CloseFile(IFileSource fileSourceController)
+      public FileOperationModel()
          {
          }
       }

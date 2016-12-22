@@ -1,5 +1,11 @@
 ﻿<ProjectConfiguration>
   <Settings>
+    <HiddenComponentWarnings>
+      <Value>PostBuildEventDisabled</Value>
+    </HiddenComponentWarnings>
+    <IgnoredTests>
+      <AllTestsSelector />
+    </IgnoredTests>
     <IncludeStaticReferencesInWorkspace>False</IncludeStaticReferencesInWorkspace>
     <InstrumentOutputAssembly>False</InstrumentOutputAssembly>
     <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>

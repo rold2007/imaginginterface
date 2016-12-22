@@ -12,6 +12,23 @@
       <Value>Plugins\ImageProcessing\Tests\ImageProcessing.Controllers.Tests\ImageProcessing.Controllers.Tests.csproj</Value>
       <Value>Plugins\Video\Bootstrapper\Video.Bootstrapper.csproj</Value>
       <Value>Plugins\Video\Tests\Video.Controllers.Tests\Video.Controllers.Tests.csproj</Value>
+      <Value>Core\ImagingInterface\ImagingInterface.csproj</Value>
+      <Value>Plugins\Video\Controllers\Video.Controllers.csproj</Value>
+      <Value>Plugins\Video\Controllers.Interfaces\Video.Controllers.Interfaces.csproj</Value>
+      <Value>Plugins\Video\Models\Video.Models.csproj</Value>
+      <Value>Plugins\Video\Models.Interfaces\Video.Models.Interfaces.csproj</Value>
+      <Value>Plugins\Video\Views\Video.Views.csproj</Value>
+      <Value>Plugins\Video\Views.Interfaces\Video.Views.Interfaces.csproj</Value>
+      <Value>Plugins\ImageProcessing\Controllers\ImageProcessing.Controllers.csproj</Value>
+      <Value>Plugins\ImageProcessing\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj</Value>
+      <Value>Plugins\ImageProcessing\Cudafied\ImageProcessing.Cudafied.csproj</Value>
+      <Value>Plugins\ImageProcessing\Models\ImageProcessing.Models.csproj</Value>
+      <Value>Plugins\ImageProcessing\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj</Value>
+      <Value>Plugins\ImageProcessing\ObjectDetection\ImageProcessing.ObjectDetection.csproj</Value>
+      <Value>Plugins\ImageProcessing\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj</Value>
+      <Value>Plugins\ImageProcessing\Tests\ImageProcessing.ObjectDetection.Tests\ImageProcessing.ObjectDetection.Tests.csproj</Value>
+      <Value>Plugins\ImageProcessing\Views\ImageProcessing.Views.csproj</Value>
+      <Value>Plugins\ImageProcessing\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
