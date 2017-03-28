@@ -1,84 +1,52 @@
 ﻿namespace ImagingInterface.Controllers
 {
-   using System;
-   using System.Collections.Generic;
-   using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Models;
-   using ImagingInterface.Plugins;
-   using Microsoft.Practices.ServiceLocation;
+    using ImagingInterface.Models;
+    using Microsoft.Practices.ServiceLocation;
 
-   public class FileOperationController
-   {
-      private FileOperationModel fileOperationModel;
-      private IServiceLocator serviceLocator;
+    public class FileOperationController
+    {
+        private FileOperationModel fileOperationModel;
+        private ImageSourceManager imageSourceManager;
 
-      public FileOperationController(FileOperationModel fileOperationModel, IServiceLocator serviceLocator)
-      {
-         this.fileOperationModel = fileOperationModel;
-         this.serviceLocator = serviceLocator;
-      }
+        public FileOperationController(FileOperationModel fileOperationModel, ImageSourceManager imageSourceManager)
+        {
+            this.fileOperationModel = fileOperationModel;
+            this.imageSourceManager = imageSourceManager;
+        }
 
-      public IList<IFileSource> OpenFiles(string[] files)
-      {
-         List<IFileSource> fileSources = null;
-
-         if (files != null && files.Length != 0)
-         {
-            fileSources = new List<IFileSource>();
-
-            foreach (string file in files)
+        public void OpenFiles(string[] files)
+        {
+            if (files != null)
             {
-               IFileSource fileSource = this.OpenFile(file);
-
-               if (fileSource != null)
-               {
-                  fileSources.Add(fileSource);
-               }
+                this.imageSourceManager.AddImageFiles(files);
             }
-         }
+        }
 
-         return fileSources;
-      }
+        ////public void CloseFile(IFileSource fileSourceController)
+        ////{
+        ////}
 
-      ////public void CloseFile(IFileSource fileSourceController)
-      ////{
-      ////}
+        public void CloseFile()
+        {
+            ////if (this.CloseFile != null)
+            ////   {
+            ////   this.CloseFile(this, EventArgs.Empty);
+            ////   }
+        }
 
-      public void RequestCloseFile()
-      {
-         ////if (this.CloseFile != null)
-         ////   {
-         ////   this.CloseFile(this, EventArgs.Empty);
-         ////   }
-      }
+        public void CloseAllFiles()
+        {
+            ////if (this.CloseAllFiles != null)
+            ////   {
+            ////   this.CloseAllFiles(this, EventArgs.Empty);
 
-      public void RequestCloseAllFiles()
-      {
-         ////if (this.CloseAllFiles != null)
-         ////   {
-         ////   this.CloseAllFiles(this, EventArgs.Empty);
+            ////   GC.Collect();
+            ////   }
+        }
 
-         ////   GC.Collect();
-         ////   }
-      }
-
-      public void RequestDragDropFile(string[] data)
-      {
-         this.OpenFiles(data);
-      }
-
-      private IFileSource OpenFile(string file)
-      {
-         IFileSource fileSource = this.serviceLocator.GetInstance<IFileSource>();
-
-         if (fileSource.LoadFile(file))
-         {
-            return fileSource;
-         }
-         else
-         {
-            return null;
-         }
-      }
-   }
+        public void RequestDragDropFile(string[] data)
+        {
+            this.OpenFiles(data);
+        }
+    }
 }

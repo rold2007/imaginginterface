@@ -28,28 +28,31 @@
       /// </summary>
       private void InitializeComponent()
          {
-         this.imagesTabControl = new System.Windows.Forms.TabControl();
-         this.SuspendLayout();
-         // 
-         // imagesTabControl
-         // 
-         this.imagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.imagesTabControl.ItemSize = new System.Drawing.Size(0, 18);
-         this.imagesTabControl.Location = new System.Drawing.Point(0, 0);
-         this.imagesTabControl.Name = "imagesTabControl";
-         this.imagesTabControl.SelectedIndex = 0;
-         this.imagesTabControl.Size = new System.Drawing.Size(746, 404);
-         this.imagesTabControl.TabIndex = 1;
-         this.imagesTabControl.SelectedIndexChanged += new System.EventHandler(this.ImagesTabControl_SelectedIndexChanged);
-         // 
-         // ImageManagerView
-         // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.Controls.Add(this.imagesTabControl);
-         this.Name = "ImageManagerView";
-         this.Size = new System.Drawing.Size(746, 404);
-         this.ResumeLayout(false);
+            this.imagesTabControl = new System.Windows.Forms.TabControl();
+            this.SuspendLayout();
+            // 
+            // imagesTabControl
+            // 
+            this.imagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imagesTabControl.ItemSize = new System.Drawing.Size(0, 18);
+            this.imagesTabControl.Location = new System.Drawing.Point(0, 0);
+            this.imagesTabControl.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.imagesTabControl.Name = "imagesTabControl";
+            this.imagesTabControl.SelectedIndex = 0;
+            this.imagesTabControl.Size = new System.Drawing.Size(1989, 963);
+            this.imagesTabControl.TabIndex = 1;
+            this.imagesTabControl.SelectedIndexChanged += new System.EventHandler(this.ImagesTabControl_SelectedIndexChanged);
+            // 
+            // ImageManagerView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.imagesTabControl);
+            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.Name = "ImageManagerView";
+            this.Size = new System.Drawing.Size(1989, 963);
+            this.Load += new System.EventHandler(this.ImageManagerView_Load);
+            this.ResumeLayout(false);
 
          }
 

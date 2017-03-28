@@ -1,15 +1,15 @@
 ﻿namespace ImagingInterface.Models
    {
-   public interface IImageManagerModel
-      {
-      int ActiveImageIndex
-         {
-         get;
-         }
+   //public interface IImageManagerModel
+   //   {
+   //   int ActiveImageIndex
+   //      {
+   //      get;
+   //      }
 
-      int ImageCount
-         {
-         get;
-         }
-      }
+   //   int ImageCount
+   //      {
+   //      get;
+   //      }
+   //   }
    }

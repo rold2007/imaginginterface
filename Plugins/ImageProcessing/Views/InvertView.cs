@@ -4,7 +4,7 @@
    using System.Windows.Forms;
    using ImageProcessing.Controllers.EventArguments;
 
-   public partial class InvertView : UserControl, IInvertView
+   public partial class InvertView : UserControl //, IInvertView
       {
       public InvertView()
          {
