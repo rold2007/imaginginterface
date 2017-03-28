@@ -6,7 +6,7 @@
    using System.Windows.Forms;
    using ImageProcessing.Controllers.EventArguments;
 
-   public partial class CudafyView : UserControl, ICudafyView
+   public partial class CudafyView : UserControl //, ICudafyView
       {
       private readonly ShowBenchmarkDelegate showBenchmarkAddCudafyDelegate;
       private readonly ShowBenchmarkDelegate showBenchmarkAddOpenCVDelegate;

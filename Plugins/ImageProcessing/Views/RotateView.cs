@@ -4,7 +4,7 @@
    using System.Windows.Forms;
    using ImageProcessing.Controllers.EventArguments;
 
-   public partial class RotateView : UserControl, IRotateView
+   public partial class RotateView : UserControl //, IRotateView
       {
       public RotateView()
          {

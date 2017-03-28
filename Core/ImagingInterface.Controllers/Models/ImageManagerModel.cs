@@ -3,7 +3,7 @@
    using System;
    using System.Diagnostics;
 
-   public class ImageManagerModel : IImageManagerModel
+   public class ImageManagerModel //: IImageManagerModel
       {
       private int activeImageIndex;
 
