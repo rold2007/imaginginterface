@@ -63,7 +63,9 @@
     <Compile Include="FileOperationController.cs" />
     <Compile Include="ImageController.cs" />
     <Compile Include="ImageManagerController.cs" />
+    <Compile Include="EventArguments\ImageSourceAddedEventArgs.cs" />
     <Compile Include="ImageSourceManager.cs" />
+    <Compile Include="EventArguments\ImageSourceRemovedEventArgs.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="Models\AboutBoxModel.cs" />
     <Compile Include="Models\FileOperationModel.cs" />

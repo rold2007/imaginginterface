@@ -47,14 +47,19 @@
             this.AddImageSources(fileSources);
         }
 
-        public void AddImageSource(IImageSource imageSource)
+        public void RemoveImageSource(IImageSource imageSource)
         {
-            this.ImageSources.Add(imageSource);
+            if (imageSource == null)
+            {
+                throw new ArgumentNullException("imageSource");
+            }
 
-            this.TriggerImageSourceAdded(imageSource);
+            this.ImageSources.Remove(imageSource);
+
+            this.TriggerImageSourceRemoved(imageSource);
         }
 
-        public void AddImageSources(IList<IImageSource> imageSources)
+        private void AddImageSources(IList<IImageSource> imageSources)
         {
             this.ImageSources.AddRange(imageSources);
 
@@ -86,34 +91,6 @@
         private void TriggerImageSourceRemoved(IImageSource imageSource)
         {
             this.ImageSourceRemoved?.Invoke(this, new ImageSourceRemovedEventArgs(imageSource));
-        }
-    }
-
-    public class ImageSourceAddedEventArgs : EventArgs
-    {
-        public ImageSourceAddedEventArgs(IImageSource imageSource)
-        {
-            this.ImageSource = imageSource;
-        }
-
-        public IImageSource ImageSource
-        {
-            get;
-            private set;
-        }
-    }
-
-    public class ImageSourceRemovedEventArgs : EventArgs
-    {
-        public ImageSourceRemovedEventArgs(IImageSource imageSource)
-        {
-            this.ImageSource = imageSource;
-        }
-
-        public IImageSource ImageSource
-        {
-            get;
-            private set;
         }
     }
 }
