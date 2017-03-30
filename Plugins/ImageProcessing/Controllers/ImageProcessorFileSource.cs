@@ -139,8 +139,6 @@
                   {
                      this.ImageData = new byte[image.Size.Height, image.Size.Width, 3];
 
-                     int imageDataIndex = 0;
-
                      for (int y = 0; y < image.Size.Height; y++)
                      {
                         for (int x = 0; x < image.Size.Width; x++)
@@ -150,8 +148,6 @@
                            this.ImageData[y, x, 0] = color.R;
                            this.ImageData[y, x, 1] = color.G;
                            this.ImageData[y, x, 2] = color.B;
-
-                           imageDataIndex++;
                         }
                      }
                   }
