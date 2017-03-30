@@ -29,6 +29,7 @@
       <Value>Plugins\ImageProcessing\Tests\ImageProcessing.ObjectDetection.Tests\ImageProcessing.ObjectDetection.Tests.csproj</Value>
       <Value>Plugins\ImageProcessing\Views\ImageProcessing.Views.csproj</Value>
       <Value>Plugins\ImageProcessing\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj</Value>
+      <Value>Core\ImagingInterface.Views\ImagingInterface.Views.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
