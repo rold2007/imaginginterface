@@ -108,7 +108,25 @@
             }
          }
 
-      public void InitializeImageSourceController(IImageSource imageSourceController)
+        public IImageSource ImageSource
+        {
+            get
+            {
+                return this.imageModel.ImageSource;
+            }
+
+            set
+            {
+                this.imageModel.ImageSource = value;
+
+                if (this.UpdateDisplay != null)
+                {
+                    this.UpdateDisplay(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        public void InitializeImageSourceController(IImageSource imageSourceController)
          {
          ////if (!this.closing)
          ////   {
@@ -124,15 +142,14 @@
          ////   }
          }
 
-      public void SetImageSource(IImageSource imageSource)
-         {
-         this.imageModel.ImageSource = imageSource;
+      //public void SetImageSource(IImageSource imageSource)
+      //   {
 
-         if (this.UpdateDisplay != null)
-            {
-            this.UpdateDisplay(this, EventArgs.Empty);
-            }
-         }
+      //   if (this.UpdateDisplay != null)
+      //      {
+      //      this.UpdateDisplay(this, EventArgs.Empty);
+      //      }
+      //   }
 
       public void UpdateZoomLevel(double zoomLevel)
          {

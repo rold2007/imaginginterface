@@ -83,9 +83,17 @@
             }
          }
 
-      public void SetImageSource(IImageSource imageSource)
+      public IImageSource ImageSource
          {
-         this.imageController.SetImageSource(imageSource);
+            get
+            {
+                return this.imageController.ImageSource;
+            }
+
+            set
+            {
+                this.imageController.ImageSource = value;
+            }
          }
 
       public void UpdateZoomLevel()

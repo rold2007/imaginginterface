@@ -1,6 +1,7 @@
 ﻿namespace ImagingInterface.Controllers
 {
     using ImagingInterface.Models;
+    using ImagingInterface.Plugins;
     using Microsoft.Practices.ServiceLocation;
 
     public class FileOperationController
@@ -22,16 +23,12 @@
             }
         }
 
-        ////public void CloseFile(IFileSource fileSourceController)
-        ////{
-        ////}
-
-        public void CloseFile()
+        public void CloseFile(IImageSource imageSource)
         {
-            ////if (this.CloseFile != null)
-            ////   {
-            ////   this.CloseFile(this, EventArgs.Empty);
-            ////   }
+            if(imageSource != null)
+            {
+                this.imageSourceManager.RemoveImageSource(imageSource);
+            }
         }
 
         public void CloseAllFiles()

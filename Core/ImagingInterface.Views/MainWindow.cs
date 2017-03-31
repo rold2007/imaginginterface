@@ -142,12 +142,25 @@
         */
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.imageManagerView.HasActiveImageView)
+            {
+                ImageView imageView = this.imageManagerView.ActiveImageView;
+
+                this.fileOperationController.CloseFile(imageView.ImageSource);
+            }
+
             //this.fileOperationController.CloseActiveFile();
             //this.imageManagerView.RemoveActiveImageView();
         }
 
         private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            while(this.imageManagerView.HasActiveImageView)
+            {
+                ImageView imageView = this.imageManagerView.ActiveImageView;
+
+                this.fileOperationController.CloseFile(imageView.ImageSource);
+            }
             //this.fileOperationController.CloseAllFiles();
             //this.imageManagerView.RemoveAllImageViews();
         }

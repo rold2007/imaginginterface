@@ -47,26 +47,26 @@
       [Test]
       public void CloseActiveFile()
          {
-         FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
-         //ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+         //FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
+         ////ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
 
-         string[] files = new string[1] { "ValidFile" };
-         List<IFileSource> imageSourceControllers = new List<IFileSource>();
+         //string[] files = new string[1] { "ValidFile" };
+         //List<IFileSource> imageSourceControllers = new List<IFileSource>();
 
-         ////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
-         ////fileOperationController.CloseFile += (sender, eventArgs) => { fileClosed = true; };
+         //////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
+         //////fileOperationController.CloseFile += (sender, eventArgs) => { fileClosed = true; };
 
-         fileOperationController.OpenFiles(files);
+         //fileOperationController.OpenFiles(files);
 
-         //Assert.AreEqual(1, fileSources.Count);
+         ////Assert.AreEqual(1, fileSources.Count);
 
-         //imageManagerController.AddImage(fileSources[0]);
+         ////imageManagerController.AddImage(fileSources[0]);
 
-         //Assert.AreEqual(1, imageManagerController.ImageCount);
+         ////Assert.AreEqual(1, imageManagerController.ImageCount);
 
-         fileOperationController.CloseFile();
+         //fileOperationController.CloseFile();
 
-         //Assert.AreEqual(0, imageManagerController.ImageCount);
+         ////Assert.AreEqual(0, imageManagerController.ImageCount);
       }
 
       [Test]
