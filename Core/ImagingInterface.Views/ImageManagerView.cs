@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Windows.Forms;
     using ImagingInterface.Controllers;
@@ -11,23 +12,25 @@
     public partial class ImageManagerView : UserControl
     {
         private List<ImageView> imageViews;
+        private Dictionary<IImageSource, ImageView> imageSourceImageView;
         private Dictionary<ImageView, TabPage> imageViewTabPage;
         private Dictionary<ImageView, ToolTip> imageViewToolTip;
-        private ImageManagerController imageManagerController;
+        //private ImageManagerController imageManagerController;
         private IServiceLocator serviceLocator;
         private ImageSourceManager imageSourceManager;
 
-        public ImageManagerView(ImageManagerController imageManagerController, IServiceLocator serviceLocator, ImageSourceManager imageSourceManager)
+        public ImageManagerView(/*ImageManagerController imageManagerController, */IServiceLocator serviceLocator, ImageSourceManager imageSourceManager)
         {
             this.InitializeComponent();
 
             this.imageViews = new List<ImageView>();
+            this.imageSourceImageView = new Dictionary<IImageSource, ImageView>();
             this.imageViewTabPage = new Dictionary<ImageView, TabPage>();
             this.imageViewToolTip = new Dictionary<ImageView, ToolTip>();
 
             this.Dock = DockStyle.Fill;
 
-            this.imageManagerController = imageManagerController;
+            //this.imageManagerController = imageManagerController;
 
             //this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
             //this.imageManagerController.ActiveImageChanged += this.ImageManagerModel_ActiveImageChanged;
@@ -36,6 +39,25 @@
             this.serviceLocator = serviceLocator;
 
             this.imageSourceManager = imageSourceManager;
+        }
+
+        public bool HasActiveImageView
+        {
+            get
+            {
+                return this.imagesTabControl.SelectedIndex >= 0;
+            }
+        }
+
+        public ImageView ActiveImageView
+        {
+            get
+            {
+                Debug.Assert(this.HasActiveImageView, "Invalid tab index");
+
+                return this.imageViews[this.imagesTabControl.SelectedIndex];
+                //return this.imageViews[this.imageManagerController.ActiveImageIndex];
+            }
         }
 
         public void AddImageView(ImageView imageView)
@@ -65,12 +87,14 @@
 
         public void RemoveActiveImageView()
         {
-            this.imageManagerController.RemoveActiveImage();
+            throw new NotImplementedException();
+            //this.imageManagerController.RemoveActiveImage();
         }
 
         public void RemoveAllImageViews()
         {
-            this.imageManagerController.RemoveAllImages();
+            throw new NotImplementedException();
+            //this.imageManagerController.RemoveAllImages();
         }
 
         private void AddImageToNewtab(ImageView imageView)
@@ -117,7 +141,7 @@
 
         private void ImagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.imageManagerController.SetActiveImageIndex(this.imagesTabControl.SelectedIndex);
+            //this.imageManagerController.SetActiveImageIndex(this.imagesTabControl.SelectedIndex);
         }
 
         private void ImageManagerController_ImageAdded(object sender, EventArgs e)
@@ -126,10 +150,10 @@
             throw new NotImplementedException();
         }
 
-        private void ImageManagerModel_ActiveImageChanged(object sender, EventArgs e)
-        {
-            this.imagesTabControl.SelectedIndex = this.imageManagerController.ActiveImageIndex;
-        }
+        //private void ImageManagerModel_ActiveImageChanged(object sender, EventArgs e)
+        //{
+        //    this.imagesTabControl.SelectedIndex = this.imageManagerController.ActiveImageIndex;
+        //}
 
         private void ImageManagerController_RemoveActiveImageIndex(object sender, EventArgs e)
         {
@@ -154,16 +178,31 @@
             // ImageView factory
             ImageView imageView = this.serviceLocator.GetInstance<ImageView>();
 
-            imageView.SetImageSource(imageSource);
+            imageView.ImageSource = imageSource;
 
+            this.imageSourceImageView.Add(imageSource, imageView);
             this.AddImageToNewtab(imageView);
 
-            this.imageManagerController.AddImage(imageSource);
+            //this.imageManagerController.AddImage(imageSource);
         }
 
         private void ImageSourceManager_ImageRemoved(object sender, ImageSourceRemovedEventArgs e)
         {
-            throw new NotImplementedException();
+            IImageSource imageSource = e.ImageSource;
+            ImageView imageView = this.imageSourceImageView[imageSource];
+
+            this.imageSourceImageView.Remove(imageSource);
+
+            using (TabPage tabPage = this.imageViewTabPage[imageView])
+            using (ToolTip toolTip = this.imageViewToolTip[imageView])
+            {
+                this.imagesTabControl.Controls.Remove(tabPage);
+                this.imageViews.Remove(imageView);
+                this.imageViewTabPage.Remove(imageView);
+                this.imageViewToolTip.Remove(imageView);
+            }
+
+            //this.imageManagerController.RemoveImage(imageSource);
         }
 
         private void ImageManagerView_Load(object sender, EventArgs e)
