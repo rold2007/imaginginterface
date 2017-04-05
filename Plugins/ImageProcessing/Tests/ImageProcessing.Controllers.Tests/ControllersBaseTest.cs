@@ -15,7 +15,6 @@
     using ImagingInterface.Tests.Common;
     using ImagingInterface.Tests.Common.Mocks;
     using NUnit.Framework;
-    using SimpleInjector;
 
     public abstract class ControllersBaseTest : BaseTest
     {
