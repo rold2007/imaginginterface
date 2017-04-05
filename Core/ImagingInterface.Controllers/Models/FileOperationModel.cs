@@ -6,7 +6,6 @@
    using System.Text;
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
-   using Microsoft.Practices.ServiceLocation;
 
    public class FileOperationModel
       {

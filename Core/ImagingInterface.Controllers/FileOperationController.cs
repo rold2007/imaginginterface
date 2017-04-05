@@ -2,7 +2,6 @@
 {
     using ImagingInterface.Models;
     using ImagingInterface.Plugins;
-    using Microsoft.Practices.ServiceLocation;
 
     public class FileOperationController
     {

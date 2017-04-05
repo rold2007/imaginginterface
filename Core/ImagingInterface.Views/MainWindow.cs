@@ -1,28 +1,26 @@
 ﻿namespace ImagingInterface.Views
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Windows.Forms;
     using ImagingInterface.Controllers;
     using ImagingInterface.Controllers.EventArguments;
-    using Microsoft.Practices.ServiceLocation;
     using Plugins;
 
     public partial class MainWindow : Form
     {
-        private IServiceLocator serviceLocator;
         private FileOperationController fileOperationController;
         private ImageManagerView imageManagerView;
         private PluginManagerView pluginManagerView;
+        private AboutBoxView aboutBoxView;
 
-        public MainWindow(IServiceLocator serviceLocator, FileOperationController fileOperationController, ImageManagerView imageManagerView, PluginManagerView pluginManagerView)
+        public MainWindow(FileOperationController fileOperationController, ImageManagerView imageManagerView, PluginManagerView pluginManagerView, AboutBoxView aboutBoxView)
         {
-            this.serviceLocator = serviceLocator;
             this.fileOperationController = fileOperationController;
             this.imageManagerView = imageManagerView;
             this.pluginManagerView = pluginManagerView;
+            this.aboutBoxView = aboutBoxView;
 
             this.InitializeComponent();
 
@@ -101,10 +99,7 @@
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (AboutBoxView aboutBoxView = this.serviceLocator.GetInstance<AboutBoxView>())
-            {
-                aboutBoxView.ShowDialog();
-            }
+            this.aboutBoxView.ShowDialog();
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -155,7 +150,7 @@
 
         private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            while(this.imageManagerView.HasActiveImageView)
+            while (this.imageManagerView.HasActiveImageView)
             {
                 ImageView imageView = this.imageManagerView.ActiveImageView;
 

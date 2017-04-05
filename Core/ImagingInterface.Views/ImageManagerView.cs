@@ -7,7 +7,6 @@
     using System.Windows.Forms;
     using ImagingInterface.Controllers;
     using ImagingInterface.Plugins;
-    using Microsoft.Practices.ServiceLocation;
 
     public partial class ImageManagerView : UserControl
     {
@@ -16,10 +15,10 @@
         private Dictionary<ImageView, TabPage> imageViewTabPage;
         private Dictionary<ImageView, ToolTip> imageViewToolTip;
         //private ImageManagerController imageManagerController;
-        private IServiceLocator serviceLocator;
         private ImageSourceManager imageSourceManager;
+        private IImageViewFactory imageViewFactory;
 
-        public ImageManagerView(/*ImageManagerController imageManagerController, */IServiceLocator serviceLocator, ImageSourceManager imageSourceManager)
+        public ImageManagerView(/*ImageManagerController imageManagerController, */ ImageSourceManager imageSourceManager, IImageViewFactory imageViewFactory)
         {
             this.InitializeComponent();
 
@@ -36,9 +35,8 @@
             //this.imageManagerController.ActiveImageChanged += this.ImageManagerModel_ActiveImageChanged;
             //this.imageManagerController.RemoveActiveImageIndex += this.ImageManagerController_RemoveActiveImageIndex;
 
-            this.serviceLocator = serviceLocator;
-
             this.imageSourceManager = imageSourceManager;
+            this.imageViewFactory = imageViewFactory;
         }
 
         public bool HasActiveImageView
@@ -175,8 +173,7 @@
         {
             IImageSource imageSource = e.ImageSource;
 
-            // ImageView factory
-            ImageView imageView = this.serviceLocator.GetInstance<ImageView>();
+            ImageView imageView = this.imageViewFactory.CreateNew();
 
             imageView.ImageSource = imageSource;
 

@@ -1,121 +1,137 @@
 ﻿namespace ImagingInterface.Controllers.Tests
-   {
-   using System.Collections.Generic;
-   using ImagingInterface.Plugins;
-   using NUnit.Framework;
+{
+    using System.Collections.Generic;
+    using ImagingInterface.Controllers.Tests.Mocks;
+    using ImagingInterface.Models;
+    using ImagingInterface.Plugins;
+    using NUnit.Framework;
 
-   [TestFixture]
-   public class FileOperationControllerTest : ControllersBaseTest
-      {
-      [Test]
-      public void Constructor()
-         {
-         FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
+    [TestFixture]
+    public class FileOperationControllerTest : ControllersBaseTest
+    {
+        [Test]
+        public void Constructor()
+        {
+            FileOperationModel fileOperationModel = new FileOperationModel();
+            FileSourceFactory fileSourceFactory = new FileSourceFactory();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-         Assert.IsNotNull(fileOperationController);
-         }
+            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
+        }
 
-      [Test]
-      public void FileOpen()
-         {
-         FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
+        [Test]
+        public void FileOpen()
+        {
+            FileOperationModel fileOperationModel = new FileOperationModel();
+            FileSourceFactory fileSourceFactory = new FileSourceFactory();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-         string[] files = new string[3] { "ValidFile", "InvalidFile", "ValidFile" };
-         //IList<IFileSource> imageSourceControllers = null;
+            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
 
-         fileOperationController.OpenFiles(files);
+            string[] files = new string[3] { "ValidFile", "InvalidFile", "ValidFile" };
+            //IList<IFileSource> imageSourceControllers = null;
 
-         //Assert.AreEqual(2, imageSourceControllers.Count);
-         //Assert.AreEqual(files[0], imageSourceControllers[0].Filename);
+            fileOperationController.OpenFiles(files);
 
-         //imageSourceControllers.Clear();
-         files = null;
+            //Assert.AreEqual(2, imageSourceControllers.Count);
+            //Assert.AreEqual(files[0], imageSourceControllers[0].Filename);
 
-         // Make sure it doesn't crash with these parameters
-         fileOperationController.OpenFiles(files);
+            //imageSourceControllers.Clear();
+            files = null;
 
-         //Assert.AreEqual(0, imageSourceControllers.Count);
+            // Make sure it doesn't crash with these parameters
+            fileOperationController.OpenFiles(files);
 
-         files = new string[0];
+            //Assert.AreEqual(0, imageSourceControllers.Count);
 
-         // Make sure it doesn't crash with these parameters
-         fileOperationController.OpenFiles(files);
+            files = new string[0];
 
-         //Assert.AreEqual(0, imageSourceControllers.Count);
-      }
+            // Make sure it doesn't crash with these parameters
+            fileOperationController.OpenFiles(files);
 
-      [Test]
-      public void CloseActiveFile()
-         {
-         //FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
-         ////ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+            //Assert.AreEqual(0, imageSourceControllers.Count);
+        }
 
-         //string[] files = new string[1] { "ValidFile" };
-         //List<IFileSource> imageSourceControllers = new List<IFileSource>();
+        [Test]
+        public void CloseActiveFile()
+        {
+            //FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
+            ////ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
 
-         //////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
-         //////fileOperationController.CloseFile += (sender, eventArgs) => { fileClosed = true; };
+            //string[] files = new string[1] { "ValidFile" };
+            //List<IFileSource> imageSourceControllers = new List<IFileSource>();
 
-         //fileOperationController.OpenFiles(files);
+            //////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
+            //////fileOperationController.CloseFile += (sender, eventArgs) => { fileClosed = true; };
 
-         ////Assert.AreEqual(1, fileSources.Count);
+            //fileOperationController.OpenFiles(files);
 
-         ////imageManagerController.AddImage(fileSources[0]);
+            ////Assert.AreEqual(1, fileSources.Count);
 
-         ////Assert.AreEqual(1, imageManagerController.ImageCount);
+            ////imageManagerController.AddImage(fileSources[0]);
 
-         //fileOperationController.CloseFile();
+            ////Assert.AreEqual(1, imageManagerController.ImageCount);
 
-         ////Assert.AreEqual(0, imageManagerController.ImageCount);
-      }
+            //fileOperationController.CloseFile();
 
-      [Test]
-      public void CloseAllFiles()
-         {
-         FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
+            ////Assert.AreEqual(0, imageManagerController.ImageCount);
+        }
 
-         string[] files = new string[1] { "ValidFile" };
-         List<IFileSource> imageSourceControllers = new List<IFileSource>();
-         //bool fileClosed = false;
+        [Test]
+        public void CloseAllFiles()
+        {
+            FileOperationModel fileOperationModel = new FileOperationModel();
+            FileSourceFactory fileSourceFactory = new FileSourceFactory();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-         ////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
-         ////fileOperationController.CloseAllFiles += (sender, eventArgs) => { fileClosed = true; };
+            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
 
-         fileOperationController.OpenFiles(files);
-         fileOperationController.CloseAllFiles();
+            string[] files = new string[1] { "ValidFile" };
+            List<IFileSource> imageSourceControllers = new List<IFileSource>();
+            //bool fileClosed = false;
 
-         //Assert.IsTrue(fileClosed);
-         }
+            ////fileOperationController.OpenFile += (sender, eventArgs) => { imageSourceControllers.AddRange(eventArgs.ImageSourceControllers); };
+            ////fileOperationController.CloseAllFiles += (sender, eventArgs) => { fileClosed = true; };
 
-      [Test]
-      public void DragDrop()
-         {
-         FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
+            fileOperationController.OpenFiles(files);
+            fileOperationController.CloseAllFiles();
 
-         string[] files = new string[1] { "ValidFile" };
-         //IList<IFileSource> imageSourceControllers = new List<IFileSource>();
+            //Assert.IsTrue(fileClosed);
+        }
 
-         fileOperationController.OpenFiles(files);
+        [Test]
+        public void DragDrop()
+        {
+            FileOperationModel fileOperationModel = new FileOperationModel();
+            FileSourceFactory fileSourceFactory = new FileSourceFactory();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-         fileOperationController.RequestDragDropFile(files);
+            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
 
-         //Assert.AreEqual(1, imageSourceControllers.Count);
-         //Assert.AreEqual(files[0], imageSourceControllers[0].Filename);
+            string[] files = new string[1] { "ValidFile" };
+            //IList<IFileSource> imageSourceControllers = new List<IFileSource>();
 
-         //imageSourceControllers.Clear();
-         files = null;
+            fileOperationController.OpenFiles(files);
 
-         // Make sure it doesn't crash with these parameters
-         fileOperationController.RequestDragDropFile(files);
+            fileOperationController.RequestDragDropFile(files);
 
-         //Assert.AreEqual(0, imageSourceControllers.Count);
+            //Assert.AreEqual(1, imageSourceControllers.Count);
+            //Assert.AreEqual(files[0], imageSourceControllers[0].Filename);
 
-         files = new string[0];
+            //imageSourceControllers.Clear();
+            files = null;
 
-         // Make sure it doesn't crash with these parameters
-         fileOperationController.RequestDragDropFile(files);
+            // Make sure it doesn't crash with these parameters
+            fileOperationController.RequestDragDropFile(files);
 
-         //Assert.AreEqual(0, imageSourceControllers.Count);
-         }
-      }
-   }
+            //Assert.AreEqual(0, imageSourceControllers.Count);
+
+            files = new string[0];
+
+            // Make sure it doesn't crash with these parameters
+            fileOperationController.RequestDragDropFile(files);
+
+            //Assert.AreEqual(0, imageSourceControllers.Count);
+        }
+    }
+}

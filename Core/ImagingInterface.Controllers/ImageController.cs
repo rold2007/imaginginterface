@@ -9,7 +9,6 @@
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
-   using Microsoft.Practices.ServiceLocation;
 
    public class ImageController
       {

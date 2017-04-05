@@ -11,7 +11,6 @@
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImagingInterface.Plugins;
-   using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
    [TestFixture]
