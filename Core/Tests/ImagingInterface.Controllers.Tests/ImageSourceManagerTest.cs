@@ -1,92 +1,101 @@
 ﻿namespace ImagingInterface.Controllers.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using ImagingInterface.Controllers.Tests.Mocks;
-    using ImagingInterface.Plugins;
-    using NUnit.Framework;
+   using System;
+   using System.Collections.Generic;
+   using ImagingInterface.Controllers.Tests.Mocks;
+   using ImagingInterface.Plugins;
+   using NUnit.Framework;
 
-    [TestFixture]
-    public class ImageSourceManagerTest : ControllersBaseTest
-    {
-        [Test]
-        public void Constructor()
-        {
-            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
-        }
+   [TestFixture]
+   public class ImageSourceManagerTest : ControllersBaseTest
+   {
+      [Test]
+      public void Constructor()
+      {
+         ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
+      }
 
-        [Test]
-        public void AddImageFiles()
-        {
-            int imageAddedCount = 0;
-            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
+      [Test]
+      public void AddImageFiles()
+      {
+         int imageAddedCount = 0;
+         ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
-            imageSourceManager.ImageSourceAdded += (sender, eventArgs) => { imageAddedCount++; };
+         imageSourceManager.ImageSourceAdded += (sender, eventArgs) => { imageAddedCount++; };
 
-            List<string> files = new List<string>();
+         List<string> files = new List<string>();
 
-            imageSourceManager.AddImageFiles(files);
+         imageSourceManager.AddImageFiles(files);
 
-            Assert.AreEqual(0, imageAddedCount);
+         Assert.AreEqual(0, imageAddedCount);
 
-            files.Add("ValidFile");
+         files.Add("ValidFile");
 
-            imageSourceManager.AddImageFiles(files);
+         imageSourceManager.AddImageFiles(files);
 
-            Assert.AreEqual(1, imageAddedCount);
+         Assert.AreEqual(1, imageAddedCount);
 
-            // Invalid file
-            files.Add("dummy");
+         // Invalid file
+         files.Add("dummy");
 
-            imageSourceManager.AddImageFiles(files);
+         imageSourceManager.AddImageFiles(files);
 
-            Assert.AreEqual(2, imageAddedCount);
-        }
+         Assert.AreEqual(2, imageAddedCount);
+      }
 
-        [Test]
-        public void AddImageFilesNullArgument()
-        {
-            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
+      [Test]
+      public void AddImageFilesNullArgument()
+      {
+         ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
-            Assert.Throws<ArgumentNullException>(() => imageSourceManager.AddImageFiles(null));
-        }
+         Assert.Throws<ArgumentNullException>(() => imageSourceManager.AddImageFiles(null));
+      }
 
-        [Test]
-        public void RemoveImageSource()
-        {
-            IImageSource imageSource = null;
-            int imageSourceRemovedCount = 0;
-            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
+      [Test]
+      public void RemoveImageSource()
+      {
+         IImageSource imageSourceAdded = null;
+         IImageSource imageSourceRemoved = null;
+         int imageSourceRemovedCount = 0;
+         ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
-            imageSourceManager.ImageSourceAdded += (sender, eventArgs) =>
-            {
-                Assert.IsNull(imageSource);
-                imageSource = eventArgs.ImageSource;
-            };
+         imageSourceManager.ImageSourceAdded += (sender, eventArgs) =>
+         {
+            Assert.IsNull(imageSourceAdded);
+            imageSourceAdded = eventArgs.ImageSource;
+         };
 
-            imageSourceManager.ImageSourceRemoved += (sender, eventArgs) => { imageSourceRemovedCount++; };
+         imageSourceManager.ImageSourceRemoved += (sender, eventArgs) => 
+         {
+            Assert.IsNull(imageSourceRemoved);
+            imageSourceRemoved = eventArgs.ImageSource;
 
-            List<string> files = new List<string>
+            imageSourceRemovedCount++;
+         };
+
+         List<string> files = new List<string>
             {
                 "ValidFile"
             };
 
-            imageSourceManager.AddImageFiles(files);
+         imageSourceManager.AddImageFiles(files);
 
-            Assert.IsNotNull(imageSource);
-            Assert.AreEqual(0, imageSourceRemovedCount);
+         Assert.IsNotNull(imageSourceAdded);
+         Assert.AreEqual(0, imageSourceRemovedCount);
 
-            imageSourceManager.RemoveImageSource(imageSource);
+         imageSourceManager.RemoveImageSource(imageSourceAdded);
 
-            Assert.AreEqual(1, imageSourceRemovedCount);
-        }
+         Assert.IsNotNull(imageSourceRemoved);
+         Assert.AreSame(imageSourceAdded, imageSourceRemoved);
+         Assert.AreEqual(1, imageSourceRemovedCount);
+      }
 
-        [Test]
-        public void RemoveImageSourceNullArgument()
-        {
-            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
+      [Test]
+      public void RemoveImageSourceNullArgument()
+      {
+         ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
-            Assert.Throws<ArgumentNullException>(() => imageSourceManager.RemoveImageSource(null));
-        }
-    }
+         Assert.Throws<ArgumentNullException>(() => imageSourceManager.RemoveImageSource(null));
+      }
+   }
 }
