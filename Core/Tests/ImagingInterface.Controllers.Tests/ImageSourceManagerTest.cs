@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using ImagingInterface.Controllers.Tests.Mocks;
     using ImagingInterface.Plugins;
     using NUnit.Framework;
 
@@ -14,14 +12,14 @@
         [Test]
         public void Constructor()
         {
-            ImageSourceManager imageSourceManager = this.ServiceLocator.GetInstance<ImageSourceManager>();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
         }
 
         [Test]
         public void AddImageFiles()
         {
             int imageAddedCount = 0;
-            ImageSourceManager imageSourceManager = this.ServiceLocator.GetInstance<ImageSourceManager>();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
             imageSourceManager.ImageSourceAdded += (sender, eventArgs) => { imageAddedCount++; };
 
@@ -48,7 +46,7 @@
         [Test]
         public void AddImageFilesNullArgument()
         {
-            ImageSourceManager imageSourceManager = this.ServiceLocator.GetInstance<ImageSourceManager>();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
             Assert.Throws<ArgumentNullException>(() => imageSourceManager.AddImageFiles(null));
         }
@@ -58,7 +56,7 @@
         {
             IImageSource imageSource = null;
             int imageSourceRemovedCount = 0;
-            ImageSourceManager imageSourceManager = this.ServiceLocator.GetInstance<ImageSourceManager>();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
             imageSourceManager.ImageSourceAdded += (sender, eventArgs) =>
             {
@@ -86,7 +84,7 @@
         [Test]
         public void RemoveImageSourceNullArgument()
         {
-            ImageSourceManager imageSourceManager = this.ServiceLocator.GetInstance<ImageSourceManager>();
+            ImageSourceManager imageSourceManager = new ImageSourceManager(new FileSourceFactory());
 
             Assert.Throws<ArgumentNullException>(() => imageSourceManager.RemoveImageSource(null));
         }

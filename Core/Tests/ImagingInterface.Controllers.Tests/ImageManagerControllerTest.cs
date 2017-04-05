@@ -11,91 +11,107 @@
    using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
    [TestFixture]
    public class ImageManagerControllerTest : ControllersBaseTest
       {
-      [Test]
-      public void Constructor()
-         {
-         ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+        [Test]
+        public void Constructor()
+        {
+            ImageManagerModel imageManagerModel = new ImageManagerModel();
+            ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerModel);
+        }
 
-         Assert.IsNotNull(imageViewManagerController);
-         }
+        [Test]
+        public void Constructor2()
+        {
+            ImageManagerModel imageManagerModel = new ImageManagerModel();
+            ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerModel);
+            //IImageSource imageSource1 = this.ServiceLocator.GetInstance<IImageSource>();
+            //IImageSource imageSource2 = this.ServiceLocator.GetInstance<IImageSource>();
+            //IImageSource imageSource3 = this.ServiceLocator.GetInstance<IImageSource>();
+            //int activeImageIndex;
 
-      //[Test]
-      //public void AddImage()
-      //   {
-      //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-      //   ImageController imageController = this.Container.GetInstance<ImageController>();
+            //imageViewManagerController.AddImage(imageSource1);
+            //activeImageIndex = imageViewManagerController.ActiveImageIndex;
+            //imageViewManagerController.SetActiveImageIndex(-1);
+            //imageViewManagerController.AddImage(imageSource2);
+            //imageViewManagerController.AddImage(imageSource3);
+            //activeImageIndex = imageViewManagerController.ActiveImageIndex;
+        }
 
-      //   Assert.AreEqual(-1, imageManagerController.ActiveImageIndex);
+        //[Test]
+        //public void AddImage()
+        //   {
+        //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+        //   ImageController imageController = this.Container.GetInstance<ImageController>();
 
-      //   imageManagerController.AddImage(null);
+        //   Assert.AreEqual(-1, imageManagerController.ActiveImageIndex);
 
-      //   Assert.AreEqual(0, imageManagerController.ActiveImageIndex);
-      //   }
+        //   imageManagerController.AddImage(null);
 
-      //[Test]
-      //public void AddRemoveImage()
-      //   {
-      //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+        //   Assert.AreEqual(0, imageManagerController.ActiveImageIndex);
+        //   }
 
-      //   imageManagerController.AddImage(null);
-      //   imageManagerController.AddImage(null);
-      //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
+        //[Test]
+        //public void AddRemoveImage()
+        //   {
+        //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
 
-      //   imageManagerController.AddImage(null);
-      //   Assert.AreEqual(2, imageManagerController.ActiveImageIndex);
+        //   imageManagerController.AddImage(null);
+        //   imageManagerController.AddImage(null);
+        //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
 
-      //   imageManagerController.RemoveActiveImage();
-      //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
+        //   imageManagerController.AddImage(null);
+        //   Assert.AreEqual(2, imageManagerController.ActiveImageIndex);
 
-      //   imageManagerController.AddImage(null);
-      //   Assert.AreEqual(2, imageManagerController.ActiveImageIndex);
+        //   imageManagerController.RemoveActiveImage();
+        //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
 
-      //   imageManagerController.SetActiveImageIndex(1);
-      //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
-      //   imageManagerController.RemoveActiveImage();
-      //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
+        //   imageManagerController.AddImage(null);
+        //   Assert.AreEqual(2, imageManagerController.ActiveImageIndex);
 
-      //   imageManagerController.RemoveActiveImage();
-      //   Assert.AreEqual(0, imageManagerController.ActiveImageIndex);
+        //   imageManagerController.SetActiveImageIndex(1);
+        //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
+        //   imageManagerController.RemoveActiveImage();
+        //   Assert.AreEqual(1, imageManagerController.ActiveImageIndex);
 
-      //   imageManagerController.RemoveActiveImage();
-      //   Assert.AreEqual(-1, imageManagerController.ActiveImageIndex);
-      //   }
+        //   imageManagerController.RemoveActiveImage();
+        //   Assert.AreEqual(0, imageManagerController.ActiveImageIndex);
 
-      //[Test]
-      //public void RemoveAllImages()
-      //   {
-      //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+        //   imageManagerController.RemoveActiveImage();
+        //   Assert.AreEqual(-1, imageManagerController.ActiveImageIndex);
+        //   }
 
-      //   imageManagerController.AddImage(null);
-      //   imageManagerController.AddImage(null);
+        //[Test]
+        //public void RemoveAllImages()
+        //   {
+        //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
 
-      //   imageManagerController.RemoveAllImages();
+        //   imageManagerController.AddImage(null);
+        //   imageManagerController.AddImage(null);
 
-      //   Assert.AreEqual(0, imageManagerController.ImageCount);
-      //   }
+        //   imageManagerController.RemoveAllImages();
 
-      ////[Test]
-      ////public void GetActiveImage()
-      ////   {
-      ////   ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-      ////   ImageController imageController = this.Container.GetInstance<ImageController>();
+        //   Assert.AreEqual(0, imageManagerController.ImageCount);
+        //   }
 
-      ////   Assert.IsNull(imageViewManagerController.GetActiveImage());
+        ////[Test]
+        ////public void GetActiveImage()
+        ////   {
+        ////   ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+        ////   ImageController imageController = this.Container.GetInstance<ImageController>();
 
-      ////   imageViewManagerController.AddImage(imageController);
+        ////   Assert.IsNull(imageViewManagerController.GetActiveImage());
 
-      ////   Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
+        ////   imageViewManagerController.AddImage(imageController);
 
-      ////   imageController.Close();
+        ////   Assert.AreSame(imageController, imageViewManagerController.GetActiveImage());
 
-      ////   Assert.IsNull(imageViewManagerController.GetActiveImage());
-      ////   }
-      }
-   }
+        ////   imageController.Close();
+
+        ////   Assert.IsNull(imageViewManagerController.GetActiveImage());
+        ////   }
+    }
+}

@@ -7,19 +7,16 @@
    using System.Threading.Tasks;
    using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
-   using Microsoft.Practices.ServiceLocation;
 
    public class PluginOperationController
       {
       private static string closePluginName = "Close plugin"; // ncrunch: no coverage
-      private IServiceLocator serviceLocator;
       private SortedDictionary<string, Type> plugins;
       private PluginManagerController pluginManagerController;
 
-      public PluginOperationController(IEnumerable<IPluginController> plugins, IServiceLocator serviceLocator, PluginManagerController pluginManagerController)
+      public PluginOperationController(IEnumerable<IPluginController> plugins, PluginManagerController pluginManagerController)
          {
          this.plugins = new SortedDictionary<string, Type>();
-         this.serviceLocator = serviceLocator;
          this.pluginManagerController = pluginManagerController;
 
          foreach (IPluginController plugin in plugins)
@@ -44,11 +41,14 @@
             }
          else
             {
-            IPluginController pluginController = this.serviceLocator.GetInstance(this.plugins[e.Name]) as IPluginController;
+                throw new NotImplementedException("Need to replace obsolete use of Service Locator.");
+                //See https://simpleinjector.readthedocs.io/en/latest/howto.html#resolve-instances-by-key
+                //Or https://simpleinjector.readthedocs.io/en/latest/howto.html#package-registrations
+            //IPluginController pluginController = this.serviceLocator.GetInstance(this.plugins[e.Name]) as IPluginController;
 
-            pluginController.Initialize();
+            //pluginController.Initialize();
 
-            this.pluginManagerController.AddPlugin(pluginController);
+            //this.pluginManagerController.AddPlugin(pluginController);
             }
          }
       }

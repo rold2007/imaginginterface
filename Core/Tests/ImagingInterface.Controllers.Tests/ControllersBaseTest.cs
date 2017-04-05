@@ -6,40 +6,29 @@
    using System.Text;
    using System.Threading;
    using System.Threading.Tasks;
-   using CommonServiceLocator.SimpleInjectorAdapter;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using ImagingInterface.Tests.Common.Mocks;
-   using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
-   using SimpleInjector;
 
    public abstract class ControllersBaseTest : BaseTest
       {
-      public Container Container
-         {
-         get;
-         private set;
-         }
-
-      public IServiceLocator ServiceLocator
-         {
-         get
-            {
-            return this.Container.GetInstance<IServiceLocator>();
-            }
-         }
+      //public Container Container
+      //   {
+      //   get;
+      //   private set;
+      //   }
 
       [SetUp]
       protected override void SetUp()
          {
          base.SetUp();
 
-         this.Bootstrap();
+         //this.Bootstrap();
          }
-
+        /*
       private void Bootstrap()
          {
          this.Container = new Container();
@@ -48,7 +37,7 @@
          this.Container.Options.AllowOverridingRegistrations = true;
 
          // Service
-         this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
+         //this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
          ////this.Container.RegisterSingleton<IMainView, MainView>();
@@ -80,6 +69,6 @@
 
          // Plugins
          this.Container.RegisterCollection<IPluginController>(new Type[] { typeof(PluginController1), typeof(PluginController2) });
-         }
+         }*/
       }
    }

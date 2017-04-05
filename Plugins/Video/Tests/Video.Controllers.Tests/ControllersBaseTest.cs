@@ -1,13 +1,11 @@
 ﻿namespace Video.Controllers.Tests
    {
-   using CommonServiceLocator.SimpleInjectorAdapter;
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
-   using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
    using SimpleInjector;
    using Video.Controllers;
@@ -20,14 +18,6 @@
          {
          get;
          private set;
-         }
-
-      public IServiceLocator ServiceLocator
-         {
-         get
-            {
-            return this.Container.GetInstance<IServiceLocator>();
-            }
          }
 
       [SetUp]
@@ -46,7 +36,7 @@
          this.Container.Options.AllowOverridingRegistrations = true;
 
          // Service
-         this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
+         //this.Container.RegisterSingleton<IServiceLocator, SimpleInjectorServiceLocatorAdapter>();
 
          // Views
          ////this.Container.RegisterSingleton<IMainView, MainView>();

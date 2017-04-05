@@ -9,7 +9,6 @@
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Tests.Common;
    using ImagingInterface.Tests.Common.Mocks;
-   using Microsoft.Practices.ServiceLocation;
    using NUnit.Framework;
 
    [TestFixture]

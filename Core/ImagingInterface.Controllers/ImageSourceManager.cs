@@ -3,16 +3,16 @@
     using System;
     using System.Collections.Generic;
     using ImagingInterface.Plugins;
-    using Microsoft.Practices.ServiceLocation;
 
     public class ImageSourceManager
     {
-        private IServiceLocator serviceLocator;
+        private IFileSourceFactory fileSourceFactory;
 
-        public ImageSourceManager(IServiceLocator serviceLocator)
+        public ImageSourceManager(IFileSourceFactory fileSourceFactory)
         {
             this.ImageSources = new List<IImageSource>();
-            this.serviceLocator = serviceLocator;
+
+            this.fileSourceFactory = fileSourceFactory;
         }
 
         public event EventHandler<ImageSourceAddedEventArgs> ImageSourceAdded;
@@ -71,7 +71,7 @@
 
         private IFileSource OpenFile(string file)
         {
-            IFileSource fileSource = this.serviceLocator.GetInstance<IFileSource>();
+            IFileSource fileSource = this.fileSourceFactory.CreateNew();
 
             if (fileSource.LoadFile(file))
             {

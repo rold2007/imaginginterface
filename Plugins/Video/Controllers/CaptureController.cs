@@ -10,7 +10,6 @@
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
-   using Microsoft.Practices.ServiceLocation;
    using Video.Models;
 
    public class CaptureController : /*IImageSourceController,*/ IDisposable
@@ -18,17 +17,15 @@
       private static readonly string CaptureDisplayName = "Capture"; // ncrunch: no coverage
       ////private ICaptureView captureView;
       private CaptureModel captureModel;
-      private IServiceLocator serviceLocator;
       private CaptureWrapper captureWrapper;
       private ImageController liveGrabImageController;
       private bool grabbingLive;
       private bool stopping;
 
-      public CaptureController(CaptureModel captureModel, IServiceLocator serviceLocator, CaptureWrapper captureWrapper)
+      public CaptureController(CaptureModel captureModel, CaptureWrapper captureWrapper)
          {
          ////this.captureView = captureView;
          this.captureModel = captureModel;
-         this.serviceLocator = serviceLocator;
          this.captureWrapper = captureWrapper;
 
          this.captureModel.DisplayName = CaptureController.CaptureDisplayName;
@@ -229,20 +226,20 @@
 
             if (this.liveGrabImageController == null)
                {
-               this.liveGrabImageController = this.serviceLocator.GetInstance<ImageController>();
+               //this.liveGrabImageController = this.serviceLocator.GetInstance<ImageController>();
 
                ////this.liveGrabImageController.Closed += this.LiveGrabImageController_Closed;
 
                ////this.liveGrabImageController.SetDisplayName("LiveGrab");
 
-               ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
+               //ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
                ////imageManagerController.AddImage(this.liveGrabImageController);
                }
 
-            CaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<CaptureModel>();
+            //CaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<CaptureModel>();
 
-            liveGrabCaptureModel.LiveGrabRunning = true;
+            //liveGrabCaptureModel.LiveGrabRunning = true;
 
             ////this.liveGrabImageController.InitializeImageSourceController(this, liveGrabCaptureModel);
             }
@@ -323,9 +320,9 @@
 
                ////this.captureView.UpdateLiveGrabStatus(false, false);
 
-               CaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<CaptureModel>();
+               //CaptureModel liveGrabCaptureModel = this.serviceLocator.GetInstance<CaptureModel>();
 
-               liveGrabCaptureModel.LiveGrabRunning = false;
+               //liveGrabCaptureModel.LiveGrabRunning = false;
 
                ////this.liveGrabImageController.InitializeImageSourceController(this, liveGrabCaptureModel);
                }
@@ -336,16 +333,16 @@
 
       private void CaptureView_SnapShot(object sender, EventArgs e)
          {
-         CaptureModel captureModel = this.serviceLocator.GetInstance<CaptureModel>();
+         //CaptureModel captureModel = this.serviceLocator.GetInstance<CaptureModel>();
 
-         captureModel.LiveGrabRunning = false;
+         //captureModel.LiveGrabRunning = false;
 
-         ImageController imageController = this.serviceLocator.GetInstance<ImageController>();
+         //ImageController imageController = this.serviceLocator.GetInstance<ImageController>();
 
          ////imageController.SetDisplayName("Snapshot");
          ////imageController.InitializeImageSourceController(this, captureModel);
 
-         ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
+         //ImageManagerController imageManagerController = this.serviceLocator.GetInstance<ImageManagerController>();
 
          ////imageManagerController.AddImage(imageController);
 

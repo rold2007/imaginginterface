@@ -4,20 +4,15 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
-    using CommonServiceLocator.SimpleInjectorAdapter;
     using ImagingInterface.BootStrapper;
     using ImagingInterface.Controllers;
     using ImagingInterface.Models;
     using ImagingInterface.Plugins;
     using ImagingInterface.Views;
-    using Microsoft.Practices.ServiceLocation;
     using SimpleInjector;
     using SimpleInjector.Diagnostics;
-
-    ////using SimpleInjector.Extensions.LifetimeScoping;
 
     public static class Program
     {
@@ -26,7 +21,7 @@
         private static List<string> pluginFolders = new List<string>();
         private static List<string> pluginLibraries = new List<string>();
 
-        private static IServiceLocator serviceLocator;
+        private static Container container = new Container();
 
         /// <summary>
         /// The main entry point for the application.
@@ -54,7 +49,7 @@
 
                 ValidateAssemblyUniqueness();
 
-                using (MainWindow mainWindow = Program.serviceLocator.GetInstance<MainWindow>())
+                using (MainWindow mainWindow = Program.container.GetInstance<MainWindow>())
                 {
                     Application.Run(mainWindow);
                 }
@@ -115,14 +110,16 @@
 
         private static void Bootstrap()
         {
-            Container container = new Container();
+            //Container container = new Container();
 
             // Service
-            Program.serviceLocator = new SimpleInjectorServiceLocatorAdapter(container);
+            //Program.serviceLocator = new SimpleInjectorServiceLocatorAdapter(container);
 
-            container.RegisterSingleton<IServiceLocator>(Program.serviceLocator);
+            //container.RegisterSingleton<IServiceLocator>(Program.serviceLocator);
 
             ////LifetimeScopeLifestyle aboutBoxLifetimeScopeLifestyle = new LifetimeScopeLifestyle(true);
+
+            container.Register<IImageViewFactory, ImageViewFactory>();
 
             // Views
             // Need to register singleton instances for all things pertaining MainWindow
