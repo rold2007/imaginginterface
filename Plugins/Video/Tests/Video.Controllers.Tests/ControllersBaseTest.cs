@@ -7,7 +7,6 @@
    using ImagingInterface.Plugins;
    using ImagingInterface.Tests.Common;
    using NUnit.Framework;
-   using SimpleInjector;
    using Video.Controllers;
    using Video.Controllers.Tests.Mocks;
    using Video.Models;
