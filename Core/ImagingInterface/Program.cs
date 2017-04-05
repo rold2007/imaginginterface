@@ -119,7 +119,7 @@
 
             ////LifetimeScopeLifestyle aboutBoxLifetimeScopeLifestyle = new LifetimeScopeLifestyle(true);
 
-            container.Register<IImageViewFactory, ImageViewFactory>();
+            container.RegisterSingleton<IImageViewFactory, ImageViewFactory>();
 
             // Views
             // Need to register singleton instances for all things pertaining MainWindow
