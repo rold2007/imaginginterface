@@ -12,10 +12,10 @@
             AboutBoxModel aboutBoxModel = new AboutBoxModel();
             AboutBoxController aboutBoxController = new AboutBoxController(aboutBoxModel);
 
-            Assert.That(aboutBoxController.AboutBoxModel.ProductName, Is.Not.Null.Or.Empty);
-            Assert.That(aboutBoxController.AboutBoxModel.Version, Is.Not.Null.Or.Empty);
-            Assert.That(aboutBoxController.AboutBoxModel.Copyright, Is.Not.Null.Or.Empty);
-            Assert.That(aboutBoxController.AboutBoxModel.ProductDescription, Is.Not.Null.Or.Empty);
+            Assert.That(aboutBoxController.Product.ProductName, Is.Not.Null.Or.Empty);
+            Assert.That(aboutBoxController.Product.Version, Is.Not.Null.Or.Empty);
+            Assert.That(aboutBoxController.Product.Copyright, Is.Not.Null.Or.Empty);
+            Assert.That(aboutBoxController.Product.ProductDescription, Is.Not.Null.Or.Empty);
         }
     }
 }

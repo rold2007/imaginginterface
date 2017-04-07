@@ -2,14 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using ImagingInterface.Models;
+    using ImagingInterface.Models.Interfaces;
     using ImagingInterface.Plugins;
 
     public class ImageManagerController
     {
-        private ImageManagerModel imageManagerModel;
+        private IImageManagerModel imageManagerModel;
 
-        public ImageManagerController(ImageManagerModel imageManagerModel)
+        public ImageManagerController(IImageManagerModel imageManagerModel)
         {
             this.imageManagerModel = imageManagerModel;
         }

@@ -1,6 +1,7 @@
 ﻿namespace ImagingInterface.Models
    {
    using System.Reflection;
+   using ImagingInterface.Models.Interfaces;
 
    public class AboutBoxModel : IAboutBoxModel
       {

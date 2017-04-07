@@ -2,8 +2,9 @@
    {
    using System;
    using System.Diagnostics;
+   using ImagingInterface.Models.Interfaces;
 
-   public class ImageManagerModel //: IImageManagerModel
+   public class ImageManagerModel : IImageManagerModel
       {
       private int activeImageIndex;
 
