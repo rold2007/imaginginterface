@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Models
+﻿namespace ImagingInterface.Models.Interfaces
    {
    public interface IAboutBoxModel
       {

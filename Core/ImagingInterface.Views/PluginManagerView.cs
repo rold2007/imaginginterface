@@ -11,7 +11,6 @@
    using System.Threading.Tasks;
    using System.Windows.Forms;
    using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
 
    public partial class PluginManagerView : UserControl

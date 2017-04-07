@@ -1,18 +1,38 @@
 ﻿namespace ImagingInterface.Controllers
 {
-   using ImagingInterface.Models;
+   using ImagingInterface.Models.Interfaces;
 
    public class AboutBoxController
    {
-      public AboutBoxController(AboutBoxModel aboutBoxModel)
+      private IAboutBoxModel aboutBoxModel;
+
+      public AboutBoxController(IAboutBoxModel aboutBoxModel)
       {
-         this.AboutBoxModel = aboutBoxModel;
+         this.aboutBoxModel = aboutBoxModel;
       }
 
-      public IAboutBoxModel AboutBoxModel
+      public ProductInformations Product
       {
-         get;
-         private set;
+         get
+         {
+            ProductInformations productInformations = new ProductInformations()
+            {
+               ProductName = this.aboutBoxModel.ProductName,
+               Version = this.aboutBoxModel.Version,
+               Copyright = this.aboutBoxModel.Copyright,
+               ProductDescription = this.aboutBoxModel.ProductDescription
+            };
+
+            return productInformations;
+         }
+      }
+
+      public struct ProductInformations
+      {
+         public string ProductName;
+         public string Version;
+         public string Copyright;
+         public string ProductDescription;
       }
    }
 }

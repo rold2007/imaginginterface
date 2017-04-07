@@ -1,96 +1,96 @@
 ﻿namespace ImagingInterface.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using ImagingInterface.Plugins;
+   using System;
+   using System.Collections.Generic;
+   using ImagingInterface.Plugins;
 
-    public class ImageSourceManager
-    {
-        private IFileSourceFactory fileSourceFactory;
+   public class ImageSourceManager
+   {
+      private IFileSourceFactory fileSourceFactory;
 
-        public ImageSourceManager(IFileSourceFactory fileSourceFactory)
-        {
-            this.ImageSources = new List<IImageSource>();
+      public ImageSourceManager(IFileSourceFactory fileSourceFactory)
+      {
+         this.ImageSources = new List<IImageSource>();
 
-            this.fileSourceFactory = fileSourceFactory;
-        }
+         this.fileSourceFactory = fileSourceFactory;
+      }
 
-        public event EventHandler<ImageSourceAddedEventArgs> ImageSourceAdded;
+      public event EventHandler<ImageSourceAddedEventArgs> ImageSourceAdded;
 
-        public event EventHandler<ImageSourceRemovedEventArgs> ImageSourceRemoved;
+      public event EventHandler<ImageSourceRemovedEventArgs> ImageSourceRemoved;
 
-        private List<IImageSource> ImageSources
-        {
-            get;
-            set;
-        }
+      private List<IImageSource> ImageSources
+      {
+         get;
+         set;
+      }
 
-        public void AddImageFiles(IEnumerable<string> files)
-        {
-            if (files == null)
+      public void AddImageFiles(IEnumerable<string> files)
+      {
+         if (files == null)
+         {
+            throw new ArgumentNullException("files");
+         }
+
+         List<IImageSource> fileSources = new List<IImageSource>();
+
+         foreach (string file in files)
+         {
+            IFileSource fileSource = this.OpenFile(file);
+
+            if (fileSource != null)
             {
-                throw new ArgumentNullException("files");
+               fileSources.Add(fileSource);
             }
+         }
 
-            List<IImageSource> fileSources = new List<IImageSource>();
+         this.AddImageSources(fileSources);
+      }
 
-            foreach (string file in files)
-            {
-                IFileSource fileSource = this.OpenFile(file);
+      public void RemoveImageSource(IImageSource imageSource)
+      {
+         if (imageSource == null)
+         {
+            throw new ArgumentNullException("imageSource");
+         }
 
-                if (fileSource != null)
-                {
-                    fileSources.Add(fileSource);
-                }
-            }
+         this.ImageSources.Remove(imageSource);
 
-            this.AddImageSources(fileSources);
-        }
+         this.TriggerImageSourceRemoved(imageSource);
+      }
 
-        public void RemoveImageSource(IImageSource imageSource)
-        {
-            if (imageSource == null)
-            {
-                throw new ArgumentNullException("imageSource");
-            }
+      private void AddImageSources(IList<IImageSource> imageSources)
+      {
+         this.ImageSources.AddRange(imageSources);
 
-            this.ImageSources.Remove(imageSource);
+         foreach (IImageSource imageSource in imageSources)
+         {
+            this.TriggerImageSourceAdded(imageSource);
+         }
+      }
 
-            this.TriggerImageSourceRemoved(imageSource);
-        }
+      private IFileSource OpenFile(string file)
+      {
+         IFileSource fileSource = this.fileSourceFactory.CreateNew();
 
-        private void AddImageSources(IList<IImageSource> imageSources)
-        {
-            this.ImageSources.AddRange(imageSources);
+         if (fileSource.LoadFile(file))
+         {
+            return fileSource;
+         }
+         else
+         {
+            return null;
+         }
+      }
 
-            foreach (IImageSource imageSource in imageSources)
-            {
-                this.TriggerImageSourceAdded(imageSource);
-            }
-        }
+      private void TriggerImageSourceAdded(IImageSource imageSource)
+      {
+         this.ImageSourceAdded?.Invoke(this, new ImageSourceAddedEventArgs(imageSource));
+      }
 
-        private IFileSource OpenFile(string file)
-        {
-            IFileSource fileSource = this.fileSourceFactory.CreateNew();
-
-            if (fileSource.LoadFile(file))
-            {
-                return fileSource;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private void TriggerImageSourceAdded(IImageSource imageSource)
-        {
-            this.ImageSourceAdded?.Invoke(this, new ImageSourceAddedEventArgs(imageSource));
-        }
-
-        private void TriggerImageSourceRemoved(IImageSource imageSource)
-        {
-            this.ImageSourceRemoved?.Invoke(this, new ImageSourceRemovedEventArgs(imageSource));
-        }
-    }
+      private void TriggerImageSourceRemoved(IImageSource imageSource)
+      {
+         this.ImageSourceRemoved?.Invoke(this, new ImageSourceRemovedEventArgs(imageSource));
+      }
+   }
 }

@@ -1,10 +1,5 @@
 ﻿namespace ImageProcessing.Bootstrapper
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using ImageProcessing.Controllers;
     using ImageProcessing.Models;
     using ImageProcessing.ObjectDetection;

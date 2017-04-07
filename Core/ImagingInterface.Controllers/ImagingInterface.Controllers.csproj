@@ -66,6 +66,7 @@
     <Compile Include="Models\AboutBoxModel.cs" />
     <Compile Include="Models\FileOperationModel.cs" />
     <Compile Include="Models\IAboutBoxModel.cs" />
+    <Compile Include="Models\IFileOperationModel.cs" />
     <Compile Include="Models\IImageManagerModel.cs" />
     <Compile Include="Models\IImageModel.cs" />
     <Compile Include="Models\ImageManagerModel.cs" />

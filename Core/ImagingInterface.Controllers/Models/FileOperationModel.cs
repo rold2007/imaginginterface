@@ -1,14 +1,9 @@
 ﻿namespace ImagingInterface.Models
    {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using ImagingInterface.Plugins;
+   using ImagingInterface.Models.Interfaces;
 
-   public class FileOperationModel
-      {
+   public class FileOperationModel: IFileOperationModel
+   {
       public FileOperationModel()
          {
          }

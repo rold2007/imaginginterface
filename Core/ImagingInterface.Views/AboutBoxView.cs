@@ -2,24 +2,29 @@
    {
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
-   using ImagingInterface.Models;
 
    public partial class AboutBoxView : Form
       {
+      private AboutBoxController aboutBoxController;
+
       public AboutBoxView(AboutBoxController aboutBoxController)
          {
          this.InitializeComponent();
 
-         this.InitializeFields(aboutBoxController.AboutBoxModel);
+         this.aboutBoxController = aboutBoxController;
+
+         this.InitializeFields();
          }
 
-      private void InitializeFields(IAboutBoxModel aboutBoxModel)
+      private void InitializeFields()
          {
-         this.Text = string.Format("About {0}", aboutBoxModel.ProductName);
-         this.labelProductName.Text = aboutBoxModel.ProductName;
-         this.labelVersion.Text = string.Format("Version {0}", aboutBoxModel.Version);
-         this.labelCopyright.Text = aboutBoxModel.Copyright;
-         this.textBoxDescription.Text = aboutBoxModel.ProductDescription;
-         }
+         AboutBoxController.ProductInformations product = this.aboutBoxController.Product;
+
+         this.Text = string.Format("About {0}", product.ProductName);
+         this.labelProductName.Text = product.ProductName;
+         this.labelVersion.Text = string.Format("Version {0}", product.Version);
+         this.labelCopyright.Text = product.Copyright;
+         this.textBoxDescription.Text = product.ProductDescription;
+      }
       }
    }

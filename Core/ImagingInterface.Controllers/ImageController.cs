@@ -6,13 +6,13 @@
    using System.Diagnostics;
    using System.Threading.Tasks;
    using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Models;
+   using ImagingInterface.Models.Interfaces;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
 
    public class ImageController
       {
-      private ImageModel imageModel;
+      private IImageModel imageModel;
       private bool closing;
       private bool closed;
       private List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers;
@@ -25,10 +25,9 @@
       private Dictionary<IPluginController, int> asyncPluginControllers;
       private HashSet<IPluginController> closingPluginControllers;
 
-      public ImageController(ImageModel imageModel)
+      public ImageController(IImageModel imageModel)
          {
          this.imageModel = imageModel;
-         ////this.serviceLocator = serviceLocator;
          this.imageProcessingControllers = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
          this.lastFetchNextImageFromSourceTask = null;
          this.lastDisplayNextImageTask = null;

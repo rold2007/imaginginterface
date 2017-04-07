@@ -1,7 +1,8 @@
-﻿namespace ImagingInterface.Models
-   {
+﻿namespace ImagingInterface.Models.Interfaces
+{
    using System.Drawing;
    using ImageProcessor.Imaging.Colors;
+   using ImagingInterface.Plugins;
 
    public interface IImageModel
       {
@@ -9,6 +10,12 @@
          {
          get;
          }
+
+      IImageSource ImageSource
+      {
+         get;
+         set;
+      }
 
       ////byte[, ,] SourceImageData
       ////   {
@@ -41,7 +48,8 @@
       double ZoomLevel
          {
          get;
-         }
+         set;
+      }
 
       RgbaColor GetRgbaPixel(Point pixelPosition);
       }
