@@ -26,6 +26,7 @@
 
       public ImageView(ImageController imageController)
          {
+         OpenTK.Toolkit.Init();
          this.InitializeComponent();
 
          this.Dock = DockStyle.Fill;
