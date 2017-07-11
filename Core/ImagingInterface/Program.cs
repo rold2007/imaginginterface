@@ -130,7 +130,6 @@
          container.RegisterSingleton<ImageSourceManager>();
 
          // Models
-         container.Register<IFileOperationModel, FileOperationModel>();
          container.Register<IImageManagerModel, ImageManagerModel>();
          container.Register<IImageModel, ImageModel>();
 

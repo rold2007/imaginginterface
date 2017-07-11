@@ -12,21 +12,19 @@
         [Test]
         public void Constructor()
         {
-            FileOperationModel fileOperationModel = new FileOperationModel();
             FileSourceFactory fileSourceFactory = new FileSourceFactory();
             ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
+            FileOperationController fileOperationController = new FileOperationController(imageSourceManager);
         }
 
         [Test]
         public void FileOpen()
         {
-            FileOperationModel fileOperationModel = new FileOperationModel();
             FileSourceFactory fileSourceFactory = new FileSourceFactory();
             ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
+            FileOperationController fileOperationController = new FileOperationController(imageSourceManager);
 
             string[] files = new string[3] { "ValidFile", "InvalidFile", "ValidFile" };
             //IList<IFileSource> imageSourceControllers = null;
@@ -80,11 +78,10 @@
         [Test]
         public void CloseAllFiles()
         {
-            FileOperationModel fileOperationModel = new FileOperationModel();
             FileSourceFactory fileSourceFactory = new FileSourceFactory();
             ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
+            FileOperationController fileOperationController = new FileOperationController(imageSourceManager);
 
             string[] files = new string[1] { "ValidFile" };
             List<IFileSource> imageSourceControllers = new List<IFileSource>();
@@ -102,11 +99,10 @@
         [Test]
         public void DragDrop()
         {
-            FileOperationModel fileOperationModel = new FileOperationModel();
             FileSourceFactory fileSourceFactory = new FileSourceFactory();
             ImageSourceManager imageSourceManager = new ImageSourceManager(fileSourceFactory);
 
-            FileOperationController fileOperationController = new FileOperationController(fileOperationModel, imageSourceManager);
+            FileOperationController fileOperationController = new FileOperationController(imageSourceManager);
 
             string[] files = new string[1] { "ValidFile" };
             //IList<IFileSource> imageSourceControllers = new List<IFileSource>();

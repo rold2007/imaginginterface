@@ -1,16 +1,15 @@
 ﻿namespace ImagingInterface.Controllers
 {
-   using ImagingInterface.Models.Interfaces;
+   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
 
    public class FileOperationController
    {
-      private IFileOperationModel fileOperationModel;
+      private FileOperationModel fileOperationModel = new FileOperationModel();
       private ImageSourceManager imageSourceManager;
 
-      public FileOperationController(IFileOperationModel fileOperationModel, ImageSourceManager imageSourceManager)
+      public FileOperationController(ImageSourceManager imageSourceManager)
       {
-         this.fileOperationModel = fileOperationModel;
          this.imageSourceManager = imageSourceManager;
       }
 
