@@ -1,18 +1,16 @@
 ﻿namespace ImagingInterface.Controllers
-   {
+{
    using System;
    using System.Collections.Generic;
-   using System.ComponentModel;
    using System.Diagnostics;
    using System.Threading.Tasks;
-   using ImagingInterface.Controllers.EventArguments;
+   using ImagingInterface.Models;
    using ImagingInterface.Models.Interfaces;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Plugins.EventArguments;
 
    public class ImageController
-      {
-      private IImageModel imageModel;
+   {
+      private ImageModel imageModel = new ImageModel();
       private bool closing;
       private bool closed;
       private List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers;
@@ -25,9 +23,8 @@
       private Dictionary<IPluginController, int> asyncPluginControllers;
       private HashSet<IPluginController> closingPluginControllers;
 
-      public ImageController(IImageModel imageModel)
-         {
-         this.imageModel = imageModel;
+      public ImageController()
+      {
          this.imageProcessingControllers = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
          this.lastFetchNextImageFromSourceTask = null;
          this.lastDisplayNextImageTask = null;
@@ -53,7 +50,7 @@
          ////this.imageView.ZoomLevelDecreased += this.ImageView_ZoomLevelDecreased;
          ////this.imageView.PixelViewChanged += this.ImageView_PixelViewChanged;
          ////this.imageView.SelectionChanged += this.ImageView_SelectionChanged;
-         }
+      }
 
       ////public event CancelEventHandler Closing;
 
@@ -68,12 +65,12 @@
       public event EventHandler ZoomLevelUpdated;
 
       public IImageModel ImageModel
-         {
+      {
          get
-            {
+         {
             return this.imageModel;
-            }
          }
+      }
       ////public IRawImageView RawImageView
       ////   {
       ////   get
@@ -99,33 +96,33 @@
       ////   }
 
       public string DisplayName
-         {
+      {
          get
-            {
+         {
             return this.imageModel.DisplayName;
-            }
+         }
+      }
+
+      public IImageSource ImageSource
+      {
+         get
+         {
+            return this.imageModel.ImageSource;
          }
 
-        public IImageSource ImageSource
-        {
-            get
-            {
-                return this.imageModel.ImageSource;
-            }
-
-            set
-            {
-                this.imageModel.ImageSource = value;
-
-                if (this.UpdateDisplay != null)
-                {
-                    this.UpdateDisplay(this, EventArgs.Empty);
-                }
-            }
-        }
-
-        public void InitializeImageSourceController(IImageSource imageSourceController)
+         set
          {
+            this.imageModel.ImageSource = value;
+
+            if (this.UpdateDisplay != null)
+            {
+               this.UpdateDisplay(this, EventArgs.Empty);
+            }
+         }
+      }
+
+      public void InitializeImageSourceController(IImageSource imageSourceController)
+      {
          ////if (!this.closing)
          ////   {
          ////   if (!this.closingPluginControllers.Contains(imageSourceController))
@@ -138,7 +135,7 @@
          ////      this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
          ////      }
          ////   }
-         }
+      }
 
       //public void SetImageSource(IImageSource imageSource)
       //   {
@@ -150,17 +147,17 @@
       //   }
 
       public void UpdateZoomLevel(double zoomLevel)
-         {
+      {
          this.imageModel.ZoomLevel = zoomLevel;
 
          if (this.ZoomLevelUpdated != null)
-            {
+         {
             this.ZoomLevelUpdated(this, EventArgs.Empty);
-            }
          }
+      }
 
       public void Close()
-         {
+      {
          /*
          if (!this.closed)
             {
@@ -204,7 +201,7 @@
                   }
                }
             }*/
-         }
+      }
 
       /*
       public void AddImageProcessingController(IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
@@ -758,5 +755,5 @@
             this.Overlays = null;
             }
          }*/
-      }
    }
+}

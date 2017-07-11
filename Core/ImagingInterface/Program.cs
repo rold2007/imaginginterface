@@ -131,7 +131,6 @@
 
          // Models
          container.Register<IImageManagerModel, ImageManagerModel>();
-         container.Register<IImageModel, ImageModel>();
 
          // Services
          Assembly servicesAssembly = typeof(ApplicationPropertiesService).Assembly;

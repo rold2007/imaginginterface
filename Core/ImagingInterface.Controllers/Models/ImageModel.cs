@@ -6,7 +6,7 @@
    using ImagingInterface.Models.Interfaces;
    using ImagingInterface.Plugins;
 
-   public class ImageModel : IImageModel
+   internal class ImageModel : IImageModel
       {
       private IImageSource imageSource;
 
