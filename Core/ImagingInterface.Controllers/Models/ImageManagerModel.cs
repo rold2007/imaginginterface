@@ -4,7 +4,7 @@
    using System.Diagnostics;
    using ImagingInterface.Models.Interfaces;
 
-   public class ImageManagerModel : IImageManagerModel
+   internal class ImageManagerModel : IImageManagerModel
       {
       private int activeImageIndex;
 
