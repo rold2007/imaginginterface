@@ -8,6 +8,7 @@
    using System.Windows.Forms;
    using ImagingInterface.BootStrapper;
    using ImagingInterface.Controllers;
+   using ImagingInterface.Controllers.Services;
    using ImagingInterface.Models;
    using ImagingInterface.Models.Interfaces;
    using ImagingInterface.Plugins;
@@ -111,19 +112,9 @@
 
       private static void Bootstrap()
       {
-         //Container container = new Container();
-
-         // Service
-         //Program.serviceLocator = new SimpleInjectorServiceLocatorAdapter(container);
-
-         //container.RegisterSingleton<IServiceLocator>(Program.serviceLocator);
-
-         ////LifetimeScopeLifestyle aboutBoxLifetimeScopeLifestyle = new LifetimeScopeLifestyle(true);
-
          container.RegisterSingleton<IImageViewFactory, ImageViewFactory>();
 
          // Views
-         // Need to register singleton instances for all things pertaining MainWindow
          container.Register<AboutBoxView>();
          container.Register<ImageManagerView>();
          container.Register<ImageView>();
@@ -139,10 +130,24 @@
          container.RegisterSingleton<ImageSourceManager>();
 
          // Models
-         container.Register<IAboutBoxModel, AboutBoxModel>();
          container.Register<IFileOperationModel, FileOperationModel>();
          container.Register<IImageManagerModel, ImageManagerModel>();
          container.Register<IImageModel, ImageModel>();
+
+         // Services
+         Assembly servicesAssembly = typeof(ApplicationPropertiesService).Assembly;
+         Type[] serviceTypes = servicesAssembly.GetExportedTypes();
+
+         foreach (Type type in serviceTypes)
+         {
+            if (type.Namespace == "ImagingInterface.Controllers.Services")
+            {
+               if (type.IsVisible)
+               {
+                  container.Register(type, type, Lifestyle.Transient);
+               }
+            }
+         }
 
          List<Type> packageWindowsFormsTypes = new List<Type>();
          List<Type> pluginControllerTypes = new List<Type>();

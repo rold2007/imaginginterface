@@ -1,14 +1,14 @@
 ﻿namespace ImagingInterface.Controllers
 {
-   using ImagingInterface.Models.Interfaces;
+   using ImagingInterface.Controllers.Services;
 
    public class AboutBoxController
    {
-      private IAboutBoxModel aboutBoxModel;
+      private ApplicationPropertiesService applicationPropertiesService;
 
-      public AboutBoxController(IAboutBoxModel aboutBoxModel)
+      public AboutBoxController(ApplicationPropertiesService applicationPropertiesService)
       {
-         this.aboutBoxModel = aboutBoxModel;
+         this.applicationPropertiesService = applicationPropertiesService;
       }
 
       public ProductInformations Product
@@ -17,10 +17,10 @@
          {
             ProductInformations productInformations = new ProductInformations()
             {
-               ProductName = this.aboutBoxModel.ProductName,
-               Version = this.aboutBoxModel.Version,
-               Copyright = this.aboutBoxModel.Copyright,
-               ProductDescription = this.aboutBoxModel.ProductDescription
+               ProductName = this.applicationPropertiesService.ProductName,
+               Version = this.applicationPropertiesService.Version,
+               Copyright = this.applicationPropertiesService.Copyright,
+               ProductDescription = this.applicationPropertiesService.ProductDescription
             };
 
             return productInformations;
