@@ -19,15 +19,13 @@
         [Test]
         public void Constructor()
         {
-            ImageManagerModel imageManagerModel = new ImageManagerModel();
-            ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerModel);
+            ImageManagerController imageViewManagerController = new ImageManagerController();
         }
 
         [Test]
         public void Constructor2()
         {
-            ImageManagerModel imageManagerModel = new ImageManagerModel();
-            ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerModel);
+            ImageManagerController imageViewManagerController = new ImageManagerController();
             //IImageSource imageSource1 = this.ServiceLocator.GetInstance<IImageSource>();
             //IImageSource imageSource2 = this.ServiceLocator.GetInstance<IImageSource>();
             //IImageSource imageSource3 = this.ServiceLocator.GetInstance<IImageSource>();

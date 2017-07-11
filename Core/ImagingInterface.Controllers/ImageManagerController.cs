@@ -2,16 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
-    using ImagingInterface.Models.Interfaces;
+    using ImagingInterface.Models;
     using ImagingInterface.Plugins;
 
     public class ImageManagerController
     {
-        private IImageManagerModel imageManagerModel;
+        private ImageManagerModel imageManagerModel;
 
-        public ImageManagerController(IImageManagerModel imageManagerModel)
+        public ImageManagerController()
         {
-            this.imageManagerModel = imageManagerModel;
         }
 
         //public event EventHandler ImageAdded;

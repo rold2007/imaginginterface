@@ -129,9 +129,6 @@
          container.Register<ImageController>();
          container.RegisterSingleton<ImageSourceManager>();
 
-         // Models
-         container.Register<IImageManagerModel, ImageManagerModel>();
-
          // Services
          Assembly servicesAssembly = typeof(ApplicationPropertiesService).Assembly;
          Type[] serviceTypes = servicesAssembly.GetExportedTypes();
