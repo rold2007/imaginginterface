@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutBoxControllerTest.cs" />
+    <Compile Include="ApplicationPropertiesServiceTest.cs" />
     <Compile Include="ColorTest.cs" />
     <Compile Include="ControllersBaseTest.cs" />
     <Compile Include="FileOperationControllerTest.cs" />
