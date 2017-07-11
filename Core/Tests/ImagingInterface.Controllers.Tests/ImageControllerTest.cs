@@ -18,15 +18,13 @@
         [Test]
         public void Constructor()
         {
-            ImageModel imageModel = new ImageModel();
-            ImageController imageController = new ImageController(imageModel);
+            ImageController imageController = new ImageController();
         }
 
         [Test]
         public void InitializeImageSourceController()
         {
-            ImageModel imageModel = new ImageModel();
-            ImageController imageController = new ImageController(imageModel);
+            ImageController imageController = new ImageController();
             //FileSourceController fileSourceController = this.ServiceLocator.GetInstance<FileSourceController>();
 
             //imageController.InitializeImageSourceController(fileSourceController);
@@ -35,8 +33,7 @@
         [Test]
         public void Close()
         {
-            ImageModel imageModel = new ImageModel();
-            ImageController imageController = new ImageController(imageModel);
+            ImageController imageController = new ImageController();
 
             imageController.Close();
         }
