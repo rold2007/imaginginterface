@@ -20,7 +20,6 @@
    public class CudafyController : IImageProcessingController, IDisposable
       {
       private static readonly string CudafyDisplayName = "Cudafy"; // ncrunch: no coverage
-      ////private ICudafyView cudafyView;
       private ICudafyModel cudafyModel;
       private ImageManagerController imageManagerController;
       private Dictionary<string, GPGPU> gpgpus;
@@ -29,7 +28,6 @@
 
       public CudafyController(CudafyModel cudafyModel, ImageManagerController imageManagerController)
          {
-         ////this.cudafyView = cudafyView;
          this.cudafyModel = cudafyModel;
          this.imageManagerController = imageManagerController;
 

@@ -1,15 +1,19 @@
 ﻿namespace ImagingInterface.Plugins
+{
+    public interface IPluginView : IRawPluginView
    {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
+        string DisplayName
+        {
+            get;
+        }
 
-   public interface IPluginView : IRawPluginView
-      {
-      void Hide();
+        bool Active
+        {
+            get;
+        }
 
-      void Close();
-      }
-   }
+        void Hide();
+
+        void Close();
+    }
+}

@@ -1,5 +1,5 @@
 ﻿namespace ImagingInterface.Views
-   {
+{
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
@@ -9,7 +9,6 @@
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
-   using OpenTK.Graphics;
    using OpenTK.Graphics.OpenGL;
 
    public partial class ImageView : UserControl

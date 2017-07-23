@@ -1,32 +1,45 @@
 ﻿namespace ImageProcessing.Views
-   {
-   using System;
-   using System.Collections.Generic;
-   using System.ComponentModel;
-   using System.Data;
-   using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
+{
    using System.Windows.Forms;
+   using ImageProcessing.Controllers;
    using ImagingInterface.Plugins;
 
    public partial class ObjectDetectionManagerView : UserControl, IObjectDetectionManagerView
+   {
+      private ObjectDetectionManagerController objectDetectionManagerController;
+
+      public ObjectDetectionManagerView(ObjectDetectionManagerController objectDetectionManagerController)
       {
-      public ObjectDetectionManagerView()
-         {
          this.InitializeComponent();
+
+         this.objectDetectionManagerController = objectDetectionManagerController;
+      }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.objectDetectionManagerController.RawPluginModel.DisplayName;
          }
+      }
+
+      public bool Active
+      {
+         get
+         {
+            return this.objectDetectionManagerController.Active;
+         }
+      }
 
       public void Close()
-         {
-         }
+      {
+      }
 
       public void AddView(IRawPluginView rawPluginView)
-         {
+      {
          Control pluginViewControl = rawPluginView as Control;
 
          this.flowLayoutPanel.Controls.Add(pluginViewControl);
-         }
       }
    }
+}

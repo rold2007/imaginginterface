@@ -14,11 +14,10 @@
         private Dictionary<IImageSource, ImageView> imageSourceImageView;
         private Dictionary<ImageView, TabPage> imageViewTabPage;
         private Dictionary<ImageView, ToolTip> imageViewToolTip;
-        //private ImageManagerController imageManagerController;
         private ImageSourceManager imageSourceManager;
         private IImageViewFactory imageViewFactory;
 
-        public ImageManagerView(/*ImageManagerController imageManagerController, */ ImageSourceManager imageSourceManager, IImageViewFactory imageViewFactory)
+        public ImageManagerView(ImageSourceManager imageSourceManager, IImageViewFactory imageViewFactory)
         {
             this.InitializeComponent();
 
@@ -172,7 +171,6 @@
         private void ImageSourceManager_ImageAdded(object sender, ImageSourceAddedEventArgs e)
         {
             IImageSource imageSource = e.ImageSource;
-
             ImageView imageView = this.imageViewFactory.CreateNew();
 
             imageView.ImageSource = imageSource;

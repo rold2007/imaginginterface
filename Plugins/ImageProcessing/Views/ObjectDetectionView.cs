@@ -1,44 +1,52 @@
 ﻿namespace ImageProcessing.Views
-   {
+{
    using System;
-   using System.Collections.Generic;
-   using System.ComponentModel;
-   using System.Data;
-   using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using System.Windows.Forms;
+   using ImageProcessing.Controllers;
 
    public partial class ObjectDetectionView : UserControl, IObjectDetectionView
+   {
+      private ObjectDetectionController objectDetectionController;
+
+      public ObjectDetectionView(ObjectDetectionController objectDetectionController)
       {
-      public ObjectDetectionView()
-         {
          this.InitializeComponent();
-         }
+
+         this.objectDetectionController = objectDetectionController;
+      }
 
       public event EventHandler Train;
 
       public event EventHandler Test;
 
-      public void Close()
+      public string DisplayName
+      {
+         get
          {
-         }
-
-      private void TrainButton_Click(object sender, EventArgs e)
-         {
-         if (this.Train != null)
-            {
-            this.Train(this, EventArgs.Empty);
-            }
-         }
-
-      private void DetectButton_Click(object sender, EventArgs e)
-         {
-         if (this.Test != null)
-            {
-            this.Test(this, EventArgs.Empty);
-            }
+            return this.objectDetectionController.RawPluginModel.DisplayName;
          }
       }
+
+      public bool Active
+      {
+         get
+         {
+            return this.objectDetectionController.Active;
+         }
+      }
+
+      public void Close()
+      {
+      }
+
+      private void TrainButton_Click(object sender, EventArgs e)
+      {
+         this.Train?.Invoke(this, EventArgs.Empty);
+      }
+
+      private void DetectButton_Click(object sender, EventArgs e)
+      {
+         this.Test?.Invoke(this, EventArgs.Empty);
+      }
    }
+}
