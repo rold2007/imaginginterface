@@ -1,55 +1,68 @@
 ﻿namespace ImageProcessing.Views
-   {
+{
    using System;
-   using System.Collections.Generic;
-   using System.ComponentModel;
-   using System.Data;
    using System.Drawing;
    using System.Drawing.Imaging;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using System.Windows.Forms;
+   using ImageProcessing.Controllers;
    using ImageProcessing.Models;
-   using ImageProcessing.Views;
 
    public partial class TaggerView : UserControl, ITaggerView
-      {
+   {
       private ITaggerModel taggerModel;
-      
-      public TaggerView()
-         {
+      private TaggerController taggerController;
+
+      public TaggerView(TaggerController taggerController)
+      {
          this.InitializeComponent();
-         }
+
+         this.taggerController = taggerController;
+      }
 
       public event EventHandler LabelAdded;
 
-      public void SetTaggerModel(ITaggerModel taggerModel)
+      public string DisplayName
+      {
+         get
          {
-         this.taggerModel = taggerModel;
+            return this.taggerController.RawPluginModel.DisplayName;
          }
+      }
+
+      public bool Active
+      {
+         get
+         {
+            return this.taggerController.Active;
+         }
+      }
+
+      public void SetTaggerModel(ITaggerModel taggerModel)
+      {
+         this.taggerModel = taggerModel;
+      }
 
       public void UpdateLabelList()
-         {
+      {
          this.labelsListView.Items.Clear();
          this.ClearImageList();
 
          int imageIndex = 0;
 
          foreach (string label in this.taggerModel.Labels)
-            {
+         {
             Color color = this.taggerModel.LabelColors[label];
             Bitmap bitmap = new Bitmap(16, 16, PixelFormat.Format24bppRgb);
 
             using (Graphics graphics = Graphics.FromImage(bitmap))
-               {
+            {
                Color colorWithAlpha = Color.FromArgb(255, color);
 
                using (SolidBrush solidBrush = new SolidBrush(colorWithAlpha))
-                  {
+               {
                   graphics.FillRectangle(solidBrush, 0, 0, 15, 15);
-                  }
                }
+            }
 
             this.imageList.Images.Add(bitmap);
 
@@ -60,63 +73,63 @@
             this.labelsListView.Items.Add(listViewItem);
 
             imageIndex++;
-            }
+         }
 
          if (this.taggerModel.SelectedLabel != null)
-            {
+         {
             this.labelsListView.Items[this.taggerModel.SelectedLabel].Selected = true;
-            }
          }
+      }
 
       public void Close()
-         {
+      {
          this.ClearImageList();
-         }
+      }
 
       private void AddButton_Click(object sender, EventArgs e)
-         {
+      {
          this.taggerModel.AddedLabel = this.labelTextBox.Text;
 
          if (this.LabelAdded != null)
-            {
+         {
             this.LabelAdded(this, EventArgs.Empty);
-            }
+         }
 
          this.UpdateLabelList();
-         }
+      }
 
       private void ClearImageList()
-         {
+      {
          foreach (Image image in this.imageList.Images)
-            {
+         {
             image.Dispose();
-            }
+         }
 
          this.imageList.Images.Clear();
-         }
+      }
 
       private void LabelTextBox_TextChanged(object sender, EventArgs e)
-         {
+      {
          if (!string.IsNullOrWhiteSpace(this.labelTextBox.Text))
-            {
+         {
             this.addButton.Enabled = true;
-            }
-         else
-            {
-            this.addButton.Enabled = false;
-            }
          }
+         else
+         {
+            this.addButton.Enabled = false;
+         }
+      }
 
       private void LabelsListView_SelectedIndexChanged(object sender, EventArgs e)
-         {
+      {
          if (this.labelsListView.SelectedItems.Count > 0)
-            {
+         {
             this.taggerModel.SelectedLabel = this.labelsListView.SelectedItems[0].Text;
-            }
+         }
          else
-            {
+         {
             this.taggerModel.SelectedLabel = null;
-            }
          }
       }
    }
+}

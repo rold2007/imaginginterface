@@ -54,7 +54,6 @@
     <Compile Include="AboutBoxController.cs" />
     <Compile Include="EventArguments\DragDropEventArgs.cs" />
     <Compile Include="EventArguments\PixelViewChangedEventArgs.cs" />
-    <Compile Include="EventArguments\PluginCreateEventArgs.cs" />
     <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
     <Compile Include="FileOperationController.cs" />
     <Compile Include="ImageController.cs" />
@@ -73,6 +72,7 @@
     <Compile Include="PluginManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApplicationPropertiesService.cs" />
+    <Compile Include="Views\PluginViewFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">

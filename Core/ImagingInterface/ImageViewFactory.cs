@@ -1,20 +1,20 @@
 ﻿namespace ImagingInterface
 {
-    using ImagingInterface.Views;
-    using SimpleInjector;
+   using System;
+   using ImagingInterface.Views;
 
-    public class ImageViewFactory : IImageViewFactory
+   public class ImageViewFactory : IImageViewFactory
     {
-        private Container container;
+        private Func<ImageView> imageViewFactory;
 
-        public ImageViewFactory(Container container)
+        public ImageViewFactory(Func<ImageView> imageViewFactory)
         {
-            this.container = container;
+            this.imageViewFactory = imageViewFactory;
         }
 
         public ImageView CreateNew()
         {
-            return this.container.GetInstance<ImageView>();
+            return this.imageViewFactory();
         }
     }
 }

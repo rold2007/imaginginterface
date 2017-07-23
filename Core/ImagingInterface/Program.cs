@@ -9,8 +9,6 @@
    using ImagingInterface.BootStrapper;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.Services;
-   using ImagingInterface.Models;
-   using ImagingInterface.Models.Interfaces;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views;
    using SimpleInjector;
@@ -118,15 +116,19 @@
          container.Register<AboutBoxView>();
          container.Register<ImageManagerView>();
          container.Register<ImageView>();
+         container.RegisterSingleton<Func<ImageView>>(() => { return container.GetInstance<ImageView>(); });
          container.Register<MainWindow>();
          container.Register<PluginManagerView>();
 
          // Controllers
          container.Register<MainController>();
          container.Register<FileOperationController>();
+         container.Register<PluginOperationController>();
          container.Register<ImageManagerController>();
          container.Register<AboutBoxController>();
          container.Register<ImageController>();
+         container.Register<PluginManagerController>();
+         container.Register<PluginViewFactory>();
          container.RegisterSingleton<ImageSourceManager>();
 
          // Services
@@ -147,11 +149,12 @@
          List<Type> packageWindowsFormsTypes = new List<Type>();
          List<Type> pluginControllerTypes = new List<Type>();
          List<Type> imageSourceTypes = new List<Type>();
+         List<Assembly> pluginAssemblies = new List<Assembly>();
 
          foreach (string libraryFile in Program.pluginLibraries)
          {
-            Assembly assembly = Assembly.LoadFrom(libraryFile);
-            Type[] exportedTypes = assembly.GetExportedTypes();
+            Assembly pluginAssembly = Assembly.LoadFrom(libraryFile);
+            Type[] exportedTypes = pluginAssembly.GetExportedTypes();
 
             foreach (Type exportedType in exportedTypes)
             {
@@ -170,7 +173,11 @@
                   imageSourceTypes.Add(exportedType);
                }
             }
+
+            pluginAssemblies.Add(pluginAssembly);
          }
+
+         container.RegisterCollection<IPluginView>(pluginAssemblies);
 
          foreach (Type packageWindowsFormsType in packageWindowsFormsTypes)
          {

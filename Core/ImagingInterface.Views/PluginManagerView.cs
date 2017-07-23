@@ -1,30 +1,22 @@
 ﻿namespace ImagingInterface.Views
-   {
+{
    using System;
    using System.Collections.Generic;
-   using System.ComponentModel;
-   using System.Data;
-   using System.Diagnostics;
    using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using System.Windows.Forms;
-   using ImagingInterface.Controllers.EventArguments;
+   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
    public partial class PluginManagerView : UserControl
       {
-      ////private static bool checkSingleton = false;
+      private PluginManagerController pluginManagerController;
+
       private Dictionary<IRawPluginView, TabPage> pluginViewTabPage;
       private Dictionary<IRawPluginView, ToolTip> pluginViewToolTip;
 
-      public PluginManagerView()
+      public PluginManagerView(PluginManagerController pluginManagerController)
          {
-         // This help detect misconfiguration in IoC
-         ////Debug.Assert(PluginManagerView.checkSingleton == false, "A singleton shoudn't be constructed twice.");
-
-         ////PluginManagerView.checkSingleton = true;
+         this.pluginManagerController = pluginManagerController;
 
          this.InitializeComponent();
 
@@ -34,19 +26,19 @@
          this.Dock = DockStyle.Fill;
          }
 
-      public void AddPlugin(IRawPluginView rawPluginView, IRawPluginModel rawPluginModel)
+      public void AddPlugin(IPluginView pluginView)
          {
-         TabPage tabPage = new TabPage(rawPluginModel.DisplayName);
+         TabPage tabPage = new TabPage(pluginView.DisplayName);
          ToolTip toolTip = new ToolTip();
 
-         this.pluginViewTabPage.Add(rawPluginView, tabPage);
-         this.pluginViewToolTip.Add(rawPluginView, toolTip);
+         this.pluginViewTabPage.Add(pluginView, tabPage);
+         this.pluginViewToolTip.Add(pluginView, toolTip);
 
          // Attach a new ToolTip because there's no way to detach a global (form) ToolTip
          // when closing the plugin
-         toolTip.SetToolTip(tabPage, rawPluginModel.DisplayName);
+         toolTip.SetToolTip(tabPage, pluginView.DisplayName);
 
-         Control pluginViewControl = rawPluginView as Control;
+         Control pluginViewControl = pluginView as Control;
 
          tabPage.Controls.Add(pluginViewControl);
 
@@ -56,7 +48,7 @@
 
          tabPage.Size = tabPageSize;
 
-         this.UpdatePluginTabPageProperties(rawPluginView);
+         this.UpdatePluginTabPageProperties(pluginView);
 
          this.pluginsTabControl.Controls.Add(tabPage);
          }

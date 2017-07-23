@@ -1,20 +1,16 @@
 ﻿namespace ImagingInterface.Controllers
-   {
+{
    using System;
    using System.Collections.Generic;
    using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
    public class PluginManagerController
       {
-      ////private IPluginManagerView pluginManagerView;
       private Dictionary<IRawPluginView, IPluginController> pluginControllers;
 
-      public PluginManagerController(/*MainController mainController*/)
+      public PluginManagerController()
          {
-         ////this.pluginManagerView = pluginManagerView;
          this.pluginControllers = new Dictionary<IRawPluginView, IPluginController>();
 
          ////mainController.AddPluginManager(this);
