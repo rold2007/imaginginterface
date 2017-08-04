@@ -1,23 +1,28 @@
 ﻿namespace ImagingInterface.Controllers
 {
-   using ImagingInterface.Models;
+   using ImagingInterface.Controllers.Interfaces;
+   using ImagingInterface.Controllers.Services;
    using ImagingInterface.Plugins;
+   using System.Collections.Generic;
 
    public class FileOperationController
    {
-      private FileOperationModel fileOperationModel = new FileOperationModel();
-      private ImageSourceManager imageSourceManager;
+      private ImageSourceService imageSourceService;
+      private IApplicationLogic applicationLogic;
 
-      public FileOperationController(ImageSourceManager imageSourceManager)
+      public FileOperationController(ImageSourceService imageSourceService, IApplicationLogic applicationLogic)
       {
-         this.imageSourceManager = imageSourceManager;
+         this.imageSourceService = imageSourceService;
+         this.applicationLogic = applicationLogic;
       }
 
       public void OpenFiles(string[] files)
       {
          if (files != null)
          {
-            this.imageSourceManager.AddImageFiles(files);
+            IEnumerable<IImageSource> imageSources = this.imageSourceService.AddImageFiles(files);
+
+            this.applicationLogic.ManageNewImageSources(imageSources);
          }
       }
 
@@ -25,7 +30,7 @@
       {
          if (imageSource != null)
          {
-            this.imageSourceManager.RemoveImageSource(imageSource);
+            this.imageSourceService.RemoveImageSource(imageSource);
          }
       }
 

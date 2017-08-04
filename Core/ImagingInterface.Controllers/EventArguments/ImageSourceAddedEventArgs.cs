@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Controllers
+﻿namespace ImagingInterface.Controllers.EventArguments
 {
     using System;
     using ImagingInterface.Plugins;

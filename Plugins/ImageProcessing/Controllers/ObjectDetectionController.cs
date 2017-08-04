@@ -10,20 +10,18 @@
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class ObjectDetectionController : IImageProcessingController
+   public class ObjectDetectionController : IImageProcessingService
       {
       ////private IObjectDetectionView objectDetectionView;
       private IObjectDetectionModel objectDetectionModel;
-      private ImageManagerController imageManagerController;
       private TaggerController taggerController;
       private IObjectDetector objectDetector;
 
-      public ObjectDetectionController(ObjectDetectionModel objectDetectionModel, IObjectDetector objectDetection, ImageManagerController imageManagerController)
+      public ObjectDetectionController(ObjectDetectionModel objectDetectionModel, IObjectDetector objectDetection)
          {
          ////this.objectDetectionView = objectDetectionView;
          this.objectDetectionModel = objectDetectionModel;
          this.objectDetector = objectDetection;
-         this.imageManagerController = imageManagerController;
          }
 
       public event CancelEventHandler Closing;

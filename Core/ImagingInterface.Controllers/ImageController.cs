@@ -13,7 +13,7 @@
       private ImageModel imageModel = new ImageModel();
       private bool closing;
       private bool closed;
-      private List<Tuple<IImageProcessingController, IRawPluginModel>> imageProcessingControllers;
+      private List<Tuple<IImageProcessingService, IRawPluginModel>> imageProcessingControllers;
       private Task<byte[,,]> lastFetchNextImageFromSourceTask;
       private Task lastDisplayNextImageTask;
       private IImageSource imageSourceController;
@@ -25,7 +25,7 @@
 
       public ImageController()
       {
-         this.imageProcessingControllers = new List<Tuple<IImageProcessingController, IRawPluginModel>>();
+         this.imageProcessingControllers = new List<Tuple<IImageProcessingService, IRawPluginModel>>();
          this.lastFetchNextImageFromSourceTask = null;
          this.lastDisplayNextImageTask = null;
          this.asyncPluginControllers = new Dictionary<IPluginController, int>();
@@ -114,10 +114,9 @@
          {
             this.imageModel.ImageSource = value;
 
-            if (this.UpdateDisplay != null)
-            {
-               this.UpdateDisplay(this, EventArgs.Empty);
-            }
+            this.imageModel.ImageSource.ImageDataUpdated += ImageSource_ImageDataUpdated;
+
+            TriggerUpdateDisplay();
          }
       }
 
@@ -237,6 +236,17 @@
             }
          }
       */
+
+      private void TriggerUpdateDisplay()
+      {
+         this.UpdateDisplay?.Invoke(this, EventArgs.Empty);
+      }
+
+      private void ImageSource_ImageDataUpdated(object sender, EventArgs e)
+      {
+         TriggerUpdateDisplay();
+      }
+
       /*
       private void CreateDynamicUpdateTasks(TaskScheduler taskScheduler)
          {

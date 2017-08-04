@@ -8,11 +8,12 @@
    using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
+   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
    using OpenTK.Graphics.OpenGL;
 
-   public partial class ImageView : UserControl
-      {
+   public partial class ImageView : UserControl, IImageView
+   {
       private Dictionary<Texture, int> textures;
       private ImageController imageController;
       private bool firstPaint = true;

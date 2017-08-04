@@ -11,18 +11,16 @@
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class InvertController : IImageProcessingController
+   public class InvertController : IImageProcessingService
       {
       private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
       ////private IInvertView invertView;
       private IInvertModel invertModel;
-      private ImageManagerController imageManagerController;
 
-      public InvertController(InvertModel invertModel, ImageManagerController imageManagerController)
+      public InvertController(InvertModel invertModel)
          {
          ////this.invertView = invertView;
          this.invertModel = invertModel;
-         this.imageManagerController = imageManagerController;
 
          this.invertModel.DisplayName = InvertController.InvertDisplayName;
          }

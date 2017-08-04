@@ -53,8 +53,9 @@
          {
          get
             {
-            return (byte[,,])this.ImageSource.ImageData.Clone();
+            return (byte[,,])this.ImageSource.UpdatedImageData.Clone();
             }
+
          ////set;
          }
 
@@ -69,7 +70,7 @@
          get
             {
             ////return new Size(this.DisplayImageData.GetLength(1), this.DisplayImageData.GetLength(0));
-            return new Size(this.ImageSource.ImageData.GetLength(1), this.ImageSource.ImageData.GetLength(0));
+            return new Size(this.ImageSource.UpdatedImageData.GetLength(1), this.ImageSource.UpdatedImageData.GetLength(0));
             }
          }
 
@@ -78,7 +79,7 @@
          get
             {
             ////return this.DisplayImageData.GetLength(2) == 1;
-            return this.ImageSource.ImageData.GetLength(2) == 1;
+            return this.ImageSource.UpdatedImageData.GetLength(2) == 1;
             }
          }
 

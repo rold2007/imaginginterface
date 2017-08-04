@@ -2,6 +2,7 @@
 {
    using System;
    using System.Collections.Generic;
+   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
 
    public class PluginOperationController

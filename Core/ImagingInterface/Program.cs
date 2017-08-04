@@ -9,10 +9,12 @@
    using ImagingInterface.BootStrapper;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.Services;
+   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views;
    using SimpleInjector;
    using SimpleInjector.Diagnostics;
+   using ImagingInterface.Controllers.Interfaces;
 
    public static class Program
    {
@@ -121,15 +123,16 @@
          container.Register<PluginManagerView>();
 
          // Controllers
-         container.Register<MainController>();
-         container.Register<FileOperationController>();
-         container.Register<PluginOperationController>();
-         container.Register<ImageManagerController>();
+         container.RegisterSingleton<IApplicationLogic, ApplicationLogic>();
          container.Register<AboutBoxController>();
+         container.Register<FileOperationController>();
+         container.Register<ImageManagerController>();
          container.Register<ImageController>();
+         container.Register<IImageProcessingManagerService, ImageProcessingManagerService>();
+         container.Register<MainController>();
          container.Register<PluginManagerController>();
+         container.Register<PluginOperationController>();
          container.Register<PluginViewFactory>();
-         container.RegisterSingleton<ImageSourceManager>();
 
          // Services
          Assembly servicesAssembly = typeof(ApplicationPropertiesService).Assembly;
@@ -145,6 +148,14 @@
                }
             }
          }
+
+         // Override the current registration
+         Debug.Assert(container.Options.AllowOverridingRegistrations == false, "The default behavior should be disabled. Someone forgot to reset this value.");
+
+         container.Options.AllowOverridingRegistrations = true;
+         container.RegisterSingleton<ImageManagerService>();
+         container.RegisterSingleton<ImageSourceService>();
+         container.Options.AllowOverridingRegistrations = false;
 
          List<Type> packageWindowsFormsTypes = new List<Type>();
          List<Type> pluginControllerTypes = new List<Type>();

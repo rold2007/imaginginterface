@@ -17,19 +17,17 @@
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
-   public class CudafyController : IImageProcessingController, IDisposable
+   public class CudafyController : IImageProcessingService, IDisposable
       {
       private static readonly string CudafyDisplayName = "Cudafy"; // ncrunch: no coverage
       private ICudafyModel cudafyModel;
-      private ImageManagerController imageManagerController;
       private Dictionary<string, GPGPU> gpgpus;
       private Dictionary<string, GPGPUProperties> gpgpuProperties;
       private Dictionary<string, eGPUType> gpuTypes;
 
-      public CudafyController(CudafyModel cudafyModel, ImageManagerController imageManagerController)
+      public CudafyController(CudafyModel cudafyModel)
          {
          this.cudafyModel = cudafyModel;
-         this.imageManagerController = imageManagerController;
 
          this.cudafyModel.DisplayName = CudafyController.CudafyDisplayName;
 

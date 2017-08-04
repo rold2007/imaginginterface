@@ -1,23 +1,24 @@
-﻿namespace ImagingInterface.Controllers
+﻿namespace ImagingInterface.Controllers.Services
 {
    using System;
    using System.Collections.Generic;
+   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
 
-   public class ImageSourceManager
+   public class ImageSourceService
    {
       private IFileSourceFactory fileSourceFactory;
 
-      public ImageSourceManager(IFileSourceFactory fileSourceFactory)
+      public ImageSourceService(IFileSourceFactory fileSourceFactory)
       {
          this.ImageSources = new List<IImageSource>();
 
          this.fileSourceFactory = fileSourceFactory;
       }
 
-      public event EventHandler<ImageSourceAddedEventArgs> ImageSourceAdded;
+      //public event EventHandler<ImageSourceAddedEventArgs> ImageSourceAdded;
 
-      public event EventHandler<ImageSourceRemovedEventArgs> ImageSourceRemoved;
+      //public event EventHandler<ImageSourceRemovedEventArgs> ImageSourceRemoved;
 
       private List<IImageSource> ImageSources
       {
@@ -25,7 +26,7 @@
          set;
       }
 
-      public void AddImageFiles(IEnumerable<string> files)
+      public IEnumerable<IImageSource> AddImageFiles(IEnumerable<string> files)
       {
          if (files == null)
          {
@@ -45,6 +46,8 @@
          }
 
          this.AddImageSources(fileSources);
+
+         return fileSources;
       }
 
       public void RemoveImageSource(IImageSource imageSource)
@@ -55,18 +58,11 @@
          }
 
          this.ImageSources.Remove(imageSource);
-
-         this.TriggerImageSourceRemoved(imageSource);
       }
 
       private void AddImageSources(IList<IImageSource> imageSources)
       {
          this.ImageSources.AddRange(imageSources);
-
-         foreach (IImageSource imageSource in imageSources)
-         {
-            this.TriggerImageSourceAdded(imageSource);
-         }
       }
 
       private IFileSource OpenFile(string file)
@@ -81,16 +77,6 @@
          {
             return null;
          }
-      }
-
-      private void TriggerImageSourceAdded(IImageSource imageSource)
-      {
-         this.ImageSourceAdded?.Invoke(this, new ImageSourceAddedEventArgs(imageSource));
-      }
-
-      private void TriggerImageSourceRemoved(IImageSource imageSource)
-      {
-         this.ImageSourceRemoved?.Invoke(this, new ImageSourceRemovedEventArgs(imageSource));
       }
    }
 }

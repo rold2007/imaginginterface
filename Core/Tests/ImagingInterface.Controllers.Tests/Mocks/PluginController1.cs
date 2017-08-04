@@ -9,7 +9,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class PluginController1 : IPluginController, IImageProcessingController
+   public class PluginController1 : IPluginController, IImageProcessingService
       {
       public PluginController1(PluginModel1 pluginModel)
          {
