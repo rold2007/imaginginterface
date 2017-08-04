@@ -1,27 +1,32 @@
 ﻿namespace ImagingInterface.Plugins
-   {
+{
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
 
    public interface IImageSource
+   {
+      event EventHandler ImageDataUpdated;
+
+      byte[,,] OriginalImageData
       {
-      byte[,,] ImageData
-         {
          get;
-         }
+      }
+
+      byte[,,] UpdatedImageData
+      {
+         get;
+      }
 
       string ImageName
-         {
+      {
          get;
-         }
+      }
 
       bool IsDynamic(IRawPluginModel rawPluginModel);
 
-      byte[, ,] NextImageData(IRawPluginModel rawPluginModel);
+      byte[,,] NextImageData(IRawPluginModel rawPluginModel);
+
+      void UpdateImageData(byte[,,] updatedImageData);
 
       void Disconnected();
-      }
    }
+}

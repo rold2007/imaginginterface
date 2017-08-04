@@ -27,6 +27,8 @@
       {
       }
 
+      public event EventHandler ImageDataUpdated;
+
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
@@ -45,7 +47,13 @@
          private set;
       }
 
-      public byte[,,] ImageData
+      public byte[,,] OriginalImageData
+      {
+         get;
+         set;
+      }
+
+      public byte[,,] UpdatedImageData
       {
          get;
          set;
@@ -73,7 +81,7 @@
          //  new FileSource class should be created with some kind of "delay load".
          this.LoadImage();
 
-         if (this.ImageData != null)
+         if (this.OriginalImageData != null)
          {
             return true;
          }
@@ -119,6 +127,13 @@
          return null;
       }
 
+      public void UpdateImageData(byte[,,] updatedImageData)
+      {
+         this.UpdatedImageData = updatedImageData;
+
+         TriggerImageDataUpdated();
+      }
+
       public void Disconnected()
       {
       }
@@ -137,7 +152,7 @@
 
                   using (FastBitmap fastBitmap = new FastBitmap(image))
                   {
-                     this.ImageData = new byte[image.Size.Height, image.Size.Width, 3];
+                     this.OriginalImageData = new byte[image.Size.Height, image.Size.Width, 3];
 
                      for (int y = 0; y < image.Size.Height; y++)
                      {
@@ -145,23 +160,34 @@
                         {
                            Color color = fastBitmap.GetPixel(x, y);
 
-                           this.ImageData[y, x, 0] = color.R;
-                           this.ImageData[y, x, 1] = color.G;
-                           this.ImageData[y, x, 2] = color.B;
+                           this.OriginalImageData[y, x, 0] = color.R;
+                           this.OriginalImageData[y, x, 1] = color.G;
+                           this.OriginalImageData[y, x, 2] = color.B;
                         }
                      }
                   }
                }
+
+               this.UpdatedImageData = this.OriginalImageData.Clone() as byte[,,];
+
+               TriggerImageDataUpdated();
             }
             catch (ImageFormatException)
             {
-               this.ImageData = null;
+               this.OriginalImageData = null;
+               this.UpdatedImageData = null;
             }
          }
          else
          {
-            this.ImageData = null;
+            this.OriginalImageData = null;
+            this.UpdatedImageData = null;
          }
+      }
+
+      private void TriggerImageDataUpdated()
+      {
+         ImageDataUpdated?.Invoke(this, EventArgs.Empty);
       }
    }
 }

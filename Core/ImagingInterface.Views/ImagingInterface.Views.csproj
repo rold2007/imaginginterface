@@ -68,6 +68,7 @@
     <Compile Include="AboutBoxView.Designer.cs">
       <DependentUpon>AboutBoxView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationLogic.cs" />
     <Compile Include="IImageViewFactory.cs" />
     <Compile Include="ImageManagerView.cs">
       <SubType>UserControl</SubType>

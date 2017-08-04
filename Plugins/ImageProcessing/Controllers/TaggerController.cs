@@ -12,21 +12,19 @@
    using ImagingInterface.Plugins.EventArguments;
    using ImagingInterface.Plugins.Utilities;
 
-   public class TaggerController : IImageProcessingController
+   public class TaggerController : IImageProcessingService
       {
       private static readonly string TaggerDisplayName = "Tagger"; // ncrunch: no coverage
       ////private ITaggerView taggerView;
       private ITaggerModel taggerModel;
-      private ImageManagerController imageManagerController;
       private ImageController registeredImageController;
       private ITagger tagger;
 
-      public TaggerController(TaggerModel taggerModel, ITagger tagger, ImageManagerController imageManagerController)
+      public TaggerController(TaggerModel taggerModel, ITagger tagger)
          {
          ////this.taggerView = taggerView;
          this.taggerModel = taggerModel;
          this.tagger = tagger;
-         this.imageManagerController = imageManagerController;
 
          this.taggerModel.DisplayName = TaggerDisplayName;
          this.taggerModel.Labels = new SortedSet<string>();

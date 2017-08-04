@@ -1,130 +1,76 @@
 ﻿namespace ImageProcessing.Controllers
-   {
+{
    using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
-   using System.Diagnostics;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using Emgu.CV;
-   using Emgu.CV.CvEnum;
-   using Emgu.CV.Structure;
-   using Emgu.Util;
-   using ImageProcessing.Controllers;
-   using ImageProcessing.Controllers.EventArguments;
-   using ImageProcessing.Models;
-   using ImagingInterface.Controllers;
-   using ImagingInterface.Plugins;
+   using ImageProcessing.Controllers.Services;
 
-   public class RotateController : IImageProcessingController
+   public class RotateController
+   {
+      private RotateService rotateService;
+
+      public RotateController(RotateService rotateService)
       {
-      private static readonly string RotateDisplayName = "Rotate"; // ncrunch: no coverage
-      ////private IRotateView rotateView;
-      private IRotateModel rotateModel;
-      private ImageManagerController imageManagerController;
-
-      public RotateController(RotateModel rotateModel, ImageManagerController imageManagerController)
-         {
-         ////this.rotateView = rotateView;
-         this.rotateModel = rotateModel;
-         this.imageManagerController = imageManagerController;
-
-         this.rotateModel.DisplayName = RotateDisplayName;
-         }
+         this.rotateService = rotateService;
+      }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
 
-      ////public IRawPluginView RawPluginView
-      ////   {
-      ////   get
-      ////      {
-      ////      return this.rotateView;
-      ////      }
-      ////   }
-
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.rotateModel;
-            }
-         }
-
       public bool Active
-         {
+      {
          get
-            {
+         {
             return true;
-            }
          }
+      }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.rotateService.DisplayName;
+         }
+      }
 
       public void Initialize()
-         {
-         ////this.rotateView.Rotate += this.RotateView_Rotate;
-         }
+      {
+      }
 
       public void Close()
-         {
+      {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
-         if (this.Closing != null)
-            {
-            this.Closing(this, cancelEventArgs);
-            }
+         this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
-            {
+         {
             ////this.rotateView.Rotate -= this.RotateView_Rotate;
 
             ////this.rotateView.Hide();
 
             ////this.rotateView.Close();
 
-            if (this.Closed != null)
-               {
-               this.Closed(this, EventArgs.Empty);
-               }
-            }
+            this.Closed?.Invoke(this, EventArgs.Empty);
          }
+      }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public void SetRotationAngle(double angle)
+      {
+         if (this.rotateService.Angle != angle)
          {
-         IRotateModel rotateModel = rawPluginModel as IRotateModel;
+            this.rotateService.Angle = angle;
 
-         if (imageData.GetLength(2) == 1)
-            {
-            using (Image<Gray, byte> convertedImage = new Image<Gray, byte>(imageData), rotatedImage = convertedImage.Rotate(rotateModel.Angle, new Gray()))
-               {
-               return rotatedImage.Data;
-               }
-            }
-         else
-            {
-            Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
+            // Force to apply a rotation
+            this.rotateService.Rotate(angle);
 
-            using (Image<Bgr, byte> convertedImage = new Image<Bgr, byte>(imageData), rotatedImage = convertedImage.Rotate(rotateModel.Angle, new Bgr()))
-               {
-               return rotatedImage.Data;
-               }
-            }
-         }
-
-      private void RotateView_Rotate(object sender, RotateEventArgs e)
-         {
-         if (this.rotateModel.Angle != e.Angle)
-            {
-            this.rotateModel.Angle = e.Angle;
-
-            ////ImageController imageController = this.imageManagerController.GetActiveImage();
+            //ImageController imageController = this.imageManagerController.GetActiveImage();
 
             ////if (imageController != null)
-               {
+            {
                ////imageController.AddImageProcessingController(this, this.rotateModel.Clone() as IRawPluginModel);
-               }
             }
          }
       }
    }
+}

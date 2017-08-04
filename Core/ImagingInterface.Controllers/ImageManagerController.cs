@@ -1,131 +1,146 @@
 ﻿namespace ImagingInterface.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using ImagingInterface.Models;
-    using ImagingInterface.Plugins;
+   using System;
+   using System.Collections.Generic;
+   using System.Windows;
+   using ImagingInterface.Controllers.EventArguments;
+   using ImagingInterface.Controllers.Services;
+   using ImagingInterface.Controllers.Views;
+   using ImagingInterface.Plugins;
 
-    public class ImageManagerController
-    {
-        private ImageManagerModel imageManagerModel;
+   public class ImageManagerController
+   {
+      private ImageManagerService imageManagerService;
+      private Dictionary<IImageSource, List<IImageView>> imageSourceImageViews;
 
-        public ImageManagerController()
-        {
-        }
+      public ImageManagerController(ImageManagerService imageManagerService)
+      {
+         this.imageManagerService = imageManagerService;
+         this.imageSourceImageViews = new Dictionary<IImageSource, List<IImageView>>();
+      }
 
-        //public event EventHandler ImageAdded;
+      //public event EventHandler ActiveImageChanged;
 
-        //public event EventHandler ActiveImageChanged;
+      //public event EventHandler RemoveActiveImageIndex;
 
-        //public event EventHandler RemoveActiveImageIndex;
+      public int ActiveImageIndex
+      {
+         get
+         {
+            return this.imageManagerService.ActiveImageIndex;
+         }
+      }
 
-        public int ActiveImageIndex
-        {
-            get
-            {
-                return this.imageManagerModel.ActiveImageIndex;
-            }
-        }
+      public int ImageCount
+      {
+         get
+         {
+            return this.imageManagerService.ImageCount;
+         }
+      }
 
-        public int ImageCount
-        {
-            get
-            {
-                return this.imageManagerModel.ImageCount;
-            }
-        }
+      //public IImageManagerModel ImageManagerModel
+      //   {
+      //   get
+      //      {
+      //      return this.imageManagerModel;
+      //      }
+      //   }
 
-        //public IImageManagerModel ImageManagerModel
-        //   {
-        //   get
-        //      {
-        //      return this.imageManagerModel;
-        //      }
-        //   }
+      public void AddImage(IImageSource imageSource, IImageView imageView)
+      {
+         List<IImageView> imageViews;
 
-        public void AddImage(IImageSource imageSource)
-        {
-            this.imageManagerModel.AddImage();
+         if (!this.imageSourceImageViews.TryGetValue(imageSource, out imageViews))
+         {
+            imageViews = new List<IImageView>();
 
+            this.imageSourceImageViews.Add(imageSource, imageViews);
+         }
+
+         imageViews.Add(imageView);
+
+         this.imageManagerService.AddImage(imageSource);
+
+         //this.TriggerActiveImageIndexChanged();
+      }
+
+      public void AddImages(IList<IImageSource> imageSources)
+      {
+         foreach (IImageSource imageSource in imageSources)
+         {
+            this.imageManagerService.AddImage(imageSource);
+
+            //ImageView imageView = this.serviceLocator.GetInstance<ImageView>();
+
+            //imageView.SetImageSource(fileSource);
+
+            //this.imageManagerView.AddImageView(imageView);
+
+            //this.TriggerImageAdded();
             //this.TriggerActiveImageIndexChanged();
-        }
+         }
+      }
 
-        public void AddImages(IList<IImageSource> imageSources)
-        {
-            foreach (IImageSource imageSource in imageSources)
-            {
-                this.imageManagerModel.AddImage();
+      public IList<ImageController> GetAllImages()
+      {
+         throw new NotImplementedException();
 
-                //ImageView imageView = this.serviceLocator.GetInstance<ImageView>();
+         return null;
+         ////return this.imageControllers.Values.ToList();
+      }
 
-                //imageView.SetImageSource(fileSource);
+      public void RemoveActiveImage()
+      {
+         int activeImageIndex = this.imageManagerService.ActiveImageIndex;
 
-                //this.imageManagerView.AddImageView(imageView);
+         this.imageManagerService.RemoveActiveImage();
 
-                //this.TriggerImageAdded();
-                //this.TriggerActiveImageIndexChanged();
-            }
-        }
+         //this.TriggerRemoveActiveImageIndex();
 
-        public IList<ImageController> GetAllImages()
-        {
-            throw new NotImplementedException();
+         activeImageIndex = Math.Min(activeImageIndex, this.imageManagerService.ImageCount - 1);
 
-            return null;
-            ////return this.imageControllers.Values.ToList();
-        }
+         // Restore the expected active image index as the removal could have changed it
+         this.imageManagerService.ActiveImageIndex = activeImageIndex;
 
-        public void RemoveActiveImage()
-        {
-            int activeImageIndex = this.imageManagerModel.ActiveImageIndex;
+         //this.TriggerActiveImageIndexChanged();
+      }
 
-            this.imageManagerModel.RemoveActiveImage();
+      public void RemoveAllImages()
+      {
+         while (this.imageManagerService.ImageCount > 0)
+         {
+            this.RemoveActiveImage();
+         }
+      }
 
-            //this.TriggerRemoveActiveImageIndex();
+      public void SetActiveImageIndex(int activeImageIndex)
+      {
+         if (activeImageIndex >= 0)
+         {
+            this.imageManagerService.ActiveImageIndex = activeImageIndex;
+         }
+      }
 
-            activeImageIndex = Math.Min(activeImageIndex, this.imageManagerModel.ImageCount - 1);
+      //private void TriggerImageAdded()
+      //{
+      //   this.ImageAdded?.Invoke(this, EventArgs.Empty);
+      //}
 
-            // Restore the expected active image index as the removal could have changed it
-            this.imageManagerModel.ActiveImageIndex = activeImageIndex;
+      //private void TriggerActiveImageIndexChanged()
+      //{
+      //   if (this.ActiveImageChanged != null)
+      //   {
+      //      this.ActiveImageChanged(this, EventArgs.Empty);
+      //   }
+      //}
 
-            //this.TriggerActiveImageIndexChanged();
-        }
-
-        public void RemoveAllImages()
-        {
-            while (this.imageManagerModel.ImageCount > 0)
-            {
-                this.RemoveActiveImage();
-            }
-        }
-
-        public void SetActiveImageIndex(int activeImageIndex)
-        {
-            if (activeImageIndex >= 0)
-            {
-                this.imageManagerModel.ActiveImageIndex = activeImageIndex;
-            }
-        }
-
-        //private void TriggerImageAdded()
-        //{
-        //   this.ImageAdded?.Invoke(this, EventArgs.Empty);
-        //}
-
-        //private void TriggerActiveImageIndexChanged()
-        //{
-        //   if (this.ActiveImageChanged != null)
-        //   {
-        //      this.ActiveImageChanged(this, EventArgs.Empty);
-        //   }
-        //}
-
-        //private void TriggerRemoveActiveImageIndex()
-        //{
-        //   if (this.RemoveActiveImageIndex != null)
-        //   {
-        //      this.RemoveActiveImageIndex(this, EventArgs.Empty);
-        //   }
-        //}
-    }
+      //private void TriggerRemoveActiveImageIndex()
+      //{
+      //   if (this.RemoveActiveImageIndex != null)
+      //   {
+      //      this.RemoveActiveImageIndex(this, EventArgs.Empty);
+      //   }
+      //}
+   }
 }

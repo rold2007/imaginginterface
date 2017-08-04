@@ -5,6 +5,7 @@
    using System.Diagnostics;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
+   using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Plugins;
 
    public partial class MainWindow : Form
@@ -16,15 +17,16 @@
       private ImageManagerView imageManagerView;
       private PluginManagerView pluginManagerView;
       private AboutBoxView aboutBoxView;
+      private ApplicationLogic applicationLogic;
 
-      public MainWindow(FileOperationController fileOperationController, PluginOperationController pluginOperationController, ImageManagerView imageManagerView, PluginManagerView pluginManagerView, AboutBoxView aboutBoxView)
+      public MainWindow(FileOperationController fileOperationController, PluginOperationController pluginOperationController, ImageManagerView imageManagerView, PluginManagerView pluginManagerView, AboutBoxView aboutBoxView, IApplicationLogic applicationLogic)
       {
          this.fileOperationController = fileOperationController;
          this.pluginOperationController = pluginOperationController;
          this.imageManagerView = imageManagerView;
          this.pluginManagerView = pluginManagerView;
          this.aboutBoxView = aboutBoxView;
-
+         this.applicationLogic = applicationLogic as ApplicationLogic;
          this.InitializeComponent();
 
          this.mainSplitContainer.Panel1.Controls.Add(this.imageManagerView);
@@ -52,7 +54,12 @@
 
       public event CancelEventHandler ApplicationClosing;
 
-      public void AddPlugin(string name)
+      public new void Close()
+      {
+         base.Close();
+      }
+
+      private void AddPlugin(string name)
       {
          ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(name);
 
@@ -60,11 +67,6 @@
          toolStripMenuItem.Click += this.PluginClick;
 
          this.pluginsToolStripMenuItem.DropDownItems.Add(toolStripMenuItem);
-      }
-
-      public new void Close()
-      {
-         base.Close();
       }
 
       private void PluginClick(object sender, EventArgs e)
@@ -238,6 +240,11 @@
          this.ApplicationClosing?.Invoke(this, cancelEventArgs);
 
          e.Cancel = cancelEventArgs.Cancel;
+      }
+
+      private void MainWindow_Load(object sender, EventArgs e)
+      {
+         this.applicationLogic.AddImageManagerView(this.imageManagerView);
       }
    }
 }

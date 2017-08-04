@@ -1,4 +1,4 @@
-﻿namespace ImagingInterface.Controllers
+﻿namespace ImagingInterface.Controllers.Views
 {
    using System.Collections.Generic;
    using ImagingInterface.Plugins;

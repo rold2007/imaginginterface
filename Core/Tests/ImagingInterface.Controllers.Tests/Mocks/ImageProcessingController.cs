@@ -8,7 +8,7 @@
    using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
-   public class ImageProcessingController : IImageProcessingController
+   public class ImageProcessingController : IImageProcessingService
       {
       public event CancelEventHandler Closing;
 

@@ -52,7 +52,8 @@
     <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
     <Compile Include="IFileSource.cs" />
     <Compile Include="IFileSourceFactory.cs" />
-    <Compile Include="IImageProcessingController.cs" />
+    <Compile Include="IImageProcessingService.cs" />
+    <Compile Include="IImageProcessingManagerService.cs" />
     <Compile Include="IImageSource.cs" />
     <Compile Include="IMemorySource.cs" />
     <Compile Include="IPluginController.cs" />

@@ -1,6 +1,7 @@
 ﻿namespace ImageProcessing.Bootstrapper
 {
    using ImageProcessing.Controllers;
+   using ImageProcessing.Controllers.Services;
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
    using ImageProcessing.Views;
@@ -17,7 +18,7 @@
          container.RegisterSingleton<IFileSourceFactory, FileSourceFactory>();
 
          // Models
-         container.Register<RotateModel>();
+         container.Register<RotateService>();
          container.Register<InvertModel>();
          container.Register<CudafyModel>();
          container.Register<TaggerModel>();
