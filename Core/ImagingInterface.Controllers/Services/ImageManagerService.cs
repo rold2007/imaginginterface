@@ -69,7 +69,7 @@
          {
             this.ActiveImageIndex--;
          }
-         else if(this.ImageCount == 0)
+         else if (this.ImageCount == 0)
          {
             this.ActiveImageIndex = -1;
          }

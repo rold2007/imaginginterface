@@ -36,6 +36,7 @@
             return this.captureController.Active;
          }
       }
+
       public void UpdateLiveGrabStatus(bool allowGrab, bool liveGrabRunning)
       {
          this.startCaptureButton.Enabled = allowGrab;

@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeatureComputer.Test.cs" />
+    <Compile Include="FeatureComputerTest.Test.cs" />
     <Compile Include="ObjectDetectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

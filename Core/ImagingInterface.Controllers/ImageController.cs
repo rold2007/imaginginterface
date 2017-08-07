@@ -11,23 +11,27 @@
    public class ImageController
    {
       private ImageModel imageModel = new ImageModel();
-      private bool closing;
-      private bool closed;
+
+      // private bool closing;
+      // private bool closed;
       private List<Tuple<IImageProcessingService, IRawPluginModel>> imageProcessingControllers;
-      private Task<byte[,,]> lastFetchNextImageFromSourceTask;
-      private Task lastDisplayNextImageTask;
-      private IImageSource imageSourceController;
-      private IRawPluginModel imageSourceRawPluginModel;
+
+      // private Task<byte[,,]> lastFetchNextImageFromSourceTask;
+      // private Task lastDisplayNextImageTask;
+      // private IImageSource imageSourceController;
+      // private IRawPluginModel imageSourceRawPluginModel;
       private Stopwatch lastDisplayUpdate;
-      private double updatePeriod;
+
+      // private double updatePeriod;
       private Dictionary<IPluginController, int> asyncPluginControllers;
       private HashSet<IPluginController> closingPluginControllers;
 
       public ImageController()
       {
          this.imageProcessingControllers = new List<Tuple<IImageProcessingService, IRawPluginModel>>();
-         this.lastFetchNextImageFromSourceTask = null;
-         this.lastDisplayNextImageTask = null;
+
+         // this.lastFetchNextImageFromSourceTask = null;
+         // this.lastDisplayNextImageTask = null;
          this.asyncPluginControllers = new Dictionary<IPluginController, int>();
          this.closingPluginControllers = new HashSet<IPluginController>();
 
@@ -44,7 +48,7 @@
          ////   this.updatePeriod = -1.0;
          ////   }
 
-         this.closed = false;
+         // this.closed = false;
 
          ////this.imageView.ZoomLevelIncreased += this.ImageView_ZoomLevelIncreased;
          ////this.imageView.ZoomLevelDecreased += this.ImageView_ZoomLevelDecreased;
@@ -71,6 +75,7 @@
             return this.imageModel;
          }
       }
+
       ////public IRawImageView RawImageView
       ////   {
       ////   get
@@ -136,15 +141,14 @@
          ////   }
       }
 
-      //public void SetImageSource(IImageSource imageSource)
+      // public void SetImageSource(IImageSource imageSource)
       //   {
 
-      //   if (this.UpdateDisplay != null)
+      // if (this.UpdateDisplay != null)
       //      {
       //      this.UpdateDisplay(this, EventArgs.Empty);
       //      }
       //   }
-
       public void UpdateZoomLevel(double zoomLevel)
       {
          this.imageModel.ZoomLevel = zoomLevel;

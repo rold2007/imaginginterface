@@ -99,6 +99,7 @@
                {
                Directory.CreateDirectory(directory);
                }
+
             //// ncrunch: no coverage end
 
             using (StreamWriter streamWriter = new StreamWriter(this.tempFilename, false))

@@ -67,7 +67,7 @@
             }
          }
 
-      public void Train(byte[, ,] imageData)
+      public void Train(byte[,,] imageData)
          {
          int trainSamples = 0;
          FeatureComputer featureComputer = new FeatureComputer(imageData);
@@ -128,14 +128,14 @@
                DecisionTree decisionTree = new DecisionTree(attributes, this.tagPoints.Count());
                C45Learning c45Learning = new C45Learning(decisionTree);
 
-               c45Learning.Run(inputs, outputs);
+               c45Learning.Learn(inputs, outputs);
 
                this.Models.Add(label, decisionTree);
                }
             }
          }
 
-      public Dictionary<string, List<Point>> Test(byte[, ,] imageData)
+      public Dictionary<string, List<Point>> Test(byte[,,] imageData)
          {
          Dictionary<string, List<Point>> predictions = new Dictionary<string, List<Point>>();
 
@@ -162,7 +162,7 @@
 
                   foreach (string model in this.Models.Keys)
                      {
-                     int prediction = this.Models[model].Compute(input);
+                     int prediction = this.Models[model].Decide(input);
 
                      if (prediction == 1)
                         {

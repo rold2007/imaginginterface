@@ -64,7 +64,7 @@
             // Force to apply a rotation
             this.rotateService.Rotate(angle);
 
-            //ImageController imageController = this.imageManagerController.GetActiveImage();
+            // ImageController imageController = this.imageManagerController.GetActiveImage();
 
             ////if (imageController != null)
             {

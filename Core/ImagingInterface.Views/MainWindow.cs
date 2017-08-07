@@ -35,6 +35,13 @@
          this.InitializePlugins();
       }
 
+      public event CancelEventHandler ApplicationClosing;
+
+      public new void Close()
+      {
+         base.Close();
+      }
+
       private void InitializePlugins()
       {
          bool pluginPresent = false;
@@ -50,13 +57,6 @@
          {
             this.AddPlugin(closePluginName);
          }
-      }
-
-      public event CancelEventHandler ApplicationClosing;
-
-      public new void Close()
-      {
-         base.Close();
       }
 
       private void AddPlugin(string name)

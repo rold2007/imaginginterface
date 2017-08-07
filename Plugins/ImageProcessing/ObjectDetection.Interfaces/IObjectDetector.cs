@@ -13,8 +13,8 @@
 
       void Remove(string label, Point tagPoint);
 
-      void Train(byte[, ,] imageData);
+      void Train(byte[,,] imageData);
 
-      Dictionary<string, List<Point>> Test(byte[, ,] imageData);
+      Dictionary<string, List<Point>> Test(byte[,,] imageData);
       }
    }

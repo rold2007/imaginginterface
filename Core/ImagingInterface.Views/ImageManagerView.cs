@@ -27,12 +27,12 @@
 
          this.Dock = DockStyle.Fill;
 
-         //this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
-         //this.imageManagerController.ActiveImageChanged += this.ImageManagerModel_ActiveImageChanged;
-         //this.imageManagerController.RemoveActiveImageIndex += this.ImageManagerController_RemoveActiveImageIndex;
+         // this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
+         // this.imageManagerController.ActiveImageChanged += this.ImageManagerModel_ActiveImageChanged;
+         // this.imageManagerController.RemoveActiveImageIndex += this.ImageManagerController_RemoveActiveImageIndex;
 
-         //this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
-         //this.imageManagerController.ImageRemoved += this.ImageManagerController_ImageRemoved;
+         // this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
+         // this.imageManagerController.ImageRemoved += this.ImageManagerController_ImageRemoved;
       }
 
       public bool HasActiveImageView
@@ -50,16 +50,17 @@
             Debug.Assert(this.HasActiveImageView, "Invalid tab index");
 
             return this.imageViews[this.imagesTabControl.SelectedIndex];
-            //return this.imageViews[this.imageManagerController.ActiveImageIndex];
+
+            // return this.imageViews[this.imageManagerController.ActiveImageIndex];
          }
       }
 
       public void AddImageView(ImageView imageView)
       {
-         //ImageView imageView = new ImageView();
-         //this.AddImageToNewtab(imageView);
+         // ImageView imageView = new ImageView();
+         // this.AddImageToNewtab(imageView);
 
-         //this.imageManagerController.AddImage();
+         // this.imageManagerController.AddImage();
          System.Diagnostics.Debug.Fail("Not done yet.");
       }
 
@@ -82,13 +83,15 @@
       public void RemoveActiveImageView()
       {
          throw new NotImplementedException();
-         //this.imageManagerController.RemoveActiveImage();
+
+         // this.imageManagerController.RemoveActiveImage();
       }
 
       public void RemoveAllImageViews()
       {
          throw new NotImplementedException();
-         //this.imageManagerController.RemoveAllImages();
+
+         // this.imageManagerController.RemoveAllImages();
       }
 
       public void AddImageToNewtab(ImageView imageView)
@@ -144,23 +147,22 @@
 
       private void ImageManagerController_ImageAdded(object sender, EventArgs e)
       {
-         //this.AddImageToNewtab();
+         // this.AddImageToNewtab();
          throw new NotImplementedException();
       }
 
-      //private void ImageManagerModel_ActiveImageChanged(object sender, EventArgs e)
-      //{
+      // private void ImageManagerModel_ActiveImageChanged(object sender, EventArgs e)
+      // {
       //    this.imagesTabControl.SelectedIndex = this.imageManagerController.ActiveImageIndex;
-      //}
-
+      // }
       private void ImageManagerController_RemoveActiveImageIndex(object sender, EventArgs e)
       {
-         //int activeImageIndex = this.imageManagerController.ImageManagerModel.ActiveImageIndex;
+         // int activeImageIndex = this.imageManagerController.ImageManagerModel.ActiveImageIndex;
          System.Diagnostics.Debug.Fail("Need to replace this code. The model shouldnt be accessed directly anymore.");
 
-         //using (ImageView activeImageView = this.imageViews[activeImageIndex])
-         //using (TabPage tabPage = this.imageViewTabPage[activeImageView])
-         //using (ToolTip toolTip = this.imageViewToolTip[activeImageView])
+         // using (ImageView activeImageView = this.imageViews[activeImageIndex])
+         // using (TabPage tabPage = this.imageViewTabPage[activeImageView])
+         // using (ToolTip toolTip = this.imageViewToolTip[activeImageView])
          //   {
          //   this.imagesTabControl.Controls.Remove(tabPage);
          //   this.imageViews.RemoveAt(activeImageIndex);
@@ -171,14 +173,14 @@
 
       private void ImageManagerController_ImageAdded(object sender, ImageSourceAddedEventArgs e)
       {
-         //IImageSource imageSource = e.ImageSource;
-         //ImageView imageView = this.imageViewFactory.CreateNew();
+         // IImageSource imageSource = e.ImageSource;
+         // ImageView imageView = this.imageViewFactory.CreateNew();
 
-         //imageView.ImageSource = imageSource;
+         // imageView.ImageSource = imageSource;
 
-         //this.AddImageToNewtab(imageView);
+         // this.AddImageToNewtab(imageView);
 
-         //this.imageManagerController.AddImage(imageSource, imageView);
+         // this.imageManagerController.AddImage(imageSource, imageView);
       }
 
       private void ImageManagerController_ImageRemoved(object sender, ImageViewRemovedEventArgs e)
@@ -194,13 +196,13 @@
             this.imageViewToolTip.Remove(imageView);
          }
 
-         //this.imageManagerController.RemoveImage(imageView);
+         // this.imageManagerController.RemoveImage(imageView);
       }
 
       private void ImageManagerView_Load(object sender, EventArgs e)
       {
-         //this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
-         //this.imageManagerController.ImageRemoved += this.ImageManagerController_ImageRemoved;
+         // this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
+         // this.imageManagerController.ImageRemoved += this.ImageManagerController_ImageRemoved;
       }
    }
 }

@@ -1,9 +1,9 @@
 ﻿namespace ImagingInterface.Controllers
 {
+   using System.Collections.Generic;
    using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Plugins;
-   using System.Collections.Generic;
 
    public class FileOperationController
    {

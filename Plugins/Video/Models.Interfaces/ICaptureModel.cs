@@ -10,7 +10,7 @@
 
    public interface ICaptureModel : IRawPluginModel, ICloneable
       {
-      byte[, ,] LastImageData
+      byte[,,] LastImageData
          {
          get;
          set;

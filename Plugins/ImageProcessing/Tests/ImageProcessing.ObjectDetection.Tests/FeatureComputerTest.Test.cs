@@ -17,7 +17,7 @@
       [Test]
       public void Constructor()
          {
-         byte[, ,] imageData = new byte[1, 1, 1];
+         byte[,,] imageData = new byte[1, 1, 1];
          FeatureComputer featureComputer = new FeatureComputer(null);
 
          featureComputer = new FeatureComputer(imageData);
@@ -38,7 +38,7 @@
       [Test]
       public void ComputeFeatures()
          {
-         byte[, ,] imageData = new byte[1, 1, 1];
+         byte[,,] imageData = new byte[1, 1, 1];
          FeatureComputer featureComputer = new FeatureComputer(imageData);
          float[] features;
 
@@ -58,7 +58,7 @@
       [Test]
       public void ComputeFeaturesWrongChannels()
          {
-         byte[, ,] imageData = new byte[1, 1, 2];
+         byte[,,] imageData = new byte[1, 1, 2];
          FeatureComputer featureComputer = new FeatureComputer(imageData);
          float[] features;
 

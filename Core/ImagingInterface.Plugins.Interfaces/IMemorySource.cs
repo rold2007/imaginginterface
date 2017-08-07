@@ -8,9 +8,5 @@
 
    public interface IMemorySource : IImageSource
       {
-      byte[, ,] OriginalImageData
-         {
-         get;
-         }
       }
    }
