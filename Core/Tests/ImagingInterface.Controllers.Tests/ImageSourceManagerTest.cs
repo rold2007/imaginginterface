@@ -2,8 +2,8 @@
 {
    using System;
    using System.Collections.Generic;
-   using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Controllers.Services;
+   using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Plugins;
    using NUnit.Framework;
 
@@ -22,7 +22,7 @@
          int imageAddedCount = 0;
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
 
-         //imageSourceManager.ImageSourceAdded += (sender, eventArgs) => { imageAddedCount++; };
+         // imageSourceManager.ImageSourceAdded += (sender, eventArgs) => { imageAddedCount++; };
          return;
          List<string> files = new List<string>();
 
@@ -60,19 +60,19 @@
          int imageSourceRemovedCount = 0;
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
 
-         //imageSourceManager.ImageSourceAdded += (sender, eventArgs) =>
-         //{
+         // imageSourceManager.ImageSourceAdded += (sender, eventArgs) =>
+         // {
          //   Assert.IsNull(imageSourceAdded);
          //   imageSourceAdded = eventArgs.ImageSource;
-         //};
+         // };
 
-         //imageSourceManager.ImageSourceRemoved += (sender, eventArgs) =>
-         //{
+         // imageSourceManager.ImageSourceRemoved += (sender, eventArgs) =>
+         // {
          //   Assert.IsNull(imageSourceRemoved);
          //   imageSourceRemoved = eventArgs.ImageSource;
 
-         //   imageSourceRemovedCount++;
-         //};
+         // imageSourceRemovedCount++;
+         // };
          return;
 
          List<string> files = new List<string>

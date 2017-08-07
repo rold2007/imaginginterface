@@ -19,10 +19,9 @@
          this.imageSourceImageViews = new Dictionary<IImageSource, List<IImageView>>();
       }
 
-      //public event EventHandler ActiveImageChanged;
+      // public event EventHandler ActiveImageChanged;
 
-      //public event EventHandler RemoveActiveImageIndex;
-
+      // public event EventHandler RemoveActiveImageIndex;
       public int ActiveImageIndex
       {
          get
@@ -39,14 +38,13 @@
          }
       }
 
-      //public IImageManagerModel ImageManagerModel
+      // public IImageManagerModel ImageManagerModel
       //   {
       //   get
       //      {
       //      return this.imageManagerModel;
       //      }
       //   }
-
       public void AddImage(IImageSource imageSource, IImageView imageView)
       {
          List<IImageView> imageViews;
@@ -62,7 +60,7 @@
 
          this.imageManagerService.AddImage(imageSource);
 
-         //this.TriggerActiveImageIndexChanged();
+         // this.TriggerActiveImageIndexChanged();
       }
 
       public void AddImages(IList<IImageSource> imageSources)
@@ -71,22 +69,20 @@
          {
             this.imageManagerService.AddImage(imageSource);
 
-            //ImageView imageView = this.serviceLocator.GetInstance<ImageView>();
+            // ImageView imageView = this.serviceLocator.GetInstance<ImageView>();
 
-            //imageView.SetImageSource(fileSource);
+            // imageView.SetImageSource(fileSource);
 
-            //this.imageManagerView.AddImageView(imageView);
+            // this.imageManagerView.AddImageView(imageView);
 
-            //this.TriggerImageAdded();
-            //this.TriggerActiveImageIndexChanged();
+            // this.TriggerImageAdded();
+            // this.TriggerActiveImageIndexChanged();
          }
       }
 
       public IList<ImageController> GetAllImages()
       {
          throw new NotImplementedException();
-
-         return null;
          ////return this.imageControllers.Values.ToList();
       }
 
@@ -96,14 +92,13 @@
 
          this.imageManagerService.RemoveActiveImage();
 
-         //this.TriggerRemoveActiveImageIndex();
-
+         // this.TriggerRemoveActiveImageIndex();
          activeImageIndex = Math.Min(activeImageIndex, this.imageManagerService.ImageCount - 1);
 
          // Restore the expected active image index as the removal could have changed it
          this.imageManagerService.ActiveImageIndex = activeImageIndex;
 
-         //this.TriggerActiveImageIndexChanged();
+         // this.TriggerActiveImageIndexChanged();
       }
 
       public void RemoveAllImages()
@@ -122,25 +117,25 @@
          }
       }
 
-      //private void TriggerImageAdded()
-      //{
+      // private void TriggerImageAdded()
+      // {
       //   this.ImageAdded?.Invoke(this, EventArgs.Empty);
-      //}
+      // }
 
-      //private void TriggerActiveImageIndexChanged()
-      //{
+      // private void TriggerActiveImageIndexChanged()
+      // {
       //   if (this.ActiveImageChanged != null)
       //   {
       //      this.ActiveImageChanged(this, EventArgs.Empty);
       //   }
-      //}
+      // }
 
-      //private void TriggerRemoveActiveImageIndex()
-      //{
+      // private void TriggerRemoveActiveImageIndex()
+      // {
       //   if (this.RemoveActiveImageIndex != null)
       //   {
       //      this.RemoveActiveImageIndex(this, EventArgs.Empty);
       //   }
-      //}
+      // }
    }
 }

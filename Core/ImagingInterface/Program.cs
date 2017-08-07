@@ -8,13 +8,13 @@
    using System.Windows.Forms;
    using ImagingInterface.BootStrapper;
    using ImagingInterface.Controllers;
+   using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
    using ImagingInterface.Views;
    using SimpleInjector;
    using SimpleInjector.Diagnostics;
-   using ImagingInterface.Controllers.Interfaces;
 
    public static class Program
    {

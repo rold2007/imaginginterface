@@ -62,7 +62,7 @@
     <Compile Include="IRawPluginModel.cs" />
     <Compile Include="IRawPluginView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\Color.cs" />
+    <Compile Include="Utilities\ColorConversion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -25,9 +25,10 @@
         public void InitializeImageSourceController()
         {
             ImageController imageController = new ImageController();
-            //FileSourceController fileSourceController = this.ServiceLocator.GetInstance<FileSourceController>();
 
-            //imageController.InitializeImageSourceController(fileSourceController);
+            // FileSourceController fileSourceController = this.ServiceLocator.GetInstance<FileSourceController>();
+
+            // imageController.InitializeImageSourceController(fileSourceController);
         }
 
         [Test]

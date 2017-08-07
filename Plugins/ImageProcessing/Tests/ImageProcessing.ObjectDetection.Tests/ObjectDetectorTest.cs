@@ -37,7 +37,7 @@
          {
          using (ObjectDetector objectDetector = new ObjectDetector())
             {
-            byte[, ,] imageData = new byte[100, 100, 1];
+            byte[,,] imageData = new byte[100, 100, 1];
 
             for (int imageIndex = 0; imageIndex < 100; imageIndex++)
                {

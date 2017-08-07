@@ -28,7 +28,6 @@
 
       public void AddImageViewToCurrentImageManagerView(IEnumerable<IImageSource> imageSources)
       {
-
       }
 
       public void ManageNewImageSources(IEnumerable<IImageSource> imageSources)

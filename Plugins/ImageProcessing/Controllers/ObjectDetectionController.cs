@@ -94,7 +94,7 @@
          this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
          }
 
-      public byte[, ,] ProcessImageData(byte[, ,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
          {
          Dictionary<string, List<Point>> predictions = this.objectDetector.Test(imageData);
 

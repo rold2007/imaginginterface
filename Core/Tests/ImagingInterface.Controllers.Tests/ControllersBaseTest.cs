@@ -15,19 +15,19 @@
 
    public abstract class ControllersBaseTest : BaseTest
       {
-      //public Container Container
+      // public Container Container
       //   {
       //   get;
       //   private set;
       //   }
-
       [SetUp]
       protected override void SetUp()
          {
          base.SetUp();
 
-         //this.Bootstrap();
+         // this.Bootstrap();
          }
+
         /*
       private void Bootstrap()
          {

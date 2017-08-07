@@ -16,16 +16,16 @@
       [Test]
       public void Constructor()
          {
-         //PluginOperationController pluginOperationController = this.ServiceLocator.GetInstance<PluginOperationController>();
+         // PluginOperationController pluginOperationController = this.ServiceLocator.GetInstance<PluginOperationController>();
          }
 
       [Test]
       public void PluginCreate()
          {
-         //PluginOperationController pluginOperationController = this.ServiceLocator.GetInstance<PluginOperationController>();
+         // PluginOperationController pluginOperationController = this.ServiceLocator.GetInstance<PluginOperationController>();
          ////PluginOperationsView pluginOperationsView = this.ServiceLocator.GetInstance<IPluginOperationView>() as PluginOperationsView;
-         //IPluginController pluginController1 = this.ServiceLocator.GetInstance<PluginController1>();
-         //IPluginController pluginController2 = this.ServiceLocator.GetInstance<PluginController2>();
+         // IPluginController pluginController1 = this.ServiceLocator.GetInstance<PluginController1>();
+         // IPluginController pluginController2 = this.ServiceLocator.GetInstance<PluginController2>();
          ////PluginManagerView pluginManagerView = this.ServiceLocator.GetInstance<IPluginManagerView>() as PluginManagerView;
 
          ////Assert.AreEqual(0, pluginManagerView.RawPluginViews.Count);

@@ -175,6 +175,7 @@
                // Need to wait for the first display update
                ////this.registeredImageController.DisplayUpdated += this.RegisteredImageController_DisplayUpdated;
                }
+
             ////else
                {
                this.ExtractPoints();
