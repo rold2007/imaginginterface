@@ -405,7 +405,7 @@
          byte[, ,] resultImage = imageSourceController.NextImageData(rawPluginModel);
 
          Debug.Assert(resultImage != null, "The image source controller should always return a valid array.");
-         
+
          return resultImage;
          }
 

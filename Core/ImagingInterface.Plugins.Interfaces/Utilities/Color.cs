@@ -63,7 +63,7 @@
 
          return hsv;
          }
-      
+
       public static double[] HSVToRGB(double[] hsv)
          {
          // Based on http://en.wikipedia.org/wiki/HSL_and_HSV#Converting_to_RGB

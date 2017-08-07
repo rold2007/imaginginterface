@@ -66,7 +66,7 @@
          //   imageSourceAdded = eventArgs.ImageSource;
          //};
 
-         //imageSourceManager.ImageSourceRemoved += (sender, eventArgs) => 
+         //imageSourceManager.ImageSourceRemoved += (sender, eventArgs) =>
          //{
          //   Assert.IsNull(imageSourceRemoved);
          //   imageSourceRemoved = eventArgs.ImageSource;
