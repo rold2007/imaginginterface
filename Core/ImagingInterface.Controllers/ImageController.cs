@@ -114,9 +114,9 @@
          {
             this.imageModel.ImageSource = value;
 
-            this.imageModel.ImageSource.ImageDataUpdated += ImageSource_ImageDataUpdated;
+            this.imageModel.ImageSource.ImageDataUpdated += this.ImageSource_ImageDataUpdated;
 
-            TriggerUpdateDisplay();
+            this.TriggerUpdateDisplay();
          }
       }
 
@@ -244,7 +244,7 @@
 
       private void ImageSource_ImageDataUpdated(object sender, EventArgs e)
       {
-         TriggerUpdateDisplay();
+         this.TriggerUpdateDisplay();
       }
 
       /*

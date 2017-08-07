@@ -131,7 +131,7 @@
       {
          this.UpdatedImageData = updatedImageData;
 
-         TriggerImageDataUpdated();
+         this.TriggerImageDataUpdated();
       }
 
       public void Disconnected()
@@ -170,7 +170,7 @@
 
                this.UpdatedImageData = this.OriginalImageData.Clone() as byte[,,];
 
-               TriggerImageDataUpdated();
+               this.TriggerImageDataUpdated();
             }
             catch (ImageFormatException)
             {
@@ -187,7 +187,7 @@
 
       private void TriggerImageDataUpdated()
       {
-         ImageDataUpdated?.Invoke(this, EventArgs.Empty);
+         this.ImageDataUpdated?.Invoke(this, EventArgs.Empty);
       }
    }
 }
