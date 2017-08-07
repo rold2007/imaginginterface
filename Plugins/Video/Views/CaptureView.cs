@@ -1,4 +1,8 @@
-﻿namespace Video.Views
+﻿// <copyright file="CaptureView.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace Video.Views
 {
    using System;
    using System.Windows.Forms;

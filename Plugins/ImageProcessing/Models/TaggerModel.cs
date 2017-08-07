@@ -1,11 +1,11 @@
-﻿namespace ImageProcessing.Models
-   {
-   using System;
+﻿// <copyright file="TaggerModel.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Models
+{
    using System.Collections.Generic;
    using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
 
    public class TaggerModel : ITaggerModel
       {

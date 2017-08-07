@@ -1,13 +1,11 @@
-﻿namespace ImageProcessing.ObjectDetection
-   {
+﻿// <copyright file="FeatureComputer.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.ObjectDetection
+{
    using System;
-   using System.Collections.Generic;
-   using System.Collections.ObjectModel;
-   using System.Diagnostics;
    using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImagingInterface.Plugins.Utilities;

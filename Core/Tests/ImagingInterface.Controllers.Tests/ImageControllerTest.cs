@@ -1,18 +1,12 @@
-﻿namespace ImagingInterface.Controllers.Tests
-{
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.IO;
-    using Emgu.CV;
-    using Emgu.CV.CvEnum;
-    using ImagingInterface.Models;
-    using ImagingInterface.Plugins;
-    using ImagingInterface.Tests.Common;
-    using ImagingInterface.Tests.Common.Mocks;
-    using Mocks;
-    using NUnit.Framework;
+﻿// <copyright file="ImageControllerTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
 
-    [TestFixture]
+namespace ImagingInterface.Controllers.Tests
+{
+   using NUnit.Framework;
+
+   [TestFixture]
     public class ImageControllerTest : ControllersBaseTest
     {
         [Test]

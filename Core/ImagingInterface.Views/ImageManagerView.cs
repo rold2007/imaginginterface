@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Views
+﻿// <copyright file="ImageManagerView.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Views
 {
    using System;
    using System.Collections.Generic;
@@ -7,7 +11,6 @@
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Plugins;
 
    public partial class ImageManagerView : UserControl
    {

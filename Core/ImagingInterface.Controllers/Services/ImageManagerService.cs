@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Controllers.Services
+﻿// <copyright file="ImageManagerService.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Services
 {
    using System;
    using System.Collections.Generic;

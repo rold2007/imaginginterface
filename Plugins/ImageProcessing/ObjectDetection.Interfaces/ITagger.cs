@@ -1,11 +1,11 @@
-﻿namespace ImageProcessing.ObjectDetection
-   {
-   using System;
+﻿// <copyright file="ITagger.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.ObjectDetection
+{
    using System.Collections.Generic;
    using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
 
    public interface ITagger
       {

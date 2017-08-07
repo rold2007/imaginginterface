@@ -1,11 +1,10 @@
-﻿namespace Video.Views
-   {
+﻿// <copyright file="ICaptureView.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace Video.Views
+{
    using System;
-   using System.Collections.Generic;
-   using System.ComponentModel;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
    public interface ICaptureView : IPluginView

@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Controllers.Tests
+﻿// <copyright file="ApplicationPropertiesServiceTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Tests
 {
    using ImagingInterface.Controllers.Services;
    using NUnit.Framework;

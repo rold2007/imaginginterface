@@ -1,11 +1,10 @@
-﻿namespace ImagingInterface.Controllers.Interfaces
+﻿// <copyright file="IApplicationLogic.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Interfaces
 {
-   using System;
    using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
    public interface IApplicationLogic

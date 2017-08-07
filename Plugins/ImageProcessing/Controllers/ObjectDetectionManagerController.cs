@@ -1,11 +1,11 @@
-﻿namespace ImageProcessing.Controllers
-   {
+﻿// <copyright file="ObjectDetectionManagerController.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers
+{
    using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
 

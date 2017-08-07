@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Plugins.Utilities
+﻿// <copyright file="ColorConversion.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Plugins.Utilities
 {
    using System;
    using System.Diagnostics;

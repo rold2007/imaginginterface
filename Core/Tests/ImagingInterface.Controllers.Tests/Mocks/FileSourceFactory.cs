@@ -1,9 +1,12 @@
-﻿namespace ImagingInterface.Controllers.Tests.Mocks
-{
-    using System;
-    using ImagingInterface.Plugins;
+﻿// <copyright file="FileSourceFactory.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
 
-    public class FileSourceFactory : IFileSourceFactory
+namespace ImagingInterface.Controllers.Tests.Mocks
+{
+   using ImagingInterface.Plugins;
+
+   public class FileSourceFactory : IFileSourceFactory
     {
         public IFileSource CreateNew()
         {

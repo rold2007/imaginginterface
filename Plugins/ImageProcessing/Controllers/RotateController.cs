@@ -1,4 +1,8 @@
-﻿namespace ImageProcessing.Controllers
+﻿// <copyright file="RotateController.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers
 {
    using System;
    using System.ComponentModel;

@@ -1,16 +1,10 @@
-﻿namespace ImagingInterface.Controllers.Tests
-   {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading;
-   using System.Threading.Tasks;
-   using ImagingInterface.Controllers.Tests.Mocks;
-   using ImagingInterface.Models;
-   using ImagingInterface.Plugins;
+﻿// <copyright file="ControllersBaseTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Tests
+{
    using ImagingInterface.Tests.Common;
-   using ImagingInterface.Tests.Common.Mocks;
    using NUnit.Framework;
 
    public abstract class ControllersBaseTest : BaseTest

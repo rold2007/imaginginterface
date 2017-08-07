@@ -1,11 +1,12 @@
-﻿namespace ImageProcessing.ObjectDetection
-   {
+﻿// <copyright file="IObjectDetector.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.ObjectDetection
+{
    using System;
    using System.Collections.Generic;
    using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
 
    public interface IObjectDetector : IDisposable
       {

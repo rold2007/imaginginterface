@@ -1,14 +1,15 @@
-﻿namespace ImagingInterface.Tests.Common
-   {
+﻿// <copyright file="ImageControllerWrapper.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Tests.Common
+{
    using System;
    using System.Collections.Generic;
    using System.Linq;
-   using System.Text;
    using System.Threading;
-   using System.Threading.Tasks;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
-   using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
 
    public class ImageControllerWrapper : IDisposable

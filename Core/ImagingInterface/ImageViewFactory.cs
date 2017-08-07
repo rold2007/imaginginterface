@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface
+﻿// <copyright file="ImageViewFactory.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface
 {
    using System;
    using ImagingInterface.Views;

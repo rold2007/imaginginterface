@@ -1,4 +1,8 @@
-﻿namespace Video.Controllers.Tests.Mocks
+﻿// <copyright file="CaptureWrapperMock.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace Video.Controllers.Tests.Mocks
    {
    using System;
    using Emgu.CV;

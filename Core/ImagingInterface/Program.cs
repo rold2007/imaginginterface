@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface
+﻿// <copyright file="Program.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface
 {
    using System;
    using System.Collections.Generic;

@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Controllers.Views
+﻿// <copyright file="IImageView.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Views
 {
    using ImagingInterface.Plugins;
 

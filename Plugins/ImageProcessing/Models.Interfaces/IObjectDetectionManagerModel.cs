@@ -1,10 +1,9 @@
-﻿namespace ImageProcessing.Models
-   {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
+﻿// <copyright file="IObjectDetectionManagerModel.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Models
+{
    using ImagingInterface.Plugins;
 
    public interface IObjectDetectionManagerModel : IRawPluginModel

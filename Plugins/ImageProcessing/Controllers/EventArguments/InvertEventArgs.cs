@@ -1,10 +1,10 @@
-﻿namespace ImageProcessing.Controllers.EventArguments
-   {
+﻿// <copyright file="InvertEventArgs.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers.EventArguments
+{
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
 
    public class InvertEventArgs : EventArgs
       {

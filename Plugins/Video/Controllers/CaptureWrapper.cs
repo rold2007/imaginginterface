@@ -1,14 +1,12 @@
-﻿namespace Video.Controllers
-   {
+﻿// <copyright file="CaptureWrapper.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace Video.Controllers
+{
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using Emgu.CV;
    using Emgu.CV.CvEnum;
-   using Emgu.CV.Structure;
-   using Emgu.Util;
 
    public class CaptureWrapper : ICaptureWrapper
       {

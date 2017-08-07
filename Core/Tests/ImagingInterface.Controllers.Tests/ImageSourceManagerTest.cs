@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Controllers.Tests
+﻿// <copyright file="ImageSourceManagerTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Tests
 {
    using System;
    using System.Collections.Generic;

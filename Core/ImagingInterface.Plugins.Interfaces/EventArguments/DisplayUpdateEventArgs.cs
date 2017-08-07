@@ -1,10 +1,10 @@
-﻿namespace ImagingInterface.Plugins.EventArguments
-   {
+﻿// <copyright file="DisplayUpdateEventArgs.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Plugins.EventArguments
+{
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
    public class DisplayUpdateEventArgs : EventArgs

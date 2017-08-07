@@ -1,5 +1,9 @@
-﻿namespace ImageProcessing.Controllers
-   {
+﻿// <copyright file="CudafyController.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers
+{
    using System;
    using System.Collections.Generic;
    using System.ComponentModel;
@@ -14,7 +18,6 @@
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Cudafied;
    using ImageProcessing.Models;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
    public class CudafyController : IImageProcessingService, IDisposable

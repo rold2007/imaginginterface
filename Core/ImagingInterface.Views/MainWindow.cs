@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Views
+﻿// <copyright file="MainWindow.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Views
 {
    using System;
    using System.ComponentModel;

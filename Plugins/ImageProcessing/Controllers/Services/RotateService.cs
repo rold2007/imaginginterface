@@ -1,4 +1,8 @@
-﻿namespace ImageProcessing.Controllers.Services
+﻿// <copyright file="RotateService.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers.Services
 {
    using System.Diagnostics;
    using Emgu.CV;
