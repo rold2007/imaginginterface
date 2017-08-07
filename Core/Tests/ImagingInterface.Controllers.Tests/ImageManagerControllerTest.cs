@@ -1,17 +1,11 @@
-﻿namespace ImagingInterface.Controllers.Tests
+﻿// <copyright file="ImageManagerControllerTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Tests
 {
-   using System;
-   using System.Collections.Generic;
-   using System.IO;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Controllers.Tests.Mocks;
-   using ImagingInterface.Models;
-   using ImagingInterface.Plugins;
    using NUnit.Framework;
 
    [TestFixture]

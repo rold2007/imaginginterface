@@ -1,10 +1,11 @@
-﻿namespace Video.Models
+﻿// <copyright file="CaptureModel.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace Video.Models
 {
    using System;
-   using System.Collections.Generic;
    using System.Diagnostics;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImagingInterface.Plugins;
 
    public class CaptureModel : IRawPluginModel, ICloneable ////: ICaptureModel

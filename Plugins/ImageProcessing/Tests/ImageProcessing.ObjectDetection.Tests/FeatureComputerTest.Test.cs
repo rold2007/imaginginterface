@@ -1,14 +1,12 @@
-﻿namespace ImageProcessing.ObjectDetection.Tests
-   {
-   using System;
-   using System.Collections.Generic;
+﻿// <copyright file="FeatureComputerTest.Test.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.ObjectDetection.Tests
+{
    using System.Drawing;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Tests.Common;
-   using ImagingInterface.Tests.Common.Mocks;
    using NUnit.Framework;
 
    [TestFixture]

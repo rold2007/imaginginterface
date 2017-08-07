@@ -1,4 +1,8 @@
-﻿namespace ImageProcessing.Bootstrapper
+﻿// <copyright file="ImageProcessingPackageWindowsForms.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Bootstrapper
 {
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Services;

@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Tests.Common.Mocks
+﻿// <copyright file="ImageSourceController.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Tests.Common.Mocks
 {
    using System;
    using System.ComponentModel;

@@ -1,14 +1,16 @@
-﻿namespace ImageProcessing.Controllers
-   {
+﻿// <copyright file="InvertController.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers
+{
    using System;
    using System.ComponentModel;
    using System.Diagnostics;
-   using System.Drawing;
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
 
    public class InvertController : IImageProcessingService

@@ -1,16 +1,16 @@
-﻿namespace ImageProcessing.ObjectDetection
-   {
+﻿// <copyright file="ObjectDetector.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.ObjectDetection
+{
    using System;
    using System.Collections.Generic;
-   using System.Diagnostics;
    using System.Drawing;
    using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using Accord.MachineLearning.DecisionTrees;
    using Accord.MachineLearning.DecisionTrees.Learning;
    using Accord.Math;
-   using ImageProcessing.ObjectDetection;
 
    public class ObjectDetector : IObjectDetector
       {

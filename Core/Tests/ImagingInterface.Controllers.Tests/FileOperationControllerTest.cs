@@ -1,9 +1,12 @@
-﻿namespace ImagingInterface.Controllers.Tests
+﻿// <copyright file="FileOperationControllerTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Tests
 {
    using System.Collections.Generic;
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Controllers.Tests.Mocks;
-   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using NUnit.Framework;
 

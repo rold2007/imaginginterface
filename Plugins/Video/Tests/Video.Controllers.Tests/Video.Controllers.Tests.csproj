@@ -67,6 +67,7 @@
     <None Include="ControllersBaseTest.cs" />
     <Compile Include="Mocks\CaptureWrapperMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">

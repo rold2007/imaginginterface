@@ -1,10 +1,9 @@
-﻿namespace Video.Bootstrapper
-   {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
+﻿// <copyright file="VideoPackageWindowsForms.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace Video.Bootstrapper
+{
    using ImagingInterface.BootStrapper;
    using SimpleInjector;
    using SimpleInjector.Diagnostics;

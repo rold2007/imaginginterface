@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Controllers
+﻿// <copyright file="AboutBoxController.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers
 {
    using ImagingInterface.Controllers.Services;
 

@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Models
+﻿// <copyright file="ImageModel.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Models
    {
    using System;
    using System.Drawing;

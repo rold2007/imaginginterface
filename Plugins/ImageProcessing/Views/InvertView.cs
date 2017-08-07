@@ -1,4 +1,8 @@
-﻿namespace ImageProcessing.Views
+﻿// <copyright file="InvertView.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Views
 {
    using System;
    using System.Windows.Forms;

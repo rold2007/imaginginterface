@@ -1,4 +1,8 @@
-﻿namespace ImageProcessing.Models
+﻿// <copyright file="CudafyModel.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Models
 {
    public class CudafyModel : ICudafyModel
    {

@@ -1,4 +1,8 @@
-﻿namespace ImagingInterface.Views
+﻿// <copyright file="AboutBoxView.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Views
    {
    using System.Windows.Forms;
    using ImagingInterface.Controllers;

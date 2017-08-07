@@ -1,10 +1,10 @@
-﻿namespace ImagingInterface.Controllers.Tests
-   {
+﻿// <copyright file="ColorTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Tests
+{
    using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
    using ImagingInterface.Plugins.Utilities;
    using NUnit.Framework;
 

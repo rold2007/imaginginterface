@@ -1,10 +1,9 @@
-﻿namespace ImagingInterface.Controllers.Tests.Mocks
-   {
-   using System;
-   using System.Collections.Generic;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
+﻿// <copyright file="PluginModel2.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Tests.Mocks
+{
    using ImagingInterface.Plugins;
 
    public class PluginModel2 : IRawPluginModel

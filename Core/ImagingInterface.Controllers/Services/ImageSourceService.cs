@@ -1,8 +1,11 @@
-﻿namespace ImagingInterface.Controllers.Services
+﻿// <copyright file="ImageSourceService.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImagingInterface.Controllers.Services
 {
    using System;
    using System.Collections.Generic;
-   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
 
    public class ImageSourceService
