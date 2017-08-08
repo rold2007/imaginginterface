@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FeatureComputerTest.Test.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ObjectDetectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

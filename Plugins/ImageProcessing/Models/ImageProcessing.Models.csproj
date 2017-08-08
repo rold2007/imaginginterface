@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CudafyModel.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InvertModel.cs" />
     <Compile Include="ObjectDetectionManagerModel.cs" />
     <Compile Include="ObjectDetectionModel.cs" />

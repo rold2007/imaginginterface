@@ -68,6 +68,7 @@
     <None Include="MemorySourceControllerTest.cs" />
     <None Include="ObjectDetectionControllerTest.cs" />
     <None Include="ObjectDetectionManagerControllerTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="RotateControllerTest.cs" />
     <AdditionalFiles Include="stylecop.json" />

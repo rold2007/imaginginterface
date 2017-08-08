@@ -65,6 +65,7 @@
   <ItemGroup>
     <None Include="CaptureControllerTest.cs" />
     <None Include="ControllersBaseTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Mocks\CaptureWrapperMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <AdditionalFiles Include="stylecop.json" />

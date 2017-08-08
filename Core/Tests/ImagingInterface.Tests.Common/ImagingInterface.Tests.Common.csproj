@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ImageControllerWrapper.cs" />
     <Compile Include="Mocks\ImageSourceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
