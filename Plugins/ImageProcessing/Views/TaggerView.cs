@@ -70,10 +70,10 @@ namespace ImageProcessing.Views
 
             this.imageList.Images.Add(bitmap);
 
-            ListViewItem listViewItem = new ListViewItem(label, imageIndex);
-
-            listViewItem.Name = label;
-
+            ListViewItem listViewItem = new ListViewItem(label, imageIndex)
+            {
+               Name = label
+            };
             this.labelsListView.Items.Add(listViewItem);
 
             imageIndex++;
@@ -94,10 +94,7 @@ namespace ImageProcessing.Views
       {
          this.taggerModel.AddedLabel = this.labelTextBox.Text;
 
-         if (this.LabelAdded != null)
-         {
-            this.LabelAdded(this, EventArgs.Empty);
-         }
+         this.LabelAdded?.Invoke(this, EventArgs.Empty);
 
          this.UpdateLabelList();
       }

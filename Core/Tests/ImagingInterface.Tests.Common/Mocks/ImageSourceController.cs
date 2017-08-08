@@ -79,17 +79,11 @@ namespace ImagingInterface.Tests.Common.Mocks
       {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
-         if (this.Closing != null)
-         {
-            this.Closing(this, cancelEventArgs);
-         }
+         this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
          {
-            if (this.Closed != null)
-            {
-               this.Closed(this, EventArgs.Empty);
-            }
+            this.Closed?.Invoke(this, EventArgs.Empty);
          }
       }
 

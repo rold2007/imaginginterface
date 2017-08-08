@@ -45,10 +45,7 @@ namespace ImageProcessing.Views
 
       private void InvertCheckBox_CheckedChanged(object sender, EventArgs e)
       {
-         if (this.Invert != null)
-         {
-            this.Invert(this, new InvertEventArgs(this.InvertCheckBox.Checked));
-         }
+         this.Invert?.Invoke(this, new InvertEventArgs(this.InvertCheckBox.Checked));
       }
    }
 }

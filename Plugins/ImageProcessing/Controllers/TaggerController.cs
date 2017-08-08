@@ -80,10 +80,7 @@ namespace ImageProcessing.Controllers
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
-         if (this.Closing != null)
-            {
-            this.Closing(this, cancelEventArgs);
-            }
+         this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
             {
@@ -97,11 +94,8 @@ namespace ImageProcessing.Controllers
 
             ////this.taggerView.Close();
 
-            if (this.Closed != null)
-               {
-               this.Closed(this, EventArgs.Empty);
-               }
-            }
+            this.Closed?.Invoke(this, EventArgs.Empty);
+         }
          }
 
       public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
@@ -252,10 +246,10 @@ namespace ImageProcessing.Controllers
          if (this.TagPointChanged != null)
             {
             Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
-            List<Point> points = new List<Point>();
-
-            points.Add(tagPoint);
-
+            List<Point> points = new List<Point>
+            {
+               tagPoint
+            };
             tagPoints.Add(label, points);
 
             this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController, label, tagPoint, added));

@@ -73,10 +73,7 @@ namespace ImageProcessing.Controllers
          {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
-         if (this.Closing != null)
-            {
-            this.Closing(this, cancelEventArgs);
-            }
+         this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
             {
@@ -87,11 +84,8 @@ namespace ImageProcessing.Controllers
             this.taggerController.Close();
             this.objectDetectionController.Close();
 
-            if (this.Closed != null)
-               {
-               this.Closed(this, EventArgs.Empty);
-               }
-            }
+            this.Closed?.Invoke(this, EventArgs.Empty);
+         }
          }
       }
    }
