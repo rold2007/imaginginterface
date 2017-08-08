@@ -23,29 +23,20 @@ namespace ImagingInterface.Controllers.Tests
       [Test]
       public void AddImageFiles()
       {
-         int imageAddedCount = 0;
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
 
-         // imageSourceManager.ImageSourceAdded += (sender, eventArgs) => { imageAddedCount++; };
-         return;
          List<string> files = new List<string>();
 
          imageSourceManager.AddImageFiles(files);
-
-         Assert.AreEqual(0, imageAddedCount);
 
          files.Add("ValidFile");
 
          imageSourceManager.AddImageFiles(files);
 
-         Assert.AreEqual(1, imageAddedCount);
-
          // Invalid file
          files.Add("dummy");
 
          imageSourceManager.AddImageFiles(files);
-
-         Assert.AreEqual(2, imageAddedCount);
       }
 
       [Test]
@@ -59,41 +50,19 @@ namespace ImagingInterface.Controllers.Tests
       [Test]
       public void RemoveImageSource()
       {
-         IImageSource imageSourceAdded = null;
-         IImageSource imageSourceRemoved = null;
-         int imageSourceRemovedCount = 0;
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
-
-         // imageSourceManager.ImageSourceAdded += (sender, eventArgs) =>
-         // {
-         //   Assert.IsNull(imageSourceAdded);
-         //   imageSourceAdded = eventArgs.ImageSource;
-         // };
-
-         // imageSourceManager.ImageSourceRemoved += (sender, eventArgs) =>
-         // {
-         //   Assert.IsNull(imageSourceRemoved);
-         //   imageSourceRemoved = eventArgs.ImageSource;
-
-         // imageSourceRemovedCount++;
-         // };
-         return;
 
          List<string> files = new List<string>
             {
                 "ValidFile"
             };
 
-         imageSourceManager.AddImageFiles(files);
+         IEnumerable<IImageSource> imageSources = imageSourceManager.AddImageFiles(files);
 
-         Assert.IsNotNull(imageSourceAdded);
-         Assert.AreEqual(0, imageSourceRemovedCount);
-
-         imageSourceManager.RemoveImageSource(imageSourceAdded);
-
-         Assert.IsNotNull(imageSourceRemoved);
-         Assert.AreSame(imageSourceAdded, imageSourceRemoved);
-         Assert.AreEqual(1, imageSourceRemovedCount);
+         foreach (IImageSource imageSource in imageSources)
+         {
+            imageSourceManager.RemoveImageSource(imageSource);
+         }
       }
 
       [Test]

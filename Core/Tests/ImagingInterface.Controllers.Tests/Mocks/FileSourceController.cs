@@ -120,5 +120,10 @@ namespace ImagingInterface.Controllers.Tests.Mocks
       public void UpdateImageData(byte[,,] updatedImageData)
       {
       }
+
+      private void TriggerImageDataUpdated()
+      {
+         this.ImageDataUpdated?.Invoke(this, EventArgs.Empty);
+      }
    }
 }
