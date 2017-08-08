@@ -65,6 +65,7 @@
     <Compile Include="ColorTest.cs" />
     <Compile Include="ControllersBaseTest.cs" />
     <Compile Include="FileOperationControllerTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ImageControllerTest.cs" />
     <Compile Include="ImageManagerControllerTest.cs" />
     <Compile Include="ImageSourceManagerTest.cs" />

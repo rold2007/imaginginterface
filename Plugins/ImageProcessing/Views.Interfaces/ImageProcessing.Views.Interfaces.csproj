@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ICudafyView.cs" />
     <Compile Include="IObjectDetectionManagerView.cs" />
     <Compile Include="IObjectDetectionView.cs" />

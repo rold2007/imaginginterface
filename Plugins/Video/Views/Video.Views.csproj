@@ -55,6 +55,7 @@
     <Compile Include="CaptureView.Designer.cs">
       <DependentUpon>CaptureView.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

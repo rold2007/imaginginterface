@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="EventArguments\DisplayUpdateEventArgs.cs" />
     <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IFileSource.cs" />
     <Compile Include="IFileSourceFactory.cs" />
     <Compile Include="IImageProcessingService.cs" />

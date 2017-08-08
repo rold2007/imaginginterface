@@ -55,6 +55,7 @@
     <Compile Include="CudafyView.Designer.cs">
       <DependentUpon>CudafyView.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ObjectDetectionManagerView.cs">
       <SubType>UserControl</SubType>
     </Compile>
