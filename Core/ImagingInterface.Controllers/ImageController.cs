@@ -156,10 +156,7 @@ namespace ImagingInterface.Controllers
       {
          this.imageModel.ZoomLevel = zoomLevel;
 
-         if (this.ZoomLevelUpdated != null)
-         {
-            this.ZoomLevelUpdated(this, EventArgs.Empty);
-         }
+         this.ZoomLevelUpdated?.Invoke(this, EventArgs.Empty);
       }
 
       public void Close()

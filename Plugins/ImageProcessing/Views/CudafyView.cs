@@ -250,10 +250,7 @@ namespace ImageProcessing.Views
 
          this.addTextBox.Text = add.ToString();
 
-         if (this.Add != null)
-         {
-            this.Add(this, new CudafyAddEventArgs(add));
-         }
+         this.Add?.Invoke(this, new CudafyAddEventArgs(add));
       }
 
       private void ShowBenchmarkAddCudafy(float benchmark)
@@ -299,34 +296,22 @@ namespace ImageProcessing.Views
 
       private void BlockSizeXNumericUpDown_ValueChanged(object sender, EventArgs e)
       {
-         if (this.BlockSizeXChanged != null)
-         {
-            this.BlockSizeXChanged(this, EventArgs.Empty);
-         }
+         this.BlockSizeXChanged?.Invoke(this, EventArgs.Empty);
       }
 
       private void BlockSizeYNumericUpDown_ValueChanged(object sender, EventArgs e)
       {
-         if (this.BlockSizeYChanged != null)
-         {
-            this.BlockSizeYChanged(this, EventArgs.Empty);
-         }
+         this.BlockSizeYChanged?.Invoke(this, EventArgs.Empty);
       }
 
       private void GridSizeNumericUpDown_ValueChanged(object sender, EventArgs e)
       {
-         if (this.GridSizeChanged != null)
-         {
-            this.GridSizeChanged(this, new CudafyGridSizeChangedEventArgs(this.GridSizeX, this.GridSizeY, this.GridSizeZ));
-         }
+         this.GridSizeChanged?.Invoke(this, new CudafyGridSizeChangedEventArgs(this.GridSizeX, this.GridSizeY, this.GridSizeZ));
       }
 
       private void GPUComboBox_SelectedIndexChanged(object sender, EventArgs e)
       {
-         if (this.GPUChanged != null)
-         {
-            this.GPUChanged(this, new CudafyGPUChangedEventArgs(this.gpuComboBox.SelectedItem.ToString()));
-         }
+         this.GPUChanged?.Invoke(this, new CudafyGPUChangedEventArgs(this.gpuComboBox.SelectedItem.ToString()));
       }
    }
 }

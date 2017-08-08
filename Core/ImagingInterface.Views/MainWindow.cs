@@ -65,9 +65,10 @@ namespace ImagingInterface.Views
 
       private void AddPlugin(string name)
       {
-         ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(name);
-
-         toolStripMenuItem.Name = name;
+         ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(name)
+         {
+            Name = name
+         };
          toolStripMenuItem.Click += this.PluginClick;
 
          this.pluginsToolStripMenuItem.DropDownItems.Add(toolStripMenuItem);

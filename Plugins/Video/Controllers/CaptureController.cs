@@ -87,19 +87,13 @@ namespace Video.Controllers
       {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
-         if (this.Closing != null)
-         {
-            this.Closing(this, cancelEventArgs);
-         }
+         this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
          {
             Debug.Assert(this.grabbingLive == false, "The grab live should have been stopped by the image controller.");
 
-            if (this.Closed != null)
-            {
-               this.Closed(this, EventArgs.Empty);
-            }
+            this.Closed?.Invoke(this, EventArgs.Empty);
 
             if (this.liveGrabImageController != null)
             {

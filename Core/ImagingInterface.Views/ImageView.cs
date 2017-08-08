@@ -199,11 +199,8 @@ namespace ImagingInterface.Views
 
       private void PrepareView()
          {
-         if (this.PrepareViewNeeded != null)
-            {
-            this.PrepareViewNeeded(this, EventArgs.Empty);
-            }
-         }
+         this.PrepareViewNeeded?.Invoke(this, EventArgs.Empty);
+      }
 
       private void ImageView_PrepareViewNeeded(object sender, EventArgs e)
          {
@@ -228,11 +225,8 @@ namespace ImagingInterface.Views
 
       private void AdjustScrollBars()
          {
-         if (this.AdjustScrollBarsNeeded != null)
-            {
-            this.AdjustScrollBarsNeeded(this, EventArgs.Empty);
-            }
-         }
+         this.AdjustScrollBarsNeeded?.Invoke(this, EventArgs.Empty);
+      }
 
       private void ImageView_AdjustScrollBarsNeeded(object sender, EventArgs e)
          {
@@ -318,11 +312,8 @@ namespace ImagingInterface.Views
 
       private void AllocateTextures()
          {
-         if (this.AllocateTexturesNeeded != null)
-            {
-            this.AllocateTexturesNeeded(this, EventArgs.Empty);
-            }
-         }
+         this.AllocateTexturesNeeded?.Invoke(this, EventArgs.Empty);
+      }
 
       private void ImageView_AllocateTexturesNeeded(object sender, EventArgs e)
          {
@@ -390,11 +381,8 @@ namespace ImagingInterface.Views
 
       private void ForceGLControlPaint()
          {
-         if (this.GLControlPaintNeeded != null)
-            {
-            this.GLControlPaintNeeded(this, null);
-            }
-         }
+         this.GLControlPaintNeeded?.Invoke(this, null);
+      }
 
       private void GLControl_Paint(object sender, PaintEventArgs e)
          {
@@ -591,11 +579,8 @@ namespace ImagingInterface.Views
                }
             else
                {
-               if (this.SelectionChanged != null)
-                  {
-                  this.SelectionChanged(this, new SelectionChangedEventArgs(mouseClickPixel, true));
-                  }
-               }
+               this.SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(mouseClickPixel, true));
+            }
             }
          else if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
@@ -611,11 +596,8 @@ namespace ImagingInterface.Views
             }
          else
             {
-            if (this.SelectionChanged != null)
-               {
-               this.SelectionChanged(this, new SelectionChangedEventArgs(mouseClickPixel, false));
-               }
-            }
+            this.SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(mouseClickPixel, false));
+         }
          }
 
       private Point GetPointPositionInImage(int mouseX, int mouseY)
