@@ -19,9 +19,6 @@ namespace ImagingInterface.Controllers.Services
          this.fileSourceFactory = fileSourceFactory;
       }
 
-      // public event EventHandler<ImageSourceAddedEventArgs> ImageSourceAdded;
-
-      // public event EventHandler<ImageSourceRemovedEventArgs> ImageSourceRemoved;
       private List<IImageSource> ImageSources
       {
          get;
