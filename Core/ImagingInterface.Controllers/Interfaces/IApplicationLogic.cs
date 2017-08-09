@@ -5,10 +5,13 @@
 namespace ImagingInterface.Controllers.Interfaces
 {
    using System.Collections.Generic;
+   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
 
    public interface IApplicationLogic
    {
       void ManageNewImageSources(IEnumerable<IImageSource> imageSources);
+
+      void RemoveImage(IImageView imageView);
    }
 }

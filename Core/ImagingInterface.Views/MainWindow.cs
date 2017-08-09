@@ -161,17 +161,15 @@ namespace ImagingInterface.Views
          {
             ImageView imageView = this.imageManagerView.ActiveImageView;
 
-            this.fileOperationController.CloseFile(imageView.ImageSource);
+            this.fileOperationController.CloseFile(imageView);
          }
       }
 
       private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
       {
-         while (this.imageManagerView.HasActiveImageView)
+         foreach (ImageView imageView in this.imageManagerView.ImageViews)
          {
-            ImageView imageView = this.imageManagerView.ActiveImageView;
-
-            this.fileOperationController.CloseFile(imageView.ImageSource);
+            this.fileOperationController.CloseFile(imageView);
          }
       }
 

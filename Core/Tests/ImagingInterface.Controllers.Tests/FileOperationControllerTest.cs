@@ -18,9 +18,10 @@ namespace ImagingInterface.Controllers.Tests
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();
          ImageSourceService imageSourceManager = new ImageSourceService(fileSourceFactory);
+         FileOperationService fileOperationService = new FileOperationService(imageSourceManager);
          ApplicationLogic applicationLogic = new ApplicationLogic();
 
-         FileOperationController fileOperationController = new FileOperationController(imageSourceManager, applicationLogic);
+         FileOperationController fileOperationController = new FileOperationController(fileOperationService, applicationLogic);
       }
 
       [Test]
@@ -28,9 +29,10 @@ namespace ImagingInterface.Controllers.Tests
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();
          ImageSourceService imageSourceManager = new ImageSourceService(fileSourceFactory);
+         FileOperationService fileOperationService = new FileOperationService(imageSourceManager);
          ApplicationLogic applicationLogic = new ApplicationLogic();
 
-         FileOperationController fileOperationController = new FileOperationController(imageSourceManager, applicationLogic);
+         FileOperationController fileOperationController = new FileOperationController(fileOperationService, applicationLogic);
 
          string[] files = new string[3] { "ValidFile", "InvalidFile", "ValidFile" };
 
@@ -85,9 +87,10 @@ namespace ImagingInterface.Controllers.Tests
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();
          ImageSourceService imageSourceManager = new ImageSourceService(fileSourceFactory);
+         FileOperationService fileOperationService = new FileOperationService(imageSourceManager);
          ApplicationLogic applicationLogic = new ApplicationLogic();
 
-         FileOperationController fileOperationController = new FileOperationController(imageSourceManager, applicationLogic);
+         FileOperationController fileOperationController = new FileOperationController(fileOperationService, applicationLogic);
 
          string[] files = new string[1] { "ValidFile" };
          List<IFileSource> imageSourceControllers = new List<IFileSource>();
@@ -108,9 +111,10 @@ namespace ImagingInterface.Controllers.Tests
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();
          ImageSourceService imageSourceManager = new ImageSourceService(fileSourceFactory);
+         FileOperationService fileOperationService = new FileOperationService(imageSourceManager);
          ApplicationLogic applicationLogic = new ApplicationLogic();
 
-         FileOperationController fileOperationController = new FileOperationController(imageSourceManager, applicationLogic);
+         FileOperationController fileOperationController = new FileOperationController(fileOperationService, applicationLogic);
 
          string[] files = new string[1] { "ValidFile" };
 

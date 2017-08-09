@@ -7,16 +7,17 @@ namespace ImagingInterface.Controllers
    using System.Collections.Generic;
    using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Services;
+   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
 
    public class FileOperationController
    {
-      private ImageSourceService imageSourceService;
+      private FileOperationService fileOperationService;
       private IApplicationLogic applicationLogic;
 
-      public FileOperationController(ImageSourceService imageSourceService, IApplicationLogic applicationLogic)
+      public FileOperationController(FileOperationService fileOperationService, IApplicationLogic applicationLogic)
       {
-         this.imageSourceService = imageSourceService;
+         this.fileOperationService = fileOperationService;
          this.applicationLogic = applicationLogic;
       }
 
@@ -24,17 +25,19 @@ namespace ImagingInterface.Controllers
       {
          if (files != null)
          {
-            IEnumerable<IImageSource> imageSources = this.imageSourceService.AddImageFiles(files);
+            IEnumerable<IImageSource> imageSources = this.fileOperationService.AddImages(files);
 
             this.applicationLogic.ManageNewImageSources(imageSources);
          }
       }
 
-      public void CloseFile(IImageSource imageSource)
+      public void CloseFile(IImageView imageView)
       {
-         if (imageSource != null)
+         if (imageView != null)
          {
-            this.imageSourceService.RemoveImageSource(imageSource);
+            this.applicationLogic.RemoveImage(imageView);
+
+            this.fileOperationService.RemoveImage(imageView.ImageSource);
          }
       }
 

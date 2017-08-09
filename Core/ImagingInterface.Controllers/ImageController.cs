@@ -7,12 +7,15 @@ namespace ImagingInterface.Controllers
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
+   using ImagingInterface.Controllers.Services;
    using ImagingInterface.Models;
    using ImagingInterface.Models.Interfaces;
    using ImagingInterface.Plugins;
 
    public class ImageController
    {
+      private ImageService imageService;
+
       private ImageModel imageModel = new ImageModel();
 
       // private bool closing;
@@ -29,8 +32,10 @@ namespace ImagingInterface.Controllers
       private Dictionary<IPluginController, int> asyncPluginControllers;
       private HashSet<IPluginController> closingPluginControllers;
 
-      public ImageController()
+      public ImageController(ImageService imageService)
       {
+         this.imageService = imageService;
+
          this.imageProcessingControllers = new List<Tuple<IImageProcessingService, IRawPluginModel>>();
 
          // this.lastFetchNextImageFromSourceTask = null;

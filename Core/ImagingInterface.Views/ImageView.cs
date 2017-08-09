@@ -129,6 +129,8 @@ namespace ImagingInterface.Views
          {
          this.FreeTextures();
 
+         this.imageController.Close();
+
          this.Dispose();
          }
 
