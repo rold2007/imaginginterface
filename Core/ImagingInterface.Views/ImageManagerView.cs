@@ -11,6 +11,7 @@ namespace ImagingInterface.Views
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
+   using ImagingInterface.Controllers.Views;
 
    public partial class ImageManagerView : UserControl
    {
@@ -58,6 +59,14 @@ namespace ImagingInterface.Views
          }
       }
 
+      public IEnumerable<ImageView> ImageViews
+      {
+         get
+         {
+            return this.ImageViews;
+         }
+      }
+
       public void AddImageView(ImageView imageView)
       {
          // ImageView imageView = new ImageView();
@@ -65,6 +74,18 @@ namespace ImagingInterface.Views
 
          // this.imageManagerController.AddImage();
          System.Diagnostics.Debug.Fail("Not done yet.");
+      }
+
+      public void RemoveImageView(ImageView imageView)
+      {
+         using (TabPage tabPage = this.imageViewTabPage[imageView])
+         using (ToolTip toolTip = this.imageViewToolTip[imageView])
+         {
+            this.imagesTabControl.Controls.Remove(tabPage);
+            this.imageViews.Remove(imageView);
+            this.imageViewTabPage.Remove(imageView);
+            this.imageViewToolTip.Remove(imageView);
+         }
       }
 
       ////public ImageView GetActiveImageView()

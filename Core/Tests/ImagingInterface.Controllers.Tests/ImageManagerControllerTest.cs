@@ -14,18 +14,14 @@ namespace ImagingInterface.Controllers.Tests
       [Test]
       public void Constructor()
       {
-         FileSourceFactory fileSourceFactory = new FileSourceFactory();
-         ImageSourceService imageSourceService = new ImageSourceService(fileSourceFactory);
-         ImageManagerService imageManagerService = new ImageManagerService(imageSourceService);
+         ImageManagerService imageManagerService = new ImageManagerService();
          ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerService);
       }
 
       [Test]
       public void Constructor2()
       {
-         FileSourceFactory fileSourceFactory = new FileSourceFactory();
-         ImageSourceService imageSourceService = new ImageSourceService(fileSourceFactory);
-         ImageManagerService imageManagerService = new ImageManagerService(imageSourceService);
+         ImageManagerService imageManagerService = new ImageManagerService();
          ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerService);
 
          // IImageSource imageSource1 = this.ServiceLocator.GetInstance<IImageSource>();

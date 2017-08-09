@@ -4,443 +4,447 @@
 
 namespace ImagingInterface.Controllers.Tests
 {
+   using ImagingInterface.Controllers.Services;
    using NUnit.Framework;
 
    [TestFixture]
-    public class ImageControllerTest : ControllersBaseTest
-    {
-        [Test]
-        public void Constructor()
-        {
-            ImageController imageController = new ImageController();
-        }
+   public class ImageControllerTest : ControllersBaseTest
+   {
+      [Test]
+      public void Constructor()
+      {
+         ImageService imageService = new ImageService();
+         ImageController imageController = new ImageController(imageService);
+      }
 
-        [Test]
-        public void InitializeImageSourceController()
-        {
-            ImageController imageController = new ImageController();
+      [Test]
+      public void InitializeImageSourceController()
+      {
+         ImageService imageService = new ImageService();
+         ImageController imageController = new ImageController(imageService);
 
-            // FileSourceController fileSourceController = this.ServiceLocator.GetInstance<FileSourceController>();
+         // FileSourceController fileSourceController = this.ServiceLocator.GetInstance<FileSourceController>();
 
-            // imageController.InitializeImageSourceController(fileSourceController);
-        }
+         // imageController.InitializeImageSourceController(fileSourceController);
+      }
 
-        [Test]
-        public void Close()
-        {
-            ImageController imageController = new ImageController();
+      [Test]
+      public void Close()
+      {
+         ImageService imageService = new ImageService();
+         ImageController imageController = new ImageController(imageService);
+
+         imageController.Close();
+      }
+
+      [Test]
+      public void FullPath()
+      {
+         ////ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+
+         ////Assert.IsNull(imageController.DisplayName);
+      }
+
+      /*
+      [Test]
+      public void LoadFile()
+         {
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
+
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+         string tempFileName = string.Empty;
+
+         try
+            {
+            tempFileName = Path.GetRandomFileName() + ".png";
+
+            using (UMat image = new UMat(1, 1, DepthType.Cv8U, 1))
+               {
+               image.Save(tempFileName);
+
+               Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
+               Assert.IsNull(imageModel.DisplayImageData);
+
+               ImageController imageController = this.Container.GetInstance<ImageController>();
+               IFileSourceController fileSourceController = this.Container.GetInstance<IFileSourceController>();
+
+               fileSourceController.Filename = tempFileName;
+               imageController.SetDisplayName(tempFileName);
+
+               using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+                  {
+                  imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
+
+                  imageControllerWrapper.WaitForDisplayUpdate();
+
+                  Assert.That(imageModel.DisplayName, Is.Not.Null.Or.Empty);
+                  Assert.IsNotNull(imageModel.DisplayImageData);
+                  ////Assert.AreSame(imageModel, imageView.AssignedImageModel);
+
+                  imageController.Close();
+
+                  imageControllerWrapper.WaitForClosed();
+
+                  // imageModel.DisplayImageData is set to null when imageController is closed
+                  Assert.IsNull(imageModel.DisplayImageData);
+                  }
+               }
+            }
+         finally
+            {
+            if (!string.IsNullOrEmpty(tempFileName))
+               {
+               File.Delete(tempFileName);
+               }
+            }
+         }
+
+      [Test]
+      public void LoadFileInvalid()
+         {
+         ////ImageView imageView = new ImageView();
+         ImageModel imageModel = new ImageModel();
+         string tempFileName = string.Empty;
+
+         try
+            {
+            tempFileName = Path.GetTempFileName();
+
+            Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
+            Assert.IsNull(imageModel.DisplayImageData);
+
+            ImageController imageController = this.Container.GetInstance<ImageController>();
+            IFileSourceController fileSourceController = this.Container.GetInstance<IFileSourceController>();
+
+            fileSourceController.Filename = tempFileName;
+
+            imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
+
+            Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
+            Assert.IsNull(imageModel.DisplayImageData);
+            ////Assert.IsNull(imageView.AssignedImageModel);
+            }
+         finally
+            {
+            if (!string.IsNullOrEmpty(tempFileName))
+               {
+               File.Delete(tempFileName);
+               }
+            }
+         }
+
+      [Test]
+      public void StartLiveUpdate()
+         {
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
+
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+         ImageController imageController = this.Container.GetInstance<ImageController>();
+
+         ////Assert.IsNotNull(imageView.AssignedImageModel);
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
+
+         ////Assert.IsNotNull(imageView.AssignedImageModel);
+         ////Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+         }
+
+      [Test]
+      public void IsGrayscale()
+         {
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageSourceController, ImageSourceController>();
+
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+         ImageController imageController = this.Container.GetInstance<ImageController>();
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+
+            Assert.IsTrue(imageModel.IsGrayscale);
+            }
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageSourceController.ImageData = new byte[1, 1, 3];
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+
+            Assert.IsFalse(imageModel.IsGrayscale);
+            }
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageSourceController.ImageData = new byte[1, 1, 4];
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+
+            Assert.IsFalse(imageModel.IsGrayscale);
+            }
+         }
+
+      [Test]
+      public void CloseWhileStartLiveUpdate()
+         {
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
+
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
+         ImageController imageController = this.Container.GetInstance<ImageController>();
+
+         ////Assert.IsNotNull(imageView.AssignedImageModel);
+
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+            imageControllerWrapper.WaitForDisplayUpdate();
+
+            ////Assert.IsNotNull(imageView.AssignedImageModel);
+            ////Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+
+            imageController.Closing += this.ImageController_Closing;
 
             imageController.Close();
-        }
-
-        [Test]
-        public void FullPath()
-        {
-            ////ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-
-            ////Assert.IsNull(imageController.DisplayName);
-        }
-
-        /*
-        [Test]
-        public void LoadFile()
-           {
-           ////this.Container.RegisterSingleton<IImageView, ImageView>();
-           this.Container.RegisterSingleton<IImageModel, ImageModel>();
-
-           ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
-           IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
-           string tempFileName = string.Empty;
-
-           try
-              {
-              tempFileName = Path.GetRandomFileName() + ".png";
-
-              using (UMat image = new UMat(1, 1, DepthType.Cv8U, 1))
-                 {
-                 image.Save(tempFileName);
-
-                 Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
-                 Assert.IsNull(imageModel.DisplayImageData);
-
-                 ImageController imageController = this.Container.GetInstance<ImageController>();
-                 IFileSourceController fileSourceController = this.Container.GetInstance<IFileSourceController>();
-
-                 fileSourceController.Filename = tempFileName;
-                 imageController.SetDisplayName(tempFileName);
-
-                 using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-                    {
-                    imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
-
-                    imageControllerWrapper.WaitForDisplayUpdate();
-
-                    Assert.That(imageModel.DisplayName, Is.Not.Null.Or.Empty);
-                    Assert.IsNotNull(imageModel.DisplayImageData);
-                    ////Assert.AreSame(imageModel, imageView.AssignedImageModel);
-
-                    imageController.Close();
-
-                    imageControllerWrapper.WaitForClosed();
-
-                    // imageModel.DisplayImageData is set to null when imageController is closed
-                    Assert.IsNull(imageModel.DisplayImageData);
-                    }
-                 }
-              }
-           finally
-              {
-              if (!string.IsNullOrEmpty(tempFileName))
-                 {
-                 File.Delete(tempFileName);
-                 }
-              }
-           }
-
-        [Test]
-        public void LoadFileInvalid()
-           {
-           ////ImageView imageView = new ImageView();
-           ImageModel imageModel = new ImageModel();
-           string tempFileName = string.Empty;
-
-           try
-              {
-              tempFileName = Path.GetTempFileName();
-
-              Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
-              Assert.IsNull(imageModel.DisplayImageData);
-
-              ImageController imageController = this.Container.GetInstance<ImageController>();
-              IFileSourceController fileSourceController = this.Container.GetInstance<IFileSourceController>();
-
-              fileSourceController.Filename = tempFileName;
-
-              imageController.InitializeImageSourceController(fileSourceController, fileSourceController.RawPluginModel);
-
-              Assert.That(imageModel.DisplayName, Is.Null.Or.Empty);
-              Assert.IsNull(imageModel.DisplayImageData);
-              ////Assert.IsNull(imageView.AssignedImageModel);
-              }
-           finally
-              {
-              if (!string.IsNullOrEmpty(tempFileName))
-                 {
-                 File.Delete(tempFileName);
-                 }
-              }
-           }
 
-        [Test]
-        public void StartLiveUpdate()
-           {
-           ////this.Container.RegisterSingleton<IImageView, ImageView>();
-           this.Container.RegisterSingleton<IImageModel, ImageModel>();
+            imageController.Closing -= this.ImageController_Closing;
 
-           ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
-           IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
-           ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-           ImageController imageController = this.Container.GetInstance<ImageController>();
+            imageController.Close();
 
-           ////Assert.IsNotNull(imageView.AssignedImageModel);
+            imageControllerWrapper.WaitForClosed();
+            }
+         }
 
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+      [Test]
+      public void UpdatePeriod()
+         {
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-              imageControllerWrapper.WaitForDisplayUpdate();
-              }
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
 
-           ////Assert.IsNotNull(imageView.AssignedImageModel);
-           ////Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
-           }
+         ////imageView.UpdateFrequency = 30;
 
-        [Test]
-        public void IsGrayscale()
-           {
-           this.Container.RegisterSingleton<IImageModel, ImageModel>();
-           ////this.Container.RegisterSingleton<IImageView, ImageView>();
-           this.Container.RegisterSingleton<IImageSourceController, ImageSourceController>();
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+         ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
 
-           ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-           ImageController imageController = this.Container.GetInstance<ImageController>();
-           IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
 
-              imageControllerWrapper.WaitForDisplayUpdate();
+         ////Thread.Sleep(Convert.ToInt32(2 * 1000 / imageView.UpdateFrequency));
 
-              Assert.IsTrue(imageModel.IsGrayscale);
-              }
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageSourceController.ImageData = new byte[1, 1, 3];
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
 
-              imageControllerWrapper.WaitForDisplayUpdate();
+         imageSourceController.ImageData = new byte[1, 1, 1];
+         ////imageView.UpdateFrequency = double.Epsilon;
+         imageController = this.ServiceLocator.GetInstance<ImageController>();
 
-              Assert.IsFalse(imageModel.IsGrayscale);
-              }
+         // Let the UpdateDisplayImageData() skip a frame
+         using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+            {
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageSourceController.ImageData = new byte[1, 1, 4];
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+            imageControllerWrapper.WaitForDisplayUpdate();
+            }
+         }
 
-              imageControllerWrapper.WaitForDisplayUpdate();
+      [Test]
+      public void ImageModelSize()
+         {
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
 
-              Assert.IsFalse(imageModel.IsGrayscale);
-              }
-           }
+         imageModel.DisplayImageData = new byte[42, 54, 1];
 
-        [Test]
-        public void CloseWhileStartLiveUpdate()
-           {
-           ////this.Container.RegisterSingleton<IImageView, ImageView>();
-           this.Container.RegisterSingleton<IImageModel, ImageModel>();
+         Assert.AreEqual(42, imageModel.Size.Height);
+         Assert.AreEqual(54, imageModel.Size.Width);
+         }
 
-           ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
-           IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
-           ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-           ImageController imageController = this.Container.GetInstance<ImageController>();
+      [Test]
+      public void ZoomLevel()
+         {
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-           ////Assert.IsNotNull(imageView.AssignedImageModel);
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
 
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         Assert.AreEqual(1, imageModel.ZoomLevel);
 
-              imageControllerWrapper.WaitForDisplayUpdate();
+         ////imageView.TriggerZoomLevelIncreased();
 
-              ////Assert.IsNotNull(imageView.AssignedImageModel);
-              ////Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
+         Assert.AreEqual(2.0, imageModel.ZoomLevel);
 
-              imageController.Closing += this.ImageController_Closing;
+         ////imageView.TriggerZoomLevelDecreased();
 
-              imageController.Close();
+         Assert.AreEqual(1.0, imageModel.ZoomLevel);
 
-              imageController.Closing -= this.ImageController_Closing;
+         ////imageView.TriggerZoomLevelDecreased();
 
-              imageController.Close();
+         Assert.AreEqual(0.5, imageModel.ZoomLevel);
+         }
 
-              imageControllerWrapper.WaitForClosed();
-              }
-           }
+      [Test]
+      public void PixelView()
+         {
+         ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         this.Container.RegisterSingleton<IImageModel, ImageModel>();
 
-        [Test]
-        public void UpdatePeriod()
-           {
-           ////this.Container.RegisterSingleton<IImageView, ImageView>();
-           this.Container.RegisterSingleton<IImageModel, ImageModel>();
+         ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+         IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
+         Point pixelPosition = new Point();
 
-           ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
+         imageModel.DisplayImageData = new byte[2, 2, 1];
 
-           ////imageView.UpdateFrequency = 30;
-
-           ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-           ImageSourceController imageSourceController = this.Container.GetInstance<IImageSourceController>() as ImageSourceController;
-
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
-
-              imageControllerWrapper.WaitForDisplayUpdate();
-              }
-
-           ////Thread.Sleep(Convert.ToInt32(2 * 1000 / imageView.UpdateFrequency));
-
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
-
-              imageControllerWrapper.WaitForDisplayUpdate();
-              }
-
-           imageSourceController.ImageData = new byte[1, 1, 1];
-           ////imageView.UpdateFrequency = double.Epsilon;
-           imageController = this.ServiceLocator.GetInstance<ImageController>();
-
-           // Let the UpdateDisplayImageData() skip a frame
-           using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-              {
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
-              imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
-
-              imageControllerWrapper.WaitForDisplayUpdate();
-              }
-           }
-
-        [Test]
-        public void ImageModelSize()
-           {
-           IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
-
-           imageModel.DisplayImageData = new byte[42, 54, 1];
-
-           Assert.AreEqual(42, imageModel.Size.Height);
-           Assert.AreEqual(54, imageModel.Size.Width);
-           }
-
-        [Test]
-        public void ZoomLevel()
-           {
-           ////this.Container.RegisterSingleton<IImageView, ImageView>();
-           this.Container.RegisterSingleton<IImageModel, ImageModel>();
-
-           ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
-           ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-           IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
-
-           Assert.AreEqual(1, imageModel.ZoomLevel);
-
-           ////imageView.TriggerZoomLevelIncreased();
-
-           Assert.AreEqual(2.0, imageModel.ZoomLevel);
-
-           ////imageView.TriggerZoomLevelDecreased();
-
-           Assert.AreEqual(1.0, imageModel.ZoomLevel);
-
-           ////imageView.TriggerZoomLevelDecreased();
-
-           Assert.AreEqual(0.5, imageModel.ZoomLevel);
-           }
-
-        [Test]
-        public void PixelView()
-           {
-           ////this.Container.RegisterSingleton<IImageView, ImageView>();
-           this.Container.RegisterSingleton<IImageModel, ImageModel>();
-
-           ////ImageView imageView = this.ServiceLocator.GetInstance<IImageView>() as ImageView;
-           ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-           IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
-           Point pixelPosition = new Point();
-
-           imageModel.DisplayImageData = new byte[2, 2, 1];
-
-           imageModel.DisplayImageData[1, 1, 0] = 255;
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(0, imageView.Gray);
-           ////Assert.IsNull(imageView.RGB);
-           ////Assert.IsNull(imageView.HSV);
-
-           pixelPosition = new Point(1, 1);
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(255, imageView.Gray);
-           ////Assert.IsNull(imageView.RGB);
-           ////Assert.IsNull(imageView.HSV);
-
-           imageModel.DisplayImageData = new byte[3, 3, 3];
-
-           imageModel.DisplayImageData[0, 1, 0] = 0;
-           imageModel.DisplayImageData[0, 1, 1] = 0;
-           imageModel.DisplayImageData[0, 1, 2] = 255;
-           imageModel.DisplayImageData[1, 0, 0] = 0;
-           imageModel.DisplayImageData[1, 0, 1] = 255;
-           imageModel.DisplayImageData[1, 0, 2] = 0;
-           imageModel.DisplayImageData[1, 1, 0] = 255;
-           imageModel.DisplayImageData[1, 1, 1] = 255;
-           imageModel.DisplayImageData[1, 1, 2] = 255;
-           imageModel.DisplayImageData[0, 2, 0] = 255;
-           imageModel.DisplayImageData[0, 2, 1] = 0;
-           imageModel.DisplayImageData[0, 2, 2] = 0;
-           imageModel.DisplayImageData[1, 2, 0] = 255;
-           imageModel.DisplayImageData[1, 2, 1] = 64;
-           imageModel.DisplayImageData[1, 2, 2] = 128;
-
-           pixelPosition = new Point(0, 0);
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(0, imageView.Gray);
-           ////Assert.AreEqual(0, imageView.RGB[0]);
-           ////Assert.AreEqual(0, imageView.RGB[1]);
-           ////Assert.AreEqual(0, imageView.RGB[2]);
-           ////Assert.AreEqual(0.0, imageView.HSV[0]);
-           ////Assert.AreEqual(0.0, imageView.HSV[1]);
-           ////Assert.AreEqual(0.0, imageView.HSV[2]);
-
-           pixelPosition = new Point(1, 0);
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(0, imageView.Gray);
-           ////Assert.AreEqual(0, imageView.RGB[0]);
-           ////Assert.AreEqual(0, imageView.RGB[1]);
-           ////Assert.AreEqual(255, imageView.RGB[2]);
-           ////Assert.AreEqual(240.0, imageView.HSV[0]);
-           ////Assert.AreEqual(1.0, imageView.HSV[1]);
-           ////Assert.AreEqual(255.0, imageView.HSV[2]);
-
-           pixelPosition = new Point(0, 1);
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(0, imageView.Gray);
-           ////Assert.AreEqual(0, imageView.RGB[0]);
-           ////Assert.AreEqual(255, imageView.RGB[1]);
-           ////Assert.AreEqual(0, imageView.RGB[2]);
-           ////Assert.AreEqual(120.0, imageView.HSV[0]);
-           ////Assert.AreEqual(1.0, imageView.HSV[1]);
-           ////Assert.AreEqual(255.0, imageView.HSV[2]);
-
-           pixelPosition = new Point(1, 1);
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(0, imageView.Gray);
-           ////Assert.AreEqual(255, imageView.RGB[0]);
-           ////Assert.AreEqual(255, imageView.RGB[1]);
-           ////Assert.AreEqual(255, imageView.RGB[2]);
-           ////Assert.AreEqual(0.0, imageView.HSV[0]);
-           ////Assert.AreEqual(0.0, imageView.HSV[1]);
-           ////Assert.AreEqual(255.0, imageView.HSV[2]);
-
-           pixelPosition = new Point(2, 0);
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(0, imageView.Gray);
-           ////Assert.AreEqual(255, imageView.RGB[0]);
-           ////Assert.AreEqual(0, imageView.RGB[1]);
-           ////Assert.AreEqual(0, imageView.RGB[2]);
-           ////Assert.AreEqual(0.0, imageView.HSV[0]);
-           ////Assert.AreEqual(1.0, imageView.HSV[1]);
-           ////Assert.AreEqual(255.0, imageView.HSV[2]);
-
-           pixelPosition = new Point(2, 1);
-
-           ////imageView.TriggerPixelViewChanged(pixelPosition);
-
-           ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
-           ////Assert.AreEqual(0, imageView.Gray);
-           ////Assert.AreEqual(255, imageView.RGB[0]);
-           ////Assert.AreEqual(64, imageView.RGB[1]);
-           ////Assert.AreEqual(128, imageView.RGB[2]);
-           ////Assert.AreEqual(340.0, imageView.HSV[0]);
-           ////Assert.AreEqual(0.749, imageView.HSV[1], 0.01);
-           ////Assert.AreEqual(255.0, imageView.HSV[2]);
-           }
-
-        private void ImageController_Closing(object sender, CancelEventArgs e)
-           {
-           e.Cancel = true;
-           }
-        */
-    }
+         imageModel.DisplayImageData[1, 1, 0] = 255;
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.IsNull(imageView.RGB);
+         ////Assert.IsNull(imageView.HSV);
+
+         pixelPosition = new Point(1, 1);
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(255, imageView.Gray);
+         ////Assert.IsNull(imageView.RGB);
+         ////Assert.IsNull(imageView.HSV);
+
+         imageModel.DisplayImageData = new byte[3, 3, 3];
+
+         imageModel.DisplayImageData[0, 1, 0] = 0;
+         imageModel.DisplayImageData[0, 1, 1] = 0;
+         imageModel.DisplayImageData[0, 1, 2] = 255;
+         imageModel.DisplayImageData[1, 0, 0] = 0;
+         imageModel.DisplayImageData[1, 0, 1] = 255;
+         imageModel.DisplayImageData[1, 0, 2] = 0;
+         imageModel.DisplayImageData[1, 1, 0] = 255;
+         imageModel.DisplayImageData[1, 1, 1] = 255;
+         imageModel.DisplayImageData[1, 1, 2] = 255;
+         imageModel.DisplayImageData[0, 2, 0] = 255;
+         imageModel.DisplayImageData[0, 2, 1] = 0;
+         imageModel.DisplayImageData[0, 2, 2] = 0;
+         imageModel.DisplayImageData[1, 2, 0] = 255;
+         imageModel.DisplayImageData[1, 2, 1] = 64;
+         imageModel.DisplayImageData[1, 2, 2] = 128;
+
+         pixelPosition = new Point(0, 0);
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(0, imageView.RGB[0]);
+         ////Assert.AreEqual(0, imageView.RGB[1]);
+         ////Assert.AreEqual(0, imageView.RGB[2]);
+         ////Assert.AreEqual(0.0, imageView.HSV[0]);
+         ////Assert.AreEqual(0.0, imageView.HSV[1]);
+         ////Assert.AreEqual(0.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(1, 0);
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(0, imageView.RGB[0]);
+         ////Assert.AreEqual(0, imageView.RGB[1]);
+         ////Assert.AreEqual(255, imageView.RGB[2]);
+         ////Assert.AreEqual(240.0, imageView.HSV[0]);
+         ////Assert.AreEqual(1.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(0, 1);
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(0, imageView.RGB[0]);
+         ////Assert.AreEqual(255, imageView.RGB[1]);
+         ////Assert.AreEqual(0, imageView.RGB[2]);
+         ////Assert.AreEqual(120.0, imageView.HSV[0]);
+         ////Assert.AreEqual(1.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(1, 1);
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(255, imageView.RGB[0]);
+         ////Assert.AreEqual(255, imageView.RGB[1]);
+         ////Assert.AreEqual(255, imageView.RGB[2]);
+         ////Assert.AreEqual(0.0, imageView.HSV[0]);
+         ////Assert.AreEqual(0.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(2, 0);
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(255, imageView.RGB[0]);
+         ////Assert.AreEqual(0, imageView.RGB[1]);
+         ////Assert.AreEqual(0, imageView.RGB[2]);
+         ////Assert.AreEqual(0.0, imageView.HSV[0]);
+         ////Assert.AreEqual(1.0, imageView.HSV[1]);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
+
+         pixelPosition = new Point(2, 1);
+
+         ////imageView.TriggerPixelViewChanged(pixelPosition);
+
+         ////Assert.AreEqual(pixelPosition, imageView.PixelPosition);
+         ////Assert.AreEqual(0, imageView.Gray);
+         ////Assert.AreEqual(255, imageView.RGB[0]);
+         ////Assert.AreEqual(64, imageView.RGB[1]);
+         ////Assert.AreEqual(128, imageView.RGB[2]);
+         ////Assert.AreEqual(340.0, imageView.HSV[0]);
+         ////Assert.AreEqual(0.749, imageView.HSV[1], 0.01);
+         ////Assert.AreEqual(255.0, imageView.HSV[2]);
+         }
+
+      private void ImageController_Closing(object sender, CancelEventArgs e)
+         {
+         e.Cancel = true;
+         }
+      */
+   }
 }

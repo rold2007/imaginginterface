@@ -11,13 +11,11 @@ namespace ImagingInterface.Controllers.Services
 
    public class ImageManagerService
    {
-      private ImageSourceService imageSourceService;
       private int activeImageIndex;
       private List<IImageSource> imageSources;
 
-      public ImageManagerService(ImageSourceService imageSourceService)
+      public ImageManagerService()
       {
-         this.imageSourceService = imageSourceService;
          this.imageSources = new List<IImageSource>();
 
          this.ActiveImageIndex = -1;

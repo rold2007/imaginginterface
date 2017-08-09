@@ -7,6 +7,7 @@ namespace ImagingInterface.Views
    using System;
    using System.Collections.Generic;
    using ImagingInterface.Controllers.Interfaces;
+   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
 
    public class ApplicationLogic : IApplicationLogic
@@ -29,17 +30,30 @@ namespace ImagingInterface.Views
          this.imageManagerView = imageManagerView;
       }
 
-      public void AddImageViewToCurrentImageManagerView(IEnumerable<IImageSource> imageSources)
+      public void ManageNewImageSources(IEnumerable<IImageSource> imageSources)
       {
+         this.ValidateImageManagerView();
+
+         this.AddImageViewToCurrentImageManagerView(imageSources);
       }
 
-      public void ManageNewImageSources(IEnumerable<IImageSource> imageSources)
+      public void RemoveImage(IImageView imageView)
+      {
+         this.ValidateImageManagerView();
+
+         this.RemoveImageViewFromCurrentImageManagerView(imageView);
+      }
+
+      private void ValidateImageManagerView()
       {
          if (this.imageManagerView == null)
          {
             throw new InvalidOperationException("The ImageManagerView was not initialized.");
          }
+      }
 
+      private void AddImageViewToCurrentImageManagerView(IEnumerable<IImageSource> imageSources)
+      {
          foreach (IImageSource imageSource in imageSources)
          {
             ImageView imageView = this.imageViewFactory.CreateNew();
@@ -48,6 +62,20 @@ namespace ImagingInterface.Views
 
             this.imageManagerView.AddImageToNewtab(imageView);
          }
+      }
+
+      private void RemoveImageViewFromCurrentImageManagerView(IImageView imageView)
+      {
+         ImageView imageViewObject = imageView as ImageView;
+
+         if (imageViewObject == null)
+         {
+            throw new ArgumentException("imageView");
+         }
+
+         this.imageManagerView.RemoveImageView(imageViewObject);
+
+         imageViewObject.Close();
       }
    }
 }
