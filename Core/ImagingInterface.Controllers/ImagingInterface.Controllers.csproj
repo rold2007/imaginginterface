@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="AboutBoxController.cs" />
     <Compile Include="EventArguments\DragDropEventArgs.cs" />
-    <Compile Include="EventArguments\ImageViewRemovedEventArgs.cs" />
     <Compile Include="EventArguments\PixelViewChangedEventArgs.cs" />
     <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
     <Compile Include="FileOperationController.cs" />
@@ -77,7 +76,7 @@
     <Compile Include="Services\ImageProcessingManagerService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\ImageSourceService.cs" />
-    <Compile Include="Views\IImageView.cs" />
+    <Compile Include="Views\ImageViewFactory.cs" />
     <Compile Include="Views\PluginViewFactory.cs" />
   </ItemGroup>
   <ItemGroup>

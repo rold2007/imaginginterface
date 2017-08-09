@@ -30,13 +30,6 @@ namespace ImagingInterface.Views
          this.imageViewToolTip = new Dictionary<ImageView, ToolTip>();
 
          this.Dock = DockStyle.Fill;
-
-         // this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
-         // this.imageManagerController.ActiveImageChanged += this.ImageManagerModel_ActiveImageChanged;
-         // this.imageManagerController.RemoveActiveImageIndex += this.ImageManagerController_RemoveActiveImageIndex;
-
-         // this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
-         // this.imageManagerController.ImageRemoved += this.ImageManagerController_ImageRemoved;
       }
 
       public bool HasActiveImageView
@@ -205,28 +198,6 @@ namespace ImagingInterface.Views
          // this.AddImageToNewtab(imageView);
 
          // this.imageManagerController.AddImage(imageSource, imageView);
-      }
-
-      private void ImageManagerController_ImageRemoved(object sender, ImageViewRemovedEventArgs e)
-      {
-         ImageView imageView = e.ImageView as ImageView;
-
-         using (TabPage tabPage = this.imageViewTabPage[imageView])
-         using (ToolTip toolTip = this.imageViewToolTip[imageView])
-         {
-            this.imagesTabControl.Controls.Remove(tabPage);
-            this.imageViews.Remove(imageView);
-            this.imageViewTabPage.Remove(imageView);
-            this.imageViewToolTip.Remove(imageView);
-         }
-
-         // this.imageManagerController.RemoveImage(imageView);
-      }
-
-      private void ImageManagerView_Load(object sender, EventArgs e)
-      {
-         // this.imageManagerController.ImageAdded += this.ImageManagerController_ImageAdded;
-         // this.imageManagerController.ImageRemoved += this.ImageManagerController_ImageRemoved;
       }
    }
 }

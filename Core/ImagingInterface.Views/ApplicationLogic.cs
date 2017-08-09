@@ -96,11 +96,18 @@ namespace ImagingInterface.Views
       {
          foreach (IImageSource imageSource in imageSources)
          {
-            ImageView imageView = this.imageViewFactory.CreateNew();
+            ImageView imageView = this.imageViewFactory.CreateNew() as ImageView;
 
-            imageView.ImageSource = imageSource;
+            if (imageView != null)
+            {
+               imageView.ImageSource = imageSource;
 
-            this.imageManagerView.AddImageToNewtab(imageView);
+               this.imageManagerView.AddImageToNewtab(imageView);
+            }
+            else
+            {
+               throw new InvalidOperationException("Unable to create ImageView.");
+            }
          }
       }
 

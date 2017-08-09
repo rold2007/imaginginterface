@@ -2,10 +2,10 @@
 // Copyright (c) David Rolland. All rights reserved.
 // </copyright>
 
-namespace ImagingInterface.Views
+namespace ImagingInterface.Plugins
 {
     public interface IImageViewFactory
     {
-        ImageView CreateNew();
+        IImageView CreateNew();
     }
 }

@@ -2,10 +2,8 @@
 // Copyright (c) David Rolland. All rights reserved.
 // </copyright>
 
-namespace ImagingInterface.Controllers.Views
+namespace ImagingInterface.Plugins
 {
-   using ImagingInterface.Plugins;
-
    public interface IImageView
    {
       IImageSource ImageSource

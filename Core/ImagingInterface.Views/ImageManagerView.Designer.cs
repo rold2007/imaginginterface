@@ -51,7 +51,6 @@
             this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.Name = "ImageManagerView";
             this.Size = new System.Drawing.Size(1989, 963);
-            this.Load += new System.EventHandler(this.ImageManagerView_Load);
             this.ResumeLayout(false);
 
          }
