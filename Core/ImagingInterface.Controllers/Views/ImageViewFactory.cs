@@ -2,21 +2,21 @@
 // Copyright (c) David Rolland. All rights reserved.
 // </copyright>
 
-namespace ImagingInterface
+namespace ImagingInterface.Controllers.Views
 {
    using System;
-   using ImagingInterface.Views;
+   using ImagingInterface.Plugins;
 
    public class ImageViewFactory : IImageViewFactory
     {
-        private Func<ImageView> imageViewFactory;
+        private Func<IImageView> imageViewFactory;
 
-        public ImageViewFactory(Func<ImageView> imageViewFactory)
+        public ImageViewFactory(Func<IImageView> imageViewFactory)
         {
             this.imageViewFactory = imageViewFactory;
         }
 
-        public ImageView CreateNew()
+        public IImageView CreateNew()
         {
             return this.imageViewFactory();
         }

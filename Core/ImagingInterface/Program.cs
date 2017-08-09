@@ -116,6 +116,7 @@ namespace ImagingInterface
 
       private static void Bootstrap()
       {
+         container.RegisterSingleton<IApplicationLogic, ApplicationLogic>();
          container.RegisterSingleton<IImageViewFactory, ImageViewFactory>();
          container.RegisterSingleton<IPluginViewFactory, PluginViewFactory>();
 
@@ -123,12 +124,11 @@ namespace ImagingInterface
          container.Register<AboutBoxView>();
          container.Register<ImageManagerView>();
          container.Register<ImageView>();
-         container.RegisterSingleton<Func<ImageView>>(() => { return container.GetInstance<ImageView>(); });
+         container.RegisterSingleton<Func<IImageView>>(() => { return container.GetInstance<ImageView>(); });
          container.Register<MainWindow>();
          container.Register<PluginManagerView>();
 
          // Controllers
-         container.RegisterSingleton<IApplicationLogic, ApplicationLogic>();
          container.Register<AboutBoxController>();
          container.Register<FileOperationController>();
          container.Register<ImageManagerController>();
