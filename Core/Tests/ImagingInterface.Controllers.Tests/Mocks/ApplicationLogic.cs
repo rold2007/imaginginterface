@@ -4,6 +4,7 @@
 
 namespace ImagingInterface.Controllers.Tests.Mocks
 {
+   using System;
    using System.Collections.Generic;
    using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Views;
@@ -15,7 +16,15 @@ namespace ImagingInterface.Controllers.Tests.Mocks
       {
       }
 
+      public void ManageNewPlugin(string pluginName)
+      {
+      }
+
       public void RemoveImage(IImageView imageView)
+      {
+      }
+
+      public void RemovePlugin(IPluginView pluginView)
       {
       }
    }

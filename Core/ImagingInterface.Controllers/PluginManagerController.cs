@@ -28,33 +28,9 @@ namespace ImagingInterface.Controllers
          ////this.pluginControllers.Add(pluginController.RawPluginView, pluginController);
          }
 
-      public IPluginController GetActivePlugin()
-         {
-         ////IRawPluginView activeRawPluginView = this.pluginManagerView.GetActivePlugin();
-
-         ////if (activeRawPluginView != null)
-         ////   {
-         ////   return this.pluginControllers[activeRawPluginView];
-         ////   }
-         ////else
-            {
-            return null;
-            }
-         }
-
       public IList<IPluginController> GetAllPlugins()
          {
          return this.pluginControllers.Values.ToList();
-         }
-
-      public void CloseActivePlugin()
-         {
-         IPluginController activePlugin = this.GetActivePlugin();
-
-         if (activePlugin != null)
-            {
-            activePlugin.Close();
-            }
          }
 
       private void RemovePlugin(IPluginController pluginController)

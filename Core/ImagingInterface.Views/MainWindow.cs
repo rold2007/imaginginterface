@@ -80,16 +80,13 @@ namespace ImagingInterface.Views
 
          if (toolStripMenuItem.Name == MainWindow.closePluginName)
          {
-            this.pluginOperationController.ClosePlugin();
+            IPluginView pluginView = this.pluginManagerView.GetActivePlugin();
+
+            this.pluginOperationController.ClosePlugin(pluginView);
          }
          else
          {
-            IPluginView pluginView = this.pluginOperationController.CreatePlugin(toolStripMenuItem.Name);
-
-            if (pluginView != null)
-            {
-               this.pluginManagerView.AddPlugin(pluginView);
-            }
+            this.pluginOperationController.CreatePlugin(toolStripMenuItem.Name);
          }
       }
 
@@ -167,10 +164,7 @@ namespace ImagingInterface.Views
 
       private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
       {
-         foreach (ImageView imageView in this.imageManagerView.ImageViews)
-         {
-            this.fileOperationController.CloseFile(imageView);
-         }
+         this.fileOperationController.CloseFiles(this.imageManagerView.ImageViews);
       }
 
       // Based on http://stackoverflow.com/questions/6521731/refresh-the-panels-of-a-splitcontainer-as-the-splitter-moves
@@ -248,6 +242,7 @@ namespace ImagingInterface.Views
       private void MainWindow_Load(object sender, EventArgs e)
       {
          this.applicationLogic.AddImageManagerView(this.imageManagerView);
+         this.applicationLogic.AddPluginManagerView(this.pluginManagerView);
       }
    }
 }
