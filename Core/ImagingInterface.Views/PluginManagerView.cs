@@ -15,8 +15,8 @@ namespace ImagingInterface.Views
       {
       private PluginManagerController pluginManagerController;
 
-      private Dictionary<IRawPluginView, TabPage> pluginViewTabPage;
-      private Dictionary<IRawPluginView, ToolTip> pluginViewToolTip;
+      private Dictionary<IPluginView, TabPage> pluginViewTabPage;
+      private Dictionary<IPluginView, ToolTip> pluginViewToolTip;
 
       public PluginManagerView(PluginManagerController pluginManagerController)
          {
@@ -24,8 +24,8 @@ namespace ImagingInterface.Views
 
          this.InitializeComponent();
 
-         this.pluginViewTabPage = new Dictionary<IRawPluginView, TabPage>();
-         this.pluginViewToolTip = new Dictionary<IRawPluginView, ToolTip>();
+         this.pluginViewTabPage = new Dictionary<IPluginView, TabPage>();
+         this.pluginViewToolTip = new Dictionary<IPluginView, ToolTip>();
 
          this.Dock = DockStyle.Fill;
          }
@@ -57,20 +57,20 @@ namespace ImagingInterface.Views
          this.pluginsTabControl.Controls.Add(tabPage);
          }
 
-      public IRawPluginView GetActivePlugin()
+      public IPluginView GetActivePlugin()
          {
          if (this.pluginsTabControl.SelectedTab != null)
             {
             if (this.pluginsTabControl.SelectedTab.Controls.Count > 0)
                {
-               return this.pluginsTabControl.SelectedTab.Controls[0] as IRawPluginView;
+               return this.pluginsTabControl.SelectedTab.Controls[0] as IPluginView;
                }
             }
 
          return null;
          }
 
-      public void RemovePlugin(IRawPluginView rawPluginView)
+      public void RemovePlugin(IPluginView rawPluginView)
          {
          TabPage tabPage = this.pluginViewTabPage[rawPluginView];
          ToolTip toolTip = this.pluginViewToolTip[rawPluginView];
@@ -83,7 +83,7 @@ namespace ImagingInterface.Views
          toolTip.Dispose();
          }
 
-      private void UpdatePluginTabPageProperties(IRawPluginView pluginView)
+      private void UpdatePluginTabPageProperties(IPluginView pluginView)
          {
          TabPage tabPage = this.pluginViewTabPage[pluginView];
          Size size = tabPage.ClientSize;
@@ -96,7 +96,7 @@ namespace ImagingInterface.Views
          {
          if (this.pluginsTabControl.TabCount != 0 && this.pluginsTabControl.SelectedTab != null)
             {
-            this.UpdatePluginTabPageProperties(this.pluginsTabControl.SelectedTab.Controls[0] as IRawPluginView);
+            this.UpdatePluginTabPageProperties(this.pluginsTabControl.SelectedTab.Controls[0] as IPluginView);
             }
          }
       }

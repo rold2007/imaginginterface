@@ -117,6 +117,7 @@ namespace ImagingInterface
       private static void Bootstrap()
       {
          container.RegisterSingleton<IImageViewFactory, ImageViewFactory>();
+         container.RegisterSingleton<IPluginViewFactory, PluginViewFactory>();
 
          // Views
          container.Register<AboutBoxView>();
@@ -136,7 +137,6 @@ namespace ImagingInterface
          container.Register<MainController>();
          container.Register<PluginManagerController>();
          container.Register<PluginOperationController>();
-         container.Register<PluginViewFactory>();
 
          // Services
          Assembly servicesAssembly = typeof(ApplicationPropertiesService).Assembly;

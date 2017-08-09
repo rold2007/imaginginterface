@@ -33,27 +33,30 @@ namespace ImagingInterface.Controllers
 
       public void CloseFile(IImageView imageView)
       {
+         this.RemoveImage(imageView);
+      }
+
+      public void CloseFiles(IEnumerable<IImageView> imageViews)
+      {
+         foreach (IImageView imageView in imageViews)
+         {
+            this.RemoveImage(imageView);
+         }
+      }
+
+      public void RequestDragDropFile(string[] data)
+      {
+         this.OpenFiles(data);
+      }
+
+      private void RemoveImage(IImageView imageView)
+      {
          if (imageView != null)
          {
             this.applicationLogic.RemoveImage(imageView);
 
             this.fileOperationService.RemoveImage(imageView.ImageSource);
          }
-      }
-
-      public void CloseAllFiles()
-      {
-         ////if (this.CloseAllFiles != null)
-         ////   {
-         ////   this.CloseAllFiles(this, EventArgs.Empty);
-
-         ////   GC.Collect();
-         ////   }
-      }
-
-      public void RequestDragDropFile(string[] data)
-      {
-         this.OpenFiles(data);
       }
    }
 }

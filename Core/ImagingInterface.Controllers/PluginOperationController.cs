@@ -6,20 +6,19 @@ namespace ImagingInterface.Controllers
 {
    using System;
    using System.Collections.Generic;
+   using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
 
    public class PluginOperationController
    {
       private SortedDictionary<string, Type> plugins;
-      private PluginManagerController pluginManagerController;
-      private PluginViewFactory pluginViewFactory;
+      private IApplicationLogic applicationLogic;
 
-      public PluginOperationController(IEnumerable<IPluginController> pluginsOld, IEnumerable<IPluginView> plugins, PluginManagerController pluginManagerController, PluginViewFactory pluginViewFactory)
+      public PluginOperationController(IEnumerable<IPluginController> pluginsOld, IEnumerable<IPluginView> plugins, IApplicationLogic applicationLogic)
       {
          this.plugins = new SortedDictionary<string, Type>();
-         this.pluginManagerController = pluginManagerController;
-         this.pluginViewFactory = pluginViewFactory;
+         this.applicationLogic = applicationLogic;
 
          foreach (IPluginView plugin in plugins)
          {
@@ -43,16 +42,17 @@ namespace ImagingInterface.Controllers
          }
       }
 
-      public IPluginView CreatePlugin(string pluginName)
+      public void CreatePlugin(string pluginName)
       {
-         IPluginView pluginView = this.pluginViewFactory.CreateNew(pluginName);
-
-         return pluginView;
+         this.applicationLogic.ManageNewPlugin(pluginName);
       }
 
-      public void ClosePlugin()
+      public void ClosePlugin(IPluginView pluginView)
       {
-         this.pluginManagerController.CloseActivePlugin();
+         if (pluginView != null)
+         {
+            this.applicationLogic.RemovePlugin(pluginView);
+         }
       }
    }
 }

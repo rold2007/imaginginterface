@@ -7,7 +7,7 @@ namespace ImagingInterface.Controllers.Views
    using System.Collections.Generic;
    using ImagingInterface.Plugins;
 
-   public class PluginViewFactory
+   public class PluginViewFactory : IPluginViewFactory
    {
       private IEnumerable<IPluginView> pluginViews;
 

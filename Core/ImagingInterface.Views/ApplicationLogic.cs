@@ -14,10 +14,13 @@ namespace ImagingInterface.Views
    {
       private IImageViewFactory imageViewFactory;
       private ImageManagerView imageManagerView;
+      private IPluginViewFactory pluginViewFactory;
+      private PluginManagerView pluginManagerView;
 
-      public ApplicationLogic(IImageViewFactory imageViewFactory)
+      public ApplicationLogic(IImageViewFactory imageViewFactory, IPluginViewFactory pluginViewFactory)
       {
          this.imageViewFactory = imageViewFactory;
+         this.pluginViewFactory = pluginViewFactory;
       }
 
       public void AddImageManagerView(ImageManagerView imageManagerView)
@@ -28,6 +31,16 @@ namespace ImagingInterface.Views
          }
 
          this.imageManagerView = imageManagerView;
+      }
+
+      public void AddPluginManagerView(PluginManagerView pluginManagerView)
+      {
+         if (this.pluginManagerView != null)
+         {
+            throw new InvalidOperationException("The PluginManagerView is already initialized.");
+         }
+
+         this.pluginManagerView = pluginManagerView;
       }
 
       public void ManageNewImageSources(IEnumerable<IImageSource> imageSources)
@@ -44,11 +57,38 @@ namespace ImagingInterface.Views
          this.RemoveImageViewFromCurrentImageManagerView(imageView);
       }
 
+      public void ManageNewPlugin(string pluginName)
+      {
+         this.ValidatePluginManagerView();
+
+         IPluginView pluginView = this.pluginViewFactory.CreateNew(pluginName);
+
+         if (pluginView != null)
+         {
+            this.pluginManagerView.AddPlugin(pluginView);
+         }
+      }
+
+      public void RemovePlugin(IPluginView pluginView)
+      {
+         this.ValidatePluginManagerView();
+
+         this.RemovePluginViewFromCurrentPluginManagerView(pluginView);
+      }
+
       private void ValidateImageManagerView()
       {
          if (this.imageManagerView == null)
          {
             throw new InvalidOperationException("The ImageManagerView was not initialized.");
+         }
+      }
+
+      private void ValidatePluginManagerView()
+      {
+         if (this.pluginManagerView == null)
+         {
+            throw new InvalidOperationException("The PluginManagerView was not initialized.");
          }
       }
 
@@ -76,6 +116,13 @@ namespace ImagingInterface.Views
          this.imageManagerView.RemoveImageView(imageViewObject);
 
          imageViewObject.Close();
+      }
+
+      private void RemovePluginViewFromCurrentPluginManagerView(IPluginView pluginView)
+      {
+         this.pluginManagerView.RemovePlugin(pluginView);
+
+         pluginView.Close();
       }
    }
 }

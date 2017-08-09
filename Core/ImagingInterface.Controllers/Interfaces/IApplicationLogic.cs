@@ -13,5 +13,9 @@ namespace ImagingInterface.Controllers.Interfaces
       void ManageNewImageSources(IEnumerable<IImageSource> imageSources);
 
       void RemoveImage(IImageView imageView);
+
+      void ManageNewPlugin(string pluginName);
+
+      void RemovePlugin(IPluginView pluginView);
    }
 }

@@ -101,7 +101,7 @@ namespace ImagingInterface.Controllers.Tests
          ////fileOperationController.CloseAllFiles += (sender, eventArgs) => { fileClosed = true; };
 
          fileOperationController.OpenFiles(files);
-         fileOperationController.CloseAllFiles();
+         ////fileOperationController.CloseFiles();
 
          // Assert.IsTrue(fileClosed);
       }
