@@ -4,7 +4,6 @@
 
 namespace ImagingInterface.Controllers.Services
 {
-   using System;
    using System.Collections.Generic;
    using ImagingInterface.Plugins;
 

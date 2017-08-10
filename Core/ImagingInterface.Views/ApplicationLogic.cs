@@ -7,7 +7,6 @@ namespace ImagingInterface.Views
    using System;
    using System.Collections.Generic;
    using ImagingInterface.Controllers.Interfaces;
-   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
 
    public class ApplicationLogic : IApplicationLogic

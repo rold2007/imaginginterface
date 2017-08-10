@@ -5,7 +5,6 @@
 namespace ImageProcessing.Models
 {
    using System;
-   using ImagingInterface.Plugins;
 
    public interface IRotateModel : ICloneable
       {

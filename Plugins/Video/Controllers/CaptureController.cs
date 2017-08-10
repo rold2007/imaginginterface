@@ -7,9 +7,7 @@ namespace Video.Controllers
    using System;
    using System.ComponentModel;
    using System.Diagnostics;
-   using System.Drawing;
    using Emgu.CV;
-   using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
    using ImagingInterface.Controllers;
    using Video.Models;

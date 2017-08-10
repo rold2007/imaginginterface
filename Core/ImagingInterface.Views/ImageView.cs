@@ -12,7 +12,6 @@ namespace ImagingInterface.Views
    using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
    using OpenTK.Graphics.OpenGL;
 

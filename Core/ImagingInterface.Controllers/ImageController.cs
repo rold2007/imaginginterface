@@ -5,7 +5,6 @@
 namespace ImagingInterface.Controllers
 {
    using System;
-   using System.Collections.Generic;
    using System.Diagnostics;
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Models;

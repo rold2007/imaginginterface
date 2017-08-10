@@ -10,7 +10,6 @@ namespace ImagingInterface.Tests.Common
    using System.Threading;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
-   using ImagingInterface.Plugins.EventArguments;
 
    public class ImageControllerWrapper : IDisposable
       {

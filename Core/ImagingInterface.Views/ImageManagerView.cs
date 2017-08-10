@@ -11,7 +11,6 @@ namespace ImagingInterface.Views
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.EventArguments;
-   using ImagingInterface.Controllers.Views;
 
    public partial class ImageManagerView : UserControl
    {
