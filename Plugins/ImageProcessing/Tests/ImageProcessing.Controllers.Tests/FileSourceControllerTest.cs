@@ -3,18 +3,7 @@
 // </copyright>
 
 namespace ImageProcessing.Controllers.Tests
-   {
-   using System;
-   using System.Collections.Generic;
-   using System.IO;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using Emgu.CV;
-   using Emgu.CV.CvEnum;
-   using Emgu.CV.Structure;
-   using ImageProcessing.Controllers;
-   using ImagingInterface.Plugins;
+{
    using NUnit.Framework;
 
    [TestFixture]

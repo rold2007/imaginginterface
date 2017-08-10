@@ -7,10 +7,11 @@ namespace Video.Controllers
    using System;
    using Emgu.CV;
    using Emgu.CV.CvEnum;
+   using Emgu.CV.Util;
 
    public class CaptureWrapper : ICaptureWrapper
       {
-      private Capture capture;
+      private VideoCapture capture;
       private double framePeriod;
 
       ~CaptureWrapper()
@@ -113,7 +114,7 @@ namespace Video.Controllers
             {
             try
                {
-               this.capture = new Capture();
+               this.capture = new VideoCapture();
 
                double frameRate = this.capture.GetCaptureProperty(CapProp.Fps);
 
