@@ -13,14 +13,12 @@ namespace ImageProcessing.Controllers
       {
       private static readonly string ObjectDetectionDisplayName = "Object detection"; // ncrunch: no coverage
       ////private IObjectDetectionManagerView objectDetectionManagerView;
-      private IObjectDetectionManagerModel objectDetectionManagerModel;
+      private ObjectDetectionManagerModel objectDetectionManagerModel = new ObjectDetectionManagerModel();
       private TaggerController taggerController;
       private ObjectDetectionController objectDetectionController;
 
-      public ObjectDetectionManagerController(ObjectDetectionManagerModel objectDetectionManagerModel, TaggerController taggerController, ObjectDetectionController objectDetectionController)
+      public ObjectDetectionManagerController(TaggerController taggerController, ObjectDetectionController objectDetectionController)
          {
-         ////this.objectDetectionManagerView = objectDetectionManagerView;
-         this.objectDetectionManagerModel = objectDetectionManagerModel;
          this.taggerController = taggerController;
          this.objectDetectionController = objectDetectionController;
 

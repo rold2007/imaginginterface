@@ -20,14 +20,12 @@ namespace ImageProcessing.Controllers
       {
       private static readonly string TaggerDisplayName = "Tagger"; // ncrunch: no coverage
       ////private ITaggerView taggerView;
-      private ITaggerModel taggerModel;
+      private TaggerModel taggerModel = new TaggerModel();
       private ImageController registeredImageController;
       private ITagger tagger;
 
-      public TaggerController(TaggerModel taggerModel, ITagger tagger)
+      public TaggerController(ITagger tagger)
          {
-         ////this.taggerView = taggerView;
-         this.taggerModel = taggerModel;
          this.tagger = tagger;
 
          this.taggerModel.DisplayName = TaggerDisplayName;

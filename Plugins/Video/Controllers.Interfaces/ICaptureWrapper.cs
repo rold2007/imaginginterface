@@ -7,7 +7,7 @@ namespace Video.Controllers
    using System;
    using Emgu.CV;
 
-   public interface ICaptureWrapper : IDisposable
+   public interface ICaptureWrapper
       {
       int Width
          {

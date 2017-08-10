@@ -20,18 +20,16 @@ namespace ImageProcessing.Controllers
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
 
-   public class CudafyController : IImageProcessingService, IDisposable
+   public class CudafyController : IImageProcessingService
       {
       private static readonly string CudafyDisplayName = "Cudafy"; // ncrunch: no coverage
-      private ICudafyModel cudafyModel;
+      private CudafyModel cudafyModel = new CudafyModel();
       private Dictionary<string, GPGPU> gpgpus;
       private Dictionary<string, GPGPUProperties> gpgpuProperties;
       private Dictionary<string, eGPUType> gpuTypes;
 
-      public CudafyController(CudafyModel cudafyModel)
+      public CudafyController()
          {
-         this.cudafyModel = cudafyModel;
-
          this.cudafyModel.DisplayName = CudafyController.CudafyDisplayName;
 
          this.gpgpus = new Dictionary<string, GPGPU>();
