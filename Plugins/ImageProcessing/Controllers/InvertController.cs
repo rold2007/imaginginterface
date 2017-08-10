@@ -16,14 +16,10 @@ namespace ImageProcessing.Controllers
    public class InvertController : IImageProcessingService
       {
       private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
-      ////private IInvertView invertView;
-      private IInvertModel invertModel;
+      private InvertModel invertModel = new InvertModel();
 
-      public InvertController(InvertModel invertModel)
+      public InvertController()
          {
-         ////this.invertView = invertView;
-         this.invertModel = invertModel;
-
          this.invertModel.DisplayName = InvertController.InvertDisplayName;
          }
 

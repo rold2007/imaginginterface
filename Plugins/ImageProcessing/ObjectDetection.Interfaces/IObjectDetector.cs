@@ -8,7 +8,7 @@ namespace ImageProcessing.ObjectDetection
    using System.Collections.Generic;
    using System.Drawing;
 
-   public interface IObjectDetector : IDisposable
+   public interface IObjectDetector
       {
       void Add(string label, Point tagPoint);
 

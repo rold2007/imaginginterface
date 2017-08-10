@@ -16,20 +16,17 @@ namespace Video.Controllers
    using ImagingInterface.Plugins.EventArguments;
    using Video.Models;
 
-   public class CaptureController : /*IImageSourceController,*/ IDisposable
+   public class CaptureController
    {
       private static readonly string CaptureDisplayName = "Capture"; // ncrunch: no coverage
-      ////private ICaptureView captureView;
-      private CaptureModel captureModel;
+      private CaptureModel captureModel = new CaptureModel();
       private CaptureWrapper captureWrapper;
       private ImageController liveGrabImageController;
       private bool grabbingLive;
       private bool stopping;
 
-      public CaptureController(CaptureModel captureModel, CaptureWrapper captureWrapper)
+      public CaptureController(CaptureWrapper captureWrapper)
       {
-         ////this.captureView = captureView;
-         this.captureModel = captureModel;
          this.captureWrapper = captureWrapper;
 
          this.captureModel.DisplayName = CaptureController.CaptureDisplayName;

@@ -96,9 +96,7 @@ namespace ImagingInterface.Views
       {
          foreach (IImageSource imageSource in imageSources)
          {
-            ImageView imageView = this.imageViewFactory.CreateNew() as ImageView;
-
-            if (imageView != null)
+            if (this.imageViewFactory.CreateNew() is ImageView imageView)
             {
                imageView.ImageSource = imageSource;
 

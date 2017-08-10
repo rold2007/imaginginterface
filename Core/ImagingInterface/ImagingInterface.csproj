@@ -120,10 +120,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BootStrapper\ImagingInterface.BootStrapper.csproj">
-      <Project>{fc9ca67d-6ea2-46af-807a-c25b9259065a}</Project>
-      <Name>ImagingInterface.BootStrapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">
       <Project>{b8c42917-287b-4b21-afe9-9a121163adb2}</Project>
       <Name>ImagingInterface.Controllers</Name>

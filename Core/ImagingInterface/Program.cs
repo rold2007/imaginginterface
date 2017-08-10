@@ -10,7 +10,6 @@ namespace ImagingInterface
    using System.IO;
    using System.Reflection;
    using System.Windows.Forms;
-   using ImagingInterface.BootStrapper;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Services;
@@ -161,61 +160,20 @@ namespace ImagingInterface
          container.RegisterSingleton<ImageSourceService>();
          container.Options.AllowOverridingRegistrations = false;
 
-         List<Type> packageWindowsFormsTypes = new List<Type>();
-         List<Type> pluginControllerTypes = new List<Type>();
-         List<Type> imageSourceTypes = new List<Type>();
          List<Assembly> pluginAssemblies = new List<Assembly>();
 
          foreach (string libraryFile in Program.pluginLibraries)
          {
             Assembly pluginAssembly = Assembly.LoadFrom(libraryFile);
-            Type[] exportedTypes = pluginAssembly.GetExportedTypes();
-
-            foreach (Type exportedType in exportedTypes)
-            {
-               if (Program.TypeValid(exportedType, typeof(IPackageWindowsForms)))
-               {
-                  packageWindowsFormsTypes.Add(exportedType);
-               }
-
-               if (Program.TypeValid(exportedType, typeof(IPluginController)))
-               {
-                  pluginControllerTypes.Add(exportedType);
-               }
-
-               if (Program.TypeValid(exportedType, typeof(IImageSource)))
-               {
-                  imageSourceTypes.Add(exportedType);
-               }
-            }
 
             pluginAssemblies.Add(pluginAssembly);
          }
 
+         container.RegisterPackages(pluginAssemblies);
+
          container.RegisterCollection<IPluginView>(pluginAssemblies);
 
-         foreach (Type packageWindowsFormsType in packageWindowsFormsTypes)
-         {
-            IPackageWindowsForms packageWindowsForms = Activator.CreateInstance(packageWindowsFormsType) as IPackageWindowsForms;
-
-            packageWindowsForms.RegisterServices(container);
-         }
-
-         container.RegisterCollection<IPluginController>(pluginControllerTypes);
-         container.RegisterCollection<IImageSource>(imageSourceTypes);
-
-         foreach (Type packageWindowsFormsType in packageWindowsFormsTypes)
-         {
-            IPackageWindowsForms packageWindowsForms = Activator.CreateInstance(packageWindowsFormsType) as IPackageWindowsForms;
-
-            packageWindowsForms.SuppressDiagnosticWarning(container);
-         }
-
-         container.GetRegistration(typeof(AboutBoxView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(ImageManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(ImageView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(MainWindow)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
-         container.GetRegistration(typeof(PluginManagerView)).Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+         SuppressDiagnosticWarning();
 
          // Verify will also create the MainWindow and the ApplicationController
          container.Verify();
@@ -227,6 +185,45 @@ namespace ImagingInterface
             if (diagnosticResult.DiagnosticType != DiagnosticType.DisposableTransientComponent)
             {
                throw new InvalidOperationException("IoC container was not initialized properly. Reason: " + diagnosticResult.Description);
+            }
+         }
+      }
+
+      private static void SuppressDiagnosticWarning()
+      {
+         InstanceProducer[] currentRegistrations = container.GetCurrentRegistrations();
+
+         foreach (InstanceProducer instanceProducer in currentRegistrations)
+         {
+            if (instanceProducer.Lifestyle == Lifestyle.Transient)
+            {
+               if (instanceProducer.ServiceType.IsPublic)
+               {
+                  if (!instanceProducer.ServiceType.IsAbstract)
+                  {
+                     if (!instanceProducer.ServiceType.IsGenericTypeDefinition)
+                     {
+                        if (typeof(IDisposable).IsAssignableFrom(instanceProducer.ServiceType))
+                        {
+                           bool validType = false;
+
+                           if (typeof(Control).IsAssignableFrom(instanceProducer.ServiceType))
+                           {
+                              validType = true;
+                           }
+                           else if (typeof(IPluginView).IsAssignableFrom(instanceProducer.ServiceType))
+                           {
+                              validType = true;
+                           }
+
+                           if (validType)
+                           {
+                              instanceProducer.Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
+                           }
+                        }
+                     }
+                  }
+               }
             }
          }
       }

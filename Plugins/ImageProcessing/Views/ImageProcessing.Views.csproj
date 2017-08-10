@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -40,6 +40,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\SimpleInjector.4.0.8\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Packaging, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\SimpleInjector.Packaging.4.0.8\lib\net40\SimpleInjector.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -51,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositionRoot\ImageProcessingPackageWindowsForms.cs" />
     <Compile Include="CudafyView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -124,6 +131,14 @@
     <ProjectReference Include="..\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
       <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
       <Name>ImageProcessing.Models.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
+      <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
+      <Name>ImageProcessing.ObjectDetection.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectDetection\ImageProcessing.ObjectDetection.csproj">
+      <Project>{fed322ae-2f56-46a3-babc-827daf264e79}</Project>
+      <Name>ImageProcessing.ObjectDetection</Name>
     </ProjectReference>
     <ProjectReference Include="..\Views.Interfaces\ImageProcessing.Views.Interfaces.csproj">
       <Project>{deee4845-897d-41f4-925d-4720f6f1f986}</Project>

@@ -15,7 +15,7 @@ namespace ImagingInterface.Controllers
       private SortedDictionary<string, Type> plugins;
       private IApplicationLogic applicationLogic;
 
-      public PluginOperationController(IEnumerable<IPluginController> pluginsOld, IEnumerable<IPluginView> plugins, IApplicationLogic applicationLogic)
+      public PluginOperationController(IEnumerable<IPluginView> plugins, IApplicationLogic applicationLogic)
       {
          this.plugins = new SortedDictionary<string, Type>();
          this.applicationLogic = applicationLogic;
