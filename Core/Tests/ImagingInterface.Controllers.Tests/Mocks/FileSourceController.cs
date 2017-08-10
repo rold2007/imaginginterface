@@ -91,21 +91,21 @@ namespace ImagingInterface.Controllers.Tests.Mocks
          }
       }
 
-      public bool IsDynamic(IRawPluginModel rawPluginModel)
-      {
-         return false;
-      }
+      ////public bool IsDynamic(IRawPluginModel rawPluginModel)
+      ////{
+      ////   return false;
+      ////}
 
-      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
-      {
-         ////if (this.fileSourceModel.ImageData == null)
-         ////   {
-         ////   this.fileSourceModel.ImageData = new byte[1, 1, 1];
-         ////   }
+      ////public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+      ////{
+      ////   ////if (this.fileSourceModel.ImageData == null)
+      ////   ////   {
+      ////   ////   this.fileSourceModel.ImageData = new byte[1, 1, 1];
+      ////   ////   }
 
-         ////return this.fileSourceModel.ImageData;
-         return null;
-      }
+      ////   ////return this.fileSourceModel.ImageData;
+      ////   return null;
+      ////}
 
       public void Disconnected()
       {

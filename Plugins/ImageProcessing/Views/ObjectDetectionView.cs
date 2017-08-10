@@ -27,7 +27,7 @@ namespace ImageProcessing.Views
       {
          get
          {
-            return this.objectDetectionController.RawPluginModel.DisplayName;
+            return this.objectDetectionController.DisplayName;
          }
       }
 

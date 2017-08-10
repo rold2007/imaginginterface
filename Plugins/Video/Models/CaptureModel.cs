@@ -8,7 +8,7 @@ namespace Video.Models
    using System.Diagnostics;
    using ImagingInterface.Plugins;
 
-   public class CaptureModel : IRawPluginModel, ICloneable ////: ICaptureModel
+   public class CaptureModel : ICloneable ////: ICaptureModel
    {
       public string DisplayName
       {

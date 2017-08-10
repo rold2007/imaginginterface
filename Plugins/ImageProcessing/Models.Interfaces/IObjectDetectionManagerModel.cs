@@ -6,7 +6,7 @@ namespace ImageProcessing.Models
 {
    using ImagingInterface.Plugins;
 
-   public interface IObjectDetectionManagerModel : IRawPluginModel
+   public interface IObjectDetectionManagerModel
       {
       }
    }

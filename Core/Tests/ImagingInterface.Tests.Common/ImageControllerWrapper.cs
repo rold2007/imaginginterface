@@ -121,13 +121,13 @@ namespace ImagingInterface.Tests.Common
          ////imageController.Closed -= this.ImageController_Closed;
          }
 
-      private void ImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
-         {
-         ImageController imageController = sender as ImageController;
+      ////private void ImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
+      ////   {
+      ////   ImageController imageController = sender as ImageController;
 
-         this.displayUpdateCountdownEvent.Signal();
+      ////   this.displayUpdateCountdownEvent.Signal();
 
-         ////imageController.DisplayUpdated -= this.ImageController_DisplayUpdated;
-         }
+      ////   ////imageController.DisplayUpdated -= this.ImageController_DisplayUpdated;
+      ////   }
       }
    }

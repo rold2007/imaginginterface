@@ -32,12 +32,6 @@ namespace ImageProcessing.Controllers
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-      {
-         get; // ncrunch: no coverage
-         private set; // ncrunch: no coverage
-      }
-
       ////public IRawPluginModel RawPluginModel
       ////   {
       ////   get
@@ -74,20 +68,20 @@ namespace ImageProcessing.Controllers
          }
       }
 
-      public bool IsDynamic(IRawPluginModel rawPluginModel)
-      {
-         return false;
-      }
+      ////public bool IsDynamic(IRawPluginModel rawPluginModel)
+      ////{
+      ////   return false;
+      ////}
 
-      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
-      {
-         ////IMemorySourceModel memorySourceModel = rawPluginModel as IMemorySourceModel;
+      ////public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+      ////{
+      ////   ////IMemorySourceModel memorySourceModel = rawPluginModel as IMemorySourceModel;
 
-         ////Debug.Assert(memorySourceModel.ImageData != null, "The image data should never be null.");
+      ////   ////Debug.Assert(memorySourceModel.ImageData != null, "The image data should never be null.");
 
-         ////return memorySourceModel.ImageData;
-         return null;
-      }
+      ////   ////return memorySourceModel.ImageData;
+      ////   return null;
+      ////}
 
       public void Initialize()
       {

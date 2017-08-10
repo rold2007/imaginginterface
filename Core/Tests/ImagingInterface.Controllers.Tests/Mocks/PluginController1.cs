@@ -10,29 +10,16 @@ namespace ImagingInterface.Controllers.Tests.Mocks
 
    public class PluginController1 : IPluginController, IImageProcessingService
       {
-      public PluginController1(PluginModel1 pluginModel)
-         {
-         ////this.RawPluginView = pluginView;
-         this.RawPluginModel = pluginModel;
+      private PluginModel1 pluginModel = new PluginModel1();
 
-         this.RawPluginModel.DisplayName = "Plugin1";
+      public PluginController1()
+         {
+         this.pluginModel.DisplayName = "Plugin1";
          }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
-
-      public IRawPluginView RawPluginView
-         {
-         get;
-         private set;
-         }
-
-      public IRawPluginModel RawPluginModel
-         {
-         get;
-         private set;
-         }
 
       public bool Active
          {
@@ -66,7 +53,7 @@ namespace ImagingInterface.Controllers.Tests.Mocks
             }
          }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
          return imageData.Clone() as byte[,,];
          }

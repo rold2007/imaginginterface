@@ -35,14 +35,6 @@ namespace ImageProcessing.Controllers
       ////      }
       ////   }
 
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.invertModel;
-            }
-         }
-
       public bool Active
          {
          get
@@ -50,6 +42,14 @@ namespace ImageProcessing.Controllers
             return true;
             }
          }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.invertModel.DisplayName;
+         }
+      }
 
       public void Initialize()
          {
@@ -74,7 +74,7 @@ namespace ImageProcessing.Controllers
          }
          }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
          if (imageData.GetLength(2) == 1)
             {

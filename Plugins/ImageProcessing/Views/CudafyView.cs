@@ -45,7 +45,7 @@ namespace ImageProcessing.Views
       {
          get
          {
-            return this.cudafyController.RawPluginModel.DisplayName;
+            return this.cudafyController.DisplayName;
          }
       }
 

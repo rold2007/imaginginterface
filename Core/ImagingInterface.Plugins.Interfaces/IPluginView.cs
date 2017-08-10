@@ -4,7 +4,7 @@
 
 namespace ImagingInterface.Plugins
 {
-    public interface IPluginView : IRawPluginView
+    public interface IPluginView
    {
         string DisplayName
         {

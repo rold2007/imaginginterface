@@ -6,7 +6,7 @@ namespace ImagingInterface.Controllers.Tests.Mocks
 {
    using ImagingInterface.Plugins;
 
-   public class PluginModel2 : IRawPluginModel
+   public class PluginModel2
       {
       public string DisplayName
          {

@@ -49,19 +49,19 @@ namespace Video.Controllers
       ////      }
       ////   }
 
-      public IRawPluginModel RawPluginModel
-      {
-         get
-         {
-            return this.captureModel;
-         }
-      }
-
       public bool Active
       {
          get
          {
             return true;
+         }
+      }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.captureModel.DisplayName;
          }
       }
 
@@ -107,85 +107,85 @@ namespace Video.Controllers
          }
       }
 
-      public bool IsDynamic(IRawPluginModel rawPluginModel)
-      {
-         CaptureModel captureModel = rawPluginModel as CaptureModel;
+      ////public bool IsDynamic(IRawPluginModel rawPluginModel)
+      ////{
+      ////   CaptureModel captureModel = rawPluginModel as CaptureModel;
 
-         return captureModel.LiveGrabRunning;
-      }
+      ////   return captureModel.LiveGrabRunning;
+      ////}
 
-      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
-      {
-         Debug.Assert(rawPluginModel != null, "We should never send a null parameter to InitializeImageSourceController.");
+      ////public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+      ////{
+      ////   Debug.Assert(rawPluginModel != null, "We should never send a null parameter to InitializeImageSourceController.");
 
-         CaptureModel captureModel = rawPluginModel as CaptureModel;
+      ////   CaptureModel captureModel = rawPluginModel as CaptureModel;
 
-         Debug.Assert(captureModel != null, "Something went wrong with the cast.");
+      ////   Debug.Assert(captureModel != null, "Something went wrong with the cast.");
 
-         // Initialize first grab
-         if (captureModel.LastImageData == null)
-         {
-            if (this.captureWrapper.Grab())
-            {
-               this.GrabFirstFrame();
-            }
+      ////   // Initialize first grab
+      ////   if (captureModel.LastImageData == null)
+      ////   {
+      ////      if (this.captureWrapper.Grab())
+      ////      {
+      ////         this.GrabFirstFrame();
+      ////      }
 
-            if (this.captureWrapper.CaptureAllocated)
-            {
-               using (UMat image = this.captureWrapper.RetrieveFrame())
-               using (Image<Rgb, byte> imageData = image.ToImage<Rgb, byte>())
-               {
-                  captureModel.LastImageData = imageData.Data;
-                  captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
-               }
-            }
-         }
-         else
-         {
-            if (captureModel.LiveGrabRunning)
-            {
-               Debug.Assert(this.captureWrapper.CaptureAllocated, "The capture should have been allocated before launching NextImageData. This is done by calling the Grab() method.");
+      ////      if (this.captureWrapper.CaptureAllocated)
+      ////      {
+      ////         using (UMat image = this.captureWrapper.RetrieveFrame())
+      ////         using (Image<Rgb, byte> imageData = image.ToImage<Rgb, byte>())
+      ////         {
+      ////            captureModel.LastImageData = imageData.Data;
+      ////            captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
+      ////         }
+      ////      }
+      ////   }
+      ////   else
+      ////   {
+      ////      if (captureModel.LiveGrabRunning)
+      ////      {
+      ////         Debug.Assert(this.captureWrapper.CaptureAllocated, "The capture should have been allocated before launching NextImageData. This is done by calling the Grab() method.");
 
-               long timeSinceLastGrab = captureModel.TimeSinceLastGrab.ElapsedMilliseconds;
+      ////         long timeSinceLastGrab = captureModel.TimeSinceLastGrab.ElapsedMilliseconds;
 
-               if (timeSinceLastGrab > this.captureWrapper.FramePeriod)
-               {
-                  using (UMat image = this.captureWrapper.RetrieveFrame())
-                  using (Image<Rgb, byte> imageData = image.ToImage<Rgb, byte>())
-                  {
-                     captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
+      ////         if (timeSinceLastGrab > this.captureWrapper.FramePeriod)
+      ////         {
+      ////            using (UMat image = this.captureWrapper.RetrieveFrame())
+      ////            using (Image<Rgb, byte> imageData = image.ToImage<Rgb, byte>())
+      ////            {
+      ////               captureModel.TimeSinceLastGrab = Stopwatch.StartNew();
 
-                     // Keep a copy of the last grabbed image to give it when when the grab is stopped and an image processing is applied
-                     captureModel.LastImageData = imageData.Data;
-                  }
-               }
-               else
-               {
-                  // Need to throttle the grab otherwise it uses 100% CPU for nothing
-                  int waitTime = Convert.ToInt32(this.captureWrapper.FramePeriod - timeSinceLastGrab - 5);
+      ////               // Keep a copy of the last grabbed image to give it when when the grab is stopped and an image processing is applied
+      ////               captureModel.LastImageData = imageData.Data;
+      ////            }
+      ////         }
+      ////         else
+      ////         {
+      ////            // Need to throttle the grab otherwise it uses 100% CPU for nothing
+      ////            int waitTime = Convert.ToInt32(this.captureWrapper.FramePeriod - timeSinceLastGrab - 5);
 
-                  if (waitTime > 0)
-                  {
-                     System.Threading.Thread.Sleep(waitTime);
-                  }
-               }
-            }
-         }
+      ////            if (waitTime > 0)
+      ////            {
+      ////               System.Threading.Thread.Sleep(waitTime);
+      ////            }
+      ////         }
+      ////      }
+      ////   }
 
-         if (captureModel.LastImageData != null)
-         {
-            return captureModel.LastImageData;
-         }
-         else
-         {
-            using (Image<Rgb, byte> errorImage = new Image<Rgb, byte>(640, 480))
-            {
-               errorImage.Draw("Unable to initialize camera.", new Point(0, 32), FontFace.HersheyPlain, 1.0, new Rgb(Color.Red));
+      ////   if (captureModel.LastImageData != null)
+      ////   {
+      ////      return captureModel.LastImageData;
+      ////   }
+      ////   else
+      ////   {
+      ////      using (Image<Rgb, byte> errorImage = new Image<Rgb, byte>(640, 480))
+      ////      {
+      ////         errorImage.Draw("Unable to initialize camera.", new Point(0, 32), FontFace.HersheyPlain, 1.0, new Rgb(Color.Red));
 
-               return errorImage.Data;
-            }
-         }
-      }
+      ////         return errorImage.Data;
+      ////      }
+      ////   }
+      ////}
 
       public void Disconnected()
       {
@@ -240,16 +240,16 @@ namespace Video.Controllers
          }
       }
 
-      private void LiveGrabImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
-      {
-         CaptureModel captureModel = e.RawPluginModel as CaptureModel;
+      ////private void LiveGrabImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
+      ////{
+         ////CaptureModel captureModel = e.RawPluginModel as CaptureModel;
 
-         // Received the new model indicating there will be no more live update
-         if (!captureModel.LiveGrabRunning)
-         {
-            this.ResetGrabLive();
-         }
-      }
+         ////// Received the new model indicating there will be no more live update
+         ////if (!captureModel.LiveGrabRunning)
+         ////{
+         ////   this.ResetGrabLive();
+         ////}
+      ////}
 
       private void ResetGrabLive()
       {
@@ -271,12 +271,12 @@ namespace Video.Controllers
          this.SnapShotFinished(imageController);
       }
 
-      private void SnapShot_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
-      {
-         ImageController imageController = sender as ImageController;
+      ////private void SnapShot_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
+      ////{
+      ////   ImageController imageController = sender as ImageController;
 
-         this.SnapShotFinished(imageController);
-      }
+      ////   this.SnapShotFinished(imageController);
+      ////}
 
       private void SnapShotFinished(ImageController imageController)
       {

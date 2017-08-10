@@ -8,6 +8,6 @@ namespace ImageProcessing.Views
 
    public interface IObjectDetectionManagerView : IPluginView
       {
-      void AddView(IRawPluginView rawPluginView);
+      ////void AddView(IRawPluginView rawPluginView);
       }
    }

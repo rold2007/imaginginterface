@@ -14,18 +14,6 @@ namespace ImagingInterface.Controllers.Tests.Mocks
 
       public event EventHandler Closed;
 
-      public IRawPluginView RawPluginView
-         {
-         get;
-         private set;
-         }
-
-      public IRawPluginModel RawPluginModel
-         {
-         get;
-         private set;
-         }
-
       public bool Active
          {
          get
@@ -50,7 +38,7 @@ namespace ImagingInterface.Controllers.Tests.Mocks
          }
          }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
          return imageData.Clone() as byte[,,];
          }

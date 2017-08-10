@@ -37,19 +37,19 @@ namespace ImageProcessing.Controllers
       ////      }
       ////   }
 
-      public IRawPluginModel RawPluginModel
-      {
-         get
-         {
-            return this.objectDetectionModel;
-         }
-      }
-
       public bool Active
       {
          get
          {
             return false;
+         }
+      }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.objectDetectionModel.DisplayName;
          }
       }
 
@@ -91,7 +91,7 @@ namespace ImageProcessing.Controllers
          this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
       }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          Dictionary<string, List<Point>> predictions = this.objectDetector.Test(imageData);
 

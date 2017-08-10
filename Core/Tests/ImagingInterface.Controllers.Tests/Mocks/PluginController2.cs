@@ -10,29 +10,16 @@ namespace ImagingInterface.Controllers.Tests.Mocks
 
    public class PluginController2 : IPluginController
       {
-      public PluginController2(PluginModel2 pluginModel)
-         {
-         ////this.RawPluginView = pluginView;
-         this.RawPluginModel = pluginModel;
+      private PluginModel2 pluginModel = new PluginModel2();
 
-         this.RawPluginModel.DisplayName = "Plugin2";
+      public PluginController2()
+         {
+         this.pluginModel.DisplayName = "Plugin2";
          }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
-
-      public IRawPluginView RawPluginView
-         {
-         get;
-         private set;
-         }
-
-      public IRawPluginModel RawPluginModel
-         {
-         get;
-         private set;
-         }
 
       public bool Active
          {

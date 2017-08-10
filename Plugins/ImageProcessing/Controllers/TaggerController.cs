@@ -47,14 +47,6 @@ namespace ImageProcessing.Controllers
       ////      }
       ////   }
 
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.taggerModel;
-            }
-         }
-
       public bool Active
          {
          get
@@ -62,6 +54,14 @@ namespace ImageProcessing.Controllers
             return true;
             }
          }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.taggerModel.DisplayName;
+         }
+      }
 
       public void Initialize()
          {
@@ -96,7 +96,7 @@ namespace ImageProcessing.Controllers
          }
          }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
          int imageWidth = imageData.GetLength(1);
          int imageHeight = imageData.GetLength(0);
@@ -211,12 +211,12 @@ namespace ImageProcessing.Controllers
             }
          }
 
-      private void RegisteredImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
-         {
-         ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
+      ////private void RegisteredImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
+      ////   {
+      ////   ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
 
-         this.ExtractPoints();
-         }
+      ////   this.ExtractPoints();
+      ////   }
 
       private void RegisteredImageController_SelectionChanged(object sender, SelectionChangedEventArgs e)
          {

@@ -21,7 +21,7 @@ namespace ImagingInterface.Controllers.Services
          int activeImageIndex = this.imageManagerService.ActiveImageIndex;
          IImageSource imageSource = this.imageManagerService.GetImageFromIndex(activeImageIndex);
 
-         byte[,,] updatedImageData = imageProcessingController.ProcessImageData(imageSource.OriginalImageData, null, null);
+         byte[,,] updatedImageData = imageProcessingController.ProcessImageData(imageSource.OriginalImageData, null);
 
          imageSource.UpdateImageData(updatedImageData);
       }

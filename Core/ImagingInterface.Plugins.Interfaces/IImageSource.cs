@@ -25,9 +25,9 @@ namespace ImagingInterface.Plugins
          get;
       }
 
-      bool IsDynamic(IRawPluginModel rawPluginModel);
+      ////bool IsDynamic(IRawPluginModel rawPluginModel);
 
-      byte[,,] NextImageData(IRawPluginModel rawPluginModel);
+      ////byte[,,] NextImageData(IRawPluginModel rawPluginModel);
 
       void UpdateImageData(byte[,,] updatedImageData);
 
