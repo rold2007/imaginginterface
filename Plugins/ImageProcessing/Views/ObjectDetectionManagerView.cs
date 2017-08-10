@@ -23,7 +23,7 @@ namespace ImageProcessing.Views
       {
          get
          {
-            return this.objectDetectionManagerController.RawPluginModel.DisplayName;
+            return this.objectDetectionManagerController.DisplayName;
          }
       }
 
@@ -39,11 +39,11 @@ namespace ImageProcessing.Views
       {
       }
 
-      public void AddView(IRawPluginView rawPluginView)
-      {
-         Control pluginViewControl = rawPluginView as Control;
+      ////public void AddView(IRawPluginView rawPluginView)
+      ////{
+      ////   Control pluginViewControl = rawPluginView as Control;
 
-         this.flowLayoutPanel.Controls.Add(pluginViewControl);
-      }
+      ////   this.flowLayoutPanel.Controls.Add(pluginViewControl);
+      ////}
    }
 }

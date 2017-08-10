@@ -20,7 +20,7 @@ namespace ImagingInterface.Controllers
 
       // private bool closing;
       // private bool closed;
-      private List<Tuple<IImageProcessingService, IRawPluginModel>> imageProcessingControllers;
+      ////private List<Tuple<IImageProcessingService, IRawPluginModel>> imageProcessingControllers;
 
       // private Task<byte[,,]> lastFetchNextImageFromSourceTask;
       // private Task lastDisplayNextImageTask;
@@ -36,7 +36,7 @@ namespace ImagingInterface.Controllers
       {
          this.imageService = imageService;
 
-         this.imageProcessingControllers = new List<Tuple<IImageProcessingService, IRawPluginModel>>();
+         ////this.imageProcessingControllers = new List<Tuple<IImageProcessingService, IRawPluginModel>>();
 
          // this.lastFetchNextImageFromSourceTask = null;
          // this.lastDisplayNextImageTask = null;

@@ -54,14 +54,6 @@ namespace ImageProcessing.Controllers
       ////      }
       ////   }
 
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.cudafyModel;
-            }
-         }
-
       public bool Active
          {
          get
@@ -69,6 +61,14 @@ namespace ImageProcessing.Controllers
             return true;
             }
          }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.cudafyModel.DisplayName;
+         }
+      }
 
       public void Dispose()
          {
@@ -107,9 +107,9 @@ namespace ImageProcessing.Controllers
             }
          }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
-         ICudafyModel cudafyModel = rawPluginModel as ICudafyModel;
+         CudafyModel cudafyModel = this.cudafyModel;
 
          if (cudafyModel.Add != 0 && !string.IsNullOrEmpty(cudafyModel.GPUName))
             {

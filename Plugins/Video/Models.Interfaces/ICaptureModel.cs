@@ -8,7 +8,7 @@ namespace Video.Models
    using System.Diagnostics;
    using ImagingInterface.Plugins;
 
-   public interface ICaptureModel : IRawPluginModel, ICloneable
+   public interface ICaptureModel : ICloneable
       {
       byte[,,] LastImageData
          {

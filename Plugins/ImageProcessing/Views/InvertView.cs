@@ -27,7 +27,7 @@ namespace ImageProcessing.Views
       {
          get
          {
-            return this.invertController.RawPluginModel.DisplayName;
+            return this.invertController.DisplayName;
          }
       }
 

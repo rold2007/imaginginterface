@@ -41,18 +41,6 @@ namespace ImagingInterface.Tests.Common.Mocks
          }
       }
 
-      public IRawPluginView RawPluginView
-      {
-         get;
-         private set;
-      }
-
-      public IRawPluginModel RawPluginModel
-      {
-         get;
-         set;
-      }
-
       public bool Active
       {
          get
@@ -61,15 +49,15 @@ namespace ImagingInterface.Tests.Common.Mocks
          }
       }
 
-      public bool IsDynamic(IRawPluginModel rawPluginModel)
-      {
-         return false;
-      }
+      ////public bool IsDynamic(IRawPluginModel rawPluginModel)
+      ////{
+      ////   return false;
+      ////}
 
-      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
-      {
-         return this.OriginalImageData;
-      }
+      ////public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+      ////{
+      ////   return this.OriginalImageData;
+      ////}
 
       public void Initialize()
       {

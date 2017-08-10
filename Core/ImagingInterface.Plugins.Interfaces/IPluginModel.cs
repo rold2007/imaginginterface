@@ -4,7 +4,7 @@
 
 namespace ImagingInterface.Plugins
 {
-   public interface IPluginModel : IRawPluginModel
+   public interface IPluginModel
       {
       }
    }

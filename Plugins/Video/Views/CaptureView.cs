@@ -29,7 +29,7 @@ namespace Video.Views
       {
          get
          {
-            return this.captureController.RawPluginModel.DisplayName;
+            return this.captureController.DisplayName;
          }
       }
 

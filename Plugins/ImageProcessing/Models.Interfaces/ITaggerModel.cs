@@ -9,7 +9,7 @@ namespace ImageProcessing.Models
    using System.Drawing;
    using ImagingInterface.Plugins;
 
-   public interface ITaggerModel : IRawPluginModel, ICloneable
+   public interface ITaggerModel : ICloneable
       {
       string AddedLabel
          {

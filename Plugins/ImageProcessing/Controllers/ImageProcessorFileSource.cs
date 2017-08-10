@@ -107,23 +107,23 @@ namespace ImageProcessing.Controllers
          }
       }
 
-      public bool IsDynamic(IRawPluginModel rawPluginModel)
-      {
-         return false;
-      }
+      ////public bool IsDynamic(IRawPluginModel rawPluginModel)
+      ////{
+      ////   return false;
+      ////}
 
-      public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
-      {
-         ////IFileSourceModel fileSourceModel = rawPluginModel as IFileSourceModel;
+      ////public byte[,,] NextImageData(IRawPluginModel rawPluginModel)
+      ////{
+      ////   ////IFileSourceModel fileSourceModel = rawPluginModel as IFileSourceModel;
 
-         ////if (fileSourceModel.ImageData == null)
-         ////   {
-         ////   this.LoadImage();
-         ////   }
+      ////   ////if (fileSourceModel.ImageData == null)
+      ////   ////   {
+      ////   ////   this.LoadImage();
+      ////   ////   }
 
-         ////return fileSourceModel.ImageData;
-         return null;
-      }
+      ////   ////return fileSourceModel.ImageData;
+      ////   return null;
+      ////}
 
       public void UpdateImageData(byte[,,] updatedImageData)
       {

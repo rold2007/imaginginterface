@@ -37,14 +37,6 @@ namespace ImageProcessing.Controllers
       ////      }
       ////   }
 
-      public IRawPluginModel RawPluginModel
-         {
-         get
-            {
-            return this.objectDetectionManagerModel;
-            }
-         }
-
       public bool Active
          {
          get
@@ -52,6 +44,14 @@ namespace ImageProcessing.Controllers
             return true;
             }
          }
+
+      public string DisplayName
+      {
+         get
+         {
+            return this.objectDetectionManagerModel.DisplayName;
+         }
+      }
 
       public void Initialize()
          {

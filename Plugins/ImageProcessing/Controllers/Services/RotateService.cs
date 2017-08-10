@@ -39,7 +39,7 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData, IRawPluginModel rawPluginModel)
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          if (imageData.GetLength(2) == 1)
          {

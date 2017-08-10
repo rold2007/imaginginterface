@@ -5,9 +5,8 @@
 namespace ImageProcessing.Models
 {
    using System;
-   using ImagingInterface.Plugins;
 
-   public interface IObjectDetectionModel : IRawPluginModel, ICloneable
+   public interface IObjectDetectionModel : ICloneable
       {
       }
    }

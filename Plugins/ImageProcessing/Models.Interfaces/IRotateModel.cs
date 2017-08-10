@@ -7,7 +7,7 @@ namespace ImageProcessing.Models
    using System;
    using ImagingInterface.Plugins;
 
-   public interface IRotateModel : IRawPluginModel, ICloneable
+   public interface IRotateModel : ICloneable
       {
       double Angle
          {

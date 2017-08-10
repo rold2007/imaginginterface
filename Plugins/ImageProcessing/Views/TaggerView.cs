@@ -29,7 +29,7 @@ namespace ImageProcessing.Views
       {
          get
          {
-            return this.taggerController.RawPluginModel.DisplayName;
+            return this.taggerController.DisplayName;
          }
       }
 
