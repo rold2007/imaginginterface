@@ -6,7 +6,7 @@ namespace ImageProcessing.Models
 {
    using ImagingInterface.Plugins;
 
-   public interface IInvertModel : IPluginModel
+   public interface IInvertModel
       {
       }
    }
