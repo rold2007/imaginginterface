@@ -7,7 +7,7 @@ namespace ImageProcessing.Models
    using System;
    using ImagingInterface.Plugins;
 
-   public interface ICudafyModel : IPluginModel, ICloneable
+   public interface ICudafyModel : ICloneable
       {
       string GPUName
          {

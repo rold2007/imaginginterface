@@ -60,8 +60,6 @@
     <Compile Include="IImageView.cs" />
     <Compile Include="IImageViewFactory.cs" />
     <Compile Include="IMemorySource.cs" />
-    <Compile Include="IPluginController.cs" />
-    <Compile Include="IPluginModel.cs" />
     <Compile Include="IPluginView.cs" />
     <Compile Include="IPluginViewFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

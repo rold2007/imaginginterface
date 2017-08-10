@@ -12,8 +12,6 @@ namespace Video.Controllers
    using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
    using ImagingInterface.Controllers;
-   using ImagingInterface.Plugins;
-   using ImagingInterface.Plugins.EventArguments;
    using Video.Models;
 
    public class CaptureController

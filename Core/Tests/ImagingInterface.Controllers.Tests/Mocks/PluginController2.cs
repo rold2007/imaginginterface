@@ -8,7 +8,7 @@ namespace ImagingInterface.Controllers.Tests.Mocks
    using System.ComponentModel;
    using ImagingInterface.Plugins;
 
-   public class PluginController2 : IPluginController
+   public class PluginController2
       {
       private PluginModel2 pluginModel = new PluginModel2();
 

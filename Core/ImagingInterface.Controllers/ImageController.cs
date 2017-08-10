@@ -29,8 +29,8 @@ namespace ImagingInterface.Controllers
       private Stopwatch lastDisplayUpdate;
 
       // private double updatePeriod;
-      private Dictionary<IPluginController, int> asyncPluginControllers;
-      private HashSet<IPluginController> closingPluginControllers;
+      ////private Dictionary<IPluginController, int> asyncPluginControllers;
+      ////private HashSet<IPluginController> closingPluginControllers;
 
       public ImageController(ImageService imageService)
       {
@@ -40,8 +40,8 @@ namespace ImagingInterface.Controllers
 
          // this.lastFetchNextImageFromSourceTask = null;
          // this.lastDisplayNextImageTask = null;
-         this.asyncPluginControllers = new Dictionary<IPluginController, int>();
-         this.closingPluginControllers = new HashSet<IPluginController>();
+         ////this.asyncPluginControllers = new Dictionary<IPluginController, int>();
+         ////this.closingPluginControllers = new HashSet<IPluginController>();
 
          this.lastDisplayUpdate = Stopwatch.StartNew();
 
