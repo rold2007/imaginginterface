@@ -1,8 +1,5 @@
 ﻿<ProjectConfiguration>
   <Settings>
-    <IgnoredTests>
-      <AllTestsSelector />
-    </IgnoredTests>
     <IncludeStaticReferencesInWorkspace>False</IncludeStaticReferencesInWorkspace>
     <PreloadReferencedAssemblies>True</PreloadReferencedAssemblies>
     <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>

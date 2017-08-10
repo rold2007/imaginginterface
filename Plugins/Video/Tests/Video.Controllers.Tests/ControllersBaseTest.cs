@@ -1,4 +1,8 @@
-﻿namespace Video.Controllers.Tests
+﻿// <copyright file="ControllersBaseTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace Video.Controllers.Tests
    {
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
@@ -13,20 +17,15 @@
 
    public abstract class ControllersBaseTest : BaseTest
       {
-      public Container Container
-         {
-         get;
-         private set;
-         }
-
       [SetUp]
       protected override void SetUp()
          {
          base.SetUp();
 
-         this.Bootstrap();
+         ////this.Bootstrap();
          }
 
+      /*
       private void Bootstrap()
          {
          this.Container = new Container();
@@ -55,6 +54,6 @@
          this.Container.Register<CaptureModel, CaptureModel>();
          this.Container.Register<IImageModel, ImageModel>();
          ////this.Container.Register<IMemorySourceModel, MemorySourceModel>();
-         }
+         }*/
       }
    }

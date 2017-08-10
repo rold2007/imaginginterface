@@ -1,37 +1,36 @@
-﻿namespace ImageProcessing.Controllers.Tests
+﻿// <copyright file="ControllersBaseTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using ImageProcessing.Controllers;
-    using ImageProcessing.Models;
-    using ImageProcessing.ObjectDetection;
-    using ImagingInterface.Controllers;
-    using ImagingInterface.Models;
-    using ImagingInterface.Plugins;
-    using ImagingInterface.Tests.Common;
-    using ImagingInterface.Tests.Common.Mocks;
-    using NUnit.Framework;
+   using System;
+   using System.Collections.Generic;
+   using System.Linq;
+   using System.Text;
+   using System.Threading;
+   using System.Threading.Tasks;
+   using ImageProcessing.Controllers;
+   using ImageProcessing.Models;
+   using ImageProcessing.ObjectDetection;
+   using ImagingInterface.Controllers;
+   using ImagingInterface.Models;
+   using ImagingInterface.Plugins;
+   using ImagingInterface.Tests.Common;
+   using ImagingInterface.Tests.Common.Mocks;
+   using NUnit.Framework;
 
-    public abstract class ControllersBaseTest : BaseTest
-    {
-        public Container Container
-        {
-            get;
-            private set;
-        }
+   public abstract class ControllersBaseTest : BaseTest
+   {
+      [SetUp]
+      protected override void SetUp()
+      {
+         base.SetUp();
 
-        [SetUp]
-        protected override void SetUp()
-        {
-            base.SetUp();
+         ////this.Bootstrap();
+      }
 
-            this.Bootstrap();
-        }
-
+      /*
         protected void Bootstrap()
         {
             this.Container = new Container();
@@ -81,6 +80,6 @@
             // Processing
             this.Container.RegisterSingleton<IObjectDetector, ObjectDetector>();
             this.Container.RegisterSingleton<ITagger, Tagger>();
-        }
-    }
+        }*/
+   }
 }
