@@ -1,4 +1,8 @@
-﻿namespace ImageProcessing.Controllers.Tests
+﻿// <copyright file="MemorySourceControllerTest.cs" company="David Rolland">
+// Copyright (c) David Rolland. All rights reserved.
+// </copyright>
+
+namespace ImageProcessing.Controllers.Tests
    {
    using System;
    using System.Collections.Generic;
