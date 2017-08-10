@@ -4,8 +4,6 @@
 
 namespace ImagingInterface.Controllers.Tests.Mocks
 {
-   using ImagingInterface.Plugins;
-
    public class PluginModel1
       {
       public string DisplayName

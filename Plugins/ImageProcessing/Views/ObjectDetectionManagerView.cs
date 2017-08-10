@@ -6,7 +6,6 @@ namespace ImageProcessing.Views
 {
    using System.Windows.Forms;
    using ImageProcessing.Controllers;
-   using ImagingInterface.Plugins;
 
    public partial class ObjectDetectionManagerView : UserControl, IObjectDetectionManagerView
    {

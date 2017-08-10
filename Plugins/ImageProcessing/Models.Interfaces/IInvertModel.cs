@@ -4,8 +4,6 @@
 
 namespace ImageProcessing.Models
 {
-   using ImagingInterface.Plugins;
-
    public interface IInvertModel
       {
       }

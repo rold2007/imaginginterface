@@ -6,7 +6,6 @@ namespace Video.Models
 {
    using System;
    using System.Diagnostics;
-   using ImagingInterface.Plugins;
 
    public interface ICaptureModel : ICloneable
       {

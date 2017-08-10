@@ -7,7 +7,6 @@ namespace ImageProcessing.Controllers
    using System;
    using System.ComponentModel;
    using ImageProcessing.Models;
-   using ImagingInterface.Plugins;
 
    public class ObjectDetectionManagerController
       {

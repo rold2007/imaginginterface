@@ -7,7 +7,6 @@ namespace ImagingInterface.Controllers
    using System;
    using System.Collections.Generic;
    using ImagingInterface.Controllers.Services;
-   using ImagingInterface.Controllers.Views;
    using ImagingInterface.Plugins;
 
    public class ImageManagerController

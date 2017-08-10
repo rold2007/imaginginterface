@@ -6,7 +6,6 @@ namespace ImagingInterface.Controllers.Tests.Mocks
 {
    using System;
    using System.ComponentModel;
-   using ImagingInterface.Plugins;
 
    public class PluginController2
       {

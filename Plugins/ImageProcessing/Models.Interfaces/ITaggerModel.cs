@@ -7,7 +7,6 @@ namespace ImageProcessing.Models
    using System;
    using System.Collections.Generic;
    using System.Drawing;
-   using ImagingInterface.Plugins;
 
    public interface ITaggerModel : ICloneable
       {

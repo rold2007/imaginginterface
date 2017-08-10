@@ -5,7 +5,6 @@
 namespace ImagingInterface.Controllers.Tests
 {
    using ImagingInterface.Controllers.Services;
-   using ImagingInterface.Controllers.Tests.Mocks;
    using NUnit.Framework;
 
    [TestFixture]
