@@ -9,7 +9,10 @@ namespace ImagingInterface
    using System.Diagnostics;
    using System.IO;
    using System.Reflection;
+   using System.Threading.Tasks;
    using System.Windows.Forms;
+   using ImageProcessor.Configuration;
+   using ImageProcessor.Imaging.Formats;
    using ImagingInterface.Controllers;
    using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Services;
@@ -34,6 +37,8 @@ namespace ImagingInterface
       [STAThread]
       public static void Main()
       {
+         LoadSupportedImageFormatsAsynchronously();
+
          TraceSource traceSource = new TraceSource("Critical", SourceLevels.Critical);
          Trace.AutoFlush = true;
 
@@ -66,6 +71,16 @@ namespace ImagingInterface
          {
             traceSource.TraceEvent(TraceEventType.Critical, 0, e.ToString());
          }
+      }
+
+      // Need to call this explicitely othwerwise the first image load is too slow (~2-3s)
+      // This is because ImageProcessor load all Accord.Net dll and scan the available classes.
+      public static async void LoadSupportedImageFormatsAsynchronously()
+      {
+         await Task.Run(() =>
+         {
+            IEnumerable<ISupportedImageFormat> supportedImageFormats = ImageProcessorBootstrapper.Instance.SupportedImageFormats;
+         });
       }
 
       private static void InitializePluginFolders()
