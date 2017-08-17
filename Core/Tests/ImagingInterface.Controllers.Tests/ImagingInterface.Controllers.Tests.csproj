@@ -117,10 +117,6 @@
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj">
-      <Project>{1692fc94-ec70-44c5-b856-694648bafa73}</Project>
-      <Name>ImagingInterface.Tests.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
