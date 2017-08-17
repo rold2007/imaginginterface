@@ -51,8 +51,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Video.Views", "Plugins\Vide
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Video.Views.Interfaces", "Plugins\Video\Views.Interfaces\Video.Views.Interfaces.csproj", "{F18DE59E-BBA4-4D41-B0B0-1EE3AD9F3978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagingInterface.Tests.Common", "Core\Tests\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj", "{1692FC94-EC70-44C5-B856-694648BAFA73}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.Controllers", "Plugins\ImageProcessing\Controllers\ImageProcessing.Controllers.csproj", "{34BCE76C-484C-487D-8D6B-D3B475974183}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.Controllers.Interfaces", "Plugins\ImageProcessing\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj", "{0F3237A4-3DA2-40CC-924F-D2431376E3BA}"
@@ -77,8 +75,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.ObjectDetection", "Plugins\ImageProcessing\ObjectDetection\ImageProcessing.ObjectDetection.csproj", "{FED322AE-2F56-46A3-BABC-827DAF264E79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.ObjectDetection.Interfaces", "Plugins\ImageProcessing\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj", "{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.ObjectDetection.Tests", "Plugins\ImageProcessing\Tests\ImageProcessing.ObjectDetection.Tests\ImageProcessing.ObjectDetection.Tests.csproj", "{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -192,14 +188,6 @@ Global
 		{F18DE59E-BBA4-4D41-B0B0-1EE3AD9F3978}.Release|x64.Build.0 = Release|x64
 		{F18DE59E-BBA4-4D41-B0B0-1EE3AD9F3978}.Release|x86.ActiveCfg = Release|x86
 		{F18DE59E-BBA4-4D41-B0B0-1EE3AD9F3978}.Release|x86.Build.0 = Release|x86
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Debug|x64.ActiveCfg = Debug|x64
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Debug|x64.Build.0 = Debug|x64
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Debug|x86.ActiveCfg = Debug|x86
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Debug|x86.Build.0 = Debug|x86
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Release|x64.ActiveCfg = Release|x64
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Release|x64.Build.0 = Release|x64
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Release|x86.ActiveCfg = Release|x86
-		{1692FC94-EC70-44C5-B856-694648BAFA73}.Release|x86.Build.0 = Release|x86
 		{34BCE76C-484C-487D-8D6B-D3B475974183}.Debug|x64.ActiveCfg = Debug|x64
 		{34BCE76C-484C-487D-8D6B-D3B475974183}.Debug|x64.Build.0 = Debug|x64
 		{34BCE76C-484C-487D-8D6B-D3B475974183}.Debug|x86.ActiveCfg = Debug|x86
@@ -272,14 +260,6 @@ Global
 		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}.Release|x64.Build.0 = Release|x64
 		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}.Release|x86.ActiveCfg = Release|x86
 		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC}.Release|x86.Build.0 = Release|x86
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Debug|x64.ActiveCfg = Debug|x64
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Debug|x64.Build.0 = Debug|x64
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Debug|x86.ActiveCfg = Debug|x86
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Debug|x86.Build.0 = Debug|x86
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Release|x64.ActiveCfg = Release|x64
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Release|x64.Build.0 = Release|x64
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Release|x86.ActiveCfg = Release|x86
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -303,7 +283,6 @@ Global
 		{07366931-0E9F-42CA-ADE2-610833B8F7C1} = {2F0A8319-E2E4-4F62-B824-67FF94D9E242}
 		{6FCD8595-A707-4CC4-96D8-03F30AFD9052} = {2F0A8319-E2E4-4F62-B824-67FF94D9E242}
 		{F18DE59E-BBA4-4D41-B0B0-1EE3AD9F3978} = {2F0A8319-E2E4-4F62-B824-67FF94D9E242}
-		{1692FC94-EC70-44C5-B856-694648BAFA73} = {2BFFCEBD-D5ED-4412-96A2-8DC5386C8854}
 		{34BCE76C-484C-487D-8D6B-D3B475974183} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
 		{0F3237A4-3DA2-40CC-924F-D2431376E3BA} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
 		{7FA43270-5E4A-4C3E-B366-2476B21087CD} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
@@ -313,7 +292,6 @@ Global
 		{4049789E-8C45-4BCA-AC3F-6135787D83D6} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
 		{FED322AE-2F56-46A3-BABC-827DAF264E79} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
 		{EBE8BF7D-D3E1-4EC3-8140-4BD8C71B01BC} = {80043AE3-B2EB-432A-9F30-DFCAB8418602}
-		{641FD9B9-404A-4C66-AA71-8DAF00FA08DC} = {B6881D31-4723-4A19-9E42-142D89526A4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {228037BB-651B-45AC-A28D-B9A709C9069E}
