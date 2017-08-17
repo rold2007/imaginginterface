@@ -6,11 +6,10 @@ namespace ImageProcessing.ObjectDetection.Tests
 {
    using System.Drawing;
    using ImageProcessing.ObjectDetection;
-   using ImagingInterface.Tests.Common;
    using NUnit.Framework;
 
    [TestFixture]
-   public class ObjectDetectorTest : BaseTest
+   public class ObjectDetectorTest
    {
       [Test]
       public void Constructor()

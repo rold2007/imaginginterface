@@ -110,10 +110,6 @@
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Core\Tests\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj">
-      <Project>{1692fc94-ec70-44c5-b856-694648bafa73}</Project>
-      <Name>ImagingInterface.Tests.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj">
       <Project>{0f3237a4-3da2-40cc-924f-d2431376e3ba}</Project>
       <Name>ImageProcessing.Controllers.Interfaces</Name>

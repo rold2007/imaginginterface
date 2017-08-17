@@ -9,18 +9,17 @@ namespace Video.Controllers.Tests
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Tests.Common;
    using NUnit.Framework;
    using Video.Controllers;
    using Video.Controllers.Tests.Mocks;
    using Video.Models;
 
-   public abstract class ControllersBaseTest : BaseTest
+   public abstract class ControllersBaseTest
       {
       [SetUp]
-      protected override void SetUp()
+      protected void SetUp()
          {
-         base.SetUp();
+         // base.SetUp();
 
          ////this.Bootstrap();
          }

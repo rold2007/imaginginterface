@@ -13,8 +13,6 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Models;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Tests.Common;
-   using ImagingInterface.Tests.Common.Mocks;
    using NUnit.Framework;
 
    [TestFixture]

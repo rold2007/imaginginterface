@@ -8,7 +8,6 @@ namespace Video.Controllers.Tests
    using System.Threading;
    using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Tests.Common;
    using NUnit.Framework;
    using Video.Controllers.Tests.Mocks;
    using Video.Models;

@@ -4,10 +4,9 @@
 
 namespace ImagingInterface.Controllers.Tests
 {
-   using ImagingInterface.Tests.Common;
    using NUnit.Framework;
 
-   public abstract class ControllersBaseTest : BaseTest
+   public abstract class ControllersBaseTest
       {
       // public Container Container
       //   {
@@ -15,9 +14,9 @@ namespace ImagingInterface.Controllers.Tests
       //   private set;
       //   }
       [SetUp]
-      protected override void SetUp()
+      protected void SetUp()
          {
-         base.SetUp();
+         // base.SetUp();
 
          // this.Bootstrap();
          }

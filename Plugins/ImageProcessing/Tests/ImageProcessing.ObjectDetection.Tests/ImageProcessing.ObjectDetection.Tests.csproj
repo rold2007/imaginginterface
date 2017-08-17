@@ -85,10 +85,6 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Core\Tests\ImagingInterface.Tests.Common\ImagingInterface.Tests.Common.csproj">
-      <Project>{1692fc94-ec70-44c5-b856-694648bafa73}</Project>
-      <Name>ImagingInterface.Tests.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
       <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
       <Name>ImageProcessing.ObjectDetection.Interfaces</Name>

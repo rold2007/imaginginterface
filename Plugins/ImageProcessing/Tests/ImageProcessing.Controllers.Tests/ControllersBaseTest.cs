@@ -16,16 +16,14 @@ namespace ImageProcessing.Controllers.Tests
    using ImagingInterface.Controllers;
    using ImagingInterface.Models;
    using ImagingInterface.Plugins;
-   using ImagingInterface.Tests.Common;
-   using ImagingInterface.Tests.Common.Mocks;
    using NUnit.Framework;
 
-   public abstract class ControllersBaseTest : BaseTest
+   public abstract class ControllersBaseTest
    {
       [SetUp]
-      protected override void SetUp()
+      protected void SetUp()
       {
-         base.SetUp();
+         // base.SetUp();
 
          ////this.Bootstrap();
       }
