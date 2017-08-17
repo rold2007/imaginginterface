@@ -14,42 +14,42 @@ namespace ImageProcessing.ObjectDetection.Tests
       [Test]
       public void Constructor()
          {
-         byte[,,] imageData = new byte[1, 1, 1];
-         FeatureComputer featureComputer = new FeatureComputer(null);
+         ////byte[,,] imageData = new byte[1, 1, 1];
+         ////FeatureComputer featureComputer = new FeatureComputer(null);
 
-         featureComputer = new FeatureComputer(imageData);
+         ////featureComputer = new FeatureComputer(imageData);
 
-         imageData = new byte[1, 1, 2];
+         ////imageData = new byte[1, 1, 2];
 
-         featureComputer = new FeatureComputer(imageData);
+         ////featureComputer = new FeatureComputer(imageData);
 
-         imageData = new byte[1, 1, 3];
+         ////imageData = new byte[1, 1, 3];
 
-         featureComputer = new FeatureComputer(imageData);
+         ////featureComputer = new FeatureComputer(imageData);
 
-         imageData = new byte[1, 1, 4];
+         ////imageData = new byte[1, 1, 4];
 
-         featureComputer = new FeatureComputer(imageData);
+         ////featureComputer = new FeatureComputer(imageData);
          }
 
       [Test]
       public void ComputeFeatures()
          {
-         byte[,,] imageData = new byte[1, 1, 1];
-         FeatureComputer featureComputer = new FeatureComputer(imageData);
-         float[] features;
+         ////byte[,,] imageData = new byte[1, 1, 1];
+         ////FeatureComputer featureComputer = new FeatureComputer(imageData);
+         ////float[] features;
 
-         features = featureComputer.ComputeFeatures(new Point(0, 0));
+         ////features = featureComputer.ComputeFeatures(new Point(0, 0));
 
-         imageData = new byte[1, 1, 3];
-         featureComputer = new FeatureComputer(imageData);
+         ////imageData = new byte[1, 1, 3];
+         ////featureComputer = new FeatureComputer(imageData);
 
-         features = featureComputer.ComputeFeatures(new Point(0, 0));
+         ////features = featureComputer.ComputeFeatures(new Point(0, 0));
 
-         imageData = new byte[50, 50, 3];
-         featureComputer = new FeatureComputer(imageData);
+         ////imageData = new byte[50, 50, 3];
+         ////featureComputer = new FeatureComputer(imageData);
 
-         features = featureComputer.ComputeFeatures(new Point(25, 25));
+         ////features = featureComputer.ComputeFeatures(new Point(25, 25));
          }
 
       [Test]
