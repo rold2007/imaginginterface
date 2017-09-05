@@ -4,7 +4,7 @@
 
 namespace ImageProcessing.Models
 {
-   public class ObjectDetectionModel : IObjectDetectionModel
+   public class ObjectDetectionModel
       {
       public string DisplayName
          {

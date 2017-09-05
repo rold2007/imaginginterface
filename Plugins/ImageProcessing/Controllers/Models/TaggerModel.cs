@@ -7,7 +7,7 @@ namespace ImageProcessing.Models
    using System.Collections.Generic;
    using System.Drawing;
 
-   public class TaggerModel : ITaggerModel
+   public class TaggerModel
       {
       public TaggerModel()
          {

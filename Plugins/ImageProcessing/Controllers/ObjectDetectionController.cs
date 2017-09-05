@@ -18,9 +18,9 @@ namespace ImageProcessing.Controllers
       ////private IObjectDetectionView objectDetectionView;
       private ObjectDetectionModel objectDetectionModel = new ObjectDetectionModel();
       private TaggerController taggerController;
-      private IObjectDetector objectDetector;
+      private ObjectDetector objectDetector;
 
-      public ObjectDetectionController(IObjectDetector objectDetection)
+      public ObjectDetectionController(ObjectDetector objectDetection)
       {
          this.objectDetector = objectDetection;
       }

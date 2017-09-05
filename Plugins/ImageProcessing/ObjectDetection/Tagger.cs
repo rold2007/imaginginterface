@@ -10,7 +10,7 @@ namespace ImageProcessing.ObjectDetection
    using System.Drawing;
    using System.IO;
 
-   public class Tagger : ITagger
+   public class Tagger
       {
       private string tempFilename;
       private bool dataPointsModified;
