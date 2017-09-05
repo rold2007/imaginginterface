@@ -8,7 +8,7 @@ namespace ImageProcessing.Views
    using System.Windows.Forms;
    using ImageProcessing.Controllers;
 
-   public partial class ObjectDetectionView : UserControl, IObjectDetectionView
+   public partial class ObjectDetectionView : UserControl
    {
       private ObjectDetectionController objectDetectionController;
 

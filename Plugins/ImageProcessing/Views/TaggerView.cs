@@ -11,7 +11,7 @@ namespace ImageProcessing.Views
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
 
-   public partial class TaggerView : UserControl, ITaggerView
+   public partial class TaggerView : UserControl
    {
       private ITaggerModel taggerModel;
       private TaggerController taggerController;
