@@ -133,10 +133,6 @@
       <Project>{4049789e-8c45-4bca-ac3f-6135787d83d6}</Project>
       <Name>ImageProcessing.Cudafied</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Models\ImageProcessing.Models.csproj">
-      <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
-      <Name>ImageProcessing.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ObjectDetection\ImageProcessing.ObjectDetection.csproj">
       <Project>{fed322ae-2f56-46a3-babc-827daf264e79}</Project>
       <Name>ImageProcessing.ObjectDetection</Name>

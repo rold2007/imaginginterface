@@ -109,10 +109,6 @@
       <Project>{34bce76c-484c-487d-8d6b-d3b475974183}</Project>
       <Name>ImageProcessing.Controllers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ImageProcessing\Models\ImageProcessing.Models.csproj">
-      <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
-      <Name>ImageProcessing.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Controllers.Interfaces\Video.Controllers.Interfaces.csproj">
       <Project>{5068a231-f949-49bd-8e14-7385f78596c5}</Project>
       <Name>Video.Controllers.Interfaces</Name>
