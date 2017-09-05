@@ -22,9 +22,9 @@ namespace ImageProcessing.Controllers
       ////private ITaggerView taggerView;
       private TaggerModel taggerModel = new TaggerModel();
       private ImageController registeredImageController;
-      private ITagger tagger;
+      private Tagger tagger;
 
-      public TaggerController(ITagger tagger)
+      public TaggerController(Tagger tagger)
          {
          this.tagger = tagger;
 

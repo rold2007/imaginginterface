@@ -107,10 +107,6 @@
       <Name>ImagingInterface.Plugins.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
-      <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
-      <Name>ImageProcessing.ObjectDetection.Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

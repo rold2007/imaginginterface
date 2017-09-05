@@ -41,8 +41,8 @@ namespace ImageProcessing.Views.CompositionRoot
          container.Register<ObjectDetectionView>();
 
          // ObjectDetection
-         container.Register<IObjectDetector, ObjectDetector>();
-         container.Register<ITagger, Tagger>();
+         container.Register<ObjectDetector>();
+         container.Register<Tagger>();
       }
    }
 }

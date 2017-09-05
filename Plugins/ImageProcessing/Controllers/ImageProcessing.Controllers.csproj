@@ -95,11 +95,23 @@
     <Compile Include="EventArguments\CudafyGPUChangedEventArgs.cs" />
     <Compile Include="EventArguments\CudafyGridSizeChangedEventArgs.cs" />
     <Compile Include="EventArguments\InvertEventArgs.cs" />
+    <Compile Include="EventArguments\TagPointChangedEventArgs.cs" />
     <Compile Include="FileSourceFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ImageProcessorFileSource.cs" />
     <Compile Include="InvertController.cs" />
     <Compile Include="MemorySource.cs" />
+    <Compile Include="Models\CudafyModel.cs" />
+    <Compile Include="Models\ICudafyModel.cs" />
+    <Compile Include="Models\IInvertModel.cs" />
+    <Compile Include="Models\InvertModel.cs" />
+    <Compile Include="Models\IObjectDetectionManagerModel.cs" />
+    <Compile Include="Models\IObjectDetectionModel.cs" />
+    <Compile Include="Models\IRotateModel.cs" />
+    <Compile Include="Models\ITaggerModel.cs" />
+    <Compile Include="Models\ObjectDetectionManagerModel.cs" />
+    <Compile Include="Models\ObjectDetectionModel.cs" />
+    <Compile Include="Models\TaggerModel.cs" />
     <Compile Include="ObjectDetectionController.cs" />
     <Compile Include="ObjectDetectionManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,25 +129,17 @@
       <Name>ImagingInterface.Plugins.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj">
-      <Project>{0f3237a4-3da2-40cc-924f-d2431376e3ba}</Project>
-      <Name>ImageProcessing.Controllers.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Cudafied\ImageProcessing.Cudafied.csproj">
       <Project>{4049789e-8c45-4bca-ac3f-6135787d83d6}</Project>
       <Name>ImageProcessing.Cudafied</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
-      <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
-      <Name>ImageProcessing.Models.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\ImageProcessing.Models.csproj">
       <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
       <Name>ImageProcessing.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
-      <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
-      <Name>ImageProcessing.ObjectDetection.Interfaces</Name>
+    <ProjectReference Include="..\ObjectDetection\ImageProcessing.ObjectDetection.csproj">
+      <Project>{fed322ae-2f56-46a3-babc-827daf264e79}</Project>
+      <Name>ImageProcessing.ObjectDetection</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

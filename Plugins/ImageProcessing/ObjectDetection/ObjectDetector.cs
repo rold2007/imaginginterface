@@ -12,7 +12,7 @@ namespace ImageProcessing.ObjectDetection
    using Accord.MachineLearning.DecisionTrees.Learning;
    using Accord.Math;
 
-   public class ObjectDetector : IObjectDetector
+   public class ObjectDetector
       {
       private Dictionary<string, List<Point>> tagPoints;
 

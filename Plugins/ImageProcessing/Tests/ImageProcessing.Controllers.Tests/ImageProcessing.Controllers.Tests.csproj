@@ -112,25 +112,13 @@
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Controllers.Interfaces\ImageProcessing.Controllers.Interfaces.csproj">
-      <Project>{0f3237a4-3da2-40cc-924f-d2431376e3ba}</Project>
-      <Name>ImageProcessing.Controllers.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Controllers\ImageProcessing.Controllers.csproj">
       <Project>{34bce76c-484c-487d-8d6b-d3b475974183}</Project>
       <Name>ImageProcessing.Controllers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
-      <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
-      <Name>ImageProcessing.Models.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Models\ImageProcessing.Models.csproj">
       <Project>{7fa43270-5e4a-4c3e-b366-2476b21087cd}</Project>
       <Name>ImageProcessing.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
-      <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
-      <Name>ImageProcessing.ObjectDetection.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ObjectDetection\ImageProcessing.ObjectDetection.csproj">
       <Project>{fed322ae-2f56-46a3-babc-827daf264e79}</Project>

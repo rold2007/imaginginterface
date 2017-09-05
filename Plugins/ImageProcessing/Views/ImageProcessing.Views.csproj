@@ -150,14 +150,6 @@
       <Name>ImageProcessing.Controllers</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Models.Interfaces\ImageProcessing.Models.Interfaces.csproj">
-      <Project>{478e62e0-f43b-4cae-8363-a4aad1943513}</Project>
-      <Name>ImageProcessing.Models.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ObjectDetection.Interfaces\ImageProcessing.ObjectDetection.Interfaces.csproj">
-      <Project>{ebe8bf7d-d3e1-4ec3-8140-4bd8c71b01bc}</Project>
-      <Name>ImageProcessing.ObjectDetection.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ObjectDetection\ImageProcessing.ObjectDetection.csproj">
       <Project>{fed322ae-2f56-46a3-babc-827daf264e79}</Project>
       <Name>ImageProcessing.ObjectDetection</Name>

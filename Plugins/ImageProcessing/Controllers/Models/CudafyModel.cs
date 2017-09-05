@@ -4,7 +4,7 @@
 
 namespace ImageProcessing.Models
 {
-   public class CudafyModel : ICudafyModel
+   public class CudafyModel
    {
       public string DisplayName
       {
