@@ -9,7 +9,6 @@ namespace Video.Controllers
    using System.Diagnostics;
    using Emgu.CV;
    using Emgu.CV.Structure;
-   using ImagingInterface.Controllers;
    using Video.Models;
 
    public class CaptureController
@@ -17,7 +16,7 @@ namespace Video.Controllers
       private static readonly string CaptureDisplayName = "Capture"; // ncrunch: no coverage
       private CaptureModel captureModel = new CaptureModel();
       private CaptureWrapper captureWrapper;
-      private ImageController liveGrabImageController;
+      ////private ImageController liveGrabImageController;
       private bool grabbingLive;
       private bool stopping;
 
@@ -88,10 +87,12 @@ namespace Video.Controllers
 
             this.Closed?.Invoke(this, EventArgs.Empty);
 
-            if (this.liveGrabImageController != null)
+            Debug.Fail("Review the use of liveGrabImageController. Plugins shouldn't depend on ImagingInterface.Controllers.");
+
+            ////if (this.liveGrabImageController != null)
             {
                ////this.liveGrabImageController.Closed -= this.LiveGrabImageController_Closed;
-               this.liveGrabImageController = null;
+               ////this.liveGrabImageController = null;
             }
 
             // Do not reset this.captureView before calling the Closed event as objects
@@ -215,7 +216,7 @@ namespace Video.Controllers
 
             ////this.captureView.UpdateLiveGrabStatus(false, true);
 
-            if (this.liveGrabImageController == null)
+            ////if (this.liveGrabImageController == null)
             {
                // this.liveGrabImageController = this.serviceLocator.GetInstance<ImageController>();
 
@@ -262,9 +263,9 @@ namespace Video.Controllers
 
       private void SnapShot_Closed(object sender, EventArgs e)
       {
-         ImageController imageController = sender as ImageController;
+         ////ImageController imageController = sender as ImageController;
 
-         this.SnapShotFinished(imageController);
+         this.SnapShotFinished(/*imageController*/);
       }
 
       ////private void SnapShot_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
@@ -274,7 +275,7 @@ namespace Video.Controllers
       ////   this.SnapShotFinished(imageController);
       ////}
 
-      private void SnapShotFinished(ImageController imageController)
+      private void SnapShotFinished(/*ImageController imageController*/)
       {
          ////imageController.Closed -= this.SnapShot_Closed;
          ////imageController.DisplayUpdated -= this.SnapShot_DisplayUpdated;
@@ -293,7 +294,7 @@ namespace Video.Controllers
       {
          ////this.liveGrabImageController.Closed -= this.LiveGrabImageController_Closed;
 
-         this.liveGrabImageController = null;
+         ////this.liveGrabImageController = null;
       }
 
       private void CaptureView_Stop(object sender, EventArgs e)

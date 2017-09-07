@@ -6,8 +6,6 @@ namespace Video.Controllers.Tests
    {
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
-   using ImagingInterface.Controllers;
-   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using NUnit.Framework;
    using Video.Controllers;
