@@ -13,8 +13,6 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
-   using ImagingInterface.Controllers;
-   using ImagingInterface.Models;
    using ImagingInterface.Plugins;
    using NUnit.Framework;
 

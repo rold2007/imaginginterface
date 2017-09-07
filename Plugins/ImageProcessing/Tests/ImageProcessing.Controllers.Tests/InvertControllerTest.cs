@@ -13,7 +13,6 @@ namespace ImageProcessing.Controllers.Tests
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using NUnit.Framework;
 

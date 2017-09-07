@@ -6,7 +6,6 @@ namespace Video.Controllers.Tests
    {
    using System;
    using System.Threading;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using NUnit.Framework;
    using Video.Controllers.Tests.Mocks;

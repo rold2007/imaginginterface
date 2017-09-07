@@ -104,10 +104,6 @@
     <Compile Include="TaggerControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Core\ImagingInterface.Controllers\ImagingInterface.Controllers.csproj">
-      <Project>{b8c42917-287b-4b21-afe9-9a121163adb2}</Project>
-      <Name>ImagingInterface.Controllers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Core\ImagingInterface.Plugins.Interfaces\ImagingInterface.Plugins.Interfaces.csproj">
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
