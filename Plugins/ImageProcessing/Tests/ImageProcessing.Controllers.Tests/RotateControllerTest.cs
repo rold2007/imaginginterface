@@ -12,18 +12,17 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class RotateControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////RotateController rotateController = this.ServiceLocator.GetInstance<RotateController>();
          }
 
-      [Test]
+      [Fact]
       public void RawPluginView()
          {
          ////RotateController rotateController = this.ServiceLocator.GetInstance<RotateController>();
@@ -32,7 +31,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsNotNull(rotateView);
          }
 
-      [Test]
+      [Fact]
       public void RawPluginModel()
          {
          ////RotateController rotateController = this.ServiceLocator.GetInstance<RotateController>();
@@ -41,7 +40,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsNotNull(rawPluginModel);
          }
 
-      [Test]
+      [Fact]
       public void DisplayName()
          {
          ////this.Container.RegisterSingleton<IRotateModel, RotateModel>();
@@ -52,7 +51,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.AreEqual("Rotate", rotateModel.DisplayName);
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          ////RotateController rotateController = this.ServiceLocator.GetInstance<RotateController>();
@@ -60,7 +59,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(rotateController.Active);
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////this.Container.RegisterSingleton<IRotateView, RotateView>();
@@ -80,7 +79,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(rotateView.CloseCalled);
          }
 
-      [Test]
+      [Fact]
       public void RotateView_Rotate()
          {
          ////RotateController rotateController = this.ServiceLocator.GetInstance<RotateController>();

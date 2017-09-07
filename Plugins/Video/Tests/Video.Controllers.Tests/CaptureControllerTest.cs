@@ -7,14 +7,13 @@ namespace Video.Controllers.Tests
    using System;
    using System.Threading;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
    using Video.Controllers.Tests.Mocks;
    using Video.Models;
+   using Xunit;
 
-   [TestFixture]
    public class CaptureControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -40,7 +39,7 @@ namespace Video.Controllers.Tests
             }
          }
 
-      [Test]
+      [Fact]
       public void DisplayName()
          {
          // this.Container.RegisterSingleton<CaptureModel, CaptureModel>();
@@ -51,7 +50,7 @@ namespace Video.Controllers.Tests
          // Assert.AreEqual("Capture", captureModel.DisplayName);
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          // CaptureController captureController = null;
@@ -71,7 +70,7 @@ namespace Video.Controllers.Tests
          //   }
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -102,7 +101,7 @@ namespace Video.Controllers.Tests
          //   }
          }
 
-      [Test]
+      [Fact]
       public void NextImageData()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -149,7 +148,7 @@ namespace Video.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void NextImageDataFail()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -184,7 +183,7 @@ namespace Video.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void StartLiveGrab()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -242,7 +241,7 @@ namespace Video.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void StopLiveGrab()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -293,7 +292,7 @@ namespace Video.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void SnapShot()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -351,7 +350,7 @@ namespace Video.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void Closing()
          {
          ////this.Container.RegisterSingleton<ICaptureView, CaptureView>();
@@ -442,7 +441,7 @@ namespace Video.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void CaptureModelClone()
          {
          ////ICaptureModel captureModel = this.ServiceLocator.GetInstance<ICaptureModel>();

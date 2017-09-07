@@ -8,18 +8,17 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ObjectDetectionControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////ObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<ObjectDetectionController>();
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          ////ObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<ObjectDetectionController>();
@@ -27,7 +26,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsFalse(objectDetectionController.Active);
          }
 
-      [Test]
+      [Fact]
       public void Initialize()
          {
          ////this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
@@ -44,7 +43,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(objectDetectionView.CanTest());
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
@@ -64,7 +63,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(objectDetectionView.CloseCalled);
          }
 
-      [Test]
+      [Fact]
       public void ProcessImageData()
          {
          ////this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
@@ -149,7 +148,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.AreEqual(255, overlayData[pixelOffset + 3]);
          }
 
-      [Test]
+      [Fact]
       public void Test()
          {
          ////this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();
@@ -181,7 +180,7 @@ namespace ImageProcessing.Controllers.Tests
             ////}
          }
 
-      [Test]
+      [Fact]
       public void SetTagger()
          {
          ////ObjectDetectionController objectDetectionController = this.ServiceLocator.GetInstance<ObjectDetectionController>();
@@ -190,7 +189,7 @@ namespace ImageProcessing.Controllers.Tests
          ////objectDetectionController.SetTagger(taggerController);
          }
 
-      [Test]
+      [Fact]
       public void TagPointChanged()
          {
          ////this.Container.RegisterSingleton<IObjectDetectionView, ObjectDetectionView>();

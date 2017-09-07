@@ -4,12 +4,11 @@
 
 namespace ImageProcessing.Controllers.Tests
 {
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class FileSourceControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
@@ -17,7 +16,7 @@ namespace ImageProcessing.Controllers.Tests
          ////fileSourceController.Initialize();
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          ////IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
@@ -25,7 +24,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsFalse(fileSourceController.Active);
          }
 
-      [Test]
+      [Fact]
       public void Filename()
          {
          ////IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
@@ -37,7 +36,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.AreEqual("Dummy", fileSourceController.Filename);
          }
 
-      [Test]
+      [Fact]
       public void IsDynamic()
          {
          ////IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
@@ -46,7 +45,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.False(fileSourceController.IsDynamic(fileSourceController.RawPluginModel));
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
@@ -63,7 +62,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(closedCalled);
          }
 
-      [Test]
+      [Fact]
       public void NextImageData()
          {
          ////IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();
@@ -113,7 +112,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void Disconnected()
          {
          ////IFileSourceController fileSourceController = this.ServiceLocator.GetInstance<IFileSourceController>();

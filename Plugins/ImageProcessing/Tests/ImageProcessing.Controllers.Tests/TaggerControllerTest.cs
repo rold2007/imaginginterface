@@ -14,18 +14,17 @@ namespace ImageProcessing.Controllers.Tests
     using ImageProcessing.Controllers;
     using ImageProcessing.Models;
     using ImagingInterface.Plugins;
-    using NUnit.Framework;
+   using Xunit;
 
-    [TestFixture]
-    public class TaggerControllerTest : ControllersBaseTest
+   public class TaggerControllerTest : ControllersBaseTest
     {
-        [Test]
+        [Fact]
         public void Constructor()
         {
             ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
         }
 
-        [Test]
+        [Fact]
         public void RawPluginView()
         {
             ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
@@ -34,7 +33,7 @@ namespace ImageProcessing.Controllers.Tests
             ////Assert.IsNotNull(rotateView);
         }
 
-        [Test]
+        [Fact]
         public void RawPluginModel()
         {
             ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
@@ -43,7 +42,7 @@ namespace ImageProcessing.Controllers.Tests
             ////Assert.IsNotNull(rawPluginModel);
         }
 
-        [Test]
+        [Fact]
         public void DisplayName()
         {
             ////this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
@@ -54,7 +53,7 @@ namespace ImageProcessing.Controllers.Tests
             ////Assert.AreEqual("Tagger", taggerModel.DisplayName);
         }
 
-        [Test]
+        [Fact]
         public void Active()
         {
             ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
@@ -62,7 +61,7 @@ namespace ImageProcessing.Controllers.Tests
             ////Assert.IsTrue(taggerController.Active);
         }
 
-        [Test]
+        [Fact]
         public void Close()
         {
             ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
@@ -82,7 +81,7 @@ namespace ImageProcessing.Controllers.Tests
             ////Assert.IsTrue(taggerView.CloseCalled);
         }
 
-        [Test]
+        [Fact]
         public void ProcessImageData()
         {
             ////string displayName = Path.GetRandomFileName();
@@ -195,7 +194,7 @@ namespace ImageProcessing.Controllers.Tests
             ////   }
         }
 
-        [Test]
+        [Fact]
         public void LabelAdded()
         {
             ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
@@ -215,7 +214,7 @@ namespace ImageProcessing.Controllers.Tests
             ////Assert.AreEqual(1, taggerModel.LabelColors.Count());
         }
 
-        [Test]
+        [Fact]
         public void RegisterActiveImage()
         {
             ////string displayName = "temp";

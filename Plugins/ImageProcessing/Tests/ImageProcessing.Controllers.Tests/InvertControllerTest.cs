@@ -12,18 +12,17 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class InvertControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////InvertController invertController = this.ServiceLocator.GetInstance<InvertController>();
          }
 
-      [Test]
+      [Fact]
       public void RawPluginView()
          {
          ////InvertController invertController = this.ServiceLocator.GetInstance<InvertController>();
@@ -32,7 +31,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsNotNull(invertView);
          }
 
-      [Test]
+      [Fact]
       public void RawPluginModel()
          {
          ////InvertController invertController = this.ServiceLocator.GetInstance<InvertController>();
@@ -41,7 +40,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsNotNull(rawPluginModel);
          }
 
-      [Test]
+      [Fact]
       public void DisplayName()
          {
          ////this.Container.RegisterSingleton<IInvertModel, InvertModel>();
@@ -52,7 +51,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.AreEqual("Invert", invertModel.DisplayName);
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          ////InvertController invertController = this.ServiceLocator.GetInstance<InvertController>();
@@ -60,7 +59,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(invertController.Active);
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////this.Container.RegisterSingleton<IInvertView, InvertView>();
@@ -80,7 +79,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(invertView.CloseCalled);
          }
 
-      [Test]
+      [Fact]
       public void InvertView_Invert()
          {
          ////InvertController invertController = this.ServiceLocator.GetInstance<InvertController>();

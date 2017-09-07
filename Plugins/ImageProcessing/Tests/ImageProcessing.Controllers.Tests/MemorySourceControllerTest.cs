@@ -12,12 +12,11 @@ namespace ImageProcessing.Controllers.Tests
    using System.Threading.Tasks;
    using ImageProcessing.Controllers;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class MemorySourceControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();
@@ -25,7 +24,7 @@ namespace ImageProcessing.Controllers.Tests
          ////memorySourceController.Initialize();
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          ////IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();
@@ -33,7 +32,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsFalse(memorySourceController.Active);
          }
 
-      [Test]
+      [Fact]
       public void IsDynamic()
          {
          ////IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();
@@ -42,7 +41,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.False(memorySourceController.IsDynamic(memorySourceController.RawPluginModel));
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();
@@ -59,7 +58,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(closedCalled);
          }
 
-      [Test]
+      [Fact]
       public void NextImageData()
          {
          ////IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();
@@ -77,7 +76,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void Disconnected()
          {
          ////IMemorySourceController memorySourceController = this.ServiceLocator.GetInstance<IMemorySourceController>();

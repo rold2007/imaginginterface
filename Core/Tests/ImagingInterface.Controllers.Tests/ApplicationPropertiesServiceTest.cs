@@ -5,20 +5,19 @@
 namespace ImagingInterface.Controllers.Tests
 {
    using ImagingInterface.Controllers.Services;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ApplicationPropertiesServiceTest
    {
-      [Test]
+      [Fact]
       public void Constructor()
       {
          ApplicationPropertiesService applicationPropertiesService = new ApplicationPropertiesService();
 
-         Assert.That(applicationPropertiesService.ProductName, Is.Not.Null.Or.Empty);
-         Assert.That(applicationPropertiesService.Version, Is.Not.Null.Or.Empty);
-         Assert.That(applicationPropertiesService.Copyright, Is.Not.Null.Or.Empty);
-         Assert.That(applicationPropertiesService.ProductDescription, Is.Not.Null.Or.Empty);
+         Assert.False(string.IsNullOrEmpty(applicationPropertiesService.ProductName));
+         Assert.False(string.IsNullOrEmpty(applicationPropertiesService.Version));
+         Assert.False(string.IsNullOrEmpty(applicationPropertiesService.Copyright));
+         Assert.False(string.IsNullOrEmpty(applicationPropertiesService.ProductDescription));
       }
    }
 }

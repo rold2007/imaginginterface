@@ -4,13 +4,12 @@
 
 namespace ImagingInterface.Controllers.Tests
 {
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class MainControllerTest : ControllersBaseTest
       {
       /*
-      [Test]
+      [Fact]
       public void MainView_ApplicationClosing()
          {
          ////MainView mainView = this.ServiceLocator.GetInstance<IMainView>() as MainView;
@@ -56,7 +55,7 @@ namespace ImagingInterface.Controllers.Tests
          Assert.IsTrue(pluginController2Closing);
          }
 
-      [Test]
+      [Fact]
       public void MainView_ApplicationClosingNoPlugin()
          {
          ////MainView mainView = this.ServiceLocator.GetInstance<IMainView>() as MainView;
@@ -84,7 +83,7 @@ namespace ImagingInterface.Controllers.Tests
          Assert.IsTrue(imageControllerClosing);
          }
 
-      [Test]
+      [Fact]
       public void MainView_ApplicationClosingWithImageProcessing()
          {
          this.Container.RegisterSingleton<PluginController1>();
