@@ -10,7 +10,6 @@ namespace Video.Controllers.Tests
    using NUnit.Framework;
    using Video.Controllers.Tests.Mocks;
    using Video.Models;
-   using Video.Views;
 
    [TestFixture]
    public class CaptureControllerTest : ControllersBaseTest

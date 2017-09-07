@@ -9,7 +9,7 @@ namespace Video.Controllers
    using Emgu.CV.CvEnum;
    using Emgu.CV.Util;
 
-   public class CaptureWrapper : ICaptureWrapper
+   public class CaptureWrapper
       {
       private VideoCapture capture;
       private double framePeriod;

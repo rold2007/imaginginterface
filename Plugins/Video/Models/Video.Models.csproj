@@ -81,10 +81,6 @@
       <Name>ImagingInterface.Plugins.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Models.Interfaces\Video.Models.Interfaces.csproj">
-      <Project>{07366931-0e9f-42ca-ade2-610833b8f7c1}</Project>
-      <Name>Video.Models.Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

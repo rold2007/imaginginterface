@@ -10,7 +10,7 @@ namespace Video.Controllers.Tests.Mocks
    using Emgu.CV.Structure;
    using Video.Controllers;
 
-   public class CaptureWrapperMock : ICaptureWrapper
+   public class CaptureWrapperMock
       {
       private bool grabStarted;
 
