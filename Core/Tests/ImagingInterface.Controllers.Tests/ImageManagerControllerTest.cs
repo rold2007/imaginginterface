@@ -5,19 +5,18 @@
 namespace ImagingInterface.Controllers.Tests
 {
    using ImagingInterface.Controllers.Services;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ImageManagerControllerTest : ControllersBaseTest
    {
-      [Test]
+      [Fact]
       public void Constructor()
       {
          ImageManagerService imageManagerService = new ImageManagerService();
          ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerService);
       }
 
-      [Test]
+      [Fact]
       public void Constructor2()
       {
          ImageManagerService imageManagerService = new ImageManagerService();
@@ -36,7 +35,7 @@ namespace ImagingInterface.Controllers.Tests
          // activeImageIndex = imageViewManagerController.ActiveImageIndex;
       }
 
-      // [Test]
+      // [Fact]
       // public void AddImage()
       //   {
       //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
@@ -49,7 +48,7 @@ namespace ImagingInterface.Controllers.Tests
       // Assert.AreEqual(0, imageManagerController.ActiveImageIndex);
       //   }
 
-      // [Test]
+      // [Fact]
       // public void AddRemoveImage()
       //   {
       //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
@@ -79,7 +78,7 @@ namespace ImagingInterface.Controllers.Tests
       //   Assert.AreEqual(-1, imageManagerController.ActiveImageIndex);
       //   }
 
-      // [Test]
+      // [Fact]
       // public void RemoveAllImages()
       //   {
       //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
@@ -92,7 +91,7 @@ namespace ImagingInterface.Controllers.Tests
       // Assert.AreEqual(0, imageManagerController.ImageCount);
       //   }
 
-      ////[Test]
+      ////[Fact]
       ////public void GetActiveImage()
       ////   {
       ////   ImageManagerController imageViewManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();

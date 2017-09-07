@@ -5,19 +5,18 @@
 namespace ImagingInterface.Controllers.Tests
 {
    using ImagingInterface.Controllers.Services;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ImageControllerTest : ControllersBaseTest
    {
-      [Test]
+      [Fact]
       public void Constructor()
       {
          ImageService imageService = new ImageService();
          ImageController imageController = new ImageController(imageService);
       }
 
-      [Test]
+      [Fact]
       public void InitializeImageSourceController()
       {
          ImageService imageService = new ImageService();
@@ -28,7 +27,7 @@ namespace ImagingInterface.Controllers.Tests
          // imageController.InitializeImageSourceController(fileSourceController);
       }
 
-      [Test]
+      [Fact]
       public void Close()
       {
          ImageService imageService = new ImageService();
@@ -37,7 +36,7 @@ namespace ImagingInterface.Controllers.Tests
          imageController.Close();
       }
 
-      [Test]
+      [Fact]
       public void FullPath()
       {
          ////ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
@@ -46,7 +45,7 @@ namespace ImagingInterface.Controllers.Tests
       }
 
       /*
-      [Test]
+      [Fact]
       public void LoadFile()
          {
          ////this.Container.RegisterSingleton<IImageView, ImageView>();
@@ -101,7 +100,7 @@ namespace ImagingInterface.Controllers.Tests
             }
          }
 
-      [Test]
+      [Fact]
       public void LoadFileInvalid()
          {
          ////ImageView imageView = new ImageView();
@@ -135,7 +134,7 @@ namespace ImagingInterface.Controllers.Tests
             }
          }
 
-      [Test]
+      [Fact]
       public void StartLiveUpdate()
          {
          ////this.Container.RegisterSingleton<IImageView, ImageView>();
@@ -159,7 +158,7 @@ namespace ImagingInterface.Controllers.Tests
          ////Assert.IsNotNull(imageView.AssignedImageModel.DisplayImageData);
          }
 
-      [Test]
+      [Fact]
       public void IsGrayscale()
          {
          this.Container.RegisterSingleton<IImageModel, ImageModel>();
@@ -200,7 +199,7 @@ namespace ImagingInterface.Controllers.Tests
             }
          }
 
-      [Test]
+      [Fact]
       public void CloseWhileStartLiveUpdate()
          {
          ////this.Container.RegisterSingleton<IImageView, ImageView>();
@@ -234,7 +233,7 @@ namespace ImagingInterface.Controllers.Tests
             }
          }
 
-      [Test]
+      [Fact]
       public void UpdatePeriod()
          {
          ////this.Container.RegisterSingleton<IImageView, ImageView>();
@@ -277,7 +276,7 @@ namespace ImagingInterface.Controllers.Tests
             }
          }
 
-      [Test]
+      [Fact]
       public void ImageModelSize()
          {
          IImageModel imageModel = this.ServiceLocator.GetInstance<IImageModel>();
@@ -288,7 +287,7 @@ namespace ImagingInterface.Controllers.Tests
          Assert.AreEqual(54, imageModel.Size.Width);
          }
 
-      [Test]
+      [Fact]
       public void ZoomLevel()
          {
          ////this.Container.RegisterSingleton<IImageView, ImageView>();
@@ -313,7 +312,7 @@ namespace ImagingInterface.Controllers.Tests
          Assert.AreEqual(0.5, imageModel.ZoomLevel);
          }
 
-      [Test]
+      [Fact]
       public void PixelView()
          {
          ////this.Container.RegisterSingleton<IImageView, ImageView>();

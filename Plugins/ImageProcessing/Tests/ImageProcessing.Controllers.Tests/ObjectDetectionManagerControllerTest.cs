@@ -14,18 +14,17 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ObjectDetectionManagerControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
          }
 
-      [Test]
+      [Fact]
       public void DisplayName()
          {
          ////this.Container.RegisterSingleton<IObjectDetectionManagerModel, ObjectDetectionManagerModel>();
@@ -36,7 +35,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.AreEqual("Object detection", objectDetectionManagerModel.DisplayName);
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          ////ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
@@ -44,7 +43,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.IsTrue(objectDetectionManagerController.Active);
          }
 
-      [Test]
+      [Fact]
       public void Initialize()
          {
          ////ObjectDetectionManagerController objectDetectionManagerController = this.ServiceLocator.GetInstance<ObjectDetectionManagerController>();
@@ -52,7 +51,7 @@ namespace ImageProcessing.Controllers.Tests
          ////objectDetectionManagerController.Initialize();
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////this.Container.RegisterSingleton<IObjectDetectionManagerView, ObjectDetectionManagerView>();

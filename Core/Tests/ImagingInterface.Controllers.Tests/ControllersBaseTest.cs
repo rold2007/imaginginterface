@@ -4,16 +4,10 @@
 
 namespace ImagingInterface.Controllers.Tests
 {
-   using NUnit.Framework;
+   using Xunit;
 
    public abstract class ControllersBaseTest
       {
-      // public Container Container
-      //   {
-      //   get;
-      //   private set;
-      //   }
-      [SetUp]
       protected void SetUp()
          {
          // base.SetUp();

@@ -6,18 +6,17 @@ namespace ImageProcessing.ObjectDetection.Tests
 {
    using System.Drawing;
    using ImageProcessing.ObjectDetection;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ObjectDetectorTest
    {
-      [Test]
+      [Fact]
       public void Constructor()
       {
          ObjectDetector objectDetector = new ObjectDetector();
       }
 
-      [Test]
+      [Fact]
       public void Add()
       {
          ObjectDetector objectDetector = new ObjectDetector();
@@ -26,7 +25,7 @@ namespace ImageProcessing.ObjectDetection.Tests
          objectDetector.Add("temp", new Point(1, 1));
       }
 
-      [Test]
+      [Fact]
       public void Train()
       {
          ////ObjectDetector objectDetector = new ObjectDetector();

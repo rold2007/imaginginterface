@@ -6,12 +6,11 @@ namespace ImagingInterface.Controllers.Tests
 {
    using System;
    using ImagingInterface.Plugins.Utilities;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ColorTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void AllRGBColors()
          {
          double[] rgb;
@@ -29,15 +28,15 @@ namespace ImagingInterface.Controllers.Tests
 
                   outputRGB = ColorConversion.HSVToRGB(hsv);
 
-                  Assert.That(rgb[0], Is.EqualTo(outputRGB[0]).Within(0.01), string.Format("R: {0} G: {1} B: {2}", rgb[0], rgb[1], rgb[2]));
-                  Assert.That(rgb[1], Is.EqualTo(outputRGB[1]).Within(0.01), string.Format("R: {0} G: {1} B: {2}", rgb[0], rgb[1], rgb[2]));
-                  Assert.That(rgb[2], Is.EqualTo(outputRGB[2]).Within(0.01), string.Format("R: {0} G: {1} B: {2}", rgb[0], rgb[1], rgb[2]));
+                  Assert.InRange(rgb[0], outputRGB[0] - 0.01, outputRGB[0] + 0.01);
+                  Assert.InRange(rgb[1], outputRGB[1] - 0.01, outputRGB[1] + 0.01);
+                  Assert.InRange(rgb[2], outputRGB[2] - 0.01, outputRGB[2] + 0.01);
                   }
                }
             }
          }
 
-      [Test]
+      [Fact]
       public void AllHSVColors()
          {
          double[] hsv;
@@ -55,15 +54,15 @@ namespace ImagingInterface.Controllers.Tests
 
                   outputHSV = ColorConversion.RGBToHSV(rgb);
 
-                  Assert.That(hsv[0], Is.EqualTo(outputHSV[0]).Within(0.01), string.Format("Hue: {0} Saturation: {1} Value: {2}", hsv[0], hsv[1], hsv[2]));
-                  Assert.That(hsv[1], Is.EqualTo(outputHSV[1]).Within(0.01), string.Format("Hue: {0} Saturation: {1} Value: {2}", hsv[0], hsv[1], hsv[2]));
-                  Assert.That(hsv[2], Is.EqualTo(outputHSV[2]).Within(0.01), string.Format("Hue: {0} Saturation: {1} Value: {2}", hsv[0], hsv[1], hsv[2]));
+                  Assert.InRange(hsv[0], outputHSV[0] - 0.01, outputHSV[0] + 0.01);
+                  Assert.InRange(hsv[1], outputHSV[1] - 0.01, outputHSV[1] + 0.01);
+                  Assert.InRange(hsv[2], outputHSV[2] - 0.01, outputHSV[2] + 0.01);
                   }
                }
             }
          }
 
-      [Test]
+      [Fact]
       public void InvalidColor()
          {
          double[] hsv = new double[3] { 360.0, 0.0, 0.0 };
@@ -71,9 +70,9 @@ namespace ImagingInterface.Controllers.Tests
 
          outputRGB = ColorConversion.HSVToRGB(hsv);
 
-         Assert.AreEqual(double.MinValue, outputRGB[0]);
-         Assert.AreEqual(double.MinValue, outputRGB[1]);
-         Assert.AreEqual(double.MinValue, outputRGB[2]);
+         Assert.Equal(double.MinValue, outputRGB[0]);
+         Assert.Equal(double.MinValue, outputRGB[1]);
+         Assert.Equal(double.MinValue, outputRGB[2]);
          }
       }
    }

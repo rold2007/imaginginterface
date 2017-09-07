@@ -9,18 +9,17 @@ namespace ImagingInterface.Controllers.Tests
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class ImageSourceManagerTest : ControllersBaseTest
    {
-      [Test]
+      [Fact]
       public void Constructor()
       {
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
       }
 
-      [Test]
+      [Fact]
       public void AddImageFiles()
       {
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
@@ -39,7 +38,7 @@ namespace ImagingInterface.Controllers.Tests
          imageSourceManager.AddImageFiles(files);
       }
 
-      [Test]
+      [Fact]
       public void AddImageFilesNullArgument()
       {
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
@@ -47,7 +46,7 @@ namespace ImagingInterface.Controllers.Tests
          Assert.Throws<ArgumentNullException>(() => imageSourceManager.AddImageFiles(null));
       }
 
-      [Test]
+      [Fact]
       public void RemoveImageSource()
       {
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());
@@ -65,7 +64,7 @@ namespace ImagingInterface.Controllers.Tests
          }
       }
 
-      [Test]
+      [Fact]
       public void RemoveImageSourceNullArgument()
       {
          ImageSourceService imageSourceManager = new ImageSourceService(new FileSourceFactory());

@@ -12,12 +12,11 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class CudafyControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////try
@@ -30,7 +29,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void DisplayName()
          {
          ////this.Container.RegisterSingleton<ICudafyModel, CudafyModel>();
@@ -41,7 +40,7 @@ namespace ImageProcessing.Controllers.Tests
          ////Assert.AreEqual("Cudafy", cudafyModel.DisplayName);
          }
 
-      [Test]
+      [Fact]
       public void Active()
          {
          ////try
@@ -56,7 +55,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void ProcessImageData()
          {
          ////CudafyController cudafyController = null;
@@ -134,7 +133,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void Close()
          {
          ////try
@@ -162,7 +161,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void GPUChanged()
          {
          ////CudafyController cudafyController = null;
@@ -237,7 +236,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void GridSizeChanged()
          {
          ////CudafyController cudafyController = null;
@@ -291,7 +290,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void BlockSizeXChanged()
          {
          ////CudafyController cudafyController = null;
@@ -372,7 +371,7 @@ namespace ImageProcessing.Controllers.Tests
          ////   }
          }
 
-      [Test]
+      [Fact]
       public void BlockSizeYChanged()
          {
          ////CudafyController cudafyController = null;

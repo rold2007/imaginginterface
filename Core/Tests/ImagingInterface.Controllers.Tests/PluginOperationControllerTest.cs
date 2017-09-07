@@ -4,18 +4,17 @@
 
 namespace ImagingInterface.Controllers.Tests
 {
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class PluginOperationControllerTest : ControllersBaseTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          // PluginOperationController pluginOperationController = this.ServiceLocator.GetInstance<PluginOperationController>();
          }
 
-      [Test]
+      [Fact]
       public void PluginCreate()
          {
          // PluginOperationController pluginOperationController = this.ServiceLocator.GetInstance<PluginOperationController>();

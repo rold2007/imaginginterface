@@ -6,12 +6,11 @@ namespace ImageProcessing.ObjectDetection.Tests
 {
    using System.Drawing;
    using ImageProcessing.ObjectDetection;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class FeatureComputerTest
       {
-      [Test]
+      [Fact]
       public void Constructor()
          {
          ////byte[,,] imageData = new byte[1, 1, 1];
@@ -32,7 +31,7 @@ namespace ImageProcessing.ObjectDetection.Tests
          ////featureComputer = new FeatureComputer(imageData);
          }
 
-      [Test]
+      [Fact]
       public void ComputeFeatures()
          {
          ////byte[,,] imageData = new byte[1, 1, 1];
@@ -52,7 +51,7 @@ namespace ImageProcessing.ObjectDetection.Tests
          ////features = featureComputer.ComputeFeatures(new Point(25, 25));
          }
 
-      [Test]
+      [Fact]
       public void ComputeFeaturesWrongChannels()
          {
          byte[,,] imageData = new byte[1, 1, 2];
@@ -61,7 +60,7 @@ namespace ImageProcessing.ObjectDetection.Tests
 
          features = featureComputer.ComputeFeatures(new Point(0, 0));
 
-         Assert.AreEqual(-1, features[0]);
+         Assert.Equal(-1, features[0]);
          }
       }
    }

@@ -7,14 +7,13 @@ namespace Video.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
    using Video.Controllers;
    using Video.Controllers.Tests.Mocks;
    using Video.Models;
+   using Xunit;
 
    public abstract class ControllersBaseTest
       {
-      [SetUp]
       protected void SetUp()
          {
          // base.SetUp();

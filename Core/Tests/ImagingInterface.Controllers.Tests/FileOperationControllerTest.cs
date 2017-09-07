@@ -8,12 +8,11 @@ namespace ImagingInterface.Controllers.Tests
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Controllers.Tests.Mocks;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
+   using Xunit;
 
-   [TestFixture]
    public class FileOperationControllerTest : ControllersBaseTest
    {
-      [Test]
+      [Fact]
       public void Constructor()
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();
@@ -24,7 +23,7 @@ namespace ImagingInterface.Controllers.Tests
          FileOperationController fileOperationController = new FileOperationController(fileOperationService, applicationLogic);
       }
 
-      [Test]
+      [Fact]
       public void FileOpen()
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();
@@ -57,7 +56,7 @@ namespace ImagingInterface.Controllers.Tests
          // Assert.AreEqual(0, imageSourceControllers.Count);
       }
 
-      [Test]
+      [Fact]
       public void CloseActiveFile()
       {
          // FileOperationController fileOperationController = this.ServiceLocator.GetInstance<FileOperationController>();
@@ -82,7 +81,7 @@ namespace ImagingInterface.Controllers.Tests
          ////Assert.AreEqual(0, imageManagerController.ImageCount);
       }
 
-      [Test]
+      [Fact]
       public void CloseAllFiles()
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();
@@ -106,7 +105,7 @@ namespace ImagingInterface.Controllers.Tests
          // Assert.IsTrue(fileClosed);
       }
 
-      [Test]
+      [Fact]
       public void DragDrop()
       {
          FileSourceFactory fileSourceFactory = new FileSourceFactory();

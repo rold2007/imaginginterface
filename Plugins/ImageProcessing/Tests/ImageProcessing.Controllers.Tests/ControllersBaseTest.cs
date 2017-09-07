@@ -14,11 +14,9 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
-   using NUnit.Framework;
 
    public abstract class ControllersBaseTest
    {
-      [SetUp]
       protected void SetUp()
       {
          // base.SetUp();
