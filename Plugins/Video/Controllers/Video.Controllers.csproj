@@ -92,10 +92,6 @@
       <Name>ImagingInterface.Plugins.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Controllers.Interfaces\Video.Controllers.Interfaces.csproj">
-      <Project>{5068a231-f949-49bd-8e14-7385f78596c5}</Project>
-      <Name>Video.Controllers.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Models\Video.Models.csproj">
       <Project>{9c6c762a-c1bf-4630-bed4-03d4b07790e7}</Project>
       <Name>Video.Models</Name>

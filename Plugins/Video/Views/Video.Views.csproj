@@ -99,10 +99,6 @@
       <Project>{46101352-ab52-467d-bb6a-2fe8a1929d21}</Project>
       <Name>Video.Controllers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Views.Interfaces\Video.Views.Interfaces.csproj">
-      <Project>{f18de59e-bba4-4d41-b0b0-1ee3ad9f3978}</Project>
-      <Name>Video.Views.Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CaptureView.resx">

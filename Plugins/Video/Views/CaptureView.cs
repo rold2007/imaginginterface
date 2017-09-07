@@ -6,9 +6,10 @@ namespace Video.Views
 {
    using System;
    using System.Windows.Forms;
+   using ImagingInterface.Plugins;
    using Video.Controllers;
 
-   public partial class CaptureView : UserControl, ICaptureView
+   public partial class CaptureView : UserControl, IPluginView
    {
       private CaptureController captureController;
 
