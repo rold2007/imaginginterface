@@ -9,8 +9,6 @@ namespace ImageProcessing.Controllers.Tests
    using System.Linq;
    using System.Text;
    using System.Threading.Tasks;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
