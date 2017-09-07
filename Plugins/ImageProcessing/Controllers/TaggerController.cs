@@ -7,11 +7,11 @@ namespace ImageProcessing.Controllers
    using System;
    using System.Collections.Generic;
    using System.ComponentModel;
+   using System.Diagnostics;
    using System.Drawing;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
-   using ImagingInterface.Controllers;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
    using ImagingInterface.Plugins.Utilities;
@@ -21,7 +21,7 @@ namespace ImageProcessing.Controllers
       private static readonly string TaggerDisplayName = "Tagger"; // ncrunch: no coverage
       ////private ITaggerView taggerView;
       private TaggerModel taggerModel = new TaggerModel();
-      private ImageController registeredImageController;
+      ////private ImageController registeredImageController;
       private Tagger tagger;
 
       public TaggerController(Tagger tagger)
@@ -181,20 +181,22 @@ namespace ImageProcessing.Controllers
 
       private void UnregisterActiveImage()
          {
-         if (this.registeredImageController != null)
+         // if (this.registeredImageController != null)
             {
             ////this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
             ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
 
             this.tagger.SavePoints();
 
-            this.registeredImageController = null;
+            // this.registeredImageController = null;
             }
          }
 
       private void ExtractPoints()
          {
-         this.tagger.LoadPoints(this.registeredImageController.DisplayName);
+         Debug.Fail("Need to review the use of registeredImageController. The plugins shoudn't depend on ImagingInterface.Controllers, only on ImagingInterface.Plugins.Interface");
+
+         ////this.tagger.LoadPoints(this.registeredImageController.DisplayName);
 
          this.AddLabels(this.tagger.DataPoints.Keys);
 
@@ -250,7 +252,7 @@ namespace ImageProcessing.Controllers
             };
             tagPoints.Add(label, points);
 
-            this.TagPointChanged(this, new TagPointChangedEventArgs(this.registeredImageController, label, tagPoint, added));
+            this.TagPointChanged(this, new TagPointChangedEventArgs(/*this.registeredImageController, */label, tagPoint, added));
             }
          }
 
