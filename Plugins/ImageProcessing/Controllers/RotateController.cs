@@ -66,7 +66,7 @@ namespace ImageProcessing.Controllers
             this.rotateService.Angle = angle;
 
             // Force to apply a rotation
-            this.rotateService.Rotate(angle);
+            this.rotateService.Rotate();
 
             // ImageController imageController = this.imageManagerController.GetActiveImage();
 

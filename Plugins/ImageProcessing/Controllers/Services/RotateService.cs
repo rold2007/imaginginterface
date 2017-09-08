@@ -34,7 +34,7 @@ namespace ImageProcessing.Controllers.Services
          set;
       }
 
-      public void Rotate(double angle)
+      public void Rotate()
       {
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
