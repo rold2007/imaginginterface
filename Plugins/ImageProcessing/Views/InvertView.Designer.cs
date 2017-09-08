@@ -34,9 +34,10 @@
          // InvertCheckBox
          // 
          this.InvertCheckBox.AutoSize = true;
-         this.InvertCheckBox.Location = new System.Drawing.Point(0, 3);
+         this.InvertCheckBox.Location = new System.Drawing.Point(0, 7);
+         this.InvertCheckBox.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.InvertCheckBox.Name = "InvertCheckBox";
-         this.InvertCheckBox.Size = new System.Drawing.Size(53, 17);
+         this.InvertCheckBox.Size = new System.Drawing.Size(123, 34);
          this.InvertCheckBox.TabIndex = 1;
          this.InvertCheckBox.Text = "Invert";
          this.InvertCheckBox.UseVisualStyleBackColor = true;
@@ -44,10 +45,12 @@
          // 
          // InvertView
          // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+         this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 30F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.Controls.Add(this.InvertCheckBox);
+         this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.Name = "InvertView";
+         this.Size = new System.Drawing.Size(400, 346);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -56,5 +59,5 @@
       #endregion
 
       private System.Windows.Forms.CheckBox InvertCheckBox;
-      }
+   }
    }

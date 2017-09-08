@@ -7,7 +7,6 @@ namespace ImageProcessing.Views
    using System;
    using System.Windows.Forms;
    using ImageProcessing.Controllers;
-   using ImageProcessing.Controllers.EventArguments;
    using ImagingInterface.Plugins;
 
    public partial class InvertView : UserControl, IPluginView
@@ -20,8 +19,6 @@ namespace ImageProcessing.Views
 
          this.invertController = invertController;
       }
-
-      public event EventHandler<InvertEventArgs> Invert;
 
       public string DisplayName
       {
@@ -45,7 +42,7 @@ namespace ImageProcessing.Views
 
       private void InvertCheckBox_CheckedChanged(object sender, EventArgs e)
       {
-         this.Invert?.Invoke(this, new InvertEventArgs(this.InvertCheckBox.Checked));
+         this.invertController.Invert(this.InvertCheckBox.Checked);
       }
    }
 }

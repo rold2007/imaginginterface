@@ -94,7 +94,6 @@
     <Compile Include="EventArguments\CudafyAddEventArgs.cs" />
     <Compile Include="EventArguments\CudafyGPUChangedEventArgs.cs" />
     <Compile Include="EventArguments\CudafyGridSizeChangedEventArgs.cs" />
-    <Compile Include="EventArguments\InvertEventArgs.cs" />
     <Compile Include="EventArguments\TagPointChangedEventArgs.cs" />
     <Compile Include="FileSourceFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -103,8 +102,6 @@
     <Compile Include="MemorySource.cs" />
     <Compile Include="Models\CudafyModel.cs" />
     <Compile Include="Models\ICudafyModel.cs" />
-    <Compile Include="Models\IInvertModel.cs" />
-    <Compile Include="Models\InvertModel.cs" />
     <Compile Include="Models\IObjectDetectionManagerModel.cs" />
     <Compile Include="Models\IObjectDetectionModel.cs" />
     <Compile Include="Models\IRotateModel.cs" />
@@ -116,6 +113,7 @@
     <Compile Include="ObjectDetectionManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotateController.cs" />
+    <Compile Include="Services\InvertService.cs" />
     <Compile Include="Services\RotateService.cs" />
     <Compile Include="TaggerController.cs" />
   </ItemGroup>
