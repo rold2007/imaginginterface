@@ -19,11 +19,15 @@ namespace ImagingInterface.Controllers.Services
       public void AddOneShotImageProcessingToActiveImage(IImageProcessingService imageProcessingController)
       {
          int activeImageIndex = this.imageManagerService.ActiveImageIndex;
-         IImageSource imageSource = this.imageManagerService.GetImageFromIndex(activeImageIndex);
 
-         byte[,,] updatedImageData = imageProcessingController.ProcessImageData(imageSource.OriginalImageData, null);
+         if (activeImageIndex >= 0)
+         {
+            IImageSource imageSource = this.imageManagerService.GetImageFromIndex(activeImageIndex);
 
-         imageSource.UpdateImageData(updatedImageData);
+            byte[,,] updatedImageData = imageProcessingController.ProcessImageData(imageSource.OriginalImageData, null);
+
+            imageSource.UpdateImageData(updatedImageData);
+         }
       }
    }
 }
