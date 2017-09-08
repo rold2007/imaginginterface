@@ -21,6 +21,7 @@ namespace ImageProcessing.Views.CompositionRoot
 
          // Models
          container.Register<RotateService>();
+         container.Register<InvertService>();
 
          // Controllers
          container.Register<RotateController>();

@@ -10,60 +10,50 @@ namespace ImageProcessing.Controllers
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImageProcessing.Controllers.EventArguments;
-   using ImageProcessing.Models;
+   using ImageProcessing.Controllers.Services;
    using ImagingInterface.Plugins;
 
-   public class InvertController : IImageProcessingService
-      {
-      private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
-      private InvertModel invertModel = new InvertModel();
+   public class InvertController
+   {
+      private InvertService invertService;
 
-      public InvertController()
-         {
-         this.invertModel.DisplayName = InvertController.InvertDisplayName;
-         }
+      public InvertController(InvertService invertService)
+      {
+         this.invertService = invertService;
+      }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
 
-      ////public IRawPluginView RawPluginView
-      ////   {
-      ////   get
-      ////      {
-      ////      return this.invertView;
-      ////      }
-      ////   }
-
       public bool Active
-         {
+      {
          get
-            {
+         {
             return true;
-            }
          }
+      }
 
       public string DisplayName
       {
          get
          {
-            return this.invertModel.DisplayName;
+            return this.invertService.DisplayName;
          }
       }
 
       public void Initialize()
-         {
-         ////this.invertView.Invert += this.InvertView_Invert;
-         }
+      {
+      }
 
       public void Close()
-         {
+      {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
          this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
-            {
+         {
             ////this.invertView.Invert -= this.InvertView_Invert;
 
             ////this.invertView.Hide();
@@ -72,47 +62,27 @@ namespace ImageProcessing.Controllers
 
             this.Closed?.Invoke(this, EventArgs.Empty);
          }
-         }
+      }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
-         {
-         if (imageData.GetLength(2) == 1)
-            {
-            using (Image<Gray, byte> invertedImage = new Image<Gray, byte>(imageData))
-               {
-               invertedImage._Not();
+      public void Invert(bool invert)
+      {
+         this.invertService.ApplyInvert = invert;
+         this.invertService.Invert();
 
-               return invertedImage.Data;
-               }
-            }
-         else
-            {
-            Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
-
-            using (Image<Bgr, byte> invertedImage = new Image<Bgr, byte>(imageData))
-               {
-               invertedImage._Not();
-
-               return invertedImage.Data;
-               }
-            }
-         }
-
-      private void InvertView_Invert(object sender, InvertEventArgs e)
-         {
          ////ImageController imageController = this.imageManagerController.GetActiveImage();
 
          ////if (imageController != null)
+         {
+            ////if (e.Invert)
             {
-            if (e.Invert)
-               {
                ////imageController.AddImageProcessingController(this, null);
-               }
-            else
-               {
+            }
+
+            ////else
+            {
                ////imageController.RemoveImageProcessingController(this, null);
-               }
             }
          }
       }
    }
+}
