@@ -84,6 +84,7 @@
     <Compile Include="CaptureController.cs" />
     <Compile Include="CaptureWrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\CaptureModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +92,6 @@
       <Project>{fd6c3570-f64d-4a9c-aa12-eb47d4fb2104}</Project>
       <Name>ImagingInterface.Plugins.Interfaces</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Models\Video.Models.csproj">
-      <Project>{9c6c762a-c1bf-4630-bed4-03d4b07790e7}</Project>
-      <Name>Video.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
