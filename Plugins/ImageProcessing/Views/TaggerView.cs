@@ -10,8 +10,9 @@ namespace ImageProcessing.Views
    using System.Windows.Forms;
    using ImageProcessing.Controllers;
    using ImageProcessing.Models;
+   using ImagingInterface.Plugins;
 
-   public partial class TaggerView : UserControl
+   public partial class TaggerView : UserControl, IPluginView
    {
       private ITaggerModel taggerModel;
       private TaggerController taggerController;
