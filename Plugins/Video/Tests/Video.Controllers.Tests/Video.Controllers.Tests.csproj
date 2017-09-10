@@ -118,10 +118,6 @@
       <Project>{46101352-ab52-467d-bb6a-2fe8a1929d21}</Project>
       <Name>Video.Controllers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Models\Video.Models.csproj">
-      <Project>{9c6c762a-c1bf-4630-bed4-03d4b07790e7}</Project>
-      <Name>Video.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
