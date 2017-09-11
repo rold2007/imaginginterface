@@ -5,6 +5,7 @@
 namespace ImageProcessing.Views
 {
    using System;
+   using System.Collections.Generic;
    using System.Drawing;
    using System.Drawing.Imaging;
    using System.Windows.Forms;
@@ -44,41 +45,44 @@ namespace ImageProcessing.Views
 
       public void UpdateLabelList()
       {
-         ////this.labelsListView.Items.Clear();
-         ////this.ClearImageList();
+         this.labelsListView.Items.Clear();
+         this.ClearImageList();
 
-         ////int imageIndex = 0;
+         int imageIndex = 0;
 
-         ////foreach (string label in this.taggerModel.Labels)
-         ////{
-         ////   Color color = this.taggerModel.LabelColors[label];
-         ////   Bitmap bitmap = new Bitmap(16, 16, PixelFormat.Format24bppRgb);
+         foreach (string label in this.taggerController.Labels)
+         {
+            ////Color color = this.taggerController.LabelColors[label];
+            Color color = Color.AliceBlue;
+            Bitmap bitmap = new Bitmap(16, 16, PixelFormat.Format24bppRgb);
 
-         ////   using (Graphics graphics = Graphics.FromImage(bitmap))
-         ////   {
-         ////      Color colorWithAlpha = Color.FromArgb(255, color);
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+               Color colorWithAlpha = Color.FromArgb(255, color);
 
-         ////      using (SolidBrush solidBrush = new SolidBrush(colorWithAlpha))
-         ////      {
-         ////         graphics.FillRectangle(solidBrush, 0, 0, 15, 15);
-         ////      }
-         ////   }
+               using (SolidBrush solidBrush = new SolidBrush(colorWithAlpha))
+               {
+                  graphics.FillRectangle(solidBrush, 0, 0, 15, 15);
+               }
+            }
 
-         ////   this.imageList.Images.Add(bitmap);
+            this.imageList.Images.Add(bitmap);
 
-         ////   ListViewItem listViewItem = new ListViewItem(label, imageIndex)
-         ////   {
-         ////      Name = label
-         ////   };
-         ////   this.labelsListView.Items.Add(listViewItem);
+            ListViewItem listViewItem = new ListViewItem(label, imageIndex)
+            {
+               Name = label
+            };
+            this.labelsListView.Items.Add(listViewItem);
 
-         ////   imageIndex++;
-         ////}
+            imageIndex++;
+         }
 
          ////if (this.taggerModel.SelectedLabel != null)
          ////{
          ////   this.labelsListView.Items[this.taggerModel.SelectedLabel].Selected = true;
          ////}
+
+         this.UpdateRemoveButtonState();
       }
 
       public void Close()
@@ -88,11 +92,23 @@ namespace ImageProcessing.Views
 
       private void AddButton_Click(object sender, EventArgs e)
       {
-         ////this.taggerModel.AddedLabel = this.labelTextBox.Text;
+         this.taggerController.AddLabel(this.labelTextBox.Text);
 
-         ////this.LabelAdded?.Invoke(this, EventArgs.Empty);
+         this.UpdateLabelList();
+      }
 
-         ////this.UpdateLabelList();
+      private void RemoveButton_Click(object sender, EventArgs e)
+      {
+         List<string> labels = new List<string>();
+
+         foreach (ListViewItem listViewItem in this.labelsListView.SelectedItems)
+         {
+            labels.Add(listViewItem.Text);
+         }
+
+         this.taggerController.RemoveLabels(labels);
+
+         this.UpdateLabelList();
       }
 
       private void ClearImageList()
@@ -119,14 +135,30 @@ namespace ImageProcessing.Views
 
       private void LabelsListView_SelectedIndexChanged(object sender, EventArgs e)
       {
-         ////if (this.labelsListView.SelectedItems.Count > 0)
-         ////{
-         ////   this.taggerModel.SelectedLabel = this.labelsListView.SelectedItems[0].Text;
-         ////}
-         ////else
-         ////{
-         ////   this.taggerModel.SelectedLabel = null;
-         ////}
+         if (this.labelsListView.SelectedItems.Count > 0)
+         {
+            ////this.taggerModel.SelectedLabel = this.labelsListView.SelectedItems[0].Text;
+         }
+         else
+         {
+            ////this.taggerModel.SelectedLabel = null;
+         }
+
+         this.UpdateRemoveButtonState();
+      }
+
+      private void UpdateRemoveButtonState()
+      {
+         if (this.labelsListView.SelectedItems.Count > 0)
+         {
+            this.removeButton.Enabled = true;
+            ////this.taggerModel.SelectedLabel = this.labelsListView.SelectedItems[0].Text;
+         }
+         else
+         {
+            this.removeButton.Enabled = false;
+            ////this.taggerModel.SelectedLabel = null;
+         }
       }
    }
 }

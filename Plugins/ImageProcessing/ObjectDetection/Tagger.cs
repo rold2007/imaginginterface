@@ -146,12 +146,36 @@ namespace ImageProcessing.ObjectDetection
          this.dataPointsModified = false;
          }
 
-      public void AddLabel(string tag)
+      public void AddLabel(string label)
          {
-         if (!this.dataPoints.ContainsKey(tag))
+         if (!this.dataPoints.ContainsKey(label))
             {
-            this.dataPoints.Add(tag, new List<Point>());
+            this.dataPoints.Add(label, new List<Point>());
             }
          }
+
+      public void AddLabels(IEnumerable<string> labels)
+      {
+         foreach (string label in labels)
+         {
+            this.AddLabel(label);
+         }
       }
+
+      public void RemoveLabel(string label)
+      {
+         if (this.dataPoints.ContainsKey(label))
+         {
+            this.dataPoints.Remove(label);
+         }
+      }
+
+      public void RemoveLabels(IEnumerable<string> labels)
+      {
+         foreach (string label in labels)
+         {
+            this.RemoveLabel(label);
+         }
+      }
+   }
    }

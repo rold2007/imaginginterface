@@ -47,10 +47,12 @@ namespace ImageProcessing.Controllers.Services
 
       public void AddLabels(IEnumerable<string> labels)
       {
-         foreach (string label in labels)
-         {
-            this.tagger.AddLabel(label);
-         }
+         this.tagger.AddLabels(labels);
+      }
+
+      public void RemoveLabels(IEnumerable<string> labels)
+      {
+         this.tagger.RemoveLabels(labels);
       }
 
       public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)

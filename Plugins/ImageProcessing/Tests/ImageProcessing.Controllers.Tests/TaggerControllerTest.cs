@@ -33,18 +33,32 @@ namespace ImageProcessing.Controllers.Tests
          const string labelName = "DummyLabel";
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
 
+         taggerController.Labels.Count().ShouldBe(0);
+
          taggerController.AddLabel(labelName);
 
-         IEnumerable<string> labels = taggerController.Labels;
-
-         labels.Count().ShouldBe(1);
-         labels.First().ShouldBe(labelName);
+         taggerController.Labels.Count().ShouldBe(1);
+         taggerController.Labels.First().ShouldBe(labelName);
       }
 
       [Fact]
       public void RemoveLabel()
       {
+         const string labelName = "DummyLabel";
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+
+         taggerController.Labels.Count().ShouldBe(0);
+
+         taggerController.RemoveLabel(labelName);
+
+         taggerController.AddLabel(labelName);
+
+         taggerController.Labels.Count().ShouldBe(1);
+         taggerController.Labels.First().ShouldBe(labelName);
+
+         taggerController.RemoveLabel(labelName);
+
+         taggerController.Labels.Count().ShouldBe(0);
       }
 
       [Fact]
