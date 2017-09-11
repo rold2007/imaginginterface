@@ -121,6 +121,16 @@ namespace ImageProcessing.Controllers
          this.AssignColors();
       }
 
+      public void RemoveLabel(string label)
+      {
+         this.RemoveLabels(new[] { label });
+      }
+
+      public void RemoveLabels(IEnumerable<string> labels)
+      {
+         this.taggerService.RemoveLabels(labels);
+      }
+
       public bool AddPoint(string tag, Point newPoint)
          {
          ////if (this.tagger.AddPoint(tag, newPoint))

@@ -32,6 +32,7 @@
          this.labelTextBox = new System.Windows.Forms.TextBox();
          this.addButton = new System.Windows.Forms.Button();
          this.labelGroupBox = new System.Windows.Forms.GroupBox();
+         this.removeButton = new System.Windows.Forms.Button();
          this.labelsListView = new System.Windows.Forms.ListView();
          this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
          this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -40,18 +41,20 @@
          // 
          // labelTextBox
          // 
-         this.labelTextBox.Location = new System.Drawing.Point(6, 19);
+         this.labelTextBox.Location = new System.Drawing.Point(16, 44);
+         this.labelTextBox.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.labelTextBox.Name = "labelTextBox";
-         this.labelTextBox.Size = new System.Drawing.Size(175, 20);
+         this.labelTextBox.Size = new System.Drawing.Size(460, 37);
          this.labelTextBox.TabIndex = 1;
          this.labelTextBox.TextChanged += new System.EventHandler(this.LabelTextBox_TextChanged);
          // 
          // addButton
          // 
          this.addButton.Enabled = false;
-         this.addButton.Location = new System.Drawing.Point(187, 16);
+         this.addButton.Location = new System.Drawing.Point(499, 37);
+         this.addButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.addButton.Name = "addButton";
-         this.addButton.Size = new System.Drawing.Size(75, 23);
+         this.addButton.Size = new System.Drawing.Size(200, 53);
          this.addButton.TabIndex = 2;
          this.addButton.Text = "Add";
          this.addButton.UseVisualStyleBackColor = true;
@@ -59,15 +62,30 @@
          // 
          // labelGroupBox
          // 
+         this.labelGroupBox.Controls.Add(this.removeButton);
          this.labelGroupBox.Controls.Add(this.labelsListView);
          this.labelGroupBox.Controls.Add(this.labelTextBox);
          this.labelGroupBox.Controls.Add(this.addButton);
-         this.labelGroupBox.Location = new System.Drawing.Point(3, 3);
+         this.labelGroupBox.Location = new System.Drawing.Point(8, 7);
+         this.labelGroupBox.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.labelGroupBox.Name = "labelGroupBox";
-         this.labelGroupBox.Size = new System.Drawing.Size(409, 219);
+         this.labelGroupBox.Padding = new System.Windows.Forms.Padding(8, 7, 8, 7);
+         this.labelGroupBox.Size = new System.Drawing.Size(1091, 505);
          this.labelGroupBox.TabIndex = 4;
          this.labelGroupBox.TabStop = false;
          this.labelGroupBox.Text = "Labels";
+         // 
+         // removeButton
+         // 
+         this.removeButton.Enabled = false;
+         this.removeButton.Location = new System.Drawing.Point(499, 104);
+         this.removeButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+         this.removeButton.Name = "removeButton";
+         this.removeButton.Size = new System.Drawing.Size(200, 53);
+         this.removeButton.TabIndex = 5;
+         this.removeButton.Text = "Remove";
+         this.removeButton.UseVisualStyleBackColor = true;
+         this.removeButton.Click += new System.EventHandler(this.RemoveButton_Click);
          // 
          // labelsListView
          // 
@@ -75,10 +93,10 @@
             this.columnHeader});
          this.labelsListView.FullRowSelect = true;
          this.labelsListView.HideSelection = false;
-         this.labelsListView.Location = new System.Drawing.Point(6, 45);
-         this.labelsListView.MultiSelect = false;
+         this.labelsListView.Location = new System.Drawing.Point(16, 104);
+         this.labelsListView.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.labelsListView.Name = "labelsListView";
-         this.labelsListView.Size = new System.Drawing.Size(175, 168);
+         this.labelsListView.Size = new System.Drawing.Size(460, 382);
          this.labelsListView.SmallImageList = this.imageList;
          this.labelsListView.TabIndex = 4;
          this.labelsListView.UseCompatibleStateImageBehavior = false;
@@ -97,11 +115,12 @@
          // 
          // TaggerView
          // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+         this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 30F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.Controls.Add(this.labelGroupBox);
+         this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.Name = "TaggerView";
-         this.Size = new System.Drawing.Size(415, 225);
+         this.Size = new System.Drawing.Size(1107, 519);
          this.labelGroupBox.ResumeLayout(false);
          this.labelGroupBox.PerformLayout();
          this.ResumeLayout(false);
@@ -116,6 +135,6 @@
       private System.Windows.Forms.ListView labelsListView;
       private System.Windows.Forms.ColumnHeader columnHeader;
       private System.Windows.Forms.ImageList imageList;
-
-      }
+      private System.Windows.Forms.Button removeButton;
+   }
    }
