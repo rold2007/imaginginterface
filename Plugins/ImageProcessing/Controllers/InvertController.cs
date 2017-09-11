@@ -6,12 +6,7 @@ namespace ImageProcessing.Controllers
 {
    using System;
    using System.ComponentModel;
-   using System.Diagnostics;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
-   using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Controllers.Services;
-   using ImagingInterface.Plugins;
 
    public class InvertController
    {

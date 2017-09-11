@@ -4,238 +4,243 @@
 
 namespace ImageProcessing.Controllers.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using ImageProcessing.Controllers;
-    using ImageProcessing.Models;
-    using ImagingInterface.Plugins;
+   using System.Collections.Generic;
+   using System.Linq;
+   using ImageProcessing.Controllers;
+   using ImageProcessing.Controllers.Services;
+   using ImageProcessing.ObjectDetection;
+   using Shouldly;
    using Xunit;
 
    public class TaggerControllerTest : ControllersBaseTest
-    {
-        [Fact]
-        public void Constructor()
-        {
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-        }
+   {
+      public TaggerControllerTest()
+      {
+         this.Container.Register<Tagger>();
+         this.Container.Register<TaggerService>();
+         this.Container.Register<TaggerController>();
+      }
 
-        [Fact]
-        public void RawPluginView()
-        {
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-            ////IRawPluginView rotateView = taggerController.RawPluginView;
+      [Fact]
+      public void Constructor()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+      }
 
-            ////Assert.IsNotNull(rotateView);
-        }
+      [Fact]
+      public void AddLabel()
+      {
+         const string labelName = "DummyLabel";
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
 
-        [Fact]
-        public void RawPluginModel()
-        {
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-            ////IRawPluginModel rawPluginModel = taggerController.RawPluginModel;
+         taggerController.AddLabel(labelName);
 
-            ////Assert.IsNotNull(rawPluginModel);
-        }
+         IEnumerable<string> labels = taggerController.Labels;
 
-        [Fact]
-        public void DisplayName()
-        {
-            ////this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
+         labels.Count().ShouldBe(1);
+         labels.First().ShouldBe(labelName);
+      }
 
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-            ////ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
+      [Fact]
+      public void RemoveLabel()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+      }
 
-            ////Assert.AreEqual("Tagger", taggerModel.DisplayName);
-        }
+      [Fact]
+      public void DisplayName()
+      {
+         ////this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-        [Fact]
-        public void Active()
-        {
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ////ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
 
-            ////Assert.IsTrue(taggerController.Active);
-        }
+         ////Assert.AreEqual("Tagger", taggerModel.DisplayName);
+      }
 
-        [Fact]
-        public void Close()
-        {
-            ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+      [Fact]
+      public void Active()
+      {
+         ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
 
-            ////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-            ////bool closingCalled = false;
-            ////bool closedCalled = false;
+         ////Assert.IsTrue(taggerController.Active);
+      }
 
-            ////taggerController.Closing += (sender, eventArgs) => { closingCalled = true; };
-            ////taggerController.Closed += (sender, eventArgs) => { closedCalled = true; };
+      [Fact]
+      public void Close()
+      {
+         ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
 
-            ////taggerController.Close();
+         ////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ////bool closingCalled = false;
+         ////bool closedCalled = false;
 
-            ////Assert.IsTrue(closingCalled);
-            ////Assert.IsTrue(closedCalled);
-            ////Assert.IsTrue(taggerView.CloseCalled);
-        }
+         ////taggerController.Closing += (sender, eventArgs) => { closingCalled = true; };
+         ////taggerController.Closed += (sender, eventArgs) => { closedCalled = true; };
 
-        [Fact]
-        public void ProcessImageData()
-        {
-            ////string displayName = Path.GetRandomFileName();
-            ////string directory = Path.GetTempPath() + "Tagger" + @"\";
+         ////taggerController.Close();
 
-            ////try
-            //   {
-            //   ////this.Container.RegisterSingleton<IImageView, ImageView>();
-            //   this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
+         ////Assert.IsTrue(closingCalled);
+         ////Assert.IsTrue(closedCalled);
+         ////Assert.IsTrue(taggerView.CloseCalled);
+      }
 
-            ////   TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-            //   ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
-            //   ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-            //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
-            //   ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
-            //   ////ImageView imageView = this.Container.GetInstance<IImageView>() as ImageView;
+      [Fact]
+      public void ProcessImageData()
+      {
+         ////string displayName = Path.GetRandomFileName();
+         ////string directory = Path.GetTempPath() + "Tagger" + @"\";
 
-            ////   imageSourceController.ImageData = new byte[10, 10, 1];
+         ////try
+         //   {
+         //   ////this.Container.RegisterSingleton<IImageView, ImageView>();
+         //   this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-            ////   taggerController.Initialize();
+         ////   TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         //   ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
+         //   ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+         //   ImageManagerController imageManagerController = this.ServiceLocator.GetInstance<ImageManagerController>();
+         //   ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
+         //   ////ImageView imageView = this.Container.GetInstance<IImageView>() as ImageView;
 
-            ////   ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            //   ////   {
-            //   ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         ////   imageSourceController.ImageData = new byte[10, 10, 1];
 
-            ////   ////   imageController.SetDisplayName(displayName);
+         ////   taggerController.Initialize();
 
-            ////   ////   imageManagerController.AddImage(imageController);
+         ////   ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         //   ////   {
+         //   ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-            ////   ////   imageControllerWrapper.WaitForDisplayUpdate();
-            ////   ////   }
+         ////   ////   imageController.SetDisplayName(displayName);
 
-            ////   string label = "Label";
+         ////   ////   imageManagerController.AddImage(imageController);
 
-            ////   taggerModel.Labels.Add(label);
-            ////   taggerModel.LabelColors.Add(label, Color.FromArgb(0));
-            ////   taggerModel.SelectedLabel = label;
+         ////   ////   imageControllerWrapper.WaitForDisplayUpdate();
+         ////   ////   }
 
-            ////   // Tag a point
-            ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            ////      {
-            ////      ////imageView.TriggerSelectionChanged(new Point(1, 1), true);
+         ////   string label = "Label";
 
-            ////      imageControllerWrapper.WaitForDisplayUpdate();
-            ////      }
+         ////   taggerModel.Labels.Add(label);
+         ////   taggerModel.LabelColors.Add(label, Color.FromArgb(0));
+         ////   taggerModel.SelectedLabel = label;
 
-            ////   // Add an already tagged point
-            ////   ////imageView.TriggerSelectionChanged(new Point(1, 1), true);
+         ////   // Tag a point
+         ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////      {
+         ////      ////imageView.TriggerSelectionChanged(new Point(1, 1), true);
 
-            ////   // Try to untag an unexisting point
-            ////   ////imageView.TriggerSelectionChanged(new Point(2, 2), false);
+         ////      imageControllerWrapper.WaitForDisplayUpdate();
+         ////      }
 
-            ////   imageSourceController.ImageData = new byte[10, 10, 3];
+         ////   // Add an already tagged point
+         ////   ////imageView.TriggerSelectionChanged(new Point(1, 1), true);
 
-            ////   // Tag a point in a 3-channels image
-            ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            ////      {
-            ////      ////imageView.TriggerSelectionChanged(new Point(2, 2), true);
+         ////   // Try to untag an unexisting point
+         ////   ////imageView.TriggerSelectionChanged(new Point(2, 2), false);
 
-            ////      imageControllerWrapper.WaitForDisplayUpdate();
-            ////      }
+         ////   imageSourceController.ImageData = new byte[10, 10, 3];
 
-            ////   // Untag a point
-            ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            ////      {
-            ////      ////imageView.TriggerSelectionChanged(new Point(2, 2), false);
+         ////   // Tag a point in a 3-channels image
+         ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////      {
+         ////      ////imageView.TriggerSelectionChanged(new Point(2, 2), true);
 
-            ////      imageControllerWrapper.WaitForDisplayUpdate();
-            ////      }
+         ////      imageControllerWrapper.WaitForDisplayUpdate();
+         ////      }
 
-            ////   // Save points
-            ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            ////      {
-            ////      imageController.Close();
+         ////   // Untag a point
+         ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////      {
+         ////      ////imageView.TriggerSelectionChanged(new Point(2, 2), false);
 
-            ////      imageControllerWrapper.WaitForClosed();
-            ////      }
+         ////      imageControllerWrapper.WaitForDisplayUpdate();
+         ////      }
 
-            ////   imageController = this.ServiceLocator.GetInstance<ImageController>();
+         ////   // Save points
+         ////   using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////      {
+         ////      imageController.Close();
 
-            ////   // Load points with first display update
-            ////   ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            ////   ////   {
-            ////   ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         ////      imageControllerWrapper.WaitForClosed();
+         ////      }
 
-            ////   ////   imageController.SetDisplayName(displayName);
+         ////   imageController = this.ServiceLocator.GetInstance<ImageController>();
 
-            ////   ////   imageManagerController.AddImage(imageController);
+         ////   // Load points with first display update
+         ////   ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   ////   {
+         ////   ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
 
-            ////   ////   imageControllerWrapper.WaitForDisplayUpdate();
-            ////   ////   }
+         ////   ////   imageController.SetDisplayName(displayName);
 
-            ////   // Close and reopen the plugin to allow to call ExtractPoints from RegisterActiveImage()
-            ////   taggerController.Close();
+         ////   ////   imageManagerController.AddImage(imageController);
 
-            ////   taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ////   ////   imageControllerWrapper.WaitForDisplayUpdate();
+         ////   ////   }
 
-            ////   taggerModel.Labels.Add(label);
-            ////   taggerModel.LabelColors.Add(label, Color.FromArgb(0));
-            ////   taggerModel.SelectedLabel = label;
+         ////   // Close and reopen the plugin to allow to call ExtractPoints from RegisterActiveImage()
+         ////   taggerController.Close();
 
-            ////   taggerController.Initialize();
-            ////   }
-            ////finally
-            ////   {
-            ////   if (Directory.Exists(directory))
-            ////      {
-            ////      File.Delete(directory + '\\' + Path.GetFileNameWithoutExtension(displayName) + ".imagedata");
-            ////      }
-            ////   }
-        }
+         ////   taggerController = this.ServiceLocator.GetInstance<TaggerController>();
 
-        [Fact]
-        public void LabelAdded()
-        {
-            ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
-            ////this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
+         ////   taggerModel.Labels.Add(label);
+         ////   taggerModel.LabelColors.Add(label, Color.FromArgb(0));
+         ////   taggerModel.SelectedLabel = label;
 
-            //////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-            ////ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
+         ////   taggerController.Initialize();
+         ////   }
+         ////finally
+         ////   {
+         ////   if (Directory.Exists(directory))
+         ////      {
+         ////      File.Delete(directory + '\\' + Path.GetFileNameWithoutExtension(displayName) + ".imagedata");
+         ////      }
+         ////   }
+      }
 
-            ////taggerModel.AddedLabel = "AddedLabel";
+      [Fact]
+      public void LabelAdded()
+      {
+         ////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         ////this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-            ////taggerController.Initialize();
+         //////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ////ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
 
-            //////taggerView.TriggerLabelAdded();
+         ////taggerModel.AddedLabel = "AddedLabel";
 
-            ////Assert.AreEqual(1, taggerModel.Labels.Count());
-            ////Assert.AreEqual(1, taggerModel.LabelColors.Count());
-        }
+         ////taggerController.Initialize();
 
-        [Fact]
-        public void RegisterActiveImage()
-        {
-            ////string displayName = "temp";
+         //////taggerView.TriggerLabelAdded();
 
-            //////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
-            ////this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
+         ////Assert.AreEqual(1, taggerModel.Labels.Count());
+         ////Assert.AreEqual(1, taggerModel.LabelColors.Count());
+      }
 
-            //////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
-            ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
-            ////ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
-            ////ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
-            ////ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
+      [Fact]
+      public void RegisterActiveImage()
+      {
+         ////string displayName = "temp";
 
-            ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
-            ////   {
-            ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+         //////this.Container.RegisterSingleton<ITaggerView, TaggerView>();
+         ////this.Container.RegisterSingleton<ITaggerModel, TaggerModel>();
 
-            ////   imageController.SetDisplayName(displayName);
+         //////TaggerView taggerView = this.ServiceLocator.GetInstance<ITaggerView>() as TaggerView;
+         ////TaggerController taggerController = this.ServiceLocator.GetInstance<TaggerController>();
+         ////ITaggerModel taggerModel = this.ServiceLocator.GetInstance<ITaggerModel>();
+         ////ImageController imageController = this.ServiceLocator.GetInstance<ImageController>();
+         ////ImageSourceController imageSourceController = this.Container.GetInstance<ImageSourceController>();
 
-            ////   imageControllerWrapper.WaitForDisplayUpdate();
-            ////   }
-        }
-    }
+         ////using (ImageControllerWrapper imageControllerWrapper = new ImageControllerWrapper(imageController))
+         ////   {
+         ////   imageController.InitializeImageSourceController(imageSourceController, imageSourceController.RawPluginModel);
+
+         ////   imageController.SetDisplayName(displayName);
+
+         ////   imageControllerWrapper.WaitForDisplayUpdate();
+         ////   }
+      }
+   }
 }
