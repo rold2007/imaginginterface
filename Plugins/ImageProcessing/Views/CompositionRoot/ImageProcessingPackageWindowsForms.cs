@@ -20,8 +20,9 @@ namespace ImageProcessing.Views.CompositionRoot
          container.RegisterSingleton<IFileSourceFactory, FileSourceFactory>();
 
          // Models
-         container.Register<RotateService>();
          container.Register<InvertService>();
+         container.Register<RotateService>();
+         container.Register<TaggerService>();
 
          // Controllers
          container.Register<RotateController>();

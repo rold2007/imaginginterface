@@ -14,9 +14,21 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
+   using SimpleInjector;
 
    public abstract class ControllersBaseTest
    {
+      public ControllersBaseTest()
+      {
+         this.Container = new Container();
+      }
+
+      protected Container Container
+      {
+         get;
+         private set;
+      }
+
       protected void SetUp()
       {
          // base.SetUp();
