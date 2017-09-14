@@ -36,11 +36,11 @@ namespace ImageProcessing.ObjectDetection
          set;
          }
 
-      public bool AddPoint(string tag, Point newPoint)
+      public bool AddPoint(string label, Point newPoint)
          {
          List<Point> points;
 
-         if (this.dataPoints.TryGetValue(tag, out points))
+         if (this.dataPoints.TryGetValue(label, out points))
             {
             if (!points.Contains(newPoint))
                {
@@ -59,7 +59,7 @@ namespace ImageProcessing.ObjectDetection
             {
             points = new List<Point>();
 
-            this.dataPoints.Add(tag, points);
+            this.dataPoints.Add(label, points);
 
             points.Add(newPoint);
 
@@ -69,15 +69,15 @@ namespace ImageProcessing.ObjectDetection
             }
          }
 
-      public bool RemovePoint(string tag, Point newPoint)
+      public bool RemovePoint(string label, Point point)
          {
          List<Point> points;
 
-         if (this.dataPoints.TryGetValue(tag, out points))
+         if (this.dataPoints.TryGetValue(label, out points))
             {
-            if (points.Contains(newPoint))
+            if (points.Contains(point))
                {
-               points.Remove(newPoint);
+               points.Remove(point);
 
                this.dataPointsModified = true;
 
@@ -104,11 +104,11 @@ namespace ImageProcessing.ObjectDetection
 
             using (StreamWriter streamWriter = new StreamWriter(this.tempFilename, false))
                {
-               foreach (string tag in this.dataPoints.Keys)
+               foreach (string label in this.dataPoints.Keys)
                   {
-                  foreach (Point point in this.dataPoints[tag])
+                  foreach (Point point in this.dataPoints[label])
                      {
-                     streamWriter.WriteLine(string.Format("{0};{1};{2}", tag, point.X, point.Y));
+                     streamWriter.WriteLine(string.Format("{0};{1};{2}", label, point.X, point.Y));
                      }
                   }
                }
@@ -133,12 +133,12 @@ namespace ImageProcessing.ObjectDetection
                   {
                   string line = streamReader.ReadLine();
                   string[] lineSplits = line.Split(';');
-                  string tag = lineSplits[0];
+                  string label = lineSplits[0];
                   Point readPoint = new Point(Convert.ToInt32(lineSplits[1]), Convert.ToInt32(lineSplits[2]));
 
-                  this.AddLabel(tag);
+                  this.AddLabel(label);
 
-                  this.AddPoint(tag, readPoint);
+                  this.AddPoint(label, readPoint);
                   }
                }
             }

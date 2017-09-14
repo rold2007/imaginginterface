@@ -55,6 +55,33 @@ namespace ImageProcessing.Controllers.Services
          this.tagger.RemoveLabels(labels);
       }
 
+      public void AddPoint(string label, Point newPoint)
+      {
+         this.tagger.AddPoint(label, newPoint);
+      }
+
+      public void RemovePoint(string label, Point point)
+      {
+         this.tagger.RemovePoint(label, point);
+      }
+
+      public List<Point> GetPoints(string label)
+      {
+         IReadOnlyDictionary<string, List<Point>> dataPoints = this.tagger.DataPoints;
+         List<Point> points;
+
+         dataPoints.TryGetValue(label, out points);
+
+         if (points == null)
+         {
+            return new List<Point>();
+         }
+         else
+         {
+            return points;
+         }
+      }
+
       public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          int imageWidth = imageData.GetLength(1);
