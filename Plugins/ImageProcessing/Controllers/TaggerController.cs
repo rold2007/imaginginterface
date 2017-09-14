@@ -3,7 +3,7 @@
 // </copyright>
 
 namespace ImageProcessing.Controllers
-   {
+{
    using System;
    using System.Collections.Generic;
    using System.ComponentModel;
@@ -11,39 +11,22 @@ namespace ImageProcessing.Controllers
    using System.Drawing;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Controllers.Services;
-   using ImageProcessing.Models;
    using ImagingInterface.Plugins.EventArguments;
-   using ImagingInterface.Plugins.Utilities;
 
    public class TaggerController
-      {
-      ////private ITaggerView taggerView;
-      ////private TaggerModel taggerModel = new TaggerModel();
-      ////private ImageController registeredImageController;
+   {
       private TaggerService taggerService;
 
       public TaggerController(TaggerService taggerService)
-         {
+      {
          this.taggerService = taggerService;
-
-         ////this.taggerModel.DisplayName = TaggerDisplayName;
-         ////this.taggerModel.Labels = new SortedSet<string>();
-         ////this.taggerModel.LabelColors = new SortedList<string, Color>();
-         }
+      }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
 
       public event EventHandler<TagPointChangedEventArgs> TagPointChanged;
-
-      ////public IRawPluginView RawPluginView
-      ////   {
-      ////   get
-      ////      {
-      ////      return this.taggerView;
-      ////      }
-      ////   }
 
       public IEnumerable<string> Labels
       {
@@ -54,12 +37,12 @@ namespace ImageProcessing.Controllers
       }
 
       public bool Active
-         {
+      {
          get
-            {
+         {
             return true;
-            }
          }
+      }
 
       public string DisplayName
       {
@@ -70,7 +53,7 @@ namespace ImageProcessing.Controllers
       }
 
       public void Initialize()
-         {
+      {
          ////this.taggerView.SetTaggerModel(this.taggerModel);
 
          ////this.taggerView.LabelAdded += this.TaggerView_LabelAdded;
@@ -78,16 +61,16 @@ namespace ImageProcessing.Controllers
          ////this.imageManagerController.ActiveImageChanged += this.ImageManagerController_ActiveImageChanged;
 
          this.RegisterActiveImage();
-         }
+      }
 
       public void Close()
-         {
+      {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
          this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
-            {
+         {
             ////this.taggerView.LabelAdded -= this.TaggerView_LabelAdded;
 
             ////this.imageManagerController.ActiveImageChanged -= this.ImageManagerController_ActiveImageChanged;
@@ -100,7 +83,7 @@ namespace ImageProcessing.Controllers
 
             this.Closed?.Invoke(this, EventArgs.Empty);
          }
-         }
+      }
 
       public void AddLabel(string label)
       {
@@ -110,15 +93,6 @@ namespace ImageProcessing.Controllers
       public void AddLabels(IEnumerable<string> labels)
       {
          this.taggerService.AddLabels(labels);
-
-         ////foreach (string label in labels)
-         ////   {
-         ////   this.tagger.AddLabel(label);
-         ////   }
-
-         ////this.taggerModel.Labels.UnionWith(this.tagger.DataPoints.Keys);
-
-         this.AssignColors();
       }
 
       public void RemoveLabel(string label)
@@ -131,78 +105,69 @@ namespace ImageProcessing.Controllers
          this.taggerService.RemoveLabels(labels);
       }
 
-      public bool AddPoint(string tag, Point newPoint)
-         {
-         ////if (this.tagger.AddPoint(tag, newPoint))
-         ////   {
-         ////   this.TriggerTagPointChanged(tag, newPoint, true);
+      public void AddPoint(string label, Point newPoint)
+      {
+         this.taggerService.AddPoint(label, newPoint);
+      }
 
-         ////   return true;
-         ////   }
+      public void RemovePoint(string label, Point point)
+      {
+         this.taggerService.RemovePoint(label, point);
+      }
 
-         return false;
-         }
-
-      public bool RemovePoint(string tag, Point newPoint)
-         {
-         ////if (this.tagger.RemovePoint(tag, newPoint))
-         ////   {
-         ////   this.TriggerTagPointChanged(tag, newPoint, false);
-
-         ////   return true;
-         ////   }
-
-         return false;
-         }
+      public List<Point> GetPoints(string label)
+      {
+         return this.taggerService.GetPoints(label);
+      }
 
       public Color TagColor(string tag)
-         {
+      {
          ////return this.taggerModel.LabelColors[tag];
          throw new NotImplementedException("AAA");
-         }
+      }
 
       private void ImageManagerController_ActiveImageChanged(object sender, EventArgs e)
-         {
+      {
          this.UnregisterActiveImage();
          this.RegisterActiveImage();
-         }
+      }
 
       private void RegisterActiveImage()
-         {
+      {
          ////this.registeredImageController = this.imageManagerController.GetActiveImage();
 
          ////if (this.registeredImageController != null)
-            {
+         {
             ////this.registeredImageController.SelectionChanged += this.RegisteredImageController_SelectionChanged;
 
             ////if (this.registeredImageController.LastDisplayedImage == null)
-               {
+            {
                // Need to wait for the first display update
                ////this.registeredImageController.DisplayUpdated += this.RegisteredImageController_DisplayUpdated;
-               }
+            }
 
             ////else
-               {
+            {
                this.ExtractPoints();
-               }
             }
          }
+      }
 
       private void UnregisterActiveImage()
-         {
+      {
          // if (this.registeredImageController != null)
-            {
+         {
             ////this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
             ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
 
             ////this.tagger.SavePoints();
 
             // this.registeredImageController = null;
-            }
          }
+      }
 
       private void ExtractPoints()
-         {
+      {
          Debug.Fail("Need to review the use of registeredImageController. The plugins shoudn't depend on ImagingInterface.Controllers, only on ImagingInterface.Plugins.Interface");
 
          ////this.tagger.LoadPoints(this.registeredImageController.DisplayName);
@@ -220,7 +185,7 @@ namespace ImageProcessing.Controllers
          ////      this.TriggerTagPointChanged(tag, point, true);
          ////      }
          ////   }
-         }
+      }
 
       ////private void RegisteredImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
       ////   {
@@ -230,30 +195,30 @@ namespace ImageProcessing.Controllers
       ////   }
 
       private void RegisteredImageController_SelectionChanged(object sender, SelectionChangedEventArgs e)
-         {
+      {
          ////if (this.taggerModel.SelectedLabel != null)
-            {
+         {
             if (e.Select)
-               {
+            {
                ////if (this.AddPoint(this.taggerModel.SelectedLabel, e.PixelPosition))
-                  {
-                  ////this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
-                  }
-               }
-            else
                {
-               ////if (this.RemovePoint(this.taggerModel.SelectedLabel, e.PixelPosition))
-                  {
                   ////this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
-                  }
+               }
+            }
+            else
+            {
+               ////if (this.RemovePoint(this.taggerModel.SelectedLabel, e.PixelPosition))
+               {
+                  ////this.registeredImageController.AddImageProcessingController(this, this.taggerModel.Clone() as IRawPluginModel);
                }
             }
          }
+      }
 
       private void TriggerTagPointChanged(string label, Point tagPoint, bool added)
-         {
+      {
          if (this.TagPointChanged != null)
-            {
+         {
             Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
             List<Point> points = new List<Point>
             {
@@ -262,8 +227,8 @@ namespace ImageProcessing.Controllers
             tagPoints.Add(label, points);
 
             this.TagPointChanged(this, new TagPointChangedEventArgs(/*this.registeredImageController, */label, tagPoint, added));
-            }
          }
+      }
 
       ////private void TaggerView_LabelAdded(object sender, EventArgs e)
       ////   {
@@ -271,7 +236,7 @@ namespace ImageProcessing.Controllers
       ////   }
 
       private void AssignColors()
-         {
+      {
          ////int labelIndex = 0;
 
          ////foreach (string label in this.taggerModel.Labels)
@@ -285,6 +250,6 @@ namespace ImageProcessing.Controllers
 
          ////   labelIndex++;
          ////   }
-         }
       }
    }
+}
