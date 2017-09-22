@@ -4,20 +4,19 @@
 
 namespace ImagingInterface.Plugins
 {
-    public interface IPluginView
+   using System.Drawing;
+
+   public interface IPluginView
    {
-        string DisplayName
-        {
-            get;
-        }
+      string DisplayName
+      {
+         get;
+      }
 
-        bool Active
-        {
-            get;
-        }
+      void Hide();
 
-        void Hide();
+      void Close();
 
-        void Close();
-    }
+      void SelectPixel(IImageSource imageSource, Point pixelPosition);
+   }
 }

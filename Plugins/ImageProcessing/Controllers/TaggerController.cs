@@ -6,25 +6,23 @@ namespace ImageProcessing.Controllers
 {
    using System;
    using System.Collections.Generic;
-   using System.ComponentModel;
    using System.Diagnostics;
    using System.Drawing;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Controllers.Services;
+   using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.EventArguments;
+   using Shouldly;
 
    public class TaggerController
    {
       private TaggerService taggerService;
+      private string selectedLabel;
 
       public TaggerController(TaggerService taggerService)
       {
          this.taggerService = taggerService;
       }
-
-      public event CancelEventHandler Closing;
-
-      public event EventHandler Closed;
 
       public event EventHandler<TagPointChangedEventArgs> TagPointChanged;
 
@@ -33,14 +31,6 @@ namespace ImageProcessing.Controllers
          get
          {
             return this.taggerService.Labels;
-         }
-      }
-
-      public bool Active
-      {
-         get
-         {
-            return true;
          }
       }
 
@@ -65,24 +55,6 @@ namespace ImageProcessing.Controllers
 
       public void Close()
       {
-         CancelEventArgs cancelEventArgs = new CancelEventArgs();
-
-         this.Closing?.Invoke(this, cancelEventArgs);
-
-         if (!cancelEventArgs.Cancel)
-         {
-            ////this.taggerView.LabelAdded -= this.TaggerView_LabelAdded;
-
-            ////this.imageManagerController.ActiveImageChanged -= this.ImageManagerController_ActiveImageChanged;
-
-            this.UnregisterActiveImage();
-
-            ////this.taggerView.Hide();
-
-            ////this.taggerView.Close();
-
-            this.Closed?.Invoke(this, EventArgs.Empty);
-         }
       }
 
       public void AddLabel(string label)
@@ -98,6 +70,24 @@ namespace ImageProcessing.Controllers
       public void RemoveLabel(string label)
       {
          this.RemoveLabels(new[] { label });
+      }
+
+      public void SelectLabel(string label)
+      {
+         if (label != null)
+         {
+            this.taggerService.Labels.ShouldContain(label);
+         }
+
+         this.selectedLabel = label;
+      }
+
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      {
+         if (this.selectedLabel != null)
+         {
+            this.taggerService.SelectPixel(imageSource, this.selectedLabel, pixelPosition);
+         }
       }
 
       public void RemoveLabels(IEnumerable<string> labels)

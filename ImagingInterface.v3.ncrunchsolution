@@ -2,7 +2,6 @@
   <Settings>
     <AllowParallelTestExecution>False</AllowParallelTestExecution>
     <MetricsExclusionList>
-      <Value>CaptureWrapper.cs:Plugins\Video\Controllers\Video.Controllers.csproj</Value>
       <Value>ImagingInterface.Controllers.Tests\ImagingInterface.Controllers.Tests.csproj</Value>
       <Value>ImagingInterface.Views\ImagingInterface.Views.csproj</Value>
       <Value>ImagingInterface\ImagingInterface.csproj\Properties</Value>

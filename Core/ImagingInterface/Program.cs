@@ -173,6 +173,7 @@ namespace ImagingInterface
          container.Options.AllowOverridingRegistrations = true;
          container.RegisterSingleton<ImageManagerService>();
          container.RegisterSingleton<ImageSourceService>();
+         container.RegisterSingleton<PluginManagerService>();
          container.Options.AllowOverridingRegistrations = false;
 
          List<Assembly> pluginAssemblies = new List<Assembly>();

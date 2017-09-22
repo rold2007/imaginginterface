@@ -6,16 +6,14 @@ namespace ImagingInterface.Controllers
 {
    using System;
    using System.Diagnostics;
+   using System.Drawing;
+   using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Controllers.Services;
-   using ImagingInterface.Models;
-   using ImagingInterface.Models.Interfaces;
    using ImagingInterface.Plugins;
 
    public class ImageController
    {
       private ImageService imageService;
-
-      private ImageModel imageModel = new ImageModel();
 
       // private bool closing;
       // private bool closed;
@@ -73,16 +71,6 @@ namespace ImagingInterface.Controllers
 
       public event EventHandler UpdateDisplay;
 
-      public event EventHandler ZoomLevelUpdated;
-
-      public IImageModel ImageModel
-      {
-         get
-         {
-            return this.imageModel;
-         }
-      }
-
       ////public IRawImageView RawImageView
       ////   {
       ////   get
@@ -111,7 +99,15 @@ namespace ImagingInterface.Controllers
       {
          get
          {
-            return this.imageModel.DisplayName;
+            return this.imageService.DisplayName;
+         }
+      }
+
+      public double ZoomLevel
+      {
+         get
+         {
+            return this.imageService.ZoomLevel;
          }
       }
 
@@ -119,16 +115,40 @@ namespace ImagingInterface.Controllers
       {
          get
          {
-            return this.imageModel.ImageSource;
+            return this.imageService.ImageSource;
          }
 
          set
          {
-            this.imageModel.ImageSource = value;
+            this.imageService.ImageSource = value;
 
-            this.imageModel.ImageSource.ImageDataUpdated += this.ImageSource_ImageDataUpdated;
+            this.imageService.ImageSource.ImageDataUpdated += this.ImageSource_ImageDataUpdated;
 
             this.TriggerUpdateDisplay();
+         }
+      }
+
+      public byte[,,] DisplayImageData
+      {
+         get
+         {
+            return this.imageService.DisplayImageData;
+         }
+      }
+
+      public Size Size
+      {
+         get
+         {
+            return this.imageService.Size;
+         }
+      }
+
+      public bool IsGrayscale
+      {
+         get
+         {
+            return this.imageService.IsGrayscale;
          }
       }
 
@@ -148,19 +168,19 @@ namespace ImagingInterface.Controllers
          ////   }
       }
 
-      // public void SetImageSource(IImageSource imageSource)
-      //   {
+      public RgbaColor GetRgbaPixel(Point pixelPosition)
+      {
+         return this.imageService.GetRgbaPixel(pixelPosition);
+      }
 
-      // if (this.UpdateDisplay != null)
-      //      {
-      //      this.UpdateDisplay(this, EventArgs.Empty);
-      //      }
-      //   }
       public void UpdateZoomLevel(double zoomLevel)
       {
-         this.imageModel.ZoomLevel = zoomLevel;
+         this.imageService.ZoomLevel = zoomLevel;
+      }
 
-         this.ZoomLevelUpdated?.Invoke(this, EventArgs.Empty);
+      public void SelectPixel(Point mouseClickPixel)
+      {
+         this.imageService.SelectPixel(mouseClickPixel);
       }
 
       public void Close()

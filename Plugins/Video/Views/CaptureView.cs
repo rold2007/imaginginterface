@@ -5,6 +5,7 @@
 namespace Video.Views
 {
    using System;
+   using System.Drawing;
    using System.Windows.Forms;
    using ImagingInterface.Plugins;
    using Video.Controllers;
@@ -34,14 +35,6 @@ namespace Video.Views
          }
       }
 
-      public bool Active
-      {
-         get
-         {
-            return this.captureController.Active;
-         }
-      }
-
       public void UpdateLiveGrabStatus(bool allowGrab, bool liveGrabRunning)
       {
          this.startCaptureButton.Enabled = allowGrab;
@@ -50,6 +43,10 @@ namespace Video.Views
       }
 
       public void Close()
+      {
+      }
+
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
       {
       }
 

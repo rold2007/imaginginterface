@@ -12,14 +12,16 @@ namespace ImagingInterface.Controllers.Tests
       [Fact]
       public void Constructor()
       {
-         ImageService imageService = new ImageService();
+         PluginManagerService pluginManagerService = new PluginManagerService();
+         ImageService imageService = new ImageService(pluginManagerService);
          ImageController imageController = new ImageController(imageService);
       }
 
       [Fact]
       public void InitializeImageSourceController()
       {
-         ImageService imageService = new ImageService();
+         PluginManagerService pluginManagerService = new PluginManagerService();
+         ImageService imageService = new ImageService(pluginManagerService);
          ImageController imageController = new ImageController(imageService);
 
          // FileSourceController fileSourceController = this.ServiceLocator.GetInstance<FileSourceController>();
@@ -30,7 +32,8 @@ namespace ImagingInterface.Controllers.Tests
       [Fact]
       public void Close()
       {
-         ImageService imageService = new ImageService();
+         PluginManagerService pluginManagerService = new PluginManagerService();
+         ImageService imageService = new ImageService(pluginManagerService);
          ImageController imageController = new ImageController(imageService);
 
          imageController.Close();

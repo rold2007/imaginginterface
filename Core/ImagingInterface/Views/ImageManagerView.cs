@@ -55,7 +55,7 @@ namespace ImagingInterface.Views
       {
          get
          {
-            return this.ImageViews;
+            return this.imageViews;
          }
       }
 

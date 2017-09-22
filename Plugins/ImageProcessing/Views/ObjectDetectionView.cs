@@ -5,6 +5,7 @@
 namespace ImageProcessing.Views
 {
    using System;
+   using System.Drawing;
    using System.Windows.Forms;
    using ImageProcessing.Controllers;
    using ImagingInterface.Plugins;
@@ -32,15 +33,11 @@ namespace ImageProcessing.Views
          }
       }
 
-      public bool Active
+      public void Close()
       {
-         get
-         {
-            return this.objectDetectionController.Active;
-         }
       }
 
-      public void Close()
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
       {
       }
 

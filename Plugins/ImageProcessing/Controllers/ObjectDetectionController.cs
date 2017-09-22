@@ -37,14 +37,6 @@ namespace ImageProcessing.Controllers
       ////      }
       ////   }
 
-      public bool Active
-      {
-         get
-         {
-            return false;
-         }
-      }
-
       public string DisplayName
       {
          get

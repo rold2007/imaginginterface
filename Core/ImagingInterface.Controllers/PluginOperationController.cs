@@ -21,11 +21,8 @@ namespace ImagingInterface.Controllers
 
          foreach (IPluginView plugin in plugins)
          {
-            if (plugin.Active)
-            {
-               this.plugins.Add(plugin.DisplayName, plugin.GetType());
-               ////pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
-            }
+            this.plugins.Add(plugin.DisplayName, plugin.GetType());
+            ////pluginOperationView.AddPlugin(plugin.RawPluginModel.DisplayName);
          }
 
          ////pluginOperationView.AddPlugin(PluginOperationController.closePluginName);

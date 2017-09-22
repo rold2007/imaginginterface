@@ -109,5 +109,10 @@ namespace ImageProcessing.Controllers.Services
 
          return imageData;
       }
+
+      public void SelectPixel(IImageSource imageSource, string label, Point pixelPosition)
+      {
+         this.tagger.AddPoint(label, pixelPosition);
+      }
    }
 }
