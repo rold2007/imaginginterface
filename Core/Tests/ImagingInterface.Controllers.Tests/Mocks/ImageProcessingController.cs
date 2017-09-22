@@ -42,5 +42,5 @@ namespace ImagingInterface.Controllers.Tests.Mocks
          {
          return imageData.Clone() as byte[,,];
          }
-      }
    }
+}

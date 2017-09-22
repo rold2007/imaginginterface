@@ -1,4 +1,4 @@
-﻿// <copyright file="SelectionChangedEventArgs.cs" company="David Rolland">
+﻿// <copyright file="PixelSelectionEventArgs.cs" company="David Rolland">
 // Copyright (c) David Rolland. All rights reserved.
 // </copyright>
 
@@ -6,12 +6,14 @@ namespace ImagingInterface.Controllers.EventArguments
 {
    using System;
    using System.Drawing;
+   using ImagingInterface.Plugins;
 
-   public class SelectionChangedEventArgs : EventArgs
+   public class PixelSelectionEventArgs : EventArgs
       {
-      public SelectionChangedEventArgs(Point pixelPosition, bool select)
+      public PixelSelectionEventArgs(Point pixelPosition, IImageSource imageSource, bool select)
          {
          this.PixelPosition = pixelPosition;
+         this.ImageSource = imageSource;
          this.Select = select;
          }
 
@@ -20,6 +22,12 @@ namespace ImagingInterface.Controllers.EventArguments
          get;
          private set;
          }
+
+      public IImageSource ImageSource
+      {
+         get;
+         private set;
+      }
 
       public bool Select
          {

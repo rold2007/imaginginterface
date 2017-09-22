@@ -9,53 +9,53 @@ namespace ImagingInterface.Controllers.Tests.Mocks
    using ImagingInterface.Plugins;
 
    public class PluginController1 : IImageProcessingService
-      {
+   {
       private PluginModel1 pluginModel = new PluginModel1();
 
       public PluginController1()
-         {
+      {
          this.pluginModel.DisplayName = "Plugin1";
-         }
+      }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
 
       public bool Active
-         {
+      {
          get
-            {
+         {
             return true;
-            }
          }
+      }
 
       public bool IsClosed
-         {
+      {
          get;
          private set;
-         }
+      }
 
       public void Initialize()
-         {
-         }
+      {
+      }
 
       public void Close()
-         {
+      {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
          this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
-            {
+         {
             this.Closed?.Invoke(this, EventArgs.Empty);
 
             this.IsClosed = true;
-            }
-         }
-
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
-         {
-         return imageData.Clone() as byte[,,];
          }
       }
+
+      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      {
+         return imageData.Clone() as byte[,,];
+      }
    }
+}

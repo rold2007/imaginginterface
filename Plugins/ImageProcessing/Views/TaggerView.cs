@@ -34,14 +34,6 @@ namespace ImageProcessing.Views
          }
       }
 
-      public bool Active
-      {
-         get
-         {
-            return this.taggerController.Active;
-         }
-      }
-
       public void UpdateLabelList()
       {
          this.labelsListView.Items.Clear();
@@ -76,17 +68,18 @@ namespace ImageProcessing.Views
             imageIndex++;
          }
 
-         ////if (this.taggerModel.SelectedLabel != null)
-         ////{
-         ////   this.labelsListView.Items[this.taggerModel.SelectedLabel].Selected = true;
-         ////}
-
+         this.taggerController.SelectLabel(null);
          this.UpdateRemoveButtonState();
       }
 
       public void Close()
       {
          this.ClearImageList();
+      }
+
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      {
+         this.taggerController.SelectPixel(imageSource, pixelPosition);
       }
 
       private void AddButton_Click(object sender, EventArgs e)
@@ -136,11 +129,11 @@ namespace ImageProcessing.Views
       {
          if (this.labelsListView.SelectedItems.Count > 0)
          {
-            ////this.taggerModel.SelectedLabel = this.labelsListView.SelectedItems[0].Text;
+            this.taggerController.SelectLabel(this.labelsListView.SelectedItems[0].Text);
          }
          else
          {
-            ////this.taggerModel.SelectedLabel = null;
+            this.taggerController.SelectLabel(null);
          }
 
          this.UpdateRemoveButtonState();
@@ -151,12 +144,10 @@ namespace ImageProcessing.Views
          if (this.labelsListView.SelectedItems.Count > 0)
          {
             this.removeButton.Enabled = true;
-            ////this.taggerModel.SelectedLabel = this.labelsListView.SelectedItems[0].Text;
          }
          else
          {
             this.removeButton.Enabled = false;
-            ////this.taggerModel.SelectedLabel = null;
          }
       }
    }

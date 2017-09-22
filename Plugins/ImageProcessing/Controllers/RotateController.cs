@@ -21,14 +21,6 @@ namespace ImageProcessing.Controllers
 
       public event EventHandler Closed;
 
-      public bool Active
-      {
-         get
-         {
-            return true;
-         }
-      }
-
       public string DisplayName
       {
          get

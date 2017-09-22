@@ -49,14 +49,6 @@ namespace ImageProcessing.Views
          }
       }
 
-      public bool Active
-      {
-         get
-         {
-            return this.cudafyController.Active;
-         }
-      }
-
       public int GridSizeX
       {
          get
@@ -216,6 +208,10 @@ namespace ImageProcessing.Views
       public void Close()
       {
          this.closed = true;
+      }
+
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      {
       }
 
       public void SetGPUs(List<string> gpus)

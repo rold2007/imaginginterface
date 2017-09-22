@@ -30,6 +30,16 @@ namespace ImageProcessing.Controllers.Tests
       }
 
       [Fact]
+      public void DisplayName()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+
+         taggerController.DisplayName.ShouldNotBeNullOrEmpty();
+         taggerController.DisplayName.ShouldNotBeNullOrWhiteSpace();
+         taggerController.DisplayName.ShouldBe("Tagger");
+      }
+
+      [Fact]
       public void AddLabel()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();

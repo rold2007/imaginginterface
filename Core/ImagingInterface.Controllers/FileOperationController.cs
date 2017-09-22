@@ -5,6 +5,7 @@
 namespace ImagingInterface.Controllers
 {
    using System.Collections.Generic;
+   using System.Linq;
    using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Plugins;
@@ -37,7 +38,10 @@ namespace ImagingInterface.Controllers
 
       public void CloseFiles(IEnumerable<IImageView> imageViews)
       {
-         foreach (IImageView imageView in imageViews)
+         // Copy to allow to remove items in the IEnumerable
+         IEnumerable<IImageView> imageViewsClone = imageViews.ToList();
+
+         foreach (IImageView imageView in imageViewsClone)
          {
             this.RemoveImage(imageView);
          }

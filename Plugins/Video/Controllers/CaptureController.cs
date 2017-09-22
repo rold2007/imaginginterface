@@ -44,14 +44,6 @@ namespace Video.Controllers
       ////      }
       ////   }
 
-      public bool Active
-      {
-         get
-         {
-            return true;
-         }
-      }
-
       public string DisplayName
       {
          get
