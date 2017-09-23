@@ -55,7 +55,7 @@ namespace ImageProcessing.Controllers
 
          // Must initialize the object detection controller first so that all points
          // loaded by the tagger are sent to the object detection controller
-         this.taggerController.Initialize();
+         ////this.taggerController.Initialize();
          }
 
       public void Close()

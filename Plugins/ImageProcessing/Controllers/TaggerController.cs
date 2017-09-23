@@ -17,7 +17,6 @@ namespace ImageProcessing.Controllers
    public class TaggerController
    {
       private TaggerService taggerService;
-      private string selectedLabel;
 
       public TaggerController(TaggerService taggerService)
       {
@@ -34,23 +33,18 @@ namespace ImageProcessing.Controllers
          }
       }
 
+      public string SelectedLabel
+      {
+         get;
+         private set;
+      }
+
       public string DisplayName
       {
          get
          {
             return this.taggerService.DisplayName;
          }
-      }
-
-      public void Initialize()
-      {
-         ////this.taggerView.SetTaggerModel(this.taggerModel);
-
-         ////this.taggerView.LabelAdded += this.TaggerView_LabelAdded;
-
-         ////this.imageManagerController.ActiveImageChanged += this.ImageManagerController_ActiveImageChanged;
-
-         this.RegisterActiveImage();
       }
 
       public void Close()
@@ -79,14 +73,14 @@ namespace ImageProcessing.Controllers
             this.taggerService.Labels.ShouldContain(label);
          }
 
-         this.selectedLabel = label;
+         this.SelectedLabel = label;
       }
 
       public void SelectPixel(IImageSource imageSource, Point pixelPosition)
       {
-         if (this.selectedLabel != null)
+         if (this.SelectedLabel != null)
          {
-            this.taggerService.SelectPixel(imageSource, this.selectedLabel, pixelPosition);
+            this.taggerService.SelectPixel(imageSource, this.SelectedLabel, pixelPosition);
          }
       }
 
