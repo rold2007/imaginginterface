@@ -114,5 +114,61 @@ namespace ImageProcessing.Controllers.Tests
 
          taggerController.GetPoints(LabelName).Count.ShouldBe(0);
       }
+
+      [Fact]
+      public void Close()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+
+         taggerController.Close();
+      }
+
+      [Fact]
+      public void SelectLabel()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+
+         taggerController.SelectedLabel.ShouldBeNull();
+
+         // Cannot select label which has not been added yet
+         Assert.Throws<Shouldly.ShouldAssertException>(() => { taggerController.SelectLabel(LabelName); });
+
+         taggerController.AddLabel(LabelName);
+
+         taggerController.SelectLabel(LabelName);
+
+         taggerController.SelectedLabel.ShouldBe(LabelName);
+
+         taggerController.SelectLabel(null);
+
+         taggerController.SelectedLabel.ShouldBeNull();
+      }
+
+      [Fact]
+      public void SelectPixel()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+
+         taggerController.GetPoints(LabelName).Count().ShouldBe(0);
+
+         taggerController.SelectPixel(null, Point.Empty);
+
+         taggerController.GetPoints(LabelName).Count().ShouldBe(0);
+
+         taggerController.AddLabel(LabelName);
+
+         taggerController.SelectPixel(null, Point.Empty);
+
+         taggerController.GetPoints(LabelName).Count().ShouldBe(0);
+
+         taggerController.SelectLabel(LabelName);
+
+         taggerController.SelectPixel(null, new Point(42, 54));
+
+         taggerController.GetPoints(LabelName).Count().ShouldBe(1);
+
+         taggerController.GetPoints(LabelName)[0].X.ShouldBe(42);
+         taggerController.GetPoints(LabelName)[0].Y.ShouldBe(54);
+      }
    }
 }
