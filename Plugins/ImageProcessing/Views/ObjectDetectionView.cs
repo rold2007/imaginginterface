@@ -10,7 +10,7 @@ namespace ImageProcessing.Views
    using ImageProcessing.Controllers;
    using ImagingInterface.Plugins;
 
-   public partial class ObjectDetectionView : UserControl, IPluginView
+   public partial class ObjectDetectionView : UserControl
    {
       private ObjectDetectionController objectDetectionController;
 
