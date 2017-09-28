@@ -1,6 +1,7 @@
 ﻿<SolutionConfiguration>
   <Settings>
-    <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <AllowParallelTestExecution>True</AllowParallelTestExecution>
+    <AutoPinNewTests>True</AutoPinNewTests>
     <MetricsExclusionList>
       <Value>ImagingInterface.Controllers.Tests\ImagingInterface.Controllers.Tests.csproj</Value>
       <Value>ImagingInterface.Views\ImagingInterface.Views.csproj</Value>

@@ -9,6 +9,8 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Services;
    using ImageProcessing.ObjectDetection;
+   using ImagingInterface.Plugins;
+   using Moq;
    using Shouldly;
    using Xunit;
 
@@ -21,6 +23,7 @@ namespace ImageProcessing.Controllers.Tests
          this.Container.Register<Tagger>();
          this.Container.Register<TaggerService>();
          this.Container.Register<TaggerController>();
+         this.Container.Register<IImageProcessingManagerService>(() => { return new Mock<IImageProcessingManagerService>().Object; });
       }
 
       [Fact]
