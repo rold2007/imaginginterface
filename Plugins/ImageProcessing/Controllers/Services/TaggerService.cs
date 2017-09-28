@@ -15,10 +15,12 @@ namespace ImageProcessing.Controllers.Services
       private static readonly string TaggerDisplayName = "Tagger";
 
       private Tagger tagger;
+      private IImageProcessingManagerService imageProcessingService;
 
-      public TaggerService(Tagger tagger)
+      public TaggerService(Tagger tagger, IImageProcessingManagerService imageProcessingService)
       {
          this.tagger = tagger;
+         this.imageProcessingService = imageProcessingService;
       }
 
       public string DisplayName
@@ -91,7 +93,9 @@ namespace ImageProcessing.Controllers.Services
          foreach (string tag in this.tagger.DataPoints.Keys)
          {
             ////Color color = this.taggerModel.LabelColors[tag];
-            Color color = this.LabelColors[tag];
+            ////Color color = this.LabelColors[tag];
+
+            Color color = Color.Red;
             byte red = Convert.ToByte(color.R);
             byte green = Convert.ToByte(color.G);
             byte blue = Convert.ToByte(color.B);
@@ -113,6 +117,8 @@ namespace ImageProcessing.Controllers.Services
       public void SelectPixel(IImageSource imageSource, string label, Point pixelPosition)
       {
          this.tagger.AddPoint(label, pixelPosition);
+
+         this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
    }
 }
