@@ -5,7 +5,6 @@
 namespace ImagingInterface.Controllers.Services
 {
    using System;
-   using System.Collections.Generic;
    using System.Drawing;
    using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
@@ -14,12 +13,9 @@ namespace ImagingInterface.Controllers.Services
    public class PluginManagerService
    {
       private int activePluginIndex;
-      ////private List<IImageProcessingService> imageProcessingPlugins;
 
       public PluginManagerService()
       {
-         ////this.imageProcessingPlugins = new List<IImageProcessingService>();
-
          this.ActivePluginIndex = -1;
          this.PluginCount = 0;
       }
@@ -54,17 +50,11 @@ namespace ImagingInterface.Controllers.Services
       public int PluginCount
       {
          get;
-         ////{
-         ////   //return this.imageProcessingPlugins.Count;
-         ////}
-
          private set;
       }
 
-      public int AddPlugin(/*IImageProcessingService imageProcessingPlugin*/)
+      public int AddPlugin()
       {
-         ////this.imageProcessingPlugins.Add(imageProcessingPlugin);
-
          this.PluginCount++;
 
          this.ActivePluginIndex = this.PluginCount - 1;
@@ -74,7 +64,6 @@ namespace ImagingInterface.Controllers.Services
 
       public void RemoveActivePlugin()
       {
-         ////this.imageProcessingPlugins.RemoveAt(this.ActivePluginIndex);
          this.PluginCount--;
 
          if (this.ActivePluginIndex > 0)
@@ -93,15 +82,5 @@ namespace ImagingInterface.Controllers.Services
       {
          this.ActiveImagePixelSelected?.Invoke(this, new PixelSelectionEventArgs(mouseClickPixel, imageSource, true));
       }
-
-      ////public IImageProcessingService GetPluginFromIndex(int activePluginIndex)
-      ////{
-      ////   if (activePluginIndex < 0 || activePluginIndex >= this.PluginCount)
-      ////   {
-      ////      throw new ArgumentOutOfRangeException("activePluginIndex");
-      ////   }
-
-      ////   return this.imageProcessingPlugins[activePluginIndex];
-      ////}
    }
 }

@@ -38,9 +38,8 @@ namespace ImagingInterface.Controllers.Tests.Mocks
          }
          }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
-         return imageData.Clone() as byte[,,];
          }
    }
 }

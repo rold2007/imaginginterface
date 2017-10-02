@@ -7,7 +7,6 @@ namespace ImagingInterface.Controllers
    using System;
    using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Controllers.Services;
-   using ImagingInterface.Plugins;
 
    public class PluginManagerController
    {

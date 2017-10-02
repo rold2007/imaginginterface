@@ -6,6 +6,6 @@ namespace ImagingInterface.Plugins
 {
    public interface IImageProcessingService
    {
-      byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData);
+      void ProcessImageData(byte[,,] imageData, byte[] overlayData);
    }
 }

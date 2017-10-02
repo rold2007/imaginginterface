@@ -135,7 +135,8 @@ namespace ImagingInterface.Views
 
          this.imagesTabControl.Controls.Add(tabPage);
 
-         this.imageManagerController.AddImage(imageView.ImageSource, imageView);
+         this.imageManagerController.AddImage();
+         imageView.AssignToImageManager();
 
          this.imagesTabControl.SelectedIndex = this.imageManagerController.ActiveImageIndex;
       }

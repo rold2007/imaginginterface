@@ -8,6 +8,7 @@ namespace ImageProcessing.Controllers.Services
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Plugins.Utilities;
 
    public class InvertService : IImageProcessingService
    {
@@ -39,7 +40,7 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          if (this.ApplyInvert)
          {
@@ -49,7 +50,7 @@ namespace ImageProcessing.Controllers.Services
                {
                   invertedImage._Not();
 
-                  return invertedImage.Data;
+                  ArrayUtils.ArrayCopy(invertedImage.Data, imageData);
                }
             }
             else
@@ -60,13 +61,9 @@ namespace ImageProcessing.Controllers.Services
                {
                   invertedImage._Not();
 
-                  return invertedImage.Data;
+                  ArrayUtils.ArrayCopy(invertedImage.Data, imageData);
                }
             }
-         }
-         else
-         {
-            return imageData;
          }
       }
    }

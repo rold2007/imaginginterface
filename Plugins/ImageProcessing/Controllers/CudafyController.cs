@@ -99,14 +99,13 @@ namespace ImageProcessing.Controllers
             }
          }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
          CudafyModel cudafyModel = this.cudafyModel;
 
          if (cudafyModel.Add != 0 && !string.IsNullOrEmpty(cudafyModel.GPUName))
             {
             Stopwatch totalTime = Stopwatch.StartNew();
-            byte[,,] imageDataOutput;
             int allocatedX = imageData.GetLength(1);
             int allocatedY = imageData.GetLength(0);
             int allocatedZ = imageData.GetLength(2);
@@ -140,12 +139,10 @@ namespace ImageProcessing.Controllers
                   gpgpu.LaunchAsync(gridSize, blockSize, 0, Primitives.Add, gpuSourceData, allocatedX, allocatedY, cudafyModel.Add, channel, gpuDestinationData);
                   }
 
-               imageDataOutput = new byte[allocatedY, allocatedX, allocatedZ];
-
                gpgpu.CopyFromDeviceAsync(gpuDestinationData, 0, hostImageData, 0, allocatedX * allocatedY * allocatedZ);
 
                Marshal.Copy(hostImageData, tempImageData, 0, imageData.Length);
-               Buffer.BlockCopy(tempImageData, 0, imageDataOutput, 0, imageData.Length);
+               Buffer.BlockCopy(tempImageData, 0, imageData, 0, imageData.Length);
 
                gpgpu.Synchronize();
 
@@ -175,12 +172,6 @@ namespace ImageProcessing.Controllers
 
             ////this.cudafyView.SetBenchmarkAddCudafy(totalTime.ElapsedMilliseconds);
             ////this.cudafyView.SetBenchmarkAddOpenCV(openCVBenchmark.ElapsedMilliseconds);
-
-            return imageDataOutput;
-            }
-         else
-            {
-            return imageData.Clone() as byte[,,];
             }
          }
 

@@ -8,6 +8,8 @@ namespace ImageProcessing.Controllers.Services
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Plugins.Utilities;
+   using Shouldly;
 
    public class RotateService : IImageProcessingService
    {
@@ -39,22 +41,22 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          if (imageData.GetLength(2) == 1)
          {
             using (Image<Gray, byte> convertedImage = new Image<Gray, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Gray(0.0)))
             {
-               return rotatedImage.Data;
+               ArrayUtils.ArrayCopy(rotatedImage.Data, imageData);
             }
          }
          else
          {
-            Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
+            imageData.GetLength(2).ShouldBe(3, "For now only 3-bands images are supported.");
 
-            using (Image<Bgr, byte> convertedImage = new Image<Bgr, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Bgr(0.0, 0.0, 0.0)))
+            using (Image<Rgb, byte> convertedImage = new Image<Rgb, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Rgb(0.0, 0.0, 0.0)))
             {
-               return rotatedImage.Data;
+               ArrayUtils.ArrayCopy(rotatedImage.Data, imageData);
             }
          }
       }
