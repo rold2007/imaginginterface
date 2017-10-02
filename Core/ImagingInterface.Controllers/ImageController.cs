@@ -136,6 +136,14 @@ namespace ImagingInterface.Controllers
          }
       }
 
+      public byte[] OverlayImageData
+      {
+         get
+         {
+            return this.imageService.OverlayImageData;
+         }
+      }
+
       public Size Size
       {
          get
@@ -152,20 +160,9 @@ namespace ImagingInterface.Controllers
          }
       }
 
-      public void InitializeImageSourceController(IImageSource imageSourceController)
+      public void AssignToImageManager()
       {
-         ////if (!this.closing)
-         ////   {
-         ////   if (!this.closingPluginControllers.Contains(imageSourceController))
-         ////      {
-         ////      this.imageSourceController = imageSourceController;
-         ////      this.imageSourceRawPluginModel = rawPluginModel;
-
-         ////      // If an assert pops here while running a unit test with NCrunch, you need to use
-         ////      // the STASynchronizationContext class to initialize a proper SynchronizationContext
-         ////      this.CreateDynamicUpdateTasks(TaskScheduler.FromCurrentSynchronizationContext());
-         ////      }
-         ////   }
+         this.imageService.AssignToImageManager();
       }
 
       public RgbaColor GetRgbaPixel(Point pixelPosition)

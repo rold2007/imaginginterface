@@ -12,10 +12,12 @@ namespace ImagingInterface.Controllers.Services
    public class ImageService
    {
       private IImageSource imageSource;
+      private ImageManagerService imageManagerService;
       private PluginManagerService pluginManagerService;
 
-      public ImageService(PluginManagerService pluginManagerService)
+      public ImageService(ImageManagerService imageManagerService, PluginManagerService pluginManagerService)
       {
+         this.imageManagerService = imageManagerService;
          this.pluginManagerService = pluginManagerService;
          this.ZoomLevel = 1.0;
       }
@@ -32,6 +34,13 @@ namespace ImagingInterface.Controllers.Services
             if (this.imageSource == null)
             {
                this.imageSource = value;
+
+               // Prepare overlay
+               int width = this.imageSource.OriginalImageData.GetLength(1);
+               int height = this.imageSource.OriginalImageData.GetLength(0);
+
+               // Allocated enough for RGBA format
+               this.OverlayImageData = new byte[width * height * 4];
             }
             else
             {
@@ -48,27 +57,19 @@ namespace ImagingInterface.Controllers.Services
          }
       }
 
-      ////public byte[,,] SourceImageData
-      ////   {
-      ////   get;
-      ////   set;
-      ////   }
-
       public byte[,,] DisplayImageData
       {
          get
          {
             return (byte[,,])this.ImageSource.UpdatedImageData.Clone();
          }
-
-         ////set;
       }
 
-      ////public byte[] OverlayImageData
-      ////   {
-      ////   get;
-      ////   set;
-      ////   }
+      public byte[] OverlayImageData
+      {
+         get;
+         private set;
+      }
 
       public Size Size
       {
@@ -92,6 +93,18 @@ namespace ImagingInterface.Controllers.Services
       {
          get;
          set;
+      }
+
+      public void AssignToImageManager()
+      {
+         this.imageManagerService.AssignImageService(this);
+      }
+
+      public void UpdateImageData(byte[,,] updatedImageData, byte[] updatedOverlayData)
+      {
+         this.OverlayImageData = updatedOverlayData;
+
+         this.imageSource.UpdateImageData(updatedImageData);
       }
 
       public RgbaColor GetRgbaPixel(Point pixelPosition)

@@ -29,14 +29,6 @@ namespace ImageProcessing.Controllers
 
       public event EventHandler Closed;
 
-      ////public IRawPluginView RawPluginView
-      ////   {
-      ////   get
-      ////      {
-      ////      return this.objectDetectionView;
-      ////      }
-      ////   }
-
       public string DisplayName
       {
          get
@@ -83,7 +75,7 @@ namespace ImageProcessing.Controllers
          this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
       }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          Dictionary<string, List<Point>> predictions = this.objectDetector.Test(imageData);
 
@@ -112,8 +104,6 @@ namespace ImageProcessing.Controllers
                overlayData[pixelOffset + 3] = 255;
             }
          }
-
-         return imageData;
       }
 
       private void TaggerController_TagPointChanged(object sender, TagPointChangedEventArgs e)

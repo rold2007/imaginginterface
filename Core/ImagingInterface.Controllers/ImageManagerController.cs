@@ -12,12 +12,10 @@ namespace ImagingInterface.Controllers
    public class ImageManagerController
    {
       private ImageManagerService imageManagerService;
-      private Dictionary<IImageSource, List<IImageView>> imageSourceImageViews;
 
       public ImageManagerController(ImageManagerService imageManagerService)
       {
          this.imageManagerService = imageManagerService;
-         this.imageSourceImageViews = new Dictionary<IImageSource, List<IImageView>>();
       }
 
       public int ActiveImageIndex
@@ -36,27 +34,16 @@ namespace ImagingInterface.Controllers
          }
       }
 
-      public void AddImage(IImageSource imageSource, IImageView imageView)
+      public void AddImage()
       {
-         List<IImageView> imageViews;
-
-         if (!this.imageSourceImageViews.TryGetValue(imageSource, out imageViews))
-         {
-            imageViews = new List<IImageView>();
-
-            this.imageSourceImageViews.Add(imageSource, imageViews);
-         }
-
-         imageViews.Add(imageView);
-
-         this.imageManagerService.AddImage(imageSource);
+         this.imageManagerService.AddImage();
       }
 
-      public void AddImages(IList<IImageSource> imageSources)
+      public void AddImages(int imageCount)
       {
-         foreach (IImageSource imageSource in imageSources)
+         for (int imageIndex = 0; imageIndex < imageCount; imageIndex++)
          {
-            this.imageManagerService.AddImage(imageSource);
+            this.imageManagerService.AddImage(/*imageSource*/);
          }
       }
 

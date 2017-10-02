@@ -11,7 +11,6 @@ namespace ImagingInterface.Views
    using System.Windows.Forms;
    using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Controllers;
-   using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
    using OpenTK.Graphics.OpenGL;
 
@@ -121,6 +120,11 @@ namespace ImagingInterface.Views
          this.UpdatePixelColor(pixelPosition, rgbaColor);
       }
 
+      public void AssignToImageManager()
+      {
+         this.imageController.AssignToImageManager();
+      }
+
       public void Close()
       {
          this.FreeTextures();
@@ -175,6 +179,15 @@ namespace ImagingInterface.Views
 
          // Display a first buffer of size 1x1x1
          this.InitializeGLControl();
+
+         this.imageController.UpdateZoomLevel(this.imageController.ZoomLevel * 16.0);
+         this.UpdateZoomLevel();
+
+         this.viewModeToolStripItem = this.viewModeToolStripSplitButton.DropDownItems[1];
+
+         this.viewModeToolStripSplitButton.Text = this.viewModeToolStripItem.Text;
+
+         this.UpdateZoomMode();
       }
 
       private void InitializeGLControl()
@@ -333,17 +346,17 @@ namespace ImagingInterface.Views
 
          GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Replace);
 
-         ////if (this.imageController.ImageModel.OverlayImageData != null)
-         ////   {
-         ////   this.textures.Add(Texture.Overlay, GL.GenTexture());
+         if (this.imageController.OverlayImageData != null)
+         {
+            this.textures.Add(Texture.Overlay, GL.GenTexture());
 
-         ////   this.InitializeTexture(this.textures[Texture.Overlay]);
+            this.InitializeTexture(this.textures[Texture.Overlay]);
 
-         ////   GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageController.ImageModel.Size.Width, this.imageController.ImageModel.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageController.ImageModel.OverlayImageData);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageController.Size.Width, this.imageController.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageController.OverlayImageData);
 
-         ////   GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, Color.White);
-         ////   GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Blend);
-         ////   }
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, Color.White);
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Blend);
+         }
 
          GL.PixelStore(PixelStoreParameter.UnpackAlignment, unpackAlignment);
 

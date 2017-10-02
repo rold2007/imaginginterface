@@ -8,15 +8,16 @@ namespace ImagingInterface.Controllers.Services
    using System.Collections.Generic;
    using System.Diagnostics;
    using ImagingInterface.Plugins;
+   using Shouldly;
 
    public class ImageManagerService
    {
       private int activeImageIndex;
-      private List<IImageSource> imageSources;
+      private List<ImageService> imageServices;
 
       public ImageManagerService()
       {
-         this.imageSources = new List<IImageSource>();
+         this.imageServices = new List<ImageService>();
 
          this.ActiveImageIndex = -1;
       }
@@ -50,13 +51,13 @@ namespace ImagingInterface.Controllers.Services
       {
          get
          {
-            return this.imageSources.Count;
+            return this.imageServices.Count;
          }
       }
 
-      public int AddImage(IImageSource imageSource)
+      public int AddImage()
       {
-         this.imageSources.Add(imageSource);
+         this.imageServices.Add(null);
 
          this.ActiveImageIndex = this.ImageCount - 1;
 
@@ -65,7 +66,7 @@ namespace ImagingInterface.Controllers.Services
 
       public void RemoveActiveImage()
       {
-         this.imageSources.RemoveAt(this.ActiveImageIndex);
+         this.imageServices.RemoveAt(this.ActiveImageIndex);
 
          if (this.ActiveImageIndex > 0)
          {
@@ -79,14 +80,20 @@ namespace ImagingInterface.Controllers.Services
          Debug.Assert(this.ImageCount >= 0, "Invalid image count.");
       }
 
-      public IImageSource GetImageFromIndex(int activeImageIndex)
+      public void AssignImageService(ImageService imageService)
       {
-         if (activeImageIndex < 0 || activeImageIndex >= this.ImageCount)
-         {
-            throw new ArgumentOutOfRangeException("activeImageIndex");
-         }
+         this.ActiveImageIndex.ShouldBeInRange(0, this.imageServices.Count - 1);
+         this.imageServices[this.ActiveImageIndex].ShouldBeNull();
 
-         return this.imageSources[activeImageIndex];
+         this.imageServices[this.ActiveImageIndex] = imageService;
+      }
+
+      public ImageService GetImageServiceFromIndex(int imageIndex)
+      {
+         imageIndex.ShouldBeInRange(0, this.imageServices.Count - 1);
+         this.imageServices[imageIndex].ShouldNotBeNull();
+
+         return this.imageServices[imageIndex];
       }
    }
 }

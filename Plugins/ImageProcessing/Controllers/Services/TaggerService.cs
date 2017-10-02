@@ -84,7 +84,7 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
-      public byte[,,] ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          int imageWidth = imageData.GetLength(1);
          int imageHeight = imageData.GetLength(0);
@@ -110,8 +110,6 @@ namespace ImageProcessing.Controllers.Services
                overlayData[pixelOffset + 3] = 255;
             }
          }
-
-         return imageData;
       }
 
       public void SelectPixel(IImageSource imageSource, string label, Point pixelPosition)

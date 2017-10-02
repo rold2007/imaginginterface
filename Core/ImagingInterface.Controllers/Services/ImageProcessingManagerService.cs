@@ -16,17 +16,20 @@ namespace ImagingInterface.Controllers.Services
       }
 
       // Apply processing to current active image synchronously
-      public void AddOneShotImageProcessingToActiveImage(IImageProcessingService imageProcessingController)
+      public void AddOneShotImageProcessingToActiveImage(IImageProcessingService imageProcessingService)
       {
          int activeImageIndex = this.imageManagerService.ActiveImageIndex;
 
          if (activeImageIndex >= 0)
          {
-            IImageSource imageSource = this.imageManagerService.GetImageFromIndex(activeImageIndex);
+            ImageService imageService = this.imageManagerService.GetImageServiceFromIndex(activeImageIndex);
 
-            byte[,,] updatedImageData = imageProcessingController.ProcessImageData(imageSource.OriginalImageData, null);
+            byte[,,] clonedImageData = imageService.ImageSource.OriginalImageData.Clone() as byte[,,];
+            byte[] clonedOverlayData = imageService.OverlayImageData.Clone() as byte[];
 
-            imageSource.UpdateImageData(updatedImageData);
+            imageProcessingService.ProcessImageData(clonedImageData, clonedOverlayData);
+
+            imageService.UpdateImageData(clonedImageData, clonedOverlayData);
          }
       }
    }
