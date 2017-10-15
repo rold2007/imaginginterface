@@ -9,6 +9,7 @@ namespace ImageProcessing.Controllers.Services
    using System.Drawing;
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
+   using ImagingInterface.Plugins.Utilities;
 
    public class TaggerService : IImageProcessingService
    {
@@ -16,11 +17,13 @@ namespace ImageProcessing.Controllers.Services
 
       private Tagger tagger;
       private IImageProcessingManagerService imageProcessingService;
+      private SortedList<string, Color> labelColors;
 
       public TaggerService(Tagger tagger, IImageProcessingManagerService imageProcessingService)
       {
          this.tagger = tagger;
          this.imageProcessingService = imageProcessingService;
+         this.labelColors = new SortedList<string, Color>();
       }
 
       public string DisplayName
@@ -41,15 +44,19 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
-      public SortedList<string, Color> LabelColors
+      public IReadOnlyDictionary<string, Color> LabelColors
       {
-         get;
-         set;
+         get
+         {
+            return this.labelColors as IReadOnlyDictionary<string, Color>;
+         }
       }
 
       public void AddLabels(IEnumerable<string> labels)
       {
          this.tagger.AddLabels(labels);
+
+         this.AssignColors(labels);
       }
 
       public void RemoveLabels(IEnumerable<string> labels)
@@ -92,10 +99,8 @@ namespace ImageProcessing.Controllers.Services
 
          foreach (string tag in this.tagger.DataPoints.Keys)
          {
-            ////Color color = this.taggerModel.LabelColors[tag];
-            ////Color color = this.LabelColors[tag];
+            Color color = this.LabelColors[tag];
 
-            Color color = Color.Red;
             byte red = Convert.ToByte(color.R);
             byte green = Convert.ToByte(color.G);
             byte blue = Convert.ToByte(color.B);
@@ -117,6 +122,23 @@ namespace ImageProcessing.Controllers.Services
          this.tagger.AddPoint(label, pixelPosition);
 
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
+      }
+
+      private void AssignColors(IEnumerable<string> labels)
+      {
+         foreach (string label in labels)
+         {
+            if (!this.LabelColors.ContainsKey(label))
+            {
+               int labelHashCode = label.GetHashCode();
+               double hue = 360 * ((double)Math.Abs(labelHashCode)) / int.MaxValue;
+               double[] hsv = new double[3] { hue, 1.0, 255.0 };
+
+               Color rgbColor = ColorConversion.FromHSV(hsv);
+
+               this.labelColors[label] = rgbColor;
+            }
+         }
       }
    }
 }
