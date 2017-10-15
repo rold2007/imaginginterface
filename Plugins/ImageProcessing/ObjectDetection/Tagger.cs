@@ -11,52 +11,52 @@ namespace ImageProcessing.ObjectDetection
    using System.IO;
 
    public class Tagger
-      {
+   {
       private string tempFilename;
       private bool dataPointsModified;
       private Dictionary<string, List<Point>> dataPoints;
 
       public Tagger()
-         {
+      {
          this.dataPoints = new Dictionary<string, List<Point>>();
          this.SavePath = Path.GetTempPath();
-         }
+      }
 
       public IReadOnlyDictionary<string, List<Point>> DataPoints
-         {
+      {
          get
-            {
+         {
             return new ReadOnlyDictionary<string, List<Point>>(this.dataPoints);
-            }
          }
+      }
 
       private string SavePath
-         {
+      {
          get;
          set;
-         }
+      }
 
       public bool AddPoint(string label, Point newPoint)
-         {
+      {
          List<Point> points;
 
          if (this.dataPoints.TryGetValue(label, out points))
-            {
+         {
             if (!points.Contains(newPoint))
-               {
+            {
                points.Add(newPoint);
 
                this.dataPointsModified = true;
 
                return true;
-               }
-            else
-               {
-               return false;
-               }
             }
-         else
+            else
             {
+               return false;
+            }
+         }
+         else
+         {
             points = new List<Point>();
 
             this.dataPoints.Add(label, points);
@@ -66,59 +66,59 @@ namespace ImageProcessing.ObjectDetection
             this.dataPointsModified = true;
 
             return true;
-            }
          }
+      }
 
       public bool RemovePoint(string label, Point point)
-         {
+      {
          List<Point> points;
 
          if (this.dataPoints.TryGetValue(label, out points))
-            {
+         {
             if (points.Contains(point))
-               {
+            {
                points.Remove(point);
 
                this.dataPointsModified = true;
 
                return true;
-               }
             }
-
-         return false;
          }
 
+         return false;
+      }
+
       public void SavePoints()
-         {
+      {
          if (this.dataPointsModified)
-            {
+         {
             string directory = Path.GetDirectoryName(this.tempFilename);
 
             // ncrunch: no coverage start
             if (!Directory.Exists(directory))
-               {
+            {
                Directory.CreateDirectory(directory);
-               }
+            }
 
             //// ncrunch: no coverage end
 
             using (StreamWriter streamWriter = new StreamWriter(this.tempFilename, false))
-               {
+            {
                foreach (string label in this.dataPoints.Keys)
-                  {
+               {
                   foreach (Point point in this.dataPoints[label])
-                     {
+                  {
                      streamWriter.WriteLine(string.Format("{0};{1};{2}", label, point.X, point.Y));
-                     }
                   }
                }
+            }
 
             this.dataPointsModified = false;
-            }
          }
+      }
 
       public void LoadPoints(string imagePath)
-         {
+      {
          string filename = Path.GetFileNameWithoutExtension(imagePath);
 
          this.tempFilename = this.SavePath + @"\Tagger\" + filename + ".imagedata";
@@ -126,11 +126,11 @@ namespace ImageProcessing.ObjectDetection
          this.dataPoints.Clear();
 
          if (File.Exists(this.tempFilename))
-            {
+         {
             using (StreamReader streamReader = new StreamReader(this.tempFilename))
-               {
+            {
                while (!streamReader.EndOfStream)
-                  {
+               {
                   string line = streamReader.ReadLine();
                   string[] lineSplits = line.Split(';');
                   string label = lineSplits[0];
@@ -139,20 +139,20 @@ namespace ImageProcessing.ObjectDetection
                   this.AddLabel(label);
 
                   this.AddPoint(label, readPoint);
-                  }
                }
             }
+         }
 
          this.dataPointsModified = false;
-         }
+      }
 
       public void AddLabel(string label)
-         {
+      {
          if (!this.dataPoints.ContainsKey(label))
-            {
+         {
             this.dataPoints.Add(label, new List<Point>());
-            }
          }
+      }
 
       public void AddLabels(IEnumerable<string> labels)
       {
@@ -178,4 +178,4 @@ namespace ImageProcessing.ObjectDetection
          }
       }
    }
-   }
+}
