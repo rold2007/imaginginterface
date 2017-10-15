@@ -14,7 +14,6 @@ namespace ImageProcessing.Views
 
    public partial class TaggerView : UserControl, IPluginView
    {
-      ////private TaggerModel taggerModel;
       private TaggerController taggerController;
 
       public TaggerView(TaggerController taggerController)
@@ -23,8 +22,6 @@ namespace ImageProcessing.Views
 
          this.taggerController = taggerController;
       }
-
-      ////public event EventHandler LabelAdded;
 
       public string DisplayName
       {
@@ -43,8 +40,7 @@ namespace ImageProcessing.Views
 
          foreach (string label in this.taggerController.Labels)
          {
-            ////Color color = this.taggerController.LabelColors[label];
-            Color color = Color.AliceBlue;
+            Color color = this.taggerController.TagColor(label);
             Bitmap bitmap = new Bitmap(16, 16, PixelFormat.Format24bppRgb);
 
             using (Graphics graphics = Graphics.FromImage(bitmap))

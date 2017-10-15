@@ -104,10 +104,9 @@ namespace ImageProcessing.Controllers
          return this.taggerService.GetPoints(label);
       }
 
-      public Color TagColor(string tag)
+      public Color TagColor(string label)
       {
-         ////return this.taggerModel.LabelColors[tag];
-         throw new NotImplementedException("AAA");
+         return this.taggerService.LabelColors[label];
       }
 
       private void ImageManagerController_ActiveImageChanged(object sender, EventArgs e)
@@ -218,22 +217,5 @@ namespace ImageProcessing.Controllers
       ////   {
       ////   this.AddLabels(new List<string>() { this.taggerModel.AddedLabel });
       ////   }
-
-      private void AssignColors()
-      {
-         ////int labelIndex = 0;
-
-         ////foreach (string label in this.taggerModel.Labels)
-         ////   {
-         ////   double hue = 360 * labelIndex / this.taggerModel.Labels.Count;
-         ////   double[] hsv = new double[3] { hue, 1.0, 255.0 };
-
-         ////   Color rgbColor = ColorConversion.FromHSV(hsv);
-
-         ////   this.taggerModel.LabelColors[label] = rgbColor;
-
-         ////   labelIndex++;
-         ////   }
-      }
    }
 }
