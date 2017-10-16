@@ -210,7 +210,11 @@ namespace ImageProcessing.Views
          this.closed = true;
       }
 
-      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      public void SelectPixel(Point pixelPosition)
+      {
+      }
+
+      public void ActiveImageSourceChanged(IImageSource imageSource)
       {
       }
 

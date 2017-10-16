@@ -73,9 +73,14 @@ namespace ImageProcessing.Views
          this.ClearImageList();
       }
 
-      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      public void SelectPixel(Point pixelPosition)
       {
-         this.taggerController.SelectPixel(imageSource, pixelPosition);
+         this.taggerController.SelectPixel(pixelPosition);
+      }
+
+      public void ActiveImageSourceChanged(IImageSource imageSource)
+      {
+         this.taggerController.ActiveImageSourceChanged(imageSource);
       }
 
       private void AddButton_Click(object sender, EventArgs e)

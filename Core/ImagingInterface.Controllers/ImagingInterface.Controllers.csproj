@@ -86,8 +86,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ImageController.cs" />
     <Compile Include="ImageManagerController.cs" />
-    <Compile Include="EventArguments\ImageSourceAddedEventArgs.cs" />
-    <Compile Include="EventArguments\ImageSourceRemovedEventArgs.cs" />
+    <Compile Include="EventArguments\ImageSourceChangedEventArgs.cs" />
     <Compile Include="Interfaces\IApplicationLogic.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="PluginOperationController.cs" />

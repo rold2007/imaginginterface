@@ -17,6 +17,8 @@ namespace ImagingInterface.Plugins
 
       void Close();
 
-      void SelectPixel(IImageSource imageSource, Point pixelPosition);
+      void SelectPixel(Point pixelPosition);
+
+      void ActiveImageSourceChanged(IImageSource imageSource);
    }
 }

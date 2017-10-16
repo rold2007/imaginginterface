@@ -1,4 +1,4 @@
-﻿// <copyright file="ImageSourceRemovedEventArgs.cs" company="David Rolland">
+﻿// <copyright file="ImageSourceChangedEventArgs.cs" company="David Rolland">
 // Copyright (c) David Rolland. All rights reserved.
 // </copyright>
 
@@ -7,9 +7,9 @@ namespace ImagingInterface.Controllers.EventArguments
     using System;
     using ImagingInterface.Plugins;
 
-    public class ImageSourceRemovedEventArgs : EventArgs
+    public class ImageSourceChangedEventArgs : EventArgs
     {
-        public ImageSourceRemovedEventArgs(IImageSource imageSource)
+        public ImageSourceChangedEventArgs(IImageSource imageSource)
         {
             this.ImageSource = imageSource;
         }

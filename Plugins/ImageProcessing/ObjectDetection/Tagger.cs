@@ -9,11 +9,12 @@ namespace ImageProcessing.ObjectDetection
    using System.Collections.ObjectModel;
    using System.Drawing;
    using System.IO;
+   using CsvHelper;
 
    public class Tagger
    {
-      private string tempFilename;
-      private bool dataPointsModified;
+      ////private string tempFilename;
+      ////private bool dataPointsModified;
       private Dictionary<string, List<Point>> dataPoints;
 
       public Tagger()
@@ -46,7 +47,7 @@ namespace ImageProcessing.ObjectDetection
             {
                points.Add(newPoint);
 
-               this.dataPointsModified = true;
+               ////this.dataPointsModified = true;
 
                return true;
             }
@@ -63,7 +64,7 @@ namespace ImageProcessing.ObjectDetection
 
             points.Add(newPoint);
 
-            this.dataPointsModified = true;
+            ////this.dataPointsModified = true;
 
             return true;
          }
@@ -79,7 +80,7 @@ namespace ImageProcessing.ObjectDetection
             {
                points.Remove(point);
 
-               this.dataPointsModified = true;
+               ////this.dataPointsModified = true;
 
                return true;
             }
@@ -88,8 +89,41 @@ namespace ImageProcessing.ObjectDetection
          return false;
       }
 
-      public void SavePoints()
+      public void RemoveAllPoints()
       {
+         foreach (List<Point> points in this.dataPoints.Values)
+         {
+            points.Clear();
+         }
+      }
+
+      public string SavePoints()
+      {
+         using (MemoryStream stream = new MemoryStream())
+         using (StreamReader reader = new StreamReader(stream))
+         using (StreamWriter writer = new StreamWriter(stream))
+         using (CsvWriter csv = new CsvWriter(writer))
+         {
+            foreach (string label in this.dataPoints.Keys)
+            {
+               foreach (Point point in this.dataPoints[label])
+               {
+                  csv.WriteField(label);
+                  csv.WriteField(point.X);
+                  csv.WriteField(point.Y);
+                  csv.NextRecordAsync();
+               }
+            }
+
+            writer.Flush();
+            stream.Position = 0;
+
+            string text = reader.ReadToEnd();
+
+            return text;
+         }
+
+         /*
          if (this.dataPointsModified)
          {
             string directory = Path.GetDirectoryName(this.tempFilename);
@@ -115,16 +149,32 @@ namespace ImageProcessing.ObjectDetection
 
             this.dataPointsModified = false;
          }
+         */
       }
 
-      public void LoadPoints(string imagePath)
+      public void LoadPoints(string dataPoints)
       {
-         string filename = Path.GetFileNameWithoutExtension(imagePath);
+         ////string filename = Path.GetFileNameWithoutExtension(imagePath);
 
-         this.tempFilename = this.SavePath + @"\Tagger\" + filename + ".imagedata";
+         ////this.tempFilename = this.SavePath + @"\Tagger\" + filename + ".imagedata";
 
          this.dataPoints.Clear();
 
+         using (MemoryStream stream = new MemoryStream())
+         using (StringReader reader = new StringReader(dataPoints))
+         using (CsvReader csv = new CsvReader(reader))
+         {
+            csv.Read();
+
+            string label = csv.GetField<string>(0);
+            Point readPoint = new Point(csv.GetField<int>(1), csv.GetField<int>(2));
+
+            this.AddLabel(label);
+
+            this.AddPoint(label, readPoint);
+         }
+
+         /*
          if (File.Exists(this.tempFilename))
          {
             using (StreamReader streamReader = new StreamReader(this.tempFilename))
@@ -142,8 +192,9 @@ namespace ImageProcessing.ObjectDetection
                }
             }
          }
+         */
 
-         this.dataPointsModified = false;
+         ////this.dataPointsModified = false;
       }
 
       public void AddLabel(string label)

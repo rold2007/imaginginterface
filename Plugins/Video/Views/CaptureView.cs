@@ -46,7 +46,11 @@ namespace Video.Views
       {
       }
 
-      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      public void SelectPixel(Point pixelPosition)
+      {
+      }
+
+      public void ActiveImageSourceChanged(IImageSource imageSource)
       {
       }
 
