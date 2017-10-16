@@ -97,6 +97,7 @@ namespace ImageProcessing.ObjectDetection
          }
       }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Too complicated to solve.")]
       public string SavePoints()
       {
          using (MemoryStream stream = new MemoryStream())
@@ -152,6 +153,7 @@ namespace ImageProcessing.ObjectDetection
          */
       }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Too complicated to solve.")]
       public void LoadPoints(string dataPoints)
       {
          ////string filename = Path.GetFileNameWithoutExtension(imagePath);
