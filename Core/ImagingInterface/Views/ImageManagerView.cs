@@ -135,7 +135,6 @@ namespace ImagingInterface.Views
 
          this.imagesTabControl.Controls.Add(tabPage);
 
-         this.imageManagerController.AddImage();
          imageView.AssignToImageManager();
 
          this.imagesTabControl.SelectedIndex = this.imageManagerController.ActiveImageIndex;
@@ -188,16 +187,16 @@ namespace ImagingInterface.Views
          //   }
       }
 
-      private void ImageManagerController_ImageAdded(object sender, ImageSourceAddedEventArgs e)
-      {
-         // IImageSource imageSource = e.ImageSource;
-         // ImageView imageView = this.imageViewFactory.CreateNew();
+      ////private void ImageManagerController_ImageAdded(object sender, ImageSourceAddedEventArgs e)
+      ////{
+      // IImageSource imageSource = e.ImageSource;
+      // ImageView imageView = this.imageViewFactory.CreateNew();
 
-         // imageView.ImageSource = imageSource;
+      // imageView.ImageSource = imageSource;
 
-         // this.AddImageToNewtab(imageView);
+      // this.AddImageToNewtab(imageView);
 
-         // this.imageManagerController.AddImage(imageSource, imageView);
-      }
+      // this.imageManagerController.AddImage(imageSource, imageView);
+      ////}
    }
 }

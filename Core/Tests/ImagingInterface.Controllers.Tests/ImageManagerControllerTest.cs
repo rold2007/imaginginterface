@@ -9,18 +9,23 @@ namespace ImagingInterface.Controllers.Tests
 
    public class ImageManagerControllerTest : ControllersBaseTest
    {
+      public ImageManagerControllerTest()
+      {
+         this.Container.Register<ImageManagerController>();
+         this.Container.RegisterSingleton<ImageManagerService>();
+         this.Container.RegisterSingleton<PluginManagerService>();
+      }
+
       [Fact]
       public void Constructor()
       {
-         ImageManagerService imageManagerService = new ImageManagerService();
-         ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerService);
+         ImageManagerController imageViewManagerController = this.Container.GetInstance<ImageManagerController>();
       }
 
       [Fact]
       public void Constructor2()
       {
-         ImageManagerService imageManagerService = new ImageManagerService();
-         ImageManagerController imageViewManagerController = new ImageManagerController(imageManagerService);
+         ImageManagerController imageViewManagerController = this.Container.GetInstance<ImageManagerController>();
 
          // IImageSource imageSource1 = this.ServiceLocator.GetInstance<IImageSource>();
          // IImageSource imageSource2 = this.ServiceLocator.GetInstance<IImageSource>();

@@ -14,9 +14,12 @@ namespace ImagingInterface.Controllers.Services
    {
       private int activeImageIndex;
       private List<ImageService> imageServices;
+      private PluginManagerService pluginManagerService;
 
-      public ImageManagerService()
+      public ImageManagerService(PluginManagerService pluginManagerService)
       {
+         this.pluginManagerService = pluginManagerService;
+
          this.imageServices = new List<ImageService>();
 
          this.ActiveImageIndex = -1;
@@ -43,7 +46,15 @@ namespace ImagingInterface.Controllers.Services
                throw new ArgumentOutOfRangeException();
             }
 
-            this.activeImageIndex = value;
+            if (this.activeImageIndex != value)
+            {
+               this.activeImageIndex = value;
+
+               if (this.activeImageIndex >= 0)
+               {
+                  this.pluginManagerService.ImageSourceChanged(this.imageServices[this.activeImageIndex].ImageSource);
+               }
+            }
          }
       }
 
@@ -55,9 +66,9 @@ namespace ImagingInterface.Controllers.Services
          }
       }
 
-      public int AddImage()
+      public int AddImage(ImageService imageService)
       {
-         this.imageServices.Add(null);
+         this.imageServices.Add(imageService);
 
          this.ActiveImageIndex = this.ImageCount - 1;
 
@@ -78,14 +89,6 @@ namespace ImagingInterface.Controllers.Services
          }
 
          Debug.Assert(this.ImageCount >= 0, "Invalid image count.");
-      }
-
-      public void AssignImageService(ImageService imageService)
-      {
-         this.ActiveImageIndex.ShouldBeInRange(0, this.imageServices.Count - 1);
-         this.imageServices[this.ActiveImageIndex].ShouldBeNull();
-
-         this.imageServices[this.ActiveImageIndex] = imageService;
       }
 
       public ImageService GetImageServiceFromIndex(int imageIndex)

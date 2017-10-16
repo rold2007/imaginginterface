@@ -97,7 +97,7 @@ namespace ImagingInterface.Controllers.Services
 
       public void AssignToImageManager()
       {
-         this.imageManagerService.AssignImageService(this);
+         this.imageManagerService.AddImage(this);
       }
 
       public void UpdateImageData(byte[,,] updatedImageData, byte[] updatedOverlayData)
@@ -130,10 +130,6 @@ namespace ImagingInterface.Controllers.Services
 
       public void SelectPixel(Point mouseClickPixel)
       {
-         ////IImageProcessingService imageProcessingPluginService = this.pluginManagerService.GetPluginFromIndex(this.pluginManagerService.ActivePluginIndex);
-
-         ////imageProcessingPluginService.SelectPixel(mouseClickPixel);
-
          this.pluginManagerService.SelectPixel(this.imageSource, mouseClickPixel);
       }
    }

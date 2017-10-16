@@ -34,19 +34,6 @@ namespace ImagingInterface.Controllers
          }
       }
 
-      public void AddImage()
-      {
-         this.imageManagerService.AddImage();
-      }
-
-      public void AddImages(int imageCount)
-      {
-         for (int imageIndex = 0; imageIndex < imageCount; imageIndex++)
-         {
-            this.imageManagerService.AddImage(/*imageSource*/);
-         }
-      }
-
       public IList<ImageController> GetAllImages()
       {
          throw new NotImplementedException();

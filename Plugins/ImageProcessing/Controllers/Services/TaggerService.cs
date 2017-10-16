@@ -10,6 +10,7 @@ namespace ImageProcessing.Controllers.Services
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.Utilities;
+   using Shouldly;
 
    public class TaggerService : IImageProcessingService
    {
@@ -17,13 +18,16 @@ namespace ImageProcessing.Controllers.Services
 
       private Tagger tagger;
       private IImageProcessingManagerService imageProcessingService;
+      private IImageSource activeImageSource;
       private SortedList<string, Color> labelColors;
+      private Dictionary<IImageSource, string> savedDataPoints;
 
       public TaggerService(Tagger tagger, IImageProcessingManagerService imageProcessingService)
       {
          this.tagger = tagger;
          this.imageProcessingService = imageProcessingService;
          this.labelColors = new SortedList<string, Color>();
+         this.savedDataPoints = new Dictionary<IImageSource, string>();
       }
 
       public string DisplayName
@@ -117,9 +121,37 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
-      public void SelectPixel(IImageSource imageSource, string label, Point pixelPosition)
+      public void SelectPixel(string label, Point pixelPosition)
       {
+         this.activeImageSource.ShouldNotBeNull("Use ActiveImageSourceChanged() to initialize the active image source.");
+
          this.tagger.AddPoint(label, pixelPosition);
+
+         this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
+      }
+
+      public void ActiveImageSourceChanged(IImageSource imageSource)
+      {
+         string savedDataPoints;
+
+         // Save the current data points
+         if (this.activeImageSource != null)
+         {
+            savedDataPoints = this.tagger.SavePoints();
+
+            this.savedDataPoints[this.activeImageSource] = savedDataPoints;
+         }
+
+         this.activeImageSource = imageSource;
+
+         if (this.savedDataPoints.TryGetValue(this.activeImageSource, out savedDataPoints))
+         {
+            this.tagger.LoadPoints(savedDataPoints);
+         }
+         else
+         {
+            this.tagger.RemoveAllPoints();
+         }
 
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }

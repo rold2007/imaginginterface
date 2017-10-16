@@ -76,12 +76,17 @@ namespace ImageProcessing.Controllers
          this.SelectedLabel = label;
       }
 
-      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      public void SelectPixel(Point pixelPosition)
       {
          if (this.SelectedLabel != null)
          {
-            this.taggerService.SelectPixel(imageSource, this.SelectedLabel, pixelPosition);
+            this.taggerService.SelectPixel(this.SelectedLabel, pixelPosition);
          }
+      }
+
+      public void ActiveImageSourceChanged(IImageSource imageSource)
+      {
+         this.taggerService.ActiveImageSourceChanged(imageSource);
       }
 
       public void RemoveLabels(IEnumerable<string> labels)
@@ -212,10 +217,5 @@ namespace ImageProcessing.Controllers
             this.TagPointChanged(this, new TagPointChangedEventArgs(/*this.registeredImageController, */label, tagPoint, added));
          }
       }
-
-      ////private void TaggerView_LabelAdded(object sender, EventArgs e)
-      ////   {
-      ////   this.AddLabels(new List<string>() { this.taggerModel.AddedLabel });
-      ////   }
    }
 }

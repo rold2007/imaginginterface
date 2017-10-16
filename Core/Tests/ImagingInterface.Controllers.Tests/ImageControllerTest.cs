@@ -11,7 +11,8 @@ namespace ImagingInterface.Controllers.Tests
    {
       public ImageControllerTest()
       {
-         this.Container.Register<PluginManagerService>();
+         this.Container.RegisterSingleton<ImageManagerService>();
+         this.Container.RegisterSingleton<PluginManagerService>();
          this.Container.Register<ImageService>();
          this.Container.Register<ImageController>();
       }

@@ -10,10 +10,9 @@ namespace ImagingInterface.Controllers.EventArguments
 
    public class PixelSelectionEventArgs : EventArgs
       {
-      public PixelSelectionEventArgs(Point pixelPosition, IImageSource imageSource, bool select)
+      public PixelSelectionEventArgs(Point pixelPosition, bool select)
          {
          this.PixelPosition = pixelPosition;
-         this.ImageSource = imageSource;
          this.Select = select;
          }
 
@@ -22,12 +21,6 @@ namespace ImagingInterface.Controllers.EventArguments
          get;
          private set;
          }
-
-      public IImageSource ImageSource
-      {
-         get;
-         private set;
-      }
 
       public bool Select
          {
