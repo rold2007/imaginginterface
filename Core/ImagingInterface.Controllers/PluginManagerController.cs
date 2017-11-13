@@ -44,6 +44,7 @@ namespace ImagingInterface.Controllers
 
       public void RemoveActivePlugin()
       {
+         this.pluginManagerService.RemoveActivePlugin();
       }
 
       private void PluginManagerService_ActiveImagePixelSelected(object sender, PixelSelectionEventArgs e)
