@@ -82,12 +82,18 @@ namespace ImagingInterface.Controllers.Services
 
       public void SelectPixel(IImageSource imageSource, Point mouseClickPixel)
       {
-         this.ActiveImagePixelSelected?.Invoke(this, new PixelSelectionEventArgs(mouseClickPixel, true));
+         if (this.PluginCount > 0)
+         {
+            this.ActiveImagePixelSelected?.Invoke(this, new PixelSelectionEventArgs(mouseClickPixel, true));
+         }
       }
 
       public void ImageSourceChanged(IImageSource imageSource)
       {
-         this.ActiveImageSourceChanged?.Invoke(this, new ImageSourceChangedEventArgs(imageSource));
+         if (this.PluginCount > 0)
+         {
+            this.ActiveImageSourceChanged?.Invoke(this, new ImageSourceChangedEventArgs(imageSource));
+         }
       }
    }
 }

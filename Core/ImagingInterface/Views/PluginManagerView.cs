@@ -89,6 +89,8 @@ namespace ImagingInterface.Views
 
          tabPage.Dispose();
          toolTip.Dispose();
+
+         this.pluginManagerController.RemoveActivePlugin();
       }
 
       protected override void OnCreateControl()
