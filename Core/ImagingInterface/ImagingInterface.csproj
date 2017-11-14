@@ -66,23 +66,23 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accord, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Accord.3.7.0\lib\net462\Accord.dll</HintPath>
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.MachineLearning, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Accord.MachineLearning.3.7.0\lib\net462\Accord.MachineLearning.dll</HintPath>
+    <Reference Include="Accord.MachineLearning, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Accord.MachineLearning.3.8.0\lib\net462\Accord.MachineLearning.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Math, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Accord.Math.3.7.0\lib\net462\Accord.Math.dll</HintPath>
+    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Math.Core, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Accord.Math.3.7.0\lib\net462\Accord.Math.Core.dll</HintPath>
+    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Accord.Statistics, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Accord.Statistics.3.7.0\lib\net462\Accord.Statistics.dll</HintPath>
+    <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="CsvHelper, Version=3.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CsvHelper.3.4.0\lib\net45\CsvHelper.dll</HintPath>
+    <Reference Include="CsvHelper, Version=6.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CsvHelper.6.0.0\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="Cudafy.NET, Version=1.29.5576.13786, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,8 +94,8 @@
     <Reference Include="Emgu.CV.World, Version=3.2.0.2721, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Emgu.CV.3.2.0.2721\lib\net35\Emgu.CV.World.dll</HintPath>
     </Reference>
-    <Reference Include="ImageProcessor, Version=2.5.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ImageProcessor.2.5.5\lib\net45\ImageProcessor.dll</HintPath>
+    <Reference Include="ImageProcessor, Version=2.5.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ImageProcessor.2.5.6\lib\net45\ImageProcessor.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
@@ -106,11 +106,11 @@
     <Reference Include="Shouldly, Version=2.8.3.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Shouldly.2.8.3\lib\net451\Shouldly.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.4.0.12\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector.Packaging, Version=4.0.11.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SimpleInjector.Packaging.4.0.11\lib\net40\SimpleInjector.Packaging.dll</HintPath>
+    <Reference Include="SimpleInjector.Packaging, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.Packaging.4.0.12\lib\net40\SimpleInjector.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -249,11 +249,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\..\packages\Emgu.CV.3.2.0.2721\build\Emgu.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Emgu.CV.3.2.0.2721\build\Emgu.CV.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Accord.3.7.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Accord.3.7.0\build\Accord.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Accord.3.8.0\build\Accord.targets'))" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\..\packages\Emgu.CV.3.2.0.2721\build\Emgu.CV.targets" Condition="Exists('..\..\packages\Emgu.CV.3.2.0.2721\build\Emgu.CV.targets')" />
-  <Import Project="..\..\packages\Accord.3.7.0\build\Accord.targets" Condition="Exists('..\..\packages\Accord.3.7.0\build\Accord.targets')" />
+  <Import Project="..\..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\..\packages\Accord.3.8.0\build\Accord.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
