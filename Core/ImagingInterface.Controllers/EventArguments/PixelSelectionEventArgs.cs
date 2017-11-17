@@ -6,7 +6,6 @@ namespace ImagingInterface.Controllers.EventArguments
 {
    using System;
    using System.Drawing;
-   using ImagingInterface.Plugins;
 
    public class PixelSelectionEventArgs : EventArgs
       {

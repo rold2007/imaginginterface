@@ -3,12 +3,7 @@
 // </copyright>
 
 namespace Video.Controllers.Tests
-   {
-   using System;
-   using System.Threading;
-   using ImagingInterface.Plugins;
-   using Video.Controllers.Tests.Mocks;
-   using Video.Models;
+{
    using Xunit;
 
    public class CaptureControllerTest : ControllersBaseTest

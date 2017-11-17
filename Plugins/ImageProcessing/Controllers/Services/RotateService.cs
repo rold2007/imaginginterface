@@ -4,7 +4,6 @@
 
 namespace ImageProcessing.Controllers.Services
 {
-   using System.Diagnostics;
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImagingInterface.Plugins;

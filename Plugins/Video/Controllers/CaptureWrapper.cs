@@ -7,7 +7,6 @@ namespace Video.Controllers
    using System;
    using Emgu.CV;
    using Emgu.CV.CvEnum;
-   using Emgu.CV.Util;
 
    public class CaptureWrapper
       {

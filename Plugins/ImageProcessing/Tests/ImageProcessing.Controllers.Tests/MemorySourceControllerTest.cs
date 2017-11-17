@@ -3,15 +3,7 @@
 // </copyright>
 
 namespace ImageProcessing.Controllers.Tests
-   {
-   using System;
-   using System.Collections.Generic;
-   using System.IO;
-   using System.Linq;
-   using System.Text;
-   using System.Threading.Tasks;
-   using ImageProcessing.Controllers;
-   using ImagingInterface.Plugins;
+{
    using Xunit;
 
    public class MemorySourceControllerTest : ControllersBaseTest
