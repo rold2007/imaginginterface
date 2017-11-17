@@ -3,12 +3,11 @@
 // </copyright>
 
 namespace Video.Controllers.Tests.Mocks
-   {
+{
    using System;
    using Emgu.CV;
    using Emgu.CV.CvEnum;
    using Emgu.CV.Structure;
-   using Video.Controllers;
 
    public class CaptureWrapperMock
       {

@@ -3,11 +3,7 @@
 // </copyright>
 
 namespace ImageProcessing.Controllers.Tests
-   {
-   using System.Drawing;
-   using ImageProcessing.Controllers;
-   using ImageProcessing.Models;
-   using ImagingInterface.Plugins;
+{
    using Xunit;
 
    public class ObjectDetectionControllerTest : ControllersBaseTest
