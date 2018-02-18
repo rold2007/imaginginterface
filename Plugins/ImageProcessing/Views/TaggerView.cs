@@ -21,6 +21,12 @@ namespace ImageProcessing.Views
          this.InitializeComponent();
 
          this.taggerController = taggerController;
+
+         this.taggerController.AddLabel("AAA");
+         this.taggerController.AddLabel("BBB");
+         this.taggerController.AddLabel("CCC");
+
+         this.UpdateLabelList();
       }
 
       public string DisplayName
@@ -73,15 +79,20 @@ namespace ImageProcessing.Views
          this.ClearImageList();
       }
 
-      public void SelectPixel(Point pixelPosition)
+      public void Activate()
       {
-         this.taggerController.SelectPixel(pixelPosition);
+         this.taggerController.Activate();
       }
 
-      public void ActiveImageSourceChanged(IImageSource imageSource)
-      {
-         this.taggerController.ActiveImageSourceChanged(imageSource);
-      }
+      ////public void SelectPixel(Point pixelPosition)
+      ////{
+      ////   this.taggerController.SelectPixel(pixelPosition);
+      ////}
+
+      ////public void ActiveImageSourceChanged(IImageSource imageSource)
+      ////{
+      ////   this.taggerController.ActiveImageSourceChanged(imageSource);
+      ////}
 
       private void AddButton_Click(object sender, EventArgs e)
       {

@@ -130,15 +130,16 @@ namespace ImagingInterface
 
       private static void Bootstrap()
       {
+         // Factories
          container.RegisterSingleton<IApplicationLogic, ApplicationLogic>();
          container.RegisterSingleton<IImageViewFactory, ImageViewFactory>();
          container.RegisterSingleton<IPluginViewFactory, PluginViewFactory>();
+         container.RegisterSingleton<Func<IImageView>>(() => { return container.GetInstance<ImageView>(); });
 
          // Views
          container.Register<AboutBoxView>();
          container.Register<ImageManagerView>();
          container.Register<ImageView>();
-         container.RegisterSingleton<Func<IImageView>>(() => { return container.GetInstance<ImageView>(); });
          container.Register<MainWindow>();
          container.Register<PluginManagerView>();
 
@@ -147,7 +148,6 @@ namespace ImagingInterface
          container.Register<FileOperationController>();
          container.Register<ImageManagerController>();
          container.Register<ImageController>();
-         container.Register<IImageProcessingManagerService, ImageProcessingManagerService>();
          container.Register<MainController>();
          container.Register<PluginManagerController>();
          container.Register<PluginOperationController>();
@@ -171,9 +171,11 @@ namespace ImagingInterface
          Debug.Assert(container.Options.AllowOverridingRegistrations == false, "The default behavior should be disabled. Someone forgot to reset this value.");
 
          container.Options.AllowOverridingRegistrations = true;
-         container.RegisterSingleton<ImageManagerService>();
+         ////container.RegisterSingleton<ImageManagerService>();
          container.RegisterSingleton<ImageSourceService>();
-         container.RegisterSingleton<PluginManagerService>();
+         ////container.RegisterSingleton<PluginManagerService>();
+         container.RegisterSingleton<ImageProcessingManagerService>();
+         container.RegisterSingleton<IImageProcessingManagerService, ImageProcessingManagerService>();
          container.Options.AllowOverridingRegistrations = false;
 
          List<Assembly> pluginAssemblies = new List<Assembly>();

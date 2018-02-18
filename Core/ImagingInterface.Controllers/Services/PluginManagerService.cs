@@ -13,16 +13,22 @@ namespace ImagingInterface.Controllers.Services
    public class PluginManagerService
    {
       private int activePluginIndex;
+      private ImageManagerService imageManagerService;
+      private ImageProcessingManagerService imageProcessingService;
 
-      public PluginManagerService()
+      public PluginManagerService(ImageManagerService imageManagerService, ImageProcessingManagerService imageProcessingService)
       {
          this.ActivePluginIndex = -1;
+         this.imageManagerService = imageManagerService;
+         this.imageProcessingService = imageProcessingService;
          this.PluginCount = 0;
+
+         ////this.imageManagerService.ActiveImageSourceChanged += this.ImageManagerService_ActiveImageSourceChanged;
       }
 
-      public event EventHandler<PixelSelectionEventArgs> ActiveImagePixelSelected;
+      ////public event EventHandler<PixelSelectionEventArgs> ActiveImagePixelSelected;
 
-      public event EventHandler<ImageSourceChangedEventArgs> ActiveImageSourceChanged;
+      ////public event EventHandler<ImageSourceChangedEventArgs> ActiveImageSourceChanged;
 
       public int ActivePluginIndex
       {
@@ -61,6 +67,19 @@ namespace ImagingInterface.Controllers.Services
 
          this.ActivePluginIndex = this.PluginCount - 1;
 
+         ////IImageSource activeImageSource;
+
+         ////if (this.imageManagerService.ActiveImageIndex > 0)
+         ////{
+         ////   activeImageSource = this.imageManagerService.GetImageServiceFromIndex(this.imageManagerService.ActiveImageIndex).ImageSource;
+         ////}
+         ////else
+         ////{
+         ////   activeImageSource = null;
+         ////}
+
+         ////this.ImageSourceChanged(activeImageSource);
+
          return this.ActivePluginIndex;
       }
 
@@ -75,25 +94,34 @@ namespace ImagingInterface.Controllers.Services
          else if (this.PluginCount == 0)
          {
             this.ActivePluginIndex = -1;
+
+            this.imageProcessingService.ActiveImageProcessingService = null;
          }
 
-         this.PluginCount.ShouldBeLessThanOrEqualTo(0, "Invalid image count.");
+         this.PluginCount.ShouldBeGreaterThanOrEqualTo(0, "Invalid plugin count.");
       }
 
-      public void SelectPixel(IImageSource imageSource, Point mouseClickPixel)
-      {
-         if (this.PluginCount > 0)
-         {
-            this.ActiveImagePixelSelected?.Invoke(this, new PixelSelectionEventArgs(mouseClickPixel, true));
-         }
-      }
+      ////public void SelectPixel(IImageSource imageSource, Point mouseClickPixel)
+      ////{
+      ////   System.Diagnostics.Debug.Fail("Not implemented.");
 
-      public void ImageSourceChanged(IImageSource imageSource)
-      {
-         if (this.PluginCount > 0)
-         {
-            this.ActiveImageSourceChanged?.Invoke(this, new ImageSourceChangedEventArgs(imageSource));
-         }
-      }
+      ////   if (this.PluginCount > 0)
+      ////   {
+      ////      ////this.ActiveImagePixelSelected?.Invoke(this, new PixelSelectionEventArgs(mouseClickPixel, true));
+      ////   }
+      ////}
+
+      ////public void ImageSourceChanged(IImageSource imageSource)
+      ////{
+      ////   this.ImageManagerService_ActiveImageSourceChanged(this, new ImageSourceChangedEventArgs(imageSource));
+      ////}
+
+      ////private void ImageManagerService_ActiveImageSourceChanged(object sender, ImageSourceChangedEventArgs e)
+      ////{
+      ////   if (this.PluginCount > 0)
+      ////   {
+      ////      this.ActiveImageSourceChanged?.Invoke(sender, e);
+      ////   }
+      ////}
    }
 }

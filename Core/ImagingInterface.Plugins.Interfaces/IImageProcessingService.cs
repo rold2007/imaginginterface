@@ -4,8 +4,14 @@
 
 namespace ImagingInterface.Plugins
 {
+   using System.Drawing;
+
    public interface IImageProcessingService
    {
+      void CloseImage(IImageSource imageSource);
+
       void ProcessImageData(byte[,,] imageData, byte[] overlayData);
+
+      void SelectPixel(IImageSource imageSource, Point mouseClickPixel);
    }
 }

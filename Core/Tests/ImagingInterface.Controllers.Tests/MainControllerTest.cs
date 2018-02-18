@@ -4,8 +4,6 @@
 
 namespace ImagingInterface.Controllers.Tests
 {
-   using Xunit;
-
    public class MainControllerTest : ControllersBaseTest
       {
       /*

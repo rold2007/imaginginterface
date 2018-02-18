@@ -13,7 +13,7 @@ namespace ImageProcessing.Controllers
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
 
-   public class ObjectDetectionController : IImageProcessingService
+   public class ObjectDetectionController : ImageProcessingServiceBase
    {
       ////private IObjectDetectionView objectDetectionView;
       private ObjectDetectionModel objectDetectionModel = new ObjectDetectionModel();
@@ -72,10 +72,12 @@ namespace ImageProcessing.Controllers
       {
          this.taggerController = taggerController;
 
-         this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
+         System.Diagnostics.Debug.Fail("Not implemented.");
+
+         ////this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
       }
 
-      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          Dictionary<string, List<Point>> predictions = this.objectDetector.Test(imageData);
 

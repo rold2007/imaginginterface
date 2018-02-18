@@ -2,6 +2,14 @@
 // Copyright (c) David Rolland. All rights reserved.
 // </copyright>
 
+//// TODO: Tester les 4% code coverage restants
+//// TODO: Diviser les tests de facon appropriee dans TaggerServiceTest.cs et TaggerTest.cs en fonction de ce que fait vraiment la fonction.
+
+//// TODO: This line creates every plugin each time it is called. This will be a mess when there are way more plugins: IPluginView pluginView = this.pluginViewFactory.CreateNew(pluginName);
+
+//// TODO: Is there a way to remove most event in my Controller/Service pattern ? It is a mess to remember to disconnect the events when closing an image (for example) and it causes too many back and forth through all the layers. The view shouldn't have to know what needs to be updated after each user's action though...
+
+//// TODO: Make all Service classes internal ? Testing should/could be all done through the Controller classes. It would also prevent responsibility leaking through different logical layers.
 namespace ImageProcessing.ObjectDetection
 {
    using System;

@@ -132,7 +132,7 @@ namespace ImageProcessing.Controllers.Tests
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
 
-         taggerController.SelectedLabel.ShouldBeNull();
+         ////taggerController.SelectedLabel.ShouldBeNull();
 
          // Cannot select label which has not been added yet
          Assert.Throws<Shouldly.ShouldAssertException>(() => { taggerController.SelectLabel(LabelName); });
@@ -141,11 +141,11 @@ namespace ImageProcessing.Controllers.Tests
 
          taggerController.SelectLabel(LabelName);
 
-         taggerController.SelectedLabel.ShouldBe(LabelName);
+         ////taggerController.SelectedLabel.ShouldBe(LabelName);
 
          taggerController.SelectLabel(null);
 
-         taggerController.SelectedLabel.ShouldBeNull();
+         ////taggerController.SelectedLabel.ShouldBeNull();
       }
 
       [Fact]
@@ -156,21 +156,21 @@ namespace ImageProcessing.Controllers.Tests
 
          taggerController.GetPoints(LabelName).Count().ShouldBe(0);
 
-         taggerController.SelectPixel(Point.Empty);
+         ////taggerController.SelectPixel(Point.Empty);
 
          taggerController.GetPoints(LabelName).Count().ShouldBe(0);
 
          taggerController.AddLabel(LabelName);
 
-         taggerController.SelectPixel(Point.Empty);
+         ////taggerController.SelectPixel(Point.Empty);
 
          taggerController.GetPoints(LabelName).Count().ShouldBe(0);
 
          taggerController.SelectLabel(LabelName);
 
-         taggerController.ActiveImageSourceChanged(imageSource);
+         ////taggerController.ActiveImageSourceChanged(imageSource);
 
-         taggerController.SelectPixel(new Point(42, 54));
+         ////taggerController.SelectPixel(new Point(42, 54));
 
          taggerController.GetPoints(LabelName).Count().ShouldBe(1);
 
@@ -190,20 +190,20 @@ namespace ImageProcessing.Controllers.Tests
          taggerController.SelectLabel(LabelName);
 
          // ActiveImageSourceChanged() must be called before calling SelectPixel()
-         Assert.Throws<Shouldly.ShouldAssertException>(() => { taggerController.SelectPixel(Point.Empty); });
+         ////Assert.Throws<Shouldly.ShouldAssertException>(() => { taggerController.SelectPixel(Point.Empty); });
 
-         taggerController.ActiveImageSourceChanged(imageSource1);
+         ////taggerController.ActiveImageSourceChanged(imageSource1);
 
          // Should not throw an exception
-         taggerController.SelectPixel(new Point(42, 54));
+         ////taggerController.SelectPixel(new Point(42, 54));
 
-         taggerController.ActiveImageSourceChanged(imageSource2);
+         ////taggerController.ActiveImageSourceChanged(imageSource2);
 
          taggerController.GetPoints(LabelName).Count().ShouldBe(0);
 
-         taggerController.SelectPixel(new Point(6, 9));
+         ////taggerController.SelectPixel(new Point(6, 9));
 
-         taggerController.ActiveImageSourceChanged(imageSource1);
+         ////taggerController.ActiveImageSourceChanged(imageSource1);
 
          taggerController.GetPoints(LabelName).Count().ShouldBe(1);
 

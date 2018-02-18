@@ -4,7 +4,6 @@
 
 namespace ImageProcessing.ObjectDetection
 {
-   using System;
    using System.Collections.Generic;
    using System.Collections.ObjectModel;
    using System.Drawing;
@@ -166,14 +165,15 @@ namespace ImageProcessing.ObjectDetection
          using (StringReader reader = new StringReader(dataPoints))
          using (CsvReader csv = new CsvReader(reader))
          {
-            csv.Read();
+            if (csv.Read())
+            {
+               string label = csv.GetField<string>(0);
+               Point readPoint = new Point(csv.GetField<int>(1), csv.GetField<int>(2));
 
-            string label = csv.GetField<string>(0);
-            Point readPoint = new Point(csv.GetField<int>(1), csv.GetField<int>(2));
+               this.AddLabel(label);
 
-            this.AddLabel(label);
-
-            this.AddPoint(label, readPoint);
+               this.AddPoint(label, readPoint);
+            }
          }
 
          /*

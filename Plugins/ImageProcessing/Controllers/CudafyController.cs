@@ -20,8 +20,8 @@ namespace ImageProcessing.Controllers
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
 
-   public class CudafyController : IImageProcessingService
-      {
+   public class CudafyController : ImageProcessingServiceBase
+   {
       private static readonly string CudafyDisplayName = "Cudafy"; // ncrunch: no coverage
       private CudafyModel cudafyModel = new CudafyModel();
       private Dictionary<string, GPGPU> gpgpus;
@@ -99,7 +99,7 @@ namespace ImageProcessing.Controllers
             }
          }
 
-      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
          {
          CudafyModel cudafyModel = this.cudafyModel;
 

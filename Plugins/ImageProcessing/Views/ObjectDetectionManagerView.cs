@@ -40,6 +40,10 @@ namespace ImageProcessing.Views
       {
       }
 
+      public void Activate()
+      {
+      }
+
       ////public void AddView(IRawPluginView rawPluginView)
       ////{
       ////   Control pluginViewControl = rawPluginView as Control;

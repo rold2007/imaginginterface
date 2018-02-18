@@ -10,7 +10,6 @@ namespace ImagingInterface.Views
    using System.Drawing;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
-   using ImagingInterface.Controllers.EventArguments;
 
    public partial class ImageManagerView : UserControl
    {
@@ -70,6 +69,8 @@ namespace ImagingInterface.Views
 
       public void RemoveImageView(ImageView imageView)
       {
+         int imageIndex = this.imageViews.IndexOf(imageView);
+
          using (TabPage tabPage = this.imageViewTabPage[imageView])
          using (ToolTip toolTip = this.imageViewToolTip[imageView])
          {
@@ -78,6 +79,10 @@ namespace ImagingInterface.Views
             this.imageViewTabPage.Remove(imageView);
             this.imageViewToolTip.Remove(imageView);
          }
+
+         this.imageManagerController.RemoveImage(imageIndex);
+
+         ////this.imageManagerController.RemoveActiveImage(); There is a design problem here. We have no prrof that imageView is actually the active image view...
       }
 
       ////public ImageView GetActiveImageView()
@@ -135,9 +140,12 @@ namespace ImagingInterface.Views
 
          this.imagesTabControl.Controls.Add(tabPage);
 
-         imageView.AssignToImageManager();
+         ////imageView.AssignToImageManager();
+         this.imageManagerController.AddImage();
 
          this.imagesTabControl.SelectedIndex = this.imageManagerController.ActiveImageIndex;
+
+         imageView.Activate();
       }
 
       private void UpdateImageTabPageProperties(ImageView imageView)
@@ -159,6 +167,11 @@ namespace ImagingInterface.Views
       private void ImagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
       {
          this.imageManagerController.SetActiveImageIndex(this.imagesTabControl.SelectedIndex);
+
+         if (this.imagesTabControl.SelectedIndex >= 0)
+         {
+            this.imageViews[this.imagesTabControl.SelectedIndex].Activate();
+         }
       }
 
       private void ImageManagerController_ImageAdded(object sender, EventArgs e)
