@@ -39,23 +39,23 @@ namespace ImagingInterface.Controllers
          ////return this.imageControllers.Values.ToList();
       }
 
-      public void RemoveActiveImage()
+      public void RemoveImage(int imageIndex)
       {
-         int activeImageIndex = this.imageManagerService.ActiveImageIndex;
+         ////int activeImageIndex = this.imageManagerService.ActiveImageIndex;
 
-         this.imageManagerService.RemoveActiveImage();
+         this.imageManagerService.RemoveImage(imageIndex);
 
-         activeImageIndex = Math.Min(activeImageIndex, this.imageManagerService.ImageCount - 1);
+         ////activeImageIndex = Math.Min(activeImageIndex, this.imageManagerService.ImageCount - 1);
 
          // Restore the expected active image index as the removal could have changed it
-         this.imageManagerService.ActiveImageIndex = activeImageIndex;
+         ////this.imageManagerService.ActiveImageIndex = activeImageIndex;
       }
 
       public void RemoveAllImages()
       {
          while (this.imageManagerService.ImageCount > 0)
          {
-            this.RemoveActiveImage();
+            this.RemoveImage(0);
          }
       }
 
@@ -65,6 +65,11 @@ namespace ImagingInterface.Controllers
          {
             this.imageManagerService.ActiveImageIndex = activeImageIndex;
          }
+      }
+
+      public void AddImage()
+      {
+         this.imageManagerService.AddImage(null);
       }
    }
 }

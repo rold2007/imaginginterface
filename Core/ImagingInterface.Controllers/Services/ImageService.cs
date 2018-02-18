@@ -9,17 +9,19 @@ namespace ImagingInterface.Controllers.Services
    using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Plugins;
 
-   public class ImageService
+   public class ImageService : IImageService
    {
       private IImageSource imageSource;
-      private ImageManagerService imageManagerService;
-      private PluginManagerService pluginManagerService;
+      ////private ImageManagerService imageManagerService;
+      ////private PluginManagerService pluginManagerService;
+      private ImageProcessingManagerService imageProcessingManagerService;
 
-      public ImageService(ImageManagerService imageManagerService, PluginManagerService pluginManagerService)
+      public ImageService(/*ImageManagerService imageManagerService, PluginManagerService pluginManagerService*/ImageProcessingManagerService imageProcessingService)
       {
-         this.imageManagerService = imageManagerService;
-         this.pluginManagerService = pluginManagerService;
+         ////this.imageManagerService = imageManagerService;
+         ////this.pluginManagerService = pluginManagerService;
          this.ZoomLevel = 1.0;
+         this.imageProcessingManagerService = imageProcessingService;
       }
 
       public IImageSource ImageSource
@@ -95,10 +97,15 @@ namespace ImagingInterface.Controllers.Services
          set;
       }
 
-      public void AssignToImageManager()
+      public void Activate()
       {
-         this.imageManagerService.AddImage(this);
+         this.imageProcessingManagerService.SetActiveImageService(this);
       }
+
+      ////public void AssignToImageManager()
+      ////{
+      ////   this.imageManagerService.AddImage(this);
+      ////}
 
       public void UpdateImageData(byte[,,] updatedImageData, byte[] updatedOverlayData)
       {
@@ -130,7 +137,9 @@ namespace ImagingInterface.Controllers.Services
 
       public void SelectPixel(Point mouseClickPixel)
       {
-         this.pluginManagerService.SelectPixel(this.imageSource, mouseClickPixel);
+         this.imageProcessingManagerService.SelectPixel(this, mouseClickPixel);
+
+         ////this.pluginManagerService.SelectPixel(this.imageSource, mouseClickPixel);
       }
    }
 }

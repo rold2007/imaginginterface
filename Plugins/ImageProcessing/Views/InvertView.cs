@@ -41,6 +41,10 @@ namespace ImageProcessing.Views
       {
       }
 
+      public void Activate()
+      {
+      }
+
       private void InvertCheckBox_CheckedChanged(object sender, EventArgs e)
       {
          this.invertController.Invert(this.InvertCheckBox.Checked);

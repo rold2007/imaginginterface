@@ -10,7 +10,7 @@ namespace ImageProcessing.Controllers.Services
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.Utilities;
 
-   public class InvertService : IImageProcessingService
+   public class InvertService : ImageProcessingServiceBase
    {
       private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
 
@@ -40,7 +40,7 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
-      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          if (this.ApplyInvert)
          {

@@ -6,9 +6,10 @@ namespace ImagingInterface.Controllers.Tests.Mocks
 {
    using System;
    using System.ComponentModel;
+   using System.Drawing;
    using ImagingInterface.Plugins;
 
-   public class PluginController1 : IImageProcessingService
+   public class PluginController1 : ImageProcessingServiceBase
    {
       private PluginModel1 pluginModel = new PluginModel1();
 
@@ -51,10 +52,6 @@ namespace ImagingInterface.Controllers.Tests.Mocks
 
             this.IsClosed = true;
          }
-      }
-
-      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
-      {
       }
    }
 }

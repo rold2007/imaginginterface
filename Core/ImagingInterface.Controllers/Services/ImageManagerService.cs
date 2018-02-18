@@ -7,23 +7,24 @@ namespace ImagingInterface.Controllers.Services
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
-   using ImagingInterface.Plugins;
+   using ImagingInterface.Controllers.EventArguments;
    using Shouldly;
 
    public class ImageManagerService
    {
       private int activeImageIndex;
       private List<ImageService> imageServices;
-      private PluginManagerService pluginManagerService;
+      private ImageProcessingManagerService imageProcessingManagerService;
 
-      public ImageManagerService(PluginManagerService pluginManagerService)
+      public ImageManagerService(ImageProcessingManagerService imageProcessingService)
       {
-         this.pluginManagerService = pluginManagerService;
-
          this.imageServices = new List<ImageService>();
+         this.imageProcessingManagerService = imageProcessingService;
 
          this.ActiveImageIndex = -1;
       }
+
+      ////public event EventHandler<ImageSourceChangedEventArgs> ActiveImageSourceChanged;
 
       public int ActiveImageIndex
       {
@@ -36,14 +37,12 @@ namespace ImagingInterface.Controllers.Services
          {
             if (this.ImageCount == 0)
             {
-               if (value != -1)
-               {
-                  throw new ArgumentOutOfRangeException();
-               }
+               value.ShouldBe(-1);
             }
             else if (value < 0 || value >= this.ImageCount)
             {
-               throw new ArgumentOutOfRangeException();
+               value.ShouldBeGreaterThanOrEqualTo(0);
+               value.ShouldBeLessThan(this.ImageCount);
             }
 
             if (this.activeImageIndex != value)
@@ -52,7 +51,7 @@ namespace ImagingInterface.Controllers.Services
 
                if (this.activeImageIndex >= 0)
                {
-                  this.pluginManagerService.ImageSourceChanged(this.imageServices[this.activeImageIndex].ImageSource);
+                  ////this.ActiveImageSourceChanged?.Invoke(this, new ImageSourceChangedEventArgs(this.imageServices[this.activeImageIndex].ImageSource));
                }
             }
          }
@@ -68,29 +67,44 @@ namespace ImagingInterface.Controllers.Services
 
       public int AddImage(ImageService imageService)
       {
-         this.imageServices.Add(imageService);
+         ////this.imageServices.Add(imageService);
+         this.imageServices.Add(null);
 
          this.ActiveImageIndex = this.ImageCount - 1;
 
          return this.ActiveImageIndex;
       }
 
-      public void RemoveActiveImage()
+      // TODO: Add unit tests for this method as its logic has changed a lot
+      public void RemoveImage(int imageIndex)
       {
-         this.imageServices.RemoveAt(this.ActiveImageIndex);
+         this.ImageCount.ShouldBeGreaterThan(0);
+         imageIndex.ShouldBeGreaterThanOrEqualTo(0);
+         imageIndex.ShouldBeLessThan(this.imageServices.Count);
 
-         if (this.ActiveImageIndex > 0)
+         this.imageServices.RemoveAt(imageIndex);
+
+         if (this.ActiveImageIndex > imageIndex)
          {
+            this.ActiveImageIndex.ShouldBeGreaterThan(0);
+
             this.ActiveImageIndex--;
          }
-         else if (this.ImageCount == 0)
+         else if (this.ActiveImageIndex == imageIndex)
          {
-            this.ActiveImageIndex = -1;
+            if (this.ActiveImageIndex >= this.ImageCount)
+            {
+               this.ActiveImageIndex--;
+            }
          }
 
-         Debug.Assert(this.ImageCount >= 0, "Invalid image count.");
+         if (this.ActiveImageIndex < 0)
+         {
+            this.imageProcessingManagerService.SetActiveImageService(null);
+         }
       }
 
+      // TODO: This method is awful. Is there any way to remove it ???
       public ImageService GetImageServiceFromIndex(int imageIndex)
       {
          imageIndex.ShouldBeInRange(0, this.imageServices.Count - 1);

@@ -35,19 +35,22 @@
          // 
          this.pluginsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
          this.pluginsTabControl.Location = new System.Drawing.Point(0, 0);
+         this.pluginsTabControl.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.pluginsTabControl.Name = "pluginsTabControl";
          this.pluginsTabControl.SelectedIndex = 0;
-         this.pluginsTabControl.Size = new System.Drawing.Size(618, 393);
+         this.pluginsTabControl.Size = new System.Drawing.Size(1648, 907);
          this.pluginsTabControl.TabIndex = 1;
+         this.pluginsTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.PluginsTabControl_Selected);
          this.pluginsTabControl.SizeChanged += new System.EventHandler(this.PluginsTabControl_SizeChanged);
          // 
          // PluginManagerView
          // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+         this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 30F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.Controls.Add(this.pluginsTabControl);
+         this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
          this.Name = "PluginManagerView";
-         this.Size = new System.Drawing.Size(618, 393);
+         this.Size = new System.Drawing.Size(1648, 907);
          this.ResumeLayout(false);
 
          }

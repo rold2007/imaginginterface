@@ -120,6 +120,8 @@ namespace ImagingInterface.Controllers
 
          set
          {
+            this.DisconnectImageServiceEvent();
+
             this.imageService.ImageSource = value;
 
             this.imageService.ImageSource.ImageDataUpdated += this.ImageSource_ImageDataUpdated;
@@ -160,10 +162,10 @@ namespace ImagingInterface.Controllers
          }
       }
 
-      public void AssignToImageManager()
-      {
-         this.imageService.AssignToImageManager();
-      }
+      ////public void AssignToImageManager()
+      ////{
+      ////   this.imageService.AssignToImageManager();
+      ////}
 
       public RgbaColor GetRgbaPixel(Point pixelPosition)
       {
@@ -182,6 +184,7 @@ namespace ImagingInterface.Controllers
 
       public void Close()
       {
+         this.DisconnectImageServiceEvent();
          /*
          if (!this.closed)
             {
@@ -227,6 +230,11 @@ namespace ImagingInterface.Controllers
             }*/
       }
 
+      public void Activate()
+      {
+         this.imageService.Activate();
+      }
+
       /*
       public void AddImageProcessingController(IImageProcessingController imageProcessingController, IRawPluginModel rawPluginModel)
          {
@@ -270,6 +278,14 @@ namespace ImagingInterface.Controllers
       private void ImageSource_ImageDataUpdated(object sender, EventArgs e)
       {
          this.TriggerUpdateDisplay();
+      }
+
+      private void DisconnectImageServiceEvent()
+      {
+         if (this.imageService.ImageSource != null)
+         {
+            this.imageService.ImageSource.ImageDataUpdated -= this.ImageSource_ImageDataUpdated;
+         }
       }
 
       /*

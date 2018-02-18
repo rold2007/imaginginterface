@@ -54,6 +54,10 @@ namespace Video.Views
       {
       }
 
+      public void Activate()
+      {
+      }
+
       private void StartCaptureButton_Click(object sender, EventArgs e)
       {
          this.Start?.Invoke(this, EventArgs.Empty);

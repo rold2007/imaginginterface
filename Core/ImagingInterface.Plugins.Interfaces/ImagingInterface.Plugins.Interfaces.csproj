@@ -81,9 +81,11 @@
     <Compile Include="IFileSourceFactory.cs" />
     <Compile Include="IImageProcessingService.cs" />
     <Compile Include="IImageProcessingManagerService.cs" />
+    <Compile Include="IImageService.cs" />
     <Compile Include="IImageSource.cs" />
     <Compile Include="IImageView.cs" />
     <Compile Include="IImageViewFactory.cs" />
+    <Compile Include="ImageProcessingServiceBase.cs" />
     <Compile Include="IMemorySource.cs" />
     <Compile Include="IPluginView.cs" />
     <Compile Include="IPluginViewFactory.cs" />

@@ -120,18 +120,25 @@ namespace ImagingInterface.Views
          this.UpdatePixelColor(pixelPosition, rgbaColor);
       }
 
-      public void AssignToImageManager()
-      {
-         this.imageController.AssignToImageManager();
-      }
+      ////public void AssignToImageManager()
+      ////{
+      ////   this.imageController.AssignToImageManager();
+      ////}
 
       public void Close()
       {
          this.FreeTextures();
 
+         this.imageController.UpdateDisplay -= this.ImageController_UpdateDisplay;
+
          this.imageController.Close();
 
          this.Dispose();
+      }
+
+      public void Activate()
+      {
+         this.imageController.Activate();
       }
 
       private void ImageController_UpdateDisplay(object sender, EventArgs e)

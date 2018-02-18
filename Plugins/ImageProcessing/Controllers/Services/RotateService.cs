@@ -10,7 +10,7 @@ namespace ImageProcessing.Controllers.Services
    using ImagingInterface.Plugins.Utilities;
    using Shouldly;
 
-   public class RotateService : IImageProcessingService
+   public class RotateService : ImageProcessingServiceBase
    {
       private static readonly string RotateDisplayName = "Rotate"; // ncrunch: no coverage
 
@@ -40,7 +40,7 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
-      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          if (imageData.GetLength(2) == 1)
          {

@@ -244,6 +244,10 @@ namespace ImageProcessing.Views
          }
       }
 
+      public void Activate()
+      {
+      }
+
       private void AddTrackBar_Scroll(object sender, EventArgs e)
       {
          int add = this.addTrackBar.Value;

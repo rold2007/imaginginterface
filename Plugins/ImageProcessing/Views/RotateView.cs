@@ -41,6 +41,10 @@ namespace ImageProcessing.Views
       {
       }
 
+      public void Activate()
+      {
+      }
+
       private void SetRotationAngle(double angle)
       {
          this.rotationAngleTrackBar.Value = Convert.ToInt32(angle * 100);

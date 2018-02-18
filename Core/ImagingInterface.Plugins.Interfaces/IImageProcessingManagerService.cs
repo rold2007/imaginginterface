@@ -6,6 +6,17 @@ namespace ImagingInterface.Plugins
 {
    public interface IImageProcessingManagerService
    {
+      IImageService ActiveImageService
+      {
+         get;
+      }
+
+      IImageProcessingService ActiveImageProcessingService
+      {
+         get;
+         set;
+      }
+
       void AddOneShotImageProcessingToActiveImage(IImageProcessingService imageProcessingController);
    }
 }

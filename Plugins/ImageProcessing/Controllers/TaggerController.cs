@@ -23,7 +23,7 @@ namespace ImageProcessing.Controllers
          this.taggerService = taggerService;
       }
 
-      public event EventHandler<TagPointChangedEventArgs> TagPointChanged;
+      ////public event EventHandler<TagPointChangedEventArgs> TagPointChanged;
 
       public IEnumerable<string> Labels
       {
@@ -31,12 +31,6 @@ namespace ImageProcessing.Controllers
          {
             return this.taggerService.Labels;
          }
-      }
-
-      public string SelectedLabel
-      {
-         get;
-         private set;
       }
 
       public string DisplayName
@@ -49,6 +43,11 @@ namespace ImageProcessing.Controllers
 
       public void Close()
       {
+      }
+
+      public void Activate()
+      {
+         this.taggerService.Activate();
       }
 
       public void AddLabel(string label)
@@ -68,26 +67,21 @@ namespace ImageProcessing.Controllers
 
       public void SelectLabel(string label)
       {
-         if (label != null)
-         {
-            this.taggerService.Labels.ShouldContain(label);
-         }
-
-         this.SelectedLabel = label;
+         this.taggerService.SelectLabel(label);
       }
 
-      public void SelectPixel(Point pixelPosition)
-      {
-         if (this.SelectedLabel != null)
-         {
-            this.taggerService.SelectPixel(this.SelectedLabel, pixelPosition);
-         }
-      }
+      ////public void SelectPixel(Point pixelPosition)
+      ////{
+      ////   if (this.SelectedLabel != null)
+      ////   {
+      ////      this.taggerService.SelectPixel(this.SelectedLabel, pixelPosition);
+      ////   }
+      ////}
 
-      public void ActiveImageSourceChanged(IImageSource imageSource)
-      {
-         this.taggerService.ActiveImageSourceChanged(imageSource);
-      }
+      ////public void ActiveImageSourceChanged(IImageSource imageSource)
+      ////{
+      ////   this.taggerService.ActiveImageSourceChanged(imageSource);
+      ////}
 
       public void RemoveLabels(IEnumerable<string> labels)
       {
@@ -205,17 +199,19 @@ namespace ImageProcessing.Controllers
 
       private void TriggerTagPointChanged(string label, Point tagPoint, bool added)
       {
-         if (this.TagPointChanged != null)
-         {
-            Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
-            List<Point> points = new List<Point>
-            {
-               tagPoint
-            };
-            tagPoints.Add(label, points);
+         System.Diagnostics.Debug.Fail("Not implemented.");
 
-            this.TagPointChanged(this, new TagPointChangedEventArgs(/*this.registeredImageController, */label, tagPoint, added));
-         }
+         ////if (this.TagPointChanged != null)
+         ////{
+         ////   Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
+         ////   List<Point> points = new List<Point>
+         ////   {
+         ////      tagPoint
+         ////   };
+         ////   tagPoints.Add(label, points);
+
+         ////   this.TagPointChanged(this, new TagPointChangedEventArgs(/*this.registeredImageController, */label, tagPoint, added));
+         ////}
       }
    }
 }
