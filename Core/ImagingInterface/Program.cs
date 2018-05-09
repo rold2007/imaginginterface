@@ -138,7 +138,7 @@ namespace ImagingInterface
          container.Register<AboutBoxView>();
          container.Register<ImageManagerView>();
          container.Register<ImageView>();
-         container.RegisterSingleton<Func<IImageView>>(() => { return container.GetInstance<ImageView>(); });
+         container.RegisterInstance<Func<IImageView>>(() => { return container.GetInstance<ImageView>(); });
          container.Register<MainWindow>();
          container.Register<PluginManagerView>();
 
