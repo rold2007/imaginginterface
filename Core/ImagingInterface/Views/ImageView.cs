@@ -223,7 +223,7 @@ namespace ImagingInterface.Views
 
          GL.Scale(this.imageController.ZoomLevel, this.imageController.ZoomLevel, 1.0);
 
-         GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
          // The alpha can be toggled to make the overlay more/less transparent
          GL.Color4(0.0, 0.0, 0.0, 0.75);
