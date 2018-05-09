@@ -88,20 +88,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CUDAfy.NET.1.29.5576.13786\lib\net40\Cudafy.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.UI, Version=3.3.0.2824, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EMGU.CV.3.3.0.2824\lib\net35\Emgu.CV.UI.dll</HintPath>
+    <Reference Include="Emgu.CV.UI, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.World, Version=3.3.0.2824, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EMGU.CV.3.3.0.2824\lib\net35\Emgu.CV.World.dll</HintPath>
+    <Reference Include="Emgu.CV.World, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.World.dll</HintPath>
     </Reference>
     <Reference Include="ImageProcessor, Version=2.6.1.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ImageProcessor.2.6.1.19\lib\net452\ImageProcessor.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenTK.3.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenTK.GLControl.1.1.2349.61993\lib\NET40\OpenTK.GLControl.dll</HintPath>
+    <Reference Include="OpenTK.GLControl, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenTK.GLControl.3.0.0\lib\net20\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="Shouldly, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Shouldly.3.0.0\lib\net451\Shouldly.dll</HintPath>
@@ -249,11 +249,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Accord.3.8.0\build\Accord.targets'))" />
-    <Error Condition="!Exists('..\..\packages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets'))" />
+    <Error Condition="!Exists('..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets'))" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\..\packages\Accord.3.8.0\build\Accord.targets')" />
-  <Import Project="..\..\packages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets" Condition="Exists('..\..\packages\EMGU.CV.3.3.0.2824\build\Emgu.CV.targets')" />
+  <Import Project="..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets" Condition="Exists('..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
