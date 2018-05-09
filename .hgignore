@@ -6,7 +6,6 @@ StyleCop.Cache
 *.opensdf
 *.user
 *.sdf
-_NCrunch_ImagingInterface/ImagingInterface.crunchsolution.cache
-_NCrunch_ImagingInterface/StoredText/*
 packages/*
 .vs/*
+_NCrunch_ImagingInterface/*
