@@ -10,3 +10,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "No documentation for now.", Scope = "namespace", Target = "~N:ImageProcessing.Controllers")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "No documentation for now.", Scope = "namespace", Target = "~N:ImageProcessing.Controllers.EventArguments")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "No documentation for now.", Scope = "namespace", Target = "~N:ImageProcessing.Controllers.Services")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:Prefix local calls with this", Justification = "Conflicts with IDE0003 and too verbose.")]

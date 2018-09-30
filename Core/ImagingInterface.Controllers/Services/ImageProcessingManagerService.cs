@@ -37,6 +37,11 @@ namespace ImagingInterface.Controllers.Services
          {
             return this.activeImageService;
          }
+
+         set
+         {
+            this.activeImageService = value as ImageService;
+         }
       }
 
       public IImageProcessingService ActiveImageProcessingService
@@ -100,11 +105,6 @@ namespace ImagingInterface.Controllers.Services
 
             this.ActiveImageProcessingService.SelectPixel(imageService.ImageSource, mouseClickPixel);
          }
-      }
-
-      public void SetActiveImageService(ImageService imageService)
-      {
-         this.activeImageService = imageService;
       }
    }
 }

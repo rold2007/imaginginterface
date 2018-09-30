@@ -9,6 +9,7 @@ namespace ImagingInterface.Plugins
       IImageService ActiveImageService
       {
          get;
+         set;
       }
 
       IImageProcessingService ActiveImageProcessingService

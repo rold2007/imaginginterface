@@ -162,11 +162,6 @@ namespace ImagingInterface.Controllers
          }
       }
 
-      ////public void AssignToImageManager()
-      ////{
-      ////   this.imageService.AssignToImageManager();
-      ////}
-
       public RgbaColor GetRgbaPixel(Point pixelPosition)
       {
          return this.imageService.GetRgbaPixel(pixelPosition);

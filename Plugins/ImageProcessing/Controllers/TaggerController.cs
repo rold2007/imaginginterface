@@ -50,14 +50,14 @@ namespace ImageProcessing.Controllers
          this.taggerService.Activate();
       }
 
-      public void AddLabel(string label)
+      public bool AddLabel(string label)
       {
-         this.AddLabels(new[] { label });
+         return AddLabels(new[] { label }) == 1;
       }
 
-      public void AddLabels(IEnumerable<string> labels)
+      public int AddLabels(IEnumerable<string> labels)
       {
-         this.taggerService.AddLabels(labels);
+         return taggerService.AddLabels(labels);
       }
 
       public void RemoveLabel(string label)
@@ -88,14 +88,19 @@ namespace ImageProcessing.Controllers
          this.taggerService.RemoveLabels(labels);
       }
 
-      public void AddPoint(string label, Point newPoint)
+      public bool AddPoint(string label, Point newPoint)
       {
-         this.taggerService.AddPoint(label, newPoint);
+         return taggerService.AddPoint(label, newPoint);
       }
 
-      public void RemovePoint(string label, Point point)
+      public bool RemovePoint(string label, Point point)
       {
-         this.taggerService.RemovePoint(label, point);
+         return taggerService.RemovePoint(label, point);
+      }
+
+      public void RemoveAllPoints()
+      {
+         taggerService.RemoveAllPoints();
       }
 
       public List<Point> GetPoints(string label)
@@ -150,6 +155,7 @@ namespace ImageProcessing.Controllers
 
       private void ExtractPoints()
       {
+         // TODO: Need to review the use of registeredImageController...
          Debug.Fail("Need to review the use of registeredImageController. The plugins shoudn't depend on ImagingInterface.Controllers, only on ImagingInterface.Plugins.Interface");
 
          ////this.tagger.LoadPoints(this.registeredImageController.DisplayName);
@@ -199,6 +205,7 @@ namespace ImageProcessing.Controllers
 
       private void TriggerTagPointChanged(string label, Point tagPoint, bool added)
       {
+         // TODO
          System.Diagnostics.Debug.Fail("Not implemented.");
 
          ////if (this.TagPointChanged != null)

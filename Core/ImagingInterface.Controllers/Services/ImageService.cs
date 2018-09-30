@@ -99,7 +99,7 @@ namespace ImagingInterface.Controllers.Services
 
       public void Activate()
       {
-         this.imageProcessingManagerService.SetActiveImageService(this);
+         this.imageProcessingManagerService.ActiveImageService = this;
       }
 
       ////public void AssignToImageManager()
