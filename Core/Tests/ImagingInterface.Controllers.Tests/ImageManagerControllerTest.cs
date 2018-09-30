@@ -19,13 +19,13 @@ namespace ImagingInterface.Controllers.Tests
       [Fact]
       public void Constructor()
       {
-         ImageManagerController imageViewManagerController = this.Container.GetInstance<ImageManagerController>();
+         ////ImageManagerController imageViewManagerController = this.Container.GetInstance<ImageManagerController>();
       }
 
       [Fact]
       public void Constructor2()
       {
-         ImageManagerController imageViewManagerController = this.Container.GetInstance<ImageManagerController>();
+         ////ImageManagerController imageViewManagerController = this.Container.GetInstance<ImageManagerController>();
 
          // IImageSource imageSource1 = this.ServiceLocator.GetInstance<IImageSource>();
          // IImageSource imageSource2 = this.ServiceLocator.GetInstance<IImageSource>();

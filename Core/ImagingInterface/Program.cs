@@ -134,7 +134,7 @@ namespace ImagingInterface
          container.RegisterSingleton<IApplicationLogic, ApplicationLogic>();
          container.RegisterSingleton<IImageViewFactory, ImageViewFactory>();
          container.RegisterSingleton<IPluginViewFactory, PluginViewFactory>();
-         container.RegisterSingleton<Func<IImageView>>(() => { return container.GetInstance<ImageView>(); });
+         container.RegisterInstance<Func<IImageView>>(() => { return container.GetInstance<ImageView>(); });
 
          // Views
          container.Register<AboutBoxView>();
@@ -189,7 +189,7 @@ namespace ImagingInterface
 
          container.RegisterPackages(pluginAssemblies);
 
-         container.RegisterCollection<IPluginView>(pluginAssemblies);
+         container.Collection.Register<IPluginView>(pluginAssemblies);
 
          SuppressDiagnosticWarning();
 

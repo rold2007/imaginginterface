@@ -100,7 +100,7 @@ namespace ImagingInterface.Controllers.Services
 
          if (this.ActiveImageIndex < 0)
          {
-            this.imageProcessingManagerService.SetActiveImageService(null);
+            this.imageProcessingManagerService.ActiveImageService = null;
          }
       }
 

@@ -12,14 +12,11 @@ namespace ImageProcessing.ObjectDetection
 
    public class Tagger
    {
-      ////private string tempFilename;
-      ////private bool dataPointsModified;
       private Dictionary<string, List<Point>> dataPoints;
 
       public Tagger()
       {
          this.dataPoints = new Dictionary<string, List<Point>>();
-         this.SavePath = Path.GetTempPath();
       }
 
       public IReadOnlyDictionary<string, List<Point>> DataPoints
@@ -30,10 +27,12 @@ namespace ImageProcessing.ObjectDetection
          }
       }
 
-      private string SavePath
+      public IReadOnlyCollection<string> Labels
       {
-         get;
-         set;
+         get
+         {
+            return this.dataPoints.Keys;
+         }
       }
 
       public bool AddPoint(string label, Point newPoint)
@@ -45,8 +44,6 @@ namespace ImageProcessing.ObjectDetection
             if (!points.Contains(newPoint))
             {
                points.Add(newPoint);
-
-               ////this.dataPointsModified = true;
 
                return true;
             }
@@ -96,7 +93,6 @@ namespace ImageProcessing.ObjectDetection
          }
       }
 
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Too complicated to solve.")]
       public string SavePoints()
       {
          using (MemoryStream stream = new MemoryStream())
@@ -122,43 +118,10 @@ namespace ImageProcessing.ObjectDetection
 
             return text;
          }
-
-         /*
-         if (this.dataPointsModified)
-         {
-            string directory = Path.GetDirectoryName(this.tempFilename);
-
-            // ncrunch: no coverage start
-            if (!Directory.Exists(directory))
-            {
-               Directory.CreateDirectory(directory);
-            }
-
-            //// ncrunch: no coverage end
-
-            using (StreamWriter streamWriter = new StreamWriter(this.tempFilename, false))
-            {
-               foreach (string label in this.dataPoints.Keys)
-               {
-                  foreach (Point point in this.dataPoints[label])
-                  {
-                     streamWriter.WriteLine(string.Format("{0};{1};{2}", label, point.X, point.Y));
-                  }
-               }
-            }
-
-            this.dataPointsModified = false;
-         }
-         */
       }
 
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Too complicated to solve.")]
       public void LoadPoints(string dataPoints)
       {
-         ////string filename = Path.GetFileNameWithoutExtension(imagePath);
-
-         ////this.tempFilename = this.SavePath + @"\Tagger\" + filename + ".imagedata";
-
          this.dataPoints.Clear();
 
          using (MemoryStream stream = new MemoryStream())
@@ -175,28 +138,6 @@ namespace ImageProcessing.ObjectDetection
                this.AddPoint(label, readPoint);
             }
          }
-
-         /*
-         if (File.Exists(this.tempFilename))
-         {
-            using (StreamReader streamReader = new StreamReader(this.tempFilename))
-            {
-               while (!streamReader.EndOfStream)
-               {
-                  string line = streamReader.ReadLine();
-                  string[] lineSplits = line.Split(';');
-                  string label = lineSplits[0];
-                  Point readPoint = new Point(Convert.ToInt32(lineSplits[1]), Convert.ToInt32(lineSplits[2]));
-
-                  this.AddLabel(label);
-
-                  this.AddPoint(label, readPoint);
-               }
-            }
-         }
-         */
-
-         ////this.dataPointsModified = false;
       }
 
       public void AddLabel(string label)
