@@ -124,4 +124,5 @@ namespace ImageProcessing.Controllers.Tests
          tagger.Labels.ShouldBeEmpty();
          tagger.DataPoints.ShouldBeEmpty();
       }
+   }
 }
