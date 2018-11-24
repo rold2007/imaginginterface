@@ -77,8 +77,9 @@ namespace ImageProcessing.Controllers
          ////this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
       }
 
-      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(IImageService imageService, byte[] overlayData)
       {
+         byte[,,] imageData = imageService.ImageSource.OriginalImageData;
          Dictionary<string, List<Point>> predictions = this.objectDetector.Test(imageData);
 
          int imageWidth = imageData.GetLength(1);

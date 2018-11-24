@@ -50,14 +50,14 @@ namespace ImageProcessing.Controllers
          this.taggerService.Activate();
       }
 
-      public bool AddLabel(string label)
+      public void AddLabel(string label)
       {
-         return AddLabels(new[] { label }) == 1;
+         AddLabels(new[] { label });
       }
 
-      public int AddLabels(IEnumerable<string> labels)
+      public void AddLabels(IEnumerable<string> labels)
       {
-         return taggerService.AddLabels(labels);
+         taggerService.AddLabels(labels);
       }
 
       public void RemoveLabel(string label)
@@ -103,7 +103,7 @@ namespace ImageProcessing.Controllers
          taggerService.RemoveAllPoints();
       }
 
-      public List<Point> GetPoints(string label)
+      public IList<Point> GetPoints(string label)
       {
          return this.taggerService.GetPoints(label);
       }

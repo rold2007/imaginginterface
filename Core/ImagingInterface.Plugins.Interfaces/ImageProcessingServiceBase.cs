@@ -12,15 +12,15 @@ namespace ImagingInterface.Plugins
       {
       }
 
-      public virtual void CloseImage(IImageSource imageSource)
+      public virtual void CloseImage(IImageService imageService)
       {
       }
 
-      public virtual void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public virtual void ProcessImageData(IImageService imageService, byte[] overlayData)
       {
       }
 
-      public virtual void SelectPixel(IImageSource imageSource, Point mouseClickPixel)
+      public virtual void SelectPixel(Point mouseClickPixel)
       {
       }
    }

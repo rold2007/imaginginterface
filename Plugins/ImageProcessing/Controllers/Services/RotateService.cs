@@ -40,8 +40,10 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
-      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(IImageService imageService, byte[] overlayData)
       {
+         byte[,,] imageData = imageService.ImageSource.OriginalImageData;
+
          if (imageData.GetLength(2) == 1)
          {
             using (Image<Gray, byte> convertedImage = new Image<Gray, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Gray(0.0)))

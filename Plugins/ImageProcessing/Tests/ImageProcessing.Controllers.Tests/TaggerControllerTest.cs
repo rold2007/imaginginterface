@@ -73,12 +73,15 @@ namespace ImageProcessing.Controllers.Tests
 
          taggerController.Labels.Count().ShouldBe(0);
 
-         Assert.True(taggerController.AddLabel(LabelName1));
+         taggerController.AddLabel(LabelName1);
 
          taggerController.Labels.Count().ShouldBe(1);
          taggerController.Labels.First().ShouldBe(LabelName1);
 
-         Assert.False(taggerController.AddLabel(DuplicateLabelName));
+         taggerController.AddLabel(DuplicateLabelName);
+
+         taggerController.Labels.Count().ShouldBe(1);
+         taggerController.Labels.First().ShouldBe(LabelName1);
       }
 
       [Fact]

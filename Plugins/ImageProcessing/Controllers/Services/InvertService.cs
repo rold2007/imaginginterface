@@ -40,10 +40,12 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
-      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(IImageService imageService, byte[] overlayData)
       {
          if (this.ApplyInvert)
          {
+            byte[,,] imageData = imageService.ImageSource.OriginalImageData;
+
             if (imageData.GetLength(2) == 1)
             {
                using (Image<Gray, byte> invertedImage = new Image<Gray, byte>(imageData))

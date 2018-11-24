@@ -73,12 +73,9 @@ namespace ImagingInterface.Controllers.Services
          {
             ImageService imageService = this.activeImageService;
 
-            byte[,,] clonedImageData = imageService.ImageSource.OriginalImageData.Clone() as byte[,,];
-            byte[] clonedOverlayData = imageService.OverlayImageData.Clone() as byte[];
+            imageProcessingService.ProcessImageData(imageService, imageService.OverlayImageData);
 
-            imageProcessingService.ProcessImageData(clonedImageData, clonedOverlayData);
-
-            imageService.UpdateImageData(clonedImageData, clonedOverlayData);
+            imageService.UpdateImageData(imageService.ImageSource.OriginalImageData, imageService.OverlayImageData);
          }
 
          ////int activeImageIndex = this.imageManagerService.ActiveImageIndex;
@@ -96,14 +93,14 @@ namespace ImagingInterface.Controllers.Services
          ////}
       }
 
-      public void SelectPixel(ImageService imageService, Point mouseClickPixel)
+      public void SelectPixel(Point mouseClickPixel)
       {
          if (this.ActiveImageProcessingService != null)
          ////if (this.activePluginManagerService >= 0)
          {
             ////this.activePluginManagerService.ShouldBeLessThan(this.pluginManagerServices.Count);
 
-            this.ActiveImageProcessingService.SelectPixel(imageService.ImageSource, mouseClickPixel);
+            this.ActiveImageProcessingService.SelectPixel(mouseClickPixel);
          }
       }
    }

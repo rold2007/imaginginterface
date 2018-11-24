@@ -99,13 +99,14 @@ namespace ImageProcessing.Controllers
             }
          }
 
-      public override void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public override void ProcessImageData(IImageService imageService, byte[] overlayData)
          {
          CudafyModel cudafyModel = this.cudafyModel;
 
          if (cudafyModel.Add != 0 && !string.IsNullOrEmpty(cudafyModel.GPUName))
             {
             Stopwatch totalTime = Stopwatch.StartNew();
+            byte[,,] imageData = imageService.ImageSource.OriginalImageData;
             int allocatedX = imageData.GetLength(1);
             int allocatedY = imageData.GetLength(0);
             int allocatedZ = imageData.GetLength(2);

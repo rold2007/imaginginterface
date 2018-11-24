@@ -8,10 +8,10 @@ namespace ImagingInterface.Plugins
 
    public interface IImageProcessingService
    {
-      void CloseImage(IImageSource imageSource);
+      void CloseImage(IImageService imageService);
 
-      void ProcessImageData(byte[,,] imageData, byte[] overlayData);
+      void ProcessImageData(IImageService imageService, byte[] overlayData);
 
-      void SelectPixel(IImageSource imageSource, Point mouseClickPixel);
+      void SelectPixel(Point mouseClickPixel);
    }
 }
