@@ -60,8 +60,6 @@ namespace ImageProcessing.ObjectDetection
 
             points.Add(newPoint);
 
-            ////this.dataPointsModified = true;
-
             return true;
          }
       }
@@ -75,8 +73,6 @@ namespace ImageProcessing.ObjectDetection
             if (points.Contains(point))
             {
                points.Remove(point);
-
-               ////this.dataPointsModified = true;
 
                return true;
             }

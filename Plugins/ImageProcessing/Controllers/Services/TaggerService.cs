@@ -7,6 +7,7 @@ namespace ImageProcessing.Controllers.Services
    using System;
    using System.Collections.Generic;
    using System.Drawing;
+   using System.Linq;
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.Utilities;
@@ -16,16 +17,13 @@ namespace ImageProcessing.Controllers.Services
    {
       private static readonly string TaggerDisplayName = "Tagger";
 
-      private SortedSet<string> labels;
       private SortedList<string, Color> labelColors;
 
       public TaggerService(IImageProcessingManagerService imageProcessingManagerService)
       {
-         Taggers = new Dictionary<IImageSource, Tagger>();
+         Taggers = new Dictionary<IImageService, Tagger>();
          ImageProcessingManagerService = imageProcessingManagerService;
          labelColors = new SortedList<string, Color>();
-         SavedDataPoints = new Dictionary<IImageSource, string>();
-         labels = new SortedSet<string>();
       }
 
       public string DisplayName
@@ -40,7 +38,7 @@ namespace ImageProcessing.Controllers.Services
       {
          get
          {
-            return labels;
+            return CurrentImageServiceTagger.Labels;
          }
       }
 
@@ -58,7 +56,7 @@ namespace ImageProcessing.Controllers.Services
          private set;
       }
 
-      private Dictionary<IImageSource, Tagger> Taggers
+      private Dictionary<IImageService, Tagger> Taggers
       {
          get;
          set;
@@ -70,43 +68,28 @@ namespace ImageProcessing.Controllers.Services
          set;
       }
 
-      private Dictionary<IImageSource, string> SavedDataPoints
-      {
-         get;
-         set;
-      }
-
-      private IImageSource ActiveImageSource
+      private IImageService ActiveImageService
       {
          get
          {
-            IImageService imageService = ImageProcessingManagerService.ActiveImageService;
-
-            if (imageService == null)
-            {
-               return null;
-            }
-            else
-            {
-               return imageService.ImageSource;
-            }
+            return ImageProcessingManagerService.ActiveImageService;
          }
       }
 
-      private Tagger CurrentImageSourceTagger
+      private Tagger CurrentImageServiceTagger
       {
          get
          {
-            IImageSource activeImageSource = ActiveImageSource;
+            IImageService activeImageService = ActiveImageService;
 
-            if (activeImageSource != null)
+            if (activeImageService != null)
             {
-               if (!Taggers.ContainsKey(activeImageSource))
+               if (!Taggers.ContainsKey(activeImageService))
                {
-                  Taggers.Add(activeImageSource, new Tagger());
+                  Taggers.Add(activeImageService, new Tagger());
                }
 
-               Tagger currentImageSourceTagger = Taggers[activeImageSource];
+               Tagger currentImageSourceTagger = Taggers[activeImageService];
 
                currentImageSourceTagger.ShouldNotBeNull();
 
@@ -119,9 +102,9 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
-      public void CloseImage(IImageSource imageSource)
+      public void CloseImage(IImageService imageService)
       {
-         Taggers.Remove(imageSource);
+         Taggers.Remove(imageService);
       }
 
       public void Activate()
@@ -129,28 +112,20 @@ namespace ImageProcessing.Controllers.Services
          ImageProcessingManagerService.ActiveImageProcessingService = this;
       }
 
-      public int AddLabels(IEnumerable<string> addedLabels)
+      public void AddLabels(IEnumerable<string> labels)
       {
-         int addedCount = 0;
-
-         foreach (string label in addedLabels)
-         {
-            if (labels.Add(label))
-            {
-               addedCount++;
-            }
-         }
+         CurrentImageServiceTagger.AddLabels(labels);
 
          this.AssignColors(labels);
-
-         return addedCount;
       }
 
       public void RemoveLabels(IEnumerable<string> labels)
       {
-         foreach (string label in labels)
+         CurrentImageServiceTagger.RemoveLabels(labels);
+
+         if (labels.Contains(SelectedLabel))
          {
-            this.labels.Remove(label);
+            SelectLabel(null);
          }
       }
 
@@ -158,6 +133,7 @@ namespace ImageProcessing.Controllers.Services
       {
          if (label != null)
          {
+            this.Labels.ShouldNotBeNull();
             this.Labels.ShouldContain(label);
          }
 
@@ -166,50 +142,35 @@ namespace ImageProcessing.Controllers.Services
 
       public bool AddPoint(string label, Point newPoint)
       {
-         return CurrentImageSourceTagger.AddPoint(label, newPoint);
+         return CurrentImageServiceTagger.AddPoint(label, newPoint);
       }
 
       public bool RemovePoint(string label, Point point)
       {
-         return CurrentImageSourceTagger.RemovePoint(label, point);
+         return CurrentImageServiceTagger.RemovePoint(label, point);
       }
 
       public void RemoveAllPoints()
       {
-         CurrentImageSourceTagger.RemoveAllPoints();
+         CurrentImageServiceTagger.RemoveAllPoints();
       }
 
-      public List<Point> GetPoints(string label)
+      public IList<Point> GetPoints(string label)
       {
-         if (CurrentImageSourceTagger != null)
-         {
-            IReadOnlyDictionary<string, List<Point>> dataPoints = CurrentImageSourceTagger.DataPoints;
-            List<Point> points;
+         IReadOnlyDictionary<string, List<Point>> dataPoints = CurrentImageServiceTagger.DataPoints;
 
-            dataPoints.TryGetValue(label, out points);
-
-            if (points == null)
-            {
-               return new List<Point>();
-            }
-            else
-            {
-               return points;
-            }
-         }
-         else
-         {
-            return new List<Point>();
-         }
+         return dataPoints[label];
       }
 
-      public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
+      public void ProcessImageData(IImageService imageService, byte[] overlayData)
       {
+         byte[,,] imageData = imageService.ImageSource.OriginalImageData;
+
          int imageWidth = imageData.GetLength(1);
          int imageHeight = imageData.GetLength(0);
          int imageSize = imageWidth * imageHeight;
 
-         foreach (string tag in this.CurrentImageSourceTagger.DataPoints.Keys)
+         foreach (string tag in this.CurrentImageServiceTagger.DataPoints.Keys)
          {
             Color color = this.LabelColors[tag];
 
@@ -217,28 +178,32 @@ namespace ImageProcessing.Controllers.Services
             byte green = Convert.ToByte(color.G);
             byte blue = Convert.ToByte(color.B);
 
-            foreach (Point point in this.CurrentImageSourceTagger.DataPoints[tag])
+            foreach (Point point in this.CurrentImageServiceTagger.DataPoints[tag])
             {
                int pixelOffset = (point.Y * imageWidth * 4) + (point.X * 4);
 
-               overlayData[pixelOffset] = red;
-               overlayData[pixelOffset + 1] = green;
-               overlayData[pixelOffset + 2] = blue;
-               overlayData[pixelOffset + 3] = 255;
+               if (pixelOffset < overlayData.Count())
+               {
+                  overlayData[pixelOffset] = red;
+                  overlayData[pixelOffset + 1] = green;
+                  overlayData[pixelOffset + 2] = blue;
+                  overlayData[pixelOffset + 3] = 255;
+               }
             }
          }
       }
 
-      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      public void SelectPixel(Point pixelPosition)
       {
          if (this.SelectedLabel != null)
          {
-            this.CurrentImageSourceTagger.AddPoint(this.SelectedLabel, pixelPosition);
+            this.CurrentImageServiceTagger.AddPoint(this.SelectedLabel, pixelPosition);
 
             ImageProcessingManagerService.AddOneShotImageProcessingToActiveImage(this);
          }
       }
 
+      /*
       public void ActiveImageSourceChanged(IImageSource imageSource)
       {
          // TODO: Currently working on this
@@ -278,6 +243,7 @@ namespace ImageProcessing.Controllers.Services
             this.CurrentImageSourceTagger.RemoveAllPoints();
          }
       }
+      //*/
 
       private void AssignColors(IEnumerable<string> labels)
       {

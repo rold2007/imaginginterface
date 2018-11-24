@@ -137,7 +137,7 @@ namespace ImagingInterface.Controllers.Services
 
       public void SelectPixel(Point mouseClickPixel)
       {
-         this.imageProcessingManagerService.SelectPixel(this, mouseClickPixel);
+         this.imageProcessingManagerService.SelectPixel(mouseClickPixel);
 
          ////this.pluginManagerService.SelectPixel(this.imageSource, mouseClickPixel);
       }
