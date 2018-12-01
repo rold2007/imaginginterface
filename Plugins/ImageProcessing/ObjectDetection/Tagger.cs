@@ -131,26 +131,8 @@ namespace ImageProcessing.ObjectDetection
                string label = csv.GetField<string>(0);
                Point readPoint = new Point(csv.GetField<int>(1), csv.GetField<int>(2));
 
-               this.AddLabel(label);
-
                this.AddPoint(label, readPoint);
             }
-         }
-      }
-
-      public void AddLabel(string label)
-      {
-         if (!this.dataPoints.ContainsKey(label))
-         {
-            this.dataPoints.Add(label, new List<Point>());
-         }
-      }
-
-      public void AddLabels(IEnumerable<string> labels)
-      {
-         foreach (string label in labels)
-         {
-            this.AddLabel(label);
          }
       }
 

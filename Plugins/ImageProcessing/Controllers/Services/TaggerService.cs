@@ -18,12 +18,14 @@ namespace ImageProcessing.Controllers.Services
       private static readonly string TaggerDisplayName = "Tagger";
 
       private SortedList<string, Color> labelColors;
+      private HashSet<string> labels;
 
       public TaggerService(IImageProcessingManagerService imageProcessingManagerService)
       {
          Taggers = new Dictionary<IImageService, Tagger>();
          ImageProcessingManagerService = imageProcessingManagerService;
          labelColors = new SortedList<string, Color>();
+         labels = new HashSet<string>();
       }
 
       public string DisplayName
@@ -38,7 +40,7 @@ namespace ImageProcessing.Controllers.Services
       {
          get
          {
-            return CurrentImageServiceTagger.Labels;
+            return this.labels;
          }
       }
 
@@ -114,18 +116,26 @@ namespace ImageProcessing.Controllers.Services
 
       public void AddLabels(IEnumerable<string> labels)
       {
-         CurrentImageServiceTagger.AddLabels(labels);
+         this.labels.UnionWith(labels);
 
          this.AssignColors(labels);
       }
 
       public void RemoveLabels(IEnumerable<string> labels)
       {
-         CurrentImageServiceTagger.RemoveLabels(labels);
+         foreach (KeyValuePair<IImageService, Tagger> tagger in this.Taggers)
+         {
+            tagger.Value.RemoveLabels(labels);
+         }
 
          if (labels.Contains(SelectedLabel))
          {
             SelectLabel(null);
+         }
+
+         foreach (string label in labels)
+         {
+            this.labels.Remove(label);
          }
       }
 
@@ -157,9 +167,19 @@ namespace ImageProcessing.Controllers.Services
 
       public IList<Point> GetPoints(string label)
       {
-         IReadOnlyDictionary<string, List<Point>> dataPoints = CurrentImageServiceTagger.DataPoints;
+         Tagger currentImageServiceTagger = this.CurrentImageServiceTagger;
 
-         return dataPoints[label];
+         if (currentImageServiceTagger != null)
+         {
+            IReadOnlyDictionary<string, List<Point>> dataPoints = currentImageServiceTagger.DataPoints;
+
+            if (dataPoints.ContainsKey(label))
+            {
+               return dataPoints[label];
+            }
+         }
+
+         return new List<Point>();
       }
 
       public void ProcessImageData(IImageService imageService, byte[] overlayData)
