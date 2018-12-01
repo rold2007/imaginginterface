@@ -63,8 +63,8 @@ namespace ImageProcessing.Controllers.Tests
       {
          TaggerService taggerService = this.Container.GetInstance<TaggerService>();
 
-         Should.Throw<System.NullReferenceException>(() => { taggerService.AddLabels(labels); });
-         Should.Throw<System.NullReferenceException>(() => { taggerService.RemoveLabels(labels); });
+         taggerService.AddLabels(labels);
+         taggerService.RemoveLabels(labels);
 
          this.Container.GetInstance<IImageProcessingManagerService>().ActiveImageService = this.Container.GetInstance<IImageService>();
 
@@ -112,9 +112,9 @@ namespace ImageProcessing.Controllers.Tests
 
          taggerService.SelectedLabel.ShouldBe(null);
 
-         Should.Throw<System.NullReferenceException>(() => { taggerService.SelectLabel(labels[0]); });
+         Should.Throw<Shouldly.ShouldAssertException>(() => { taggerService.SelectLabel(labels[0]); });
 
-         Should.Throw<System.NullReferenceException>(() => { taggerService.AddLabels(new[] { labels[0] }); });
+         taggerService.AddLabels(new[] { labels[0] });
 
          this.Container.GetInstance<IImageProcessingManagerService>().ActiveImageService = this.Container.GetInstance<IImageService>();
 
@@ -197,7 +197,7 @@ namespace ImageProcessing.Controllers.Tests
 
          taggerService.CloseImage(imageService);
 
-         taggerService.Labels.ShouldBeEmpty();
+         taggerService.Labels.ShouldHaveSingleItem(labels[2]);
       }
    }
 }

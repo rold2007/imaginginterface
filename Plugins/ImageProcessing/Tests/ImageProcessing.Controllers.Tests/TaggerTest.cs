@@ -103,8 +103,8 @@ namespace ImageProcessing.Controllers.Tests
 
          tagger.DataPoints.ShouldBeEmpty();
 
-         tagger.AddLabel(labels[0]);
-         tagger.AddLabel(labels[1]);
+         tagger.AddPoint(labels[0], points[0]);
+         tagger.AddPoint(labels[1], points[1]);
 
          tagger.RemoveLabel(labels[1]);
          tagger.Labels.ShouldContain(labels[0]);
@@ -112,13 +112,15 @@ namespace ImageProcessing.Controllers.Tests
          tagger.Labels.ShouldBeEmpty();
          tagger.DataPoints.ShouldBeEmpty();
 
-         tagger.AddLabels(labels);
+         tagger.AddPoint(labels[0], points[0]);
+         tagger.AddPoint(labels[1], points[1]);
+         tagger.AddPoint(labels[2], points[2]);
+         tagger.AddPoint(labels[3], points[1]);
+         tagger.AddPoint(labels[4], points[0]);
+
          tagger.Labels.ShouldContain(labels[0]);
          tagger.Labels.ShouldContain(labels[1]);
          tagger.Labels.ShouldContain(labels[2]);
-         tagger.DataPoints[labels[0]].ShouldBeEmpty();
-         tagger.DataPoints[labels[1]].ShouldBeEmpty();
-         tagger.DataPoints[labels[2]].ShouldBeEmpty();
 
          tagger.RemoveLabels(labels);
          tagger.Labels.ShouldBeEmpty();
