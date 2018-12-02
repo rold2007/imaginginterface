@@ -5,6 +5,7 @@
 namespace ImageProcessing.Controllers.Tests
 {
    using System;
+   using System.Collections.Generic;
    using System.Drawing;
    using System.Linq;
    using ImageProcessing.Controllers;
@@ -20,6 +21,14 @@ namespace ImageProcessing.Controllers.Tests
       private const string LabelName1 = "DummyLabel1";
       private const string LabelName2 = "DummyLabel2";
       private const string DuplicateLabelName = "DummyLabel1";
+
+      private readonly List<string> labels = new List<string> { "DummyLabel1", "DummyLabel2", "DummyLabel3", "DummyLabel4", "DummyLabel5" };
+      private readonly List<Point> points = new List<Point>
+      {
+            new Point(3, 4),
+            new Point(5, 6),
+            new Point(7, 8)
+      };
 
       public TaggerControllerTest()
       {
@@ -203,6 +212,14 @@ namespace ImageProcessing.Controllers.Tests
       }
 
       [Fact]
+      public void Activate()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+
+         taggerController.Activate();
+      }
+
+      [Fact]
       public void Close()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
@@ -231,41 +248,25 @@ namespace ImageProcessing.Controllers.Tests
          ////taggerController.SelectedLabel.ShouldBeNull();
       }
 
-      /*
       [Fact]
-      public void ActiveImageSourceChanged()
+      public void TagColor()
       {
-         ImageService imageService1 = Container.GetInstance<ImageService>();
-         ImageService imageService2 = Container.GetInstance<ImageService>();
-         TaggerController taggerController = Container.GetInstance<TaggerController>();
-         ImageProcessingManagerService imageProcessingManagerService = Container.GetInstance<ImageProcessingManagerService>();
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
 
-         taggerController.AddLabel(LabelName);
+         taggerController.AddLabels(labels);
 
-         taggerController.SelectLabel(LabelName);
+         HashSet<Color> labelColors = new HashSet<Color>();
 
-         imageProcessingManagerService.SetActiveImageService(imageService1);
+         foreach (string label in labels)
+         {
+            Color tagColor = taggerController.TagColor(label);
 
-         // ActiveImageSourceChanged() must be called before calling SelectPixel()
-         ////Assert.Throws<Shouldly.ShouldAssertException>(() => { taggerController.SelectPixel(Point.Empty); });
+            tagColor.ShouldNotBeNull();
 
-         ////taggerController.ActiveImageSourceChanged(imageSource1);
+            labelColors.Add(tagColor);
+         }
 
-         // Should not throw an exception
-         ////taggerController.SelectPixel(new Point(42, 54));
-
-         ////taggerController.ActiveImageSourceChanged(imageSource2);
-
-         taggerController.GetPoints(LabelName).Count().ShouldBe(0);
-
-         ////taggerController.SelectPixel(new Point(6, 9));
-
-         ////taggerController.ActiveImageSourceChanged(imageSource1);
-
-         taggerController.GetPoints(LabelName).Count().ShouldBe(1);
-
-         taggerController.GetPoints(LabelName)[0].X.ShouldBe(42);
-         taggerController.GetPoints(LabelName)[0].Y.ShouldBe(54);
-      }*/
+         labelColors.Count().ShouldBe(labels.Count());
+      }
    }
 }
