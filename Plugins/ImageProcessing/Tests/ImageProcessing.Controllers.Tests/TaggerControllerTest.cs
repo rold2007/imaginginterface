@@ -113,6 +113,27 @@ namespace ImageProcessing.Controllers.Tests
       }
 
       [Fact]
+      public void AddRemoveLabels()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+
+         taggerController.AddLabels(labels);
+         taggerController.RemoveLabels(labels);
+
+         taggerController.AddLabels(labels);
+
+         taggerController.Labels.Count().ShouldBe(labels.Count);
+
+         taggerController.AddLabels(new[] { labels[0] });
+
+         taggerController.Labels.Count().ShouldBe(labels.Count);
+
+         taggerController.RemoveLabels(new[] { labels[1] });
+
+         taggerController.Labels.Count().ShouldBe(labels.Count - 1);
+      }
+
+      [Fact]
       public void AddPoint()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
