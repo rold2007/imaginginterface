@@ -159,45 +159,11 @@ namespace ImageProcessing.Controllers.Tests
       }
 
       [Fact]
-      public void ProcessImageData()
-      {
-         TaggerService taggerService = this.Container.GetInstance<TaggerService>();
-         IImageService imageService = this.Container.GetInstance<IImageService>();
-         this.Container.GetInstance<IImageProcessingManagerService>().ActiveImageService = imageService;
-
-         int imageWidth = imageService.ImageSource.OriginalImageData.GetLength(1);
-         int imageHeight = imageService.ImageSource.OriginalImageData.GetLength(0);
-         int imageSize = imageWidth * imageHeight;
-         byte[] overlayData = new byte[imageSize * 4];
-
-         taggerService.AddLabels(new[] { labels[2] });
-
-         taggerService.SelectLabel(labels[2]);
-
-         taggerService.SelectPixel(points[0]);
-
-         int pixelOffset = (points[0].Y * imageWidth * 4) + (points[0].X * 4);
-
-         overlayData[pixelOffset].ShouldBe<byte>(0);
-
-         taggerService.ProcessImageData(imageService, overlayData);
-      }
-
-      [Fact]
       public void CloseImage()
       {
          TaggerService taggerService = this.Container.GetInstance<TaggerService>();
-         IImageService imageService = this.Container.GetInstance<IImageService>();
-         IImageProcessingManagerService imageProcessingManagerService = this.Container.GetInstance<IImageProcessingManagerService>();
 
-         imageProcessingManagerService.ActiveImageService = imageService;
-
-         taggerService.Labels.ShouldBeEmpty();
-         taggerService.AddLabels(new[] { labels[2] });
-
-         taggerService.CloseImage(imageService);
-
-         taggerService.Labels.ShouldHaveSingleItem(labels[2]);
+         taggerService.CloseImage(null);
       }
    }
 }

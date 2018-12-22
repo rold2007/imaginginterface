@@ -83,8 +83,9 @@ namespace ImageProcessing.Controllers
       ////   return null;
       ////}
 
-      public void Initialize()
+      public void Initialize(int width, int height)
       {
+         OriginalImageData = new byte[height, width, 3];
       }
 
       public void Close()
