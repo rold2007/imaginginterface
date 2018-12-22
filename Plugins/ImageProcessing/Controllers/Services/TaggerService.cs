@@ -106,7 +106,6 @@ namespace ImageProcessing.Controllers.Services
 
       public void CloseImage(IImageService imageService)
       {
-         Taggers.Remove(imageService);
       }
 
       public void Activate()
@@ -123,11 +122,6 @@ namespace ImageProcessing.Controllers.Services
 
       public void RemoveLabels(IEnumerable<string> labels)
       {
-         foreach (KeyValuePair<IImageService, Tagger> tagger in this.Taggers)
-         {
-            tagger.Value.RemoveLabels(labels);
-         }
-
          if (labels.Contains(SelectedLabel))
          {
             SelectLabel(null);

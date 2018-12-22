@@ -11,9 +11,11 @@ namespace ImageProcessing.Controllers.Tests
    using ImageProcessing.Controllers;
    using ImageProcessing.Controllers.Services;
    using ImageProcessing.ObjectDetection;
+   using ImagingInterface.Controllers;
+   using ImagingInterface.Controllers.Services;
    using ImagingInterface.Plugins;
-   using Moq;
    using Shouldly;
+   using SimpleInjector;
    using Xunit;
 
    public class TaggerControllerTest : ControllersBaseTest
@@ -35,9 +37,12 @@ namespace ImageProcessing.Controllers.Tests
          Container.Register<Tagger>();
          Container.Register<TaggerService>();
          Container.Register<TaggerController>();
+         Container.Register<ImageController>();
 
-         Container.Register(() => { return Mock.Of<IImageService>(x => x.ImageSource == Mock.Of<IImageSource>()); });
-         Container.RegisterSingleton(() => { return Mock.Of<IImageProcessingManagerService>(); });
+         Registration registration = Lifestyle.Singleton.CreateRegistration<ImageProcessingManagerService>(Container);
+
+         Container.AddRegistration(typeof(IImageProcessingManagerService), registration);
+         Container.AddRegistration(typeof(ImageProcessingManagerService), registration);
       }
 
       [Fact]
@@ -137,12 +142,12 @@ namespace ImageProcessing.Controllers.Tests
       public void AddPoint()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
-         IImageProcessingManagerService imageProcessingManagerService = this.Container.GetInstance<IImageProcessingManagerService>();
-         IImageService imageService = this.Container.GetInstance<IImageService>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
+         ImageController imageController2 = this.Container.GetInstance<ImageController>();
 
          taggerController.GetPoints(LabelName1).Count.ShouldBe(0);
 
-         imageProcessingManagerService.ActiveImageService = imageService;
+         imageController.Activate();
 
          taggerController.AddPoint(LabelName1, new Point(42, 54));
 
@@ -151,7 +156,7 @@ namespace ImageProcessing.Controllers.Tests
          taggerController.GetPoints(LabelName1)[0].X.ShouldBe(42);
          taggerController.GetPoints(LabelName1)[0].Y.ShouldBe(54);
 
-         imageProcessingManagerService.ActiveImageService = Container.GetInstance<IImageService>();
+         imageController2.Activate();
 
          taggerController.GetPoints(LabelName1).Count().ShouldBe(0);
 
@@ -162,7 +167,7 @@ namespace ImageProcessing.Controllers.Tests
          taggerController.GetPoints(LabelName1)[0].X.ShouldBe(6);
          taggerController.GetPoints(LabelName1)[0].Y.ShouldBe(9);
 
-         imageProcessingManagerService.ActiveImageService = imageService;
+         imageController.Activate();
 
          Assert.True(taggerController.AddPoint(LabelName1, new Point(99, 100)));
 
@@ -190,7 +195,7 @@ namespace ImageProcessing.Controllers.Tests
       public void RemovePoint()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
-         IImageProcessingManagerService imageProcessingManagerService = this.Container.GetInstance<IImageProcessingManagerService>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
 
          Assert.Throws<NullReferenceException>(() => { taggerController.RemovePoint(string.Empty, new Point(1, 1)); });
 
@@ -200,7 +205,7 @@ namespace ImageProcessing.Controllers.Tests
 
          Assert.Throws<NullReferenceException>(() => { taggerController.RemovePoint(LabelName1, new Point(1, 1)); });
 
-         imageProcessingManagerService.ActiveImageService = Container.GetInstance<IImageService>();
+         imageController.Activate();
 
          taggerController.AddPoint(LabelName1, new Point(42, 54));
 
@@ -219,9 +224,9 @@ namespace ImageProcessing.Controllers.Tests
       public void RemoveAllPoint()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
-         IImageProcessingManagerService imageProcessingManagerService = this.Container.GetInstance<IImageProcessingManagerService>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
 
-         imageProcessingManagerService.ActiveImageService = Container.GetInstance<IImageService>();
+         imageController.Activate();
 
          taggerController.AddPoint(LabelName1, new Point(42, 54));
 
@@ -288,6 +293,35 @@ namespace ImageProcessing.Controllers.Tests
          }
 
          labelColors.Count().ShouldBe(labels.Count());
+      }
+
+      [Fact]
+      public void ProcessImageData()
+      {
+         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
+         MemorySource memorySource = new MemorySource();
+
+         memorySource.Initialize(28, 28);
+
+         imageController.ImageSource = memorySource;
+
+         taggerController.Activate();
+         imageController.Activate();
+
+         taggerController.AddLabels(new[] { labels[2] });
+
+         taggerController.SelectLabel(labels[2]);
+
+         int imageWidth = memorySource.OriginalImageData.GetLength(1);
+         int imageHeight = memorySource.OriginalImageData.GetLength(0);
+         int pixelOffset = (points[0].Y * imageWidth * 4) + (points[0].X * 4);
+
+         imageController.OverlayImageData[pixelOffset].ShouldBe<byte>(0);
+
+         imageController.SelectPixel(points[0]);
+
+         imageController.OverlayImageData[pixelOffset].ShouldNotBe<byte>(0);
       }
    }
 }
