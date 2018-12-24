@@ -241,8 +241,13 @@ namespace ImageProcessing.Controllers.Tests
       public void Activate()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+         ImageProcessingManagerService imageProcessingManagerService = this.Container.GetInstance<ImageProcessingManagerService>();
+
+         imageProcessingManagerService.ActiveImageProcessingService.ShouldBeNull();
 
          taggerController.Activate();
+
+         imageProcessingManagerService.ActiveImageProcessingService.ShouldNotBeNull();
       }
 
       [Fact]
@@ -257,21 +262,37 @@ namespace ImageProcessing.Controllers.Tests
       public void SelectLabel()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
+         ImageController imageController = this.Container.GetInstance<ImageController>();
 
-         ////taggerController.SelectedLabel.ShouldBeNull();
+         taggerController.SelectedLabel.ShouldBe(null);
 
-         // Cannot select label which has not been added yet
-         Assert.Throws<Shouldly.ShouldAssertException>(() => { taggerController.SelectLabel(LabelName1); });
+         Should.Throw<Shouldly.ShouldAssertException>(() => { taggerController.SelectLabel(labels[0]); });
 
-         taggerController.AddLabel(LabelName1);
+         taggerController.AddLabels(new[] { labels[0] });
 
-         taggerController.SelectLabel(LabelName1);
+         imageController.Activate();
 
-         ////taggerController.SelectedLabel.ShouldBe(LabelName);
+         taggerController.AddLabels(new[] { labels[0] });
+
+         taggerController.SelectedLabel.ShouldBe(null);
+
+         taggerController.SelectLabel(labels[0]);
+
+         taggerController.SelectedLabel.ShouldBe(labels[0]);
 
          taggerController.SelectLabel(null);
 
-         ////taggerController.SelectedLabel.ShouldBeNull();
+         taggerController.SelectedLabel.ShouldBe(null);
+
+         taggerController.AddLabels(new[] { labels[1] });
+
+         taggerController.SelectLabel(labels[1]);
+
+         taggerController.SelectedLabel.ShouldBe(labels[1]);
+
+         taggerController.RemoveLabels(new[] { labels[1] });
+
+         taggerController.SelectedLabel.ShouldBe(null);
       }
 
       [Fact]
@@ -296,7 +317,7 @@ namespace ImageProcessing.Controllers.Tests
       }
 
       [Fact]
-      public void ProcessImageData()
+      public void SelectPixel()
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
          ImageController imageController = this.Container.GetInstance<ImageController>();
