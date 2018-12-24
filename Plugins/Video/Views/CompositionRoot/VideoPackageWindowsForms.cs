@@ -5,6 +5,7 @@
 namespace Video.Views.CompositionRoot
 {
    using SimpleInjector;
+   using SimpleInjector.Diagnostics;
    using SimpleInjector.Packaging;
    using Video.Controllers;
    using Video.Views;
@@ -19,6 +20,10 @@ namespace Video.Views.CompositionRoot
 
          // Views
          container.Register<CaptureView>();
+
+         InstanceProducer instanceProducer = container.GetRegistration(typeof(CaptureWrapper));
+
+         instanceProducer.Registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "Managed by the application.");
       }
    }
 }
