@@ -104,10 +104,6 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
-      public void CloseImage(IImageService imageService)
-      {
-      }
-
       public void Activate()
       {
          ImageProcessingManagerService.ActiveImageProcessingService = this;

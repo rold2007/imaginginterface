@@ -12,10 +12,6 @@ namespace ImagingInterface.Plugins
       {
       }
 
-      public virtual void CloseImage(IImageService imageService)
-      {
-      }
-
       public virtual void ProcessImageData(IImageService imageService, byte[] overlayData)
       {
       }
