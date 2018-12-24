@@ -125,7 +125,6 @@
     <Compile Include="RotateControllerTest.cs" />
     <AdditionalFiles Include="stylecop.json" />
     <Compile Include="TaggerControllerTest.cs" />
-    <Compile Include="TaggerServiceTest.cs" />
     <Compile Include="TaggerTest.cs" />
   </ItemGroup>
   <ItemGroup>
