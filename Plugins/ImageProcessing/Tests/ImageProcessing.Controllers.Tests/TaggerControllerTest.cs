@@ -144,6 +144,14 @@ namespace ImageProcessing.Controllers.Tests
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
          ImageController imageController = this.Container.GetInstance<ImageController>();
          ImageController imageController2 = this.Container.GetInstance<ImageController>();
+         MemorySource memorySource = new MemorySource();
+         MemorySource memorySource2 = new MemorySource();
+
+         memorySource.Initialize(28, 28);
+         memorySource2.Initialize(28, 28);
+
+         imageController.ImageSource = memorySource;
+         imageController2.ImageSource = memorySource2;
 
          taggerController.GetPoints(LabelName1).Count.ShouldBe(0);
 
@@ -196,6 +204,11 @@ namespace ImageProcessing.Controllers.Tests
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
          ImageController imageController = this.Container.GetInstance<ImageController>();
+         MemorySource memorySource = new MemorySource();
+
+         memorySource.Initialize(28, 28);
+
+         imageController.ImageSource = memorySource;
 
          Assert.Throws<NullReferenceException>(() => { taggerController.RemovePoint(string.Empty, new Point(1, 1)); });
 
@@ -225,6 +238,11 @@ namespace ImageProcessing.Controllers.Tests
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
          ImageController imageController = this.Container.GetInstance<ImageController>();
+         MemorySource memorySource = new MemorySource();
+
+         memorySource.Initialize(28, 28);
+
+         imageController.ImageSource = memorySource;
 
          imageController.Activate();
 
