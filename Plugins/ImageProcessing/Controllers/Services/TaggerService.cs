@@ -22,7 +22,7 @@ namespace ImageProcessing.Controllers.Services
 
       public TaggerService(IImageProcessingManagerService imageProcessingManagerService)
       {
-         Taggers = new Dictionary<IImageService, Tagger>();
+         Taggers = new Dictionary<IImageSource, Tagger>();
          ImageProcessingManagerService = imageProcessingManagerService;
          labelColors = new SortedList<string, Color>();
          labels = new HashSet<string>();
@@ -58,7 +58,7 @@ namespace ImageProcessing.Controllers.Services
          private set;
       }
 
-      private Dictionary<IImageService, Tagger> Taggers
+      private Dictionary<IImageSource, Tagger> Taggers
       {
          get;
          set;
@@ -86,12 +86,14 @@ namespace ImageProcessing.Controllers.Services
 
             if (activeImageService != null)
             {
-               if (!Taggers.ContainsKey(activeImageService))
+               IImageSource imageSource = activeImageService.ImageSource;
+
+               if (!Taggers.ContainsKey(imageSource))
                {
-                  Taggers.Add(activeImageService, new Tagger());
+                  Taggers.Add(imageSource, new Tagger());
                }
 
-               Tagger currentImageSourceTagger = Taggers[activeImageService];
+               Tagger currentImageSourceTagger = Taggers[imageSource];
 
                currentImageSourceTagger.ShouldNotBeNull();
 
