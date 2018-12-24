@@ -21,7 +21,7 @@ namespace ImageProcessing.Controllers
       {
          get
          {
-            return this.taggerService.Labels;
+            return taggerService.Labels;
          }
       }
 
@@ -29,7 +29,15 @@ namespace ImageProcessing.Controllers
       {
          get
          {
-            return this.taggerService.DisplayName;
+            return taggerService.DisplayName;
+         }
+      }
+
+      public string SelectedLabel
+      {
+         get
+         {
+            return taggerService.SelectedLabel;
          }
       }
 
