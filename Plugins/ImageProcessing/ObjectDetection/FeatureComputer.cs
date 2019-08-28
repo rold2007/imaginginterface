@@ -2,6 +2,11 @@
 // Copyright (c) David Rolland. All rights reserved.
 // </copyright>
 
+// TODO: Get to 100% code coverage for the Tagger plugin, starting from the bottom (Tagger class) to the top (UI).
+// Increase Tagger class test coverage to 100%. I believe that TaggerService should have been covered directly by tests on TaggerController.
+// The tests are acting exactly like the  View layer, they should not access the Service layer directly.
+// Need to use SimpleInjector wisely for to keep this clear and simple
+
 // TODO: Tester les 4% code coverage restants
 // TODO: Diviser les tests de facon appropriee dans TaggerServiceTest.cs et TaggerTest.cs en fonction de ce que fait vraiment la fonction.
 
