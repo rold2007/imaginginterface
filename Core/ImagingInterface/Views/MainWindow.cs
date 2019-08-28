@@ -244,9 +244,6 @@ namespace ImagingInterface.Views
          this.applicationLogic.AddImageManagerView(this.imageManagerView);
          this.applicationLogic.AddPluginManagerView(this.pluginManagerView);
 
-         this.pluginOperationController.CreatePlugin("Tagger");
-         this.fileOperationController.OpenFiles(new[] { @"C:\Users\rold2007\Downloads\Media\Images\im31-326x244.jpg" });
-
          ////this.pluginOperationController.CreatePlugin("Rotate");
       }
    }
