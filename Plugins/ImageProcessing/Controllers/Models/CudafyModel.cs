@@ -4,6 +4,8 @@
 
 namespace ImageProcessing.Models
 {
+   using System.Diagnostics.CodeAnalysis;
+
    public class CudafyModel
    {
       public string DisplayName
@@ -24,12 +26,14 @@ namespace ImageProcessing.Models
          set;
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public int[] GridSize
       {
          get;
          set;
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public int[] BlockSize
       {
          get;

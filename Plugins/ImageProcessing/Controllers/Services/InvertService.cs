@@ -5,6 +5,7 @@
 namespace ImageProcessing.Controllers.Services
 {
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
    using Emgu.CV;
    using Emgu.CV.Structure;
    using ImagingInterface.Plugins;
@@ -12,7 +13,7 @@ namespace ImageProcessing.Controllers.Services
 
    public class InvertService : IImageProcessingService
    {
-      private static readonly string InvertDisplayName = "Invert"; // ncrunch: no coverage
+      private const string InvertDisplayName = "Invert"; // ncrunch: no coverage
 
       private IImageProcessingManagerService imageProcessingService;
 
@@ -21,6 +22,7 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService = imageProcessingService;
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public string DisplayName
       {
          get
@@ -40,6 +42,7 @@ namespace ImageProcessing.Controllers.Services
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          if (this.ApplyInvert)

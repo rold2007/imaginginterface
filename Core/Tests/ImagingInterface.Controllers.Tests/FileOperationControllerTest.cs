@@ -4,6 +4,7 @@
 
 namespace ImagingInterface.Controllers.Tests
 {
+   using System;
    using System.Collections.Generic;
    using ImagingInterface.Controllers.Services;
    using ImagingInterface.Controllers.Tests.Mocks;
@@ -48,7 +49,7 @@ namespace ImagingInterface.Controllers.Tests
          fileOperationController.OpenFiles(files);
 
          // Assert.AreEqual(0, imageSourceControllers.Count);
-         files = new string[0];
+         files = Array.Empty<string>();
 
          // Make sure it doesn't crash with these parameters
          fileOperationController.OpenFiles(files);
@@ -132,7 +133,7 @@ namespace ImagingInterface.Controllers.Tests
          fileOperationController.RequestDragDropFile(files);
 
          // Assert.AreEqual(0, imageSourceControllers.Count);
-         files = new string[0];
+         files = Array.Empty<string>();
 
          // Make sure it doesn't crash with these parameters
          fileOperationController.RequestDragDropFile(files);

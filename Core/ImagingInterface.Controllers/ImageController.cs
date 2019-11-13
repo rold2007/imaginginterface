@@ -6,6 +6,7 @@ namespace ImagingInterface.Controllers
 {
    using System;
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Controllers.Services;
@@ -128,6 +129,8 @@ namespace ImagingInterface.Controllers
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public byte[,,] DisplayImageData
       {
          get
@@ -136,6 +139,7 @@ namespace ImagingInterface.Controllers
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public byte[] OverlayImageData
       {
          get
@@ -180,6 +184,7 @@ namespace ImagingInterface.Controllers
          this.imageService.SelectPixel(mouseClickPixel);
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Close()
       {
          /*

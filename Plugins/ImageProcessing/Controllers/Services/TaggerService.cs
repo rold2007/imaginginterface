@@ -6,6 +6,7 @@ namespace ImageProcessing.Controllers.Services
 {
    using System;
    using System.Collections.Generic;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
@@ -14,7 +15,7 @@ namespace ImageProcessing.Controllers.Services
 
    public class TaggerService : IImageProcessingService
    {
-      private static readonly string TaggerDisplayName = "Tagger";
+      private const string TaggerDisplayName = "Tagger";
 
       private Tagger tagger;
       private IImageProcessingManagerService imageProcessingService;
@@ -30,6 +31,7 @@ namespace ImageProcessing.Controllers.Services
          this.savedDataPoints = new Dictionary<IImageSource, string>();
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public string DisplayName
       {
          get
@@ -95,6 +97,7 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          int imageWidth = imageData.GetLength(1);

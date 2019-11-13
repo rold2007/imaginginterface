@@ -7,6 +7,7 @@ namespace ImageProcessing.Controllers
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Controllers.Services;
@@ -47,6 +48,7 @@ namespace ImageProcessing.Controllers
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Close()
       {
       }
@@ -154,6 +156,7 @@ namespace ImageProcessing.Controllers
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       private void ExtractPoints()
       {
          Debug.Fail("Need to review the use of registeredImageController. The plugins shoudn't depend on ImagingInterface.Controllers, only on ImagingInterface.Plugins.Interface");
@@ -210,7 +213,7 @@ namespace ImageProcessing.Controllers
             Dictionary<string, List<Point>> tagPoints = new Dictionary<string, List<Point>>();
             List<Point> points = new List<Point>
             {
-               tagPoint
+               tagPoint,
             };
             tagPoints.Add(label, points);
 

@@ -6,6 +6,7 @@ namespace ImageProcessing.Controllers
 {
    using System;
    using System.ComponentModel;
+   using System.Diagnostics.CodeAnalysis;
    using ImagingInterface.Plugins;
 
    public class MemorySource : IMemorySource
@@ -40,6 +41,7 @@ namespace ImageProcessing.Controllers
       ////      }
       ////   }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public bool Active
       {
          get
@@ -48,12 +50,16 @@ namespace ImageProcessing.Controllers
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public byte[,,] OriginalImageData
       {
          get;
          private set;
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public byte[,,] UpdatedImageData
       {
          get;
@@ -83,6 +89,7 @@ namespace ImageProcessing.Controllers
       ////   return null;
       ////}
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Initialize()
       {
       }
@@ -103,6 +110,7 @@ namespace ImageProcessing.Controllers
       {
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void UpdateImageData(byte[,,] updatedImageData)
       {
       }

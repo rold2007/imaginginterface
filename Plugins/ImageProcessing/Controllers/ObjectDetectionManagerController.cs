@@ -10,7 +10,7 @@ namespace ImageProcessing.Controllers
 
    public class ObjectDetectionManagerController
       {
-      private static readonly string ObjectDetectionDisplayName = "Object detection"; // ncrunch: no coverage
+      private const string ObjectDetectionDisplayName = "Object detection"; // ncrunch: no coverage
       ////private IObjectDetectionManagerView objectDetectionManagerView;
       private ObjectDetectionManagerModel objectDetectionManagerModel = new ObjectDetectionManagerModel();
       private TaggerController taggerController;

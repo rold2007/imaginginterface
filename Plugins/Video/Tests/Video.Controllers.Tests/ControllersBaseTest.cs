@@ -4,8 +4,11 @@
 
 namespace Video.Controllers.Tests
 {
+   using System.Diagnostics.CodeAnalysis;
+
    public abstract class ControllersBaseTest
       {
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       protected void SetUp()
          {
          // base.SetUp();

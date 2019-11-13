@@ -72,7 +72,7 @@ namespace ImageProcessing.Controllers.Tests
          }
 
       [Fact]
-      public void RotateView_Rotate()
+      public void RotateViewRotate()
          {
          ////RotateController rotateController = this.ServiceLocator.GetInstance<RotateController>();
          ////RotateView rotateView = rotateController.RawPluginView as RotateView;

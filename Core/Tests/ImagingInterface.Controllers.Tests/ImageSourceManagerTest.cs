@@ -53,7 +53,7 @@ namespace ImagingInterface.Controllers.Tests
 
          List<string> files = new List<string>
             {
-                "ValidFile"
+                "ValidFile",
             };
 
          IEnumerable<IImageSource> imageSources = imageSourceManager.AddImageFiles(files);

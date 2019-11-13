@@ -5,6 +5,7 @@
 namespace ImageProcessing.Views
 {
    using System;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using System.Windows.Forms;
    using ImageProcessing.Controllers;
@@ -33,10 +34,13 @@ namespace ImageProcessing.Views
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Close()
       {
       }
 
+      [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Too much work for now.")]
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void SelectPixel(IImageSource imageSource, Point pixelPosition)
       {
       }

@@ -5,6 +5,7 @@
 namespace ImagingInterface.Controllers.Services
 {
    using System;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using ImagingInterface.Controllers.EventArguments;
    using ImagingInterface.Plugins;
@@ -37,12 +38,12 @@ namespace ImagingInterface.Controllers.Services
             {
                if (value != -1)
                {
-                  throw new ArgumentOutOfRangeException();
+                  throw new ArgumentOutOfRangeException(nameof(value));
                }
             }
             else if (value < 0 || value >= this.PluginCount)
             {
-               throw new ArgumentOutOfRangeException();
+               throw new ArgumentOutOfRangeException(nameof(value));
             }
 
             this.activePluginIndex = value;
@@ -80,6 +81,7 @@ namespace ImagingInterface.Controllers.Services
          this.PluginCount.ShouldBeLessThanOrEqualTo(0, "Invalid image count.");
       }
 
+      [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Too much work for now.")]
       public void SelectPixel(IImageSource imageSource, Point mouseClickPixel)
       {
          if (this.PluginCount > 0)

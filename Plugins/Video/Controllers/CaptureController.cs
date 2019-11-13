@@ -7,13 +7,14 @@ namespace Video.Controllers
    using System;
    using System.ComponentModel;
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
    using Emgu.CV;
    using Emgu.CV.Structure;
    using Video.Models;
 
-   public class CaptureController
+   public class CaptureController : IDisposable
    {
-      private static readonly string CaptureDisplayName = "Capture"; // ncrunch: no coverage
+      private const string CaptureDisplayName = "Capture"; // ncrunch: no coverage
       private CaptureModel captureModel = new CaptureModel();
       private CaptureWrapper captureWrapper;
       ////private ImageController liveGrabImageController;
@@ -58,6 +59,7 @@ namespace Video.Controllers
          GC.SuppressFinalize(this);
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Initialize()
       {
          ////this.captureView.Start += this.CaptureView_Start;
@@ -231,13 +233,13 @@ namespace Video.Controllers
 
       ////private void LiveGrabImageController_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
       ////{
-         ////CaptureModel captureModel = e.RawPluginModel as CaptureModel;
+      ////CaptureModel captureModel = e.RawPluginModel as CaptureModel;
 
-         ////// Received the new model indicating there will be no more live update
-         ////if (!captureModel.LiveGrabRunning)
-         ////{
-         ////   this.ResetGrabLive();
-         ////}
+      ////// Received the new model indicating there will be no more live update
+      ////if (!captureModel.LiveGrabRunning)
+      ////{
+      ////   this.ResetGrabLive();
+      ////}
       ////}
 
       private void ResetGrabLive()
@@ -275,6 +277,7 @@ namespace Video.Controllers
          ////this.captureView.UpdateLiveGrabStatus(true, false);
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       private void UnregisterCaptureViewEvents()
       {
          ////this.captureView.Start -= this.CaptureView_Start;

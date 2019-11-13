@@ -72,7 +72,7 @@ namespace ImageProcessing.Controllers.Tests
          }
 
       [Fact]
-      public void InvertView_Invert()
+      public void InvertViewInvert()
          {
          ////InvertController invertController = this.ServiceLocator.GetInstance<InvertController>();
          ////InvertView invertView = invertController.RawPluginView as InvertView;

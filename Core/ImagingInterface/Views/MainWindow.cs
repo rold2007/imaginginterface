@@ -67,7 +67,7 @@ namespace ImagingInterface.Views
       {
          ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(name)
          {
-            Name = name
+            Name = name,
          };
          toolStripMenuItem.Click += this.PluginClick;
 

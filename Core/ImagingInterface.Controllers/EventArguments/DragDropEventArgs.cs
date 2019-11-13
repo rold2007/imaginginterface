@@ -5,18 +5,23 @@
 namespace ImagingInterface.Controllers.EventArguments
 {
    using System;
+   using System.Collections.ObjectModel;
 
    public class DragDropEventArgs : EventArgs
-      {
-      public DragDropEventArgs(string[] data)
-         {
-         this.Data = data;
-         }
+   {
+      private string[] data;
 
-      public string[] Data
+      public DragDropEventArgs(string[] data)
+      {
+         this.data = data;
+      }
+
+      public ReadOnlyCollection<string> Data
+      {
+         get
          {
-         get;
-         private set;
+            return new ReadOnlyCollection<string>(this.data);
          }
       }
    }
+}

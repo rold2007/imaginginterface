@@ -1,5 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
+  <Import Project="..\..\..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\..\..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props')" />
+  <Import Project="..\..\..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props" Condition="Exists('..\..\..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props')" />
+  <Import Project="..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.7\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.7\build\Microsoft.CodeQuality.Analyzers.props')" />
+  <Import Project="..\..\..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.7\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props" Condition="Exists('..\..\..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.7\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,9 +29,10 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\..\ImagingInterface.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\x86\Debug\Video.Controllers.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -35,41 +41,52 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\..\ImagingInterface.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\x86\Release\Video.Controllers.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\..\ImagingInterface.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\x64\Debug\Video.Controllers.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\..\ImagingInterface.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\x64\Release\Video.Controllers.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Video.Controllers.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\..\..\ImagingInterface.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Video.Controllers.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\..\..\ImagingInterface.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.CV.UI, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.UI.dll</HintPath>
+    <Reference Include="Emgu.CV.UI, Version=4.1.1.3497, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EMGU.CV.4.1.1.3497\lib\net35\Emgu.CV.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.World, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.World.dll</HintPath>
+    <Reference Include="Emgu.CV.World, Version=4.1.1.3497, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EMGU.CV.4.1.1.3497\lib\net35\Emgu.CV.World.dll</HintPath>
     </Reference>
-    <Reference Include="Shouldly, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Shouldly.3.0.0\lib\net451\Shouldly.dll</HintPath>
+    <Reference Include="Shouldly, Version=3.0.2.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Shouldly.3.0.2\lib\net451\Shouldly.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -103,8 +120,17 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.7\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.7\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.7\analyzers\dotnet\cs\Humanizer.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.NetCore.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetCore.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.NetCore.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.NetFramework.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\Microsoft.NetFramework.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -118,9 +144,14 @@ if $(ConfigurationName) == Debug copy "$(TargetDir)$(TargetName).pdb" "$(Project
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.7\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.7\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.7\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.7\build\Microsoft.CodeQuality.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
   </Target>
-  <Import Project="..\..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets" Condition="Exists('..\..\..\packages\EMGU.CV.3.4.1.2976\build\EMGU.CV.targets')" />
+  <Import Project="..\..\..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets" Condition="Exists('..\..\..\packages\EMGU.CV.4.1.1.3497\build\EMGU.CV.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -6,6 +6,7 @@ namespace Video.Models
 {
    using System;
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
 
    public class CaptureModel : ICloneable ////: ICaptureModel
    {
@@ -15,11 +16,12 @@ namespace Video.Models
          set;
       }
 
-      public byte[,,] LastImageData
-      {
-         get;
-         set;
-      }
+      ////[SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
+      ////public byte[,,] LastImageData
+      ////{
+      ////   get;
+      ////   set;
+      ////}
 
       public bool LiveGrabRunning
       {

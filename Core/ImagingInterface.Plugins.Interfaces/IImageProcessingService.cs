@@ -4,8 +4,11 @@
 
 namespace ImagingInterface.Plugins
 {
+   using System.Diagnostics.CodeAnalysis;
+
    public interface IImageProcessingService
    {
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       void ProcessImageData(byte[,,] imageData, byte[] overlayData);
    }
 }

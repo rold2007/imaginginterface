@@ -57,7 +57,7 @@ namespace ImageProcessing.Views
 
             ListViewItem listViewItem = new ListViewItem(label, imageIndex)
             {
-               Name = label
+               Name = label,
             };
             this.labelsListView.Items.Add(listViewItem);
 

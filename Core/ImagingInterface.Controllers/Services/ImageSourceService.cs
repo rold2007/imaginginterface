@@ -29,7 +29,7 @@ namespace ImagingInterface.Controllers.Services
       {
          if (files == null)
          {
-            throw new ArgumentNullException("files");
+            throw new ArgumentNullException(nameof(files));
          }
 
          List<IImageSource> fileSources = new List<IImageSource>();
@@ -53,7 +53,7 @@ namespace ImagingInterface.Controllers.Services
       {
          if (imageSource == null)
          {
-            throw new ArgumentNullException("imageSource");
+            throw new ArgumentNullException(nameof(imageSource));
          }
 
          this.ImageSources.Remove(imageSource);

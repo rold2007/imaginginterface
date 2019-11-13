@@ -7,6 +7,7 @@ namespace ImagingInterface.Views
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using System.Windows.Forms;
    using ImagingInterface.Controllers;
@@ -59,6 +60,8 @@ namespace ImagingInterface.Views
          }
       }
 
+      [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Too much work for now.")]
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void AddImageView(ImageView imageView)
       {
          // ImageView imageView = new ImageView();

@@ -4,7 +4,7 @@
 
 namespace ImageProcessing.Models
 {
-   public interface IObjectDetectionManagerModel
-      {
-      }
-   }
+   ////public interface IObjectDetectionManagerModel
+   ////   {
+   ////   }
+}

@@ -6,6 +6,7 @@ namespace ImageProcessing.Controllers
 {
    using System;
    using System.ComponentModel;
+   using System.Diagnostics.CodeAnalysis;
    using ImageProcessing.Controllers.Services;
 
    public class RotateController
@@ -29,6 +30,7 @@ namespace ImageProcessing.Controllers
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Initialize()
       {
       }

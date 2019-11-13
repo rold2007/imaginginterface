@@ -6,6 +6,7 @@ namespace ImageProcessing.Views
 {
    using System;
    using System.Collections.Generic;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using System.Windows.Forms;
    using ImageProcessing.Controllers;
@@ -248,7 +249,7 @@ namespace ImageProcessing.Views
       {
          int add = this.addTrackBar.Value;
 
-         this.addTextBox.Text = add.ToString();
+         this.addTextBox.Text = FormattableString.Invariant($"{add}");
 
          this.Add?.Invoke(this, new CudafyAddEventArgs(add));
       }
@@ -257,7 +258,7 @@ namespace ImageProcessing.Views
       {
          if (!this.closed)
          {
-            this.benchmarkAddCudafyLabel.Text = string.Format("{0} ms", benchmark);
+            this.benchmarkAddCudafyLabel.Text = FormattableString.Invariant($"{benchmark} ms");
          }
       }
 
@@ -265,7 +266,7 @@ namespace ImageProcessing.Views
       {
          if (!this.closed)
          {
-            this.benchmarkAddOpenCVLabel.Text = string.Format("{0} ms", benchmark);
+            this.benchmarkAddOpenCVLabel.Text = FormattableString.Invariant($"{benchmark} ms");
          }
       }
 

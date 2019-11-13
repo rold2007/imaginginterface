@@ -38,12 +38,12 @@ namespace ImagingInterface.Controllers.Services
             {
                if (value != -1)
                {
-                  throw new ArgumentOutOfRangeException();
+                  throw new ArgumentOutOfRangeException(nameof(value));
                }
             }
             else if (value < 0 || value >= this.ImageCount)
             {
-               throw new ArgumentOutOfRangeException();
+               throw new ArgumentOutOfRangeException(nameof(value));
             }
 
             if (this.activeImageIndex != value)

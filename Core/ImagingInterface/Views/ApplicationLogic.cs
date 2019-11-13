@@ -6,6 +6,7 @@ namespace ImagingInterface.Views
 {
    using System;
    using System.Collections.Generic;
+   using System.Diagnostics.CodeAnalysis;
    using ImagingInterface.Controllers.Interfaces;
    using ImagingInterface.Plugins;
 
@@ -22,6 +23,7 @@ namespace ImagingInterface.Views
          this.pluginViewFactory = pluginViewFactory;
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       public void AddImageManagerView(ImageManagerView imageManagerView)
       {
          if (this.imageManagerView != null)
@@ -32,6 +34,7 @@ namespace ImagingInterface.Views
          this.imageManagerView = imageManagerView;
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       public void AddPluginManagerView(PluginManagerView pluginManagerView)
       {
          if (this.pluginManagerView != null)
@@ -75,6 +78,7 @@ namespace ImagingInterface.Views
          this.RemovePluginViewFromCurrentPluginManagerView(pluginView);
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       private void ValidateImageManagerView()
       {
          if (this.imageManagerView == null)
@@ -83,6 +87,7 @@ namespace ImagingInterface.Views
          }
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       private void ValidatePluginManagerView()
       {
          if (this.pluginManagerView == null)
@@ -91,6 +96,7 @@ namespace ImagingInterface.Views
          }
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       private void AddImageViewToCurrentImageManagerView(IEnumerable<IImageSource> imageSources)
       {
          foreach (IImageSource imageSource in imageSources)
@@ -108,13 +114,14 @@ namespace ImagingInterface.Views
          }
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       private void RemoveImageViewFromCurrentImageManagerView(IImageView imageView)
       {
          ImageView imageViewObject = imageView as ImageView;
 
          if (imageViewObject == null)
          {
-            throw new ArgumentException("imageView");
+            throw new ArgumentNullException(nameof(imageView));
          }
 
          this.imageManagerView.RemoveImageView(imageViewObject);

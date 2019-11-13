@@ -7,6 +7,7 @@ namespace ImagingInterface
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
    using System.IO;
    using System.Reflection;
    using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace ImagingInterface
 
    public static class Program
    {
-      private static readonly string PluginsRootFolderName = "Plugins";
+      private const string PluginsRootFolderName = "Plugins";
 
       private static List<string> pluginFolders = new List<string>();
       private static List<string> pluginLibraries = new List<string>();
@@ -35,6 +36,7 @@ namespace ImagingInterface
       /// The main entry point for the application.
       /// </summary>
       [STAThread]
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Managed through trace.")]
       public static void Main()
       {
          LoadSupportedImageFormatsAsynchronously();
@@ -73,14 +75,16 @@ namespace ImagingInterface
          }
       }
 
-      // Need to call this explicitely othwerwise the first image load is too slow (~2-3s)
+      // Need to call this explicitely otherwise the first image load is too slow (~2-3s)
       // This is because ImageProcessor load all Accord.Net dll and scan the available classes.
       public static async void LoadSupportedImageFormatsAsynchronously()
       {
-         await Task.Run(() =>
+         Task task = Task.Run(() =>
          {
             IEnumerable<ISupportedImageFormat> supportedImageFormats = ImageProcessorBootstrapper.Instance.SupportedImageFormats;
          });
+
+         await task.ConfigureAwait(false);
       }
 
       private static void InitializePluginFolders()
@@ -187,7 +191,7 @@ namespace ImagingInterface
 
          container.RegisterPackages(pluginAssemblies);
 
-         container.RegisterCollection<IPluginView>(pluginAssemblies);
+         container.Collection.Register<IPluginView>(pluginAssemblies);
 
          SuppressDiagnosticWarning();
 
@@ -277,7 +281,7 @@ namespace ImagingInterface
             {
                // When this exception is thrown, change the "Copy Local" property of the
                // referenced DLL for the plugin with the issue
-               throw new InvalidOperationException(string.Format("The DLL {0} was already loaded. Don't load the same DLL twice from different paths.", loadedAssemblyFullName));
+               throw new InvalidOperationException(FormattableString.Invariant($"The DLL {loadedAssemblyFullName} was already loaded. Don't load the same DLL twice from different paths."));
             }
 
             loadedAssemblyFullNames.Add(loadedAssemblyFullName);

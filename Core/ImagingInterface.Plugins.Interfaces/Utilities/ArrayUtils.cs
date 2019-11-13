@@ -4,12 +4,16 @@
 
 namespace ImagingInterface.Plugins.Utilities
 {
+   using System.Diagnostics.CodeAnalysis;
    using Shouldly;
 
    public static class ArrayUtils
    {
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public static void ArrayCopy(byte[,,] source, byte[,,] destination)
       {
+         source.ShouldNotBeNull();
+         destination.ShouldNotBeNull();
          destination.GetLength(0).ShouldBe(source.GetLength(0));
          destination.GetLength(1).ShouldBeLessThanOrEqualTo(source.GetLength(1));
          destination.GetLength(2).ShouldBe(source.GetLength(2));

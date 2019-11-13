@@ -7,6 +7,7 @@ namespace ImagingInterface.Views
    using System;
    using System.Collections.Generic;
    using System.Diagnostics;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using System.Windows.Forms;
    using ImageProcessor.Imaging.Colors;
@@ -64,7 +65,7 @@ namespace ImagingInterface.Views
          /// <summary>
          /// The overlay is displayed over the underlay
          /// </summary>
-         Overlay
+         Overlay,
       }
 
       public string DisplayName
@@ -75,6 +76,7 @@ namespace ImagingInterface.Views
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public double UpdateFrequency
       {
          get
@@ -98,7 +100,7 @@ namespace ImagingInterface.Views
 
       public void UpdateZoomLevel()
       {
-         this.zoomLevelToolStripStatusLabel.Text = string.Format("{0}x", this.imageController.ZoomLevel);
+         this.zoomLevelToolStripStatusLabel.Text = FormattableString.Invariant($"{this.imageController.ZoomLevel}x");
 
          this.UpdateStatusStripSeparators();
 
@@ -669,7 +671,7 @@ namespace ImagingInterface.Views
 
       private void UpdateMousePosition(Point pixelPosition)
       {
-         this.mousePositionToolStripStatusLabel.Text = string.Format("({0}, {1})", pixelPosition.X, pixelPosition.Y);
+         this.mousePositionToolStripStatusLabel.Text = FormattableString.Invariant($"({pixelPosition.X}, {pixelPosition.Y})");
 
          this.UpdateStatusStripSeparators();
       }
@@ -681,11 +683,12 @@ namespace ImagingInterface.Views
          this.UpdateStatusStripSeparators();
       }
 
+      [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Too much work for now.")]
       private void UpdatePixelColor(Point pixelPosition, RgbaColor rgbaColor)
       {
          if (this.imageController.IsGrayscale)
          {
-            this.rgbGrayColorToolStripStatusLabel.Text = string.Format("Gray: {0} ", rgbaColor.R.ToString());
+            this.rgbGrayColorToolStripStatusLabel.Text = FormattableString.Invariant($"Gray: {rgbaColor.R}");
             this.hsvColorToolStripStatusLabel.Text = string.Empty;
          }
          else
@@ -710,11 +713,12 @@ namespace ImagingInterface.Views
 
       private void UpdateImageSize()
       {
-         this.imageSizeToolStripStatusLabel.Text = string.Format("({0}x{1})", this.imageController.Size.Width, this.imageController.Size.Height);
+         this.imageSizeToolStripStatusLabel.Text = FormattableString.Invariant($"({this.imageController.Size.Width}x{this.imageController.Size.Height})");
 
          this.UpdateStatusStripSeparators();
       }
 
+      [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Don't care.")]
       private void CreateStatusStripSeparators()
       {
          int separatorIndex = 1;

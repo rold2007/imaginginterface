@@ -7,6 +7,7 @@ namespace ImageProcessing.Controllers
    using System;
    using System.Collections.Generic;
    using System.ComponentModel;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Models;
@@ -37,6 +38,7 @@ namespace ImageProcessing.Controllers
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Initialize()
       {
          ////this.objectDetectionView.Train += this.ObjectDetectionView_Train;
@@ -44,6 +46,7 @@ namespace ImageProcessing.Controllers
          ////this.objectDetectionView.Test += this.ObjectDetectionView_Test;
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       public void Close()
       {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -75,6 +78,7 @@ namespace ImageProcessing.Controllers
          this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          Dictionary<string, List<Point>> predictions = this.objectDetector.Test(imageData);

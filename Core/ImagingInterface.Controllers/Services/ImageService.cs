@@ -5,6 +5,7 @@
 namespace ImagingInterface.Controllers.Services
 {
    using System;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
    using ImageProcessor.Imaging.Colors;
    using ImagingInterface.Plugins;
@@ -22,6 +23,7 @@ namespace ImagingInterface.Controllers.Services
          this.ZoomLevel = 1.0;
       }
 
+      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       public IImageSource ImageSource
       {
          get
@@ -57,6 +59,8 @@ namespace ImagingInterface.Controllers.Services
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public byte[,,] DisplayImageData
       {
          get
@@ -65,6 +69,8 @@ namespace ImagingInterface.Controllers.Services
          }
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
+      [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Too much work for now.")]
       public byte[] OverlayImageData
       {
          get;
@@ -100,6 +106,7 @@ namespace ImagingInterface.Controllers.Services
          this.imageManagerService.AddImage(this);
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void UpdateImageData(byte[,,] updatedImageData, byte[] updatedOverlayData)
       {
          this.OverlayImageData = updatedOverlayData;
