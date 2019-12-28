@@ -21,27 +21,30 @@ namespace ImageProcessing.Controllers
    using ImageProcessing.Models;
    using ImagingInterface.Plugins;
 
-   public class CudafyController : IImageProcessingService, IDisposable
+   public class CudafyController : IImageProcessingService
    {
       private const string CudafyDisplayName = "Cudafy"; // ncrunch: no coverage
       private CudafyModel cudafyModel = new CudafyModel();
-      private Dictionary<string, GPGPU> gpgpus;
-      private Dictionary<string, GPGPUProperties> gpgpuProperties;
-      private Dictionary<string, eGPUType> gpuTypes;
+
+      //// The controller shouldn't manage GPGPU directly, or even reference Cudafy. In the same way, it shouldn't implement IDisposable.
+      //// IDisposable should not spread from the bottom layers up to the controller/view.
+      ////private Dictionary<string, GPGPU> gpgpus;
+      ////private Dictionary<string, GPGPUProperties> gpgpuProperties;
+      ////private Dictionary<string, eGPUType> gpuTypes;
 
       public CudafyController()
       {
          this.cudafyModel.DisplayName = CudafyController.CudafyDisplayName;
 
-         this.gpgpus = new Dictionary<string, GPGPU>();
-         this.gpgpuProperties = new Dictionary<string, GPGPUProperties>();
-         this.gpuTypes = new Dictionary<string, eGPUType>();
+         ////this.gpgpus = new Dictionary<string, GPGPU>();
+         ////this.gpgpuProperties = new Dictionary<string, GPGPUProperties>();
+         ////this.gpuTypes = new Dictionary<string, eGPUType>();
       }
 
-      ~CudafyController()
-      { // ncrunch: no coverage
-         this.Dispose(false); // ncrunch: no coverage
-      } // ncrunch: no coverage
+      ////~CudafyController()
+      ////{ // ncrunch: no coverage
+      ////   this.Dispose(false); // ncrunch: no coverage
+      ////} // ncrunch: no coverage
 
       public event CancelEventHandler Closing;
 
@@ -63,11 +66,11 @@ namespace ImageProcessing.Controllers
          }
       }
 
-      public void Dispose()
-      {
-         this.Dispose(true);
-         GC.SuppressFinalize(this);
-      }
+      ////public void Dispose()
+      ////{
+      ////   this.Dispose(true);
+      ////   GC.SuppressFinalize(this);
+      ////}
 
       public void Initialize()
       {
@@ -96,13 +99,14 @@ namespace ImageProcessing.Controllers
 
             this.Closed?.Invoke(this, EventArgs.Empty);
 
-            this.Dispose();
+            ////this.Dispose();
          }
       }
 
       [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
+         /*
          CudafyModel cudafyModel = this.cudafyModel;
 
          if (cudafyModel.Add != 0 && !string.IsNullOrEmpty(cudafyModel.GPUName))
@@ -175,6 +179,7 @@ namespace ImageProcessing.Controllers
             ////this.cudafyView.SetBenchmarkAddCudafy(totalTime.ElapsedMilliseconds);
             ////this.cudafyView.SetBenchmarkAddOpenCV(openCVBenchmark.ElapsedMilliseconds);
          }
+         //*/
       }
 
       protected virtual void Dispose(bool disposing)
@@ -187,18 +192,18 @@ namespace ImageProcessing.Controllers
             ////this.cudafyView.BlockSizeXChanged -= this.CudafyView_BlockSizeXChanged;
             ////this.cudafyView.BlockSizeYChanged -= this.CudafyView_BlockSizeYChanged;
 
-            foreach (KeyValuePair<string, GPGPU> gpgpu in this.gpgpus)
-            {
-               GPGPU currentGPGPU = gpgpu.Value;
+            ////foreach (KeyValuePair<string, GPGPU> gpgpu in this.gpgpus)
+            ////{
+            ////   GPGPU currentGPGPU = gpgpu.Value;
 
-               currentGPGPU.DisableMultithreading();
-               currentGPGPU.Dispose();
-            }
+            ////   currentGPGPU.DisableMultithreading();
+            ////   currentGPGPU.Dispose();
+            ////}
 
-            this.gpgpus.Clear();
+            ////this.gpgpus.Clear();
          }
 
-         Debug.Assert(this.gpgpus.Count == 0, "The GPUs were not disposed of properly.");
+         ////Debug.Assert(this.gpgpus.Count == 0, "The GPUs were not disposed of properly.");
       }
 
       private void CudafyView_Add(object sender, CudafyAddEventArgs e)
@@ -229,13 +234,14 @@ namespace ImageProcessing.Controllers
 
       private void SelectGPU(string gpuName)
       {
-         GPGPU gpgpu = this.gpgpus[gpuName];
-         GPGPUProperties gpgpuProperties = gpgpu.GetDeviceProperties(true);
-         dim3 maxGridSize;
-         int maxThreadsPerBlock;
+         ////GPGPU gpgpu = this.gpgpus[gpuName];
+         ////GPGPUProperties gpgpuProperties = gpgpu.GetDeviceProperties(true);
+         ////dim3 maxGridSize;
+         ////int maxThreadsPerBlock;
 
          this.cudafyModel.GPUName = gpuName;
 
+         /*
          if (this.gpuTypes[gpuName] == eGPUType.Emulator)
          {
             int numberOfProcessorsToUse = Math.Max(1, Environment.ProcessorCount - 1);
@@ -248,6 +254,7 @@ namespace ImageProcessing.Controllers
             maxGridSize = gpgpuProperties.MaxGridSize;
             maxThreadsPerBlock = gpgpuProperties.MaxThreadsPerBlock;
          }
+         //*/
 
          ////this.cudafyView.MaxGridSizeX = maxGridSize.x;
          ////this.cudafyView.MaxGridSizeY = maxGridSize.y;
@@ -262,7 +269,7 @@ namespace ImageProcessing.Controllers
 
          long totalBlockThreads = this.cudafyModel.BlockSize[0] * this.cudafyModel.BlockSize[1] * this.cudafyModel.BlockSize[2];
 
-         if (totalBlockThreads > gpgpuProperties.MaxThreadsPerBlock)
+         ////if (totalBlockThreads > gpgpuProperties.MaxThreadsPerBlock)
          {
             ////this.cudafyView.BlockSizeY = Convert.ToInt32(Math.Floor((double)gpgpuProperties.MaxThreadsPerBlock / this.cudafyModel.BlockSize[0]));
          }
@@ -301,6 +308,7 @@ namespace ImageProcessing.Controllers
          this.TriggerAddProcessing();
       }
 
+      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       private void InitializeGPUs()
       {
          eGPUType[] gpuTypes = new eGPUType[] { eGPUType.Cuda, eGPUType.OpenCL, eGPUType.Emulator };
@@ -344,9 +352,9 @@ namespace ImageProcessing.Controllers
 
                         string gpuName = gpgpuProperties.Name.Trim() + " - " + gpuType.ToString() + " - " + language.ToString();
 
-                        this.gpgpus.Add(gpuName, gpgpu);
-                        this.gpgpuProperties.Add(gpuName, gpgpuProperties);
-                        this.gpuTypes.Add(gpuName, gpuType);
+                        ////this.gpgpus.Add(gpuName, gpgpu);
+                        ////this.gpgpuProperties.Add(gpuName, gpgpuProperties);
+                        ////this.gpuTypes.Add(gpuName, gpuType);
                      }
                      catch (CudafyCompileException)
                      {

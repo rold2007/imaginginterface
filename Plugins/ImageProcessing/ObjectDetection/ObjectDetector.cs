@@ -14,7 +14,7 @@ namespace ImageProcessing.ObjectDetection
    using Accord.MachineLearning.DecisionTrees.Learning;
    using Accord.Math;
 
-   public class ObjectDetector : IDisposable
+   public class ObjectDetector
    {
       private Dictionary<string, List<Point>> tagPoints;
 
@@ -24,10 +24,10 @@ namespace ImageProcessing.ObjectDetection
          this.Models = new Dictionary<string, DecisionTree>();
       }
 
-      ~ObjectDetector()
-      { // ncrunch: no coverage
-         this.Dispose(false); // ncrunch: no coverage
-      } // ncrunch: no coverage
+      ////~ObjectDetector()
+      ////{ // ncrunch: no coverage
+      ////   this.Dispose(false); // ncrunch: no coverage
+      ////} // ncrunch: no coverage
 
       private Dictionary<string, DecisionTree> Models
       {
@@ -35,11 +35,11 @@ namespace ImageProcessing.ObjectDetection
          set;
       }
 
-      public void Dispose()
-      {
-         this.Dispose(true);
-         GC.SuppressFinalize(this);
-      }
+      ////public void Dispose()
+      ////{
+      ////   this.Dispose(true);
+      ////   GC.SuppressFinalize(this);
+      ////}
 
       public void Add(string label, Point tagPoint)
       {

@@ -15,7 +15,9 @@ namespace Video.Views.CompositionRoot
       {
          // Controllers
          container.Register<CaptureController>();
-         container.Register<CaptureWrapper>();
+
+         //// Need to enable the use of CaptureWrapper without implementing IDisposable in the Controller
+         ////container.Register<CaptureWrapper>();
 
          // Views
          container.Register<CaptureView>();

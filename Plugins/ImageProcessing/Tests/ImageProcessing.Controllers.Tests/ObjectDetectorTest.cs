@@ -13,19 +13,16 @@ namespace ImageProcessing.ObjectDetection.Tests
       [Fact]
       public void Constructor()
       {
-         using (ObjectDetector objectDetector = new ObjectDetector())
-         {
-         }
+         ObjectDetector objectDetector = new ObjectDetector();
       }
 
       [Fact]
       public void Add()
       {
-         using (ObjectDetector objectDetector = new ObjectDetector())
-         {
-            objectDetector.Add("temp", new Point(0, 0));
-            objectDetector.Add("temp", new Point(1, 1));
-         }
+         ObjectDetector objectDetector = new ObjectDetector();
+
+         objectDetector.Add("temp", new Point(0, 0));
+         objectDetector.Add("temp", new Point(1, 1));
       }
 
       [Fact]

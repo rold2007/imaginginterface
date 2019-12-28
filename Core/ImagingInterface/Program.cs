@@ -69,9 +69,17 @@ namespace ImagingInterface
             // Make sure that using the plugins we don't load some DLL from elsewhere
             ValidateAssemblyUniqueness();
          }
+         catch (SimpleInjector.DiagnosticVerificationException e)
+         {
+            traceSource.TraceEvent(TraceEventType.Critical, 0, e.ToString());
+
+            throw;
+         }
          catch (Exception e)
          {
             traceSource.TraceEvent(TraceEventType.Critical, 0, e.ToString());
+
+            throw;
          }
       }
 

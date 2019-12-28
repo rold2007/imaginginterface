@@ -12,26 +12,26 @@ namespace Video.Controllers
    using Emgu.CV.Structure;
    using Video.Models;
 
-   public class CaptureController : IDisposable
+   public class CaptureController
    {
       private const string CaptureDisplayName = "Capture"; // ncrunch: no coverage
       private CaptureModel captureModel = new CaptureModel();
-      private CaptureWrapper captureWrapper;
+      ////private CaptureWrapper captureWrapper;
       ////private ImageController liveGrabImageController;
       private bool grabbingLive;
       private bool stopping;
 
-      public CaptureController(CaptureWrapper captureWrapper)
+      public CaptureController(/*CaptureWrapper captureWrapper*/)
       {
-         this.captureWrapper = captureWrapper;
+         ////this.captureWrapper = captureWrapper;
 
          this.captureModel.DisplayName = CaptureController.CaptureDisplayName;
       }
 
-      ~CaptureController()
-      { // ncrunch: no coverage
-         this.Dispose(false); // ncrunch: no coverage
-      } // ncrunch: no coverage
+      ////~CaptureController()
+      ////{ // ncrunch: no coverage
+      ////   this.Dispose(false); // ncrunch: no coverage
+      ////} // ncrunch: no coverage
 
       public event CancelEventHandler Closing;
 
@@ -53,11 +53,11 @@ namespace Video.Controllers
          }
       }
 
-      public void Dispose()
-      {
-         this.Dispose(true);
-         GC.SuppressFinalize(this);
-      }
+      ////public void Dispose()
+      ////{
+      ////   this.Dispose(true);
+      ////   GC.SuppressFinalize(this);
+      ////}
 
       [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       public void Initialize()
@@ -94,7 +94,7 @@ namespace Video.Controllers
             ////this.captureView.Close();
             this.UnregisterCaptureViewEvents();
             ////this.captureView = null;
-            this.Dispose();
+            ////this.Dispose();
          }
       }
 
@@ -183,24 +183,24 @@ namespace Video.Controllers
          this.ResetGrabLive();
       }
 
-      protected virtual void Dispose(bool disposing)
-      {
-         if (disposing)
-         {
-            if (this.captureWrapper != null)
-            {
-               this.captureWrapper.Dispose();
-               this.captureWrapper = null;
-            }
+      ////protected virtual void Dispose(bool disposing)
+      ////{
+      ////   if (disposing)
+      ////   {
+      ////      if (this.captureWrapper != null)
+      ////      {
+      ////         this.captureWrapper.Dispose();
+      ////         this.captureWrapper = null;
+      ////      }
 
-            ////if (this.captureView != null)
-            {
-               this.UnregisterCaptureViewEvents();
+      ////      ////if (this.captureView != null)
+      ////      {
+      ////         this.UnregisterCaptureViewEvents();
 
-               ////this.captureView = null;
-            }
-         }
-      }
+      ////         ////this.captureView = null;
+      ////      }
+      ////   }
+      ////}
 
       private void CaptureView_Start(object sender, EventArgs e)
       {
@@ -343,25 +343,26 @@ namespace Video.Controllers
 
       private void GrabFirstFrame()
       {
-         if (this.captureWrapper.CaptureAllocated)
+         ////if (this.captureWrapper.CaptureAllocated)
          {
             // The first grab is usually blank, skip it
-            bool blank = true;
-            Stopwatch stopwatch = Stopwatch.StartNew();
+
+            ////bool blank = true;
+            ////Stopwatch stopwatch = Stopwatch.StartNew();
 
             // Don't wait more than a second
-            while (blank && stopwatch.ElapsedMilliseconds < 1000)
-            {
-               using (UMat image = this.captureWrapper.RetrieveFrame())
-               {
-                  MCvScalar abc = CvInvoke.Sum(image);
+            ////while (blank && stopwatch.ElapsedMilliseconds < 1000)
+            ////{
+            ////   using (UMat image = this.captureWrapper.RetrieveFrame())
+            ////   {
+            ////      MCvScalar abc = CvInvoke.Sum(image);
 
-                  if (abc.V0 != 0)
-                  {
-                     blank = false;
-                  }
-               }
-            }
+            ////      if (abc.V0 != 0)
+            ////      {
+            ////         blank = false;
+            ////      }
+            ////   }
+            ////}
          }
       }
    }
