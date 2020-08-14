@@ -78,17 +78,12 @@ namespace ImageProcessing.Controllers
          this.SelectedLabel = label;
       }
 
-      public void SelectPixel(Point pixelPosition)
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
       {
          if (this.SelectedLabel != null)
          {
-            this.taggerService.SelectPixel(this.SelectedLabel, pixelPosition);
+            this.taggerService.SelectPixel(this.SelectedLabel, imageSource, pixelPosition);
          }
-      }
-
-      public void ActiveImageSourceChanged(IImageSource imageSource)
-      {
-         this.taggerService.ActiveImageSourceChanged(imageSource);
       }
 
       public void RemoveLabels(IEnumerable<string> labels)

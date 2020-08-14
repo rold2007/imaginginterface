@@ -49,11 +49,6 @@ namespace ImagingInterface.Controllers.Services
             if (this.activeImageIndex != value)
             {
                this.activeImageIndex = value;
-
-               if (this.activeImageIndex >= 0)
-               {
-                  this.pluginManagerService.ImageSourceChanged(this.imageServices[this.activeImageIndex].ImageSource);
-               }
             }
          }
       }

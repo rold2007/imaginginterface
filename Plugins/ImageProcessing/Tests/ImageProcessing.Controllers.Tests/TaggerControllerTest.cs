@@ -156,21 +156,19 @@ namespace ImageProcessing.Controllers.Tests
 
          taggerController.GetPoints(LabelName).Count.ShouldBe(0);
 
-         taggerController.SelectPixel(Point.Empty);
+         taggerController.SelectPixel(null, Point.Empty);
 
          taggerController.GetPoints(LabelName).Count.ShouldBe(0);
 
          taggerController.AddLabel(LabelName);
 
-         taggerController.SelectPixel(Point.Empty);
+         taggerController.SelectPixel(null, Point.Empty);
 
          taggerController.GetPoints(LabelName).Count.ShouldBe(0);
 
          taggerController.SelectLabel(LabelName);
 
-         taggerController.ActiveImageSourceChanged(imageSource);
-
-         taggerController.SelectPixel(new Point(42, 54));
+         taggerController.SelectPixel(imageSource, new Point(42, 54));
 
          taggerController.GetPoints(LabelName).Count.ShouldBe(1);
 

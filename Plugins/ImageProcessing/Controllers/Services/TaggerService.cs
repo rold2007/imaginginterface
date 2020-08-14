@@ -19,7 +19,6 @@ namespace ImageProcessing.Controllers.Services
 
       private Tagger tagger;
       private IImageProcessingManagerService imageProcessingService;
-      private IImageSource activeImageSource;
       private SortedList<string, Color> labelColors;
       private Dictionary<IImageSource, string> savedDataPoints;
 
@@ -102,7 +101,6 @@ namespace ImageProcessing.Controllers.Services
       {
          int imageWidth = imageData.GetLength(1);
          int imageHeight = imageData.GetLength(0);
-         int imageSize = imageWidth * imageHeight;
 
          foreach (string tag in this.tagger.DataPoints.Keys)
          {
@@ -124,28 +122,11 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
-      public void SelectPixel(string label, Point pixelPosition)
-      {
-         this.tagger.AddPoint(label, pixelPosition);
-
-         this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
-      }
-
-      public void ActiveImageSourceChanged(IImageSource imageSource)
+      public void SelectPixel(string label, IImageSource imageSource, Point pixelPosition)
       {
          string savedDataPoints;
 
-         // Save the current data points
-         if (this.activeImageSource != null)
-         {
-            savedDataPoints = this.tagger.SavePoints();
-
-            this.savedDataPoints[this.activeImageSource] = savedDataPoints;
-         }
-
-         this.activeImageSource = imageSource;
-
-         if (this.savedDataPoints.TryGetValue(this.activeImageSource, out savedDataPoints))
+         if (this.savedDataPoints.TryGetValue(imageSource, out savedDataPoints))
          {
             this.tagger.LoadPoints(savedDataPoints);
          }
@@ -153,6 +134,12 @@ namespace ImageProcessing.Controllers.Services
          {
             this.tagger.RemoveAllPoints();
          }
+
+         this.tagger.AddPoint(label, pixelPosition);
+
+         savedDataPoints = this.tagger.SavePoints();
+
+         this.savedDataPoints[imageSource] = savedDataPoints;
 
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
       }

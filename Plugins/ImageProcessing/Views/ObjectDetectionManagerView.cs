@@ -32,11 +32,7 @@ namespace ImageProcessing.Views
       {
       }
 
-      public void SelectPixel(Point pixelPosition)
-      {
-      }
-
-      public void ActiveImageSourceChanged(IImageSource imageSource)
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
       {
       }
 

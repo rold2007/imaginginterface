@@ -24,7 +24,6 @@ namespace ImagingInterface.Views
          this.pluginManagerController = pluginManagerController;
 
          this.pluginManagerController.ActiveImagePixelSelected += this.PluginManagerController_ActiveImagePixelSelected;
-         this.pluginManagerController.ActiveImageSourceChanged += this.PluginManagerController_ActiveImageSourceChanged;
 
          this.InitializeComponent();
 
@@ -119,12 +118,7 @@ namespace ImagingInterface.Views
 
       private void PluginManagerController_ActiveImagePixelSelected(object sender, PixelSelectionEventArgs e)
       {
-         (this.pluginsTabControl.SelectedTab.Controls[0] as IPluginView).SelectPixel(e.PixelPosition);
-      }
-
-      private void PluginManagerController_ActiveImageSourceChanged(object sender, ImageSourceChangedEventArgs e)
-      {
-         (this.pluginsTabControl.SelectedTab.Controls[0] as IPluginView).ActiveImageSourceChanged(e.ImageSource);
+         (this.pluginsTabControl.SelectedTab.Controls[0] as IPluginView).SelectPixel(e.ImageSource, e.PixelPosition);
       }
    }
 }

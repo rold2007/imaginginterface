@@ -19,8 +19,6 @@ namespace ImagingInterface.Controllers
 
       public event EventHandler<PixelSelectionEventArgs> ActiveImagePixelSelected;
 
-      public event EventHandler<ImageSourceChangedEventArgs> ActiveImageSourceChanged;
-
       public int ActivePluginIndex
       {
          get
@@ -34,7 +32,6 @@ namespace ImagingInterface.Controllers
          // PluginManagerService is a singleton, so it is better not to register this event in the constructor
          // otherwise it is registered twice because of SimpleInjector's Verify().
          this.pluginManagerService.ActiveImagePixelSelected += this.PluginManagerService_ActiveImagePixelSelected;
-         this.pluginManagerService.ActiveImageSourceChanged += this.PluginManagerService_ActiveImageSourceChanged;
       }
 
       public void AddPlugin()
@@ -50,11 +47,6 @@ namespace ImagingInterface.Controllers
       private void PluginManagerService_ActiveImagePixelSelected(object sender, PixelSelectionEventArgs e)
       {
          this.ActiveImagePixelSelected?.Invoke(sender, e);
-      }
-
-      private void PluginManagerService_ActiveImageSourceChanged(object sender, ImageSourceChangedEventArgs e)
-      {
-         this.ActiveImageSourceChanged.Invoke(sender, e);
       }
    }
 }

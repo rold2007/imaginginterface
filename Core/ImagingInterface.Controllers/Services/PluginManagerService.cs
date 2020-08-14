@@ -23,8 +23,6 @@ namespace ImagingInterface.Controllers.Services
 
       public event EventHandler<PixelSelectionEventArgs> ActiveImagePixelSelected;
 
-      public event EventHandler<ImageSourceChangedEventArgs> ActiveImageSourceChanged;
-
       public int ActivePluginIndex
       {
          get
@@ -86,15 +84,7 @@ namespace ImagingInterface.Controllers.Services
       {
          if (this.PluginCount > 0)
          {
-            this.ActiveImagePixelSelected?.Invoke(this, new PixelSelectionEventArgs(mouseClickPixel, true));
-         }
-      }
-
-      public void ImageSourceChanged(IImageSource imageSource)
-      {
-         if (this.PluginCount > 0)
-         {
-            this.ActiveImageSourceChanged?.Invoke(this, new ImageSourceChangedEventArgs(imageSource));
+            this.ActiveImagePixelSelected?.Invoke(this, new PixelSelectionEventArgs(imageSource, mouseClickPixel, true));
          }
       }
    }
