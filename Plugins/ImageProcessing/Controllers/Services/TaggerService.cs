@@ -19,6 +19,7 @@ namespace ImageProcessing.Controllers.Services
 
       private Tagger tagger;
       private IImageProcessingManagerService imageProcessingService;
+      private IImageSource activeImageSource;
       private SortedList<string, Color> labelColors;
       private Dictionary<IImageSource, string> savedDataPoints;
 

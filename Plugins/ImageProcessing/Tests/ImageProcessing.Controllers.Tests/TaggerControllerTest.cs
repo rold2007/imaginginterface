@@ -177,38 +177,5 @@ namespace ImageProcessing.Controllers.Tests
          taggerController.GetPoints(LabelName)[0].X.ShouldBe(42);
          taggerController.GetPoints(LabelName)[0].Y.ShouldBe(54);
       }
-
-      [Fact]
-      public void ActiveImageSourceChanged()
-      {
-         IImageSource imageSource1 = this.Container.GetInstance<IImageSource>();
-         IImageSource imageSource2 = this.Container.GetInstance<IImageSource>();
-         TaggerController taggerController = this.Container.GetInstance<TaggerController>();
-
-         taggerController.AddLabel(LabelName);
-
-         taggerController.SelectLabel(LabelName);
-
-         // ActiveImageSourceChanged() must be called before calling SelectPixel()
-         Assert.Throws<Shouldly.ShouldAssertException>(() => { taggerController.SelectPixel(Point.Empty); });
-
-         taggerController.ActiveImageSourceChanged(imageSource1);
-
-         // Should not throw an exception
-         taggerController.SelectPixel(new Point(42, 54));
-
-         taggerController.ActiveImageSourceChanged(imageSource2);
-
-         taggerController.GetPoints(LabelName).Count.ShouldBe(0);
-
-         taggerController.SelectPixel(new Point(6, 9));
-
-         taggerController.ActiveImageSourceChanged(imageSource1);
-
-         taggerController.GetPoints(LabelName).Count.ShouldBe(1);
-
-         taggerController.GetPoints(LabelName)[0].X.ShouldBe(42);
-         taggerController.GetPoints(LabelName)[0].Y.ShouldBe(54);
-      }
    }
 }
