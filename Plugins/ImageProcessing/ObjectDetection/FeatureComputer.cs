@@ -29,7 +29,7 @@ namespace ImageProcessing.ObjectDetection
 
          if (imageData != null)
          {
-            this.integral = this.ComputeIntegral(imageData);
+            this.integral = FeatureComputer.ComputeIntegral(imageData);
          }
       }
 
@@ -99,7 +99,7 @@ namespace ImageProcessing.ObjectDetection
       }
 
       [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
-      private double[,,] ComputeIntegral(byte[,,] imageData)
+      private static double[,,] ComputeIntegral(byte[,,] imageData)
       {
          int channels = imageData.GetLength(2);
 

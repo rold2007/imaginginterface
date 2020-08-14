@@ -17,7 +17,7 @@ namespace ImageProcessing.Views
    {
       private readonly ShowBenchmarkDelegate showBenchmarkAddCudafyDelegate;
       private readonly ShowBenchmarkDelegate showBenchmarkAddOpenCVDelegate;
-      private bool closed = false;
+      private bool closed;
       private CudafyController cudafyController;
 
       public CudafyView(CudafyController cudafyController)

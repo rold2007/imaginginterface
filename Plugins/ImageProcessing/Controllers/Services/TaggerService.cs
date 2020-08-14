@@ -19,7 +19,6 @@ namespace ImageProcessing.Controllers.Services
 
       private Tagger tagger;
       private IImageProcessingManagerService imageProcessingService;
-      private IImageSource activeImageSource;
       private SortedList<string, Color> labelColors;
       private Dictionary<IImageSource, string> savedDataPoints;
 
@@ -126,8 +125,6 @@ namespace ImageProcessing.Controllers.Services
 
       public void SelectPixel(string label, Point pixelPosition)
       {
-         this.activeImageSource.ShouldNotBeNull("Use ActiveImageSourceChanged() to initialize the active image source.");
-
          this.tagger.AddPoint(label, pixelPosition);
 
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);

@@ -106,6 +106,11 @@ namespace ImagingInterface.Controllers.Services
          this.imageManagerService.AddImage(this);
       }
 
+      public void UnAssignFromImageManager()
+      {
+         this.imageManagerService.RemoveImage(this);
+      }
+
       [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void UpdateImageData(byte[,,] updatedImageData, byte[] updatedOverlayData)
       {

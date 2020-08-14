@@ -46,6 +46,24 @@ namespace ImagingInterface.Views
          base.Close();
       }
 
+      private static bool DragEventValid(DragEventArgs e)
+      {
+         if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
+         {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+               string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+               if (data.Length != 0)
+               {
+                  return true;
+               }
+            }
+         }
+
+         return false;
+      }
+
       private void InitializePlugins()
       {
          bool pluginPresent = false;
@@ -92,7 +110,7 @@ namespace ImagingInterface.Views
 
       private void MainWindow_DragDrop(object sender, DragEventArgs e)
       {
-         if (this.DragEventValid(e))
+         if (MainWindow.DragEventValid(e))
          {
             string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
 
@@ -102,7 +120,7 @@ namespace ImagingInterface.Views
 
       private void MainWindow_DragEnter(object sender, DragEventArgs e)
       {
-         if (this.DragEventValid(e))
+         if (MainWindow.DragEventValid(e))
          {
             e.Effect = DragDropEffects.Copy;
          }
@@ -110,24 +128,6 @@ namespace ImagingInterface.Views
          {
             e.Effect = DragDropEffects.None;
          }
-      }
-
-      private bool DragEventValid(DragEventArgs e)
-      {
-         if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
-         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-               string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
-
-               if (data.Length != 0)
-               {
-                  return true;
-               }
-            }
-         }
-
-         return false;
       }
 
       private void AboutToolStripMenuItem_Click(object sender, EventArgs e)

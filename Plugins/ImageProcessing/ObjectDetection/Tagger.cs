@@ -8,8 +8,10 @@ namespace ImageProcessing.ObjectDetection
    using System.Collections.Generic;
    using System.Collections.ObjectModel;
    using System.Drawing;
+   using System.Globalization;
    using System.IO;
    using CsvHelper;
+   using CsvHelper.Configuration;
 
    public class Tagger
    {
@@ -103,7 +105,7 @@ namespace ImageProcessing.ObjectDetection
          using (MemoryStream stream = new MemoryStream())
          using (StreamReader reader = new StreamReader(stream))
          using (StreamWriter writer = new StreamWriter(stream))
-         using (CsvWriter csv = new CsvWriter(writer))
+         using (CsvWriter csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
          {
             foreach (string label in this.dataPoints.Keys)
             {
@@ -164,7 +166,7 @@ namespace ImageProcessing.ObjectDetection
 
          using (MemoryStream stream = new MemoryStream())
          using (StringReader reader = new StringReader(dataPoints))
-         using (CsvReader csv = new CsvReader(reader))
+         using (CsvReader csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
          {
             csv.Read();
 

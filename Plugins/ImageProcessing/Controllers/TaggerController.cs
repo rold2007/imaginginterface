@@ -116,9 +116,22 @@ namespace ImageProcessing.Controllers
          return this.taggerService.LabelColors[label];
       }
 
+      private static void UnregisterActiveImage()
+      {
+         // if (this.registeredImageController != null)
+         {
+            ////this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
+            ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
+
+            ////this.tagger.SavePoints();
+
+            // this.registeredImageController = null;
+         }
+      }
+
       private void ImageManagerController_ActiveImageChanged(object sender, EventArgs e)
       {
-         this.UnregisterActiveImage();
+         TaggerController.UnregisterActiveImage();
          this.RegisterActiveImage();
       }
 
@@ -140,19 +153,6 @@ namespace ImageProcessing.Controllers
             {
                this.ExtractPoints();
             }
-         }
-      }
-
-      private void UnregisterActiveImage()
-      {
-         // if (this.registeredImageController != null)
-         {
-            ////this.registeredImageController.SelectionChanged -= this.RegisteredImageController_SelectionChanged;
-            ////this.registeredImageController.DisplayUpdated -= this.RegisteredImageController_DisplayUpdated;
-
-            ////this.tagger.SavePoints();
-
-            // this.registeredImageController = null;
          }
       }
 

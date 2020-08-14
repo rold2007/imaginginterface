@@ -202,6 +202,39 @@ namespace Video.Controllers
       ////   }
       ////}
 
+      private static void GrabFirstFrame()
+      {
+         ////if (this.captureWrapper.CaptureAllocated)
+         {
+            // The first grab is usually blank, skip it
+
+            ////bool blank = true;
+            ////Stopwatch stopwatch = Stopwatch.StartNew();
+
+            // Don't wait more than a second
+            ////while (blank && stopwatch.ElapsedMilliseconds < 1000)
+            ////{
+            ////   using (UMat image = this.captureWrapper.RetrieveFrame())
+            ////   {
+            ////      MCvScalar abc = CvInvoke.Sum(image);
+
+            ////      if (abc.V0 != 0)
+            ////      {
+            ////         blank = false;
+            ////      }
+            ////   }
+            ////}
+         }
+      }
+
+      private static void SnapShotFinished(/*ImageController imageController*/)
+      {
+         ////imageController.Closed -= this.SnapShot_Closed;
+         ////imageController.DisplayUpdated -= this.SnapShot_DisplayUpdated;
+
+         ////this.captureView.UpdateLiveGrabStatus(true, false);
+      }
+
       private void CaptureView_Start(object sender, EventArgs e)
       {
          if (!this.grabbingLive)
@@ -259,7 +292,7 @@ namespace Video.Controllers
       {
          ////ImageController imageController = sender as ImageController;
 
-         this.SnapShotFinished(/*imageController*/);
+         CaptureController.SnapShotFinished(/*imageController*/);
       }
 
       ////private void SnapShot_DisplayUpdated(object sender, DisplayUpdateEventArgs e)
@@ -268,14 +301,6 @@ namespace Video.Controllers
 
       ////   this.SnapShotFinished(imageController);
       ////}
-
-      private void SnapShotFinished(/*ImageController imageController*/)
-      {
-         ////imageController.Closed -= this.SnapShot_Closed;
-         ////imageController.DisplayUpdated -= this.SnapShot_DisplayUpdated;
-
-         ////this.captureView.UpdateLiveGrabStatus(true, false);
-      }
 
       [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
       private void UnregisterCaptureViewEvents()
@@ -339,31 +364,6 @@ namespace Video.Controllers
 
          // Prevent any other grab until snapshot is finished to prevent many thread calling NextImageData
          ////this.captureView.UpdateLiveGrabStatus(false, false);
-      }
-
-      private void GrabFirstFrame()
-      {
-         ////if (this.captureWrapper.CaptureAllocated)
-         {
-            // The first grab is usually blank, skip it
-
-            ////bool blank = true;
-            ////Stopwatch stopwatch = Stopwatch.StartNew();
-
-            // Don't wait more than a second
-            ////while (blank && stopwatch.ElapsedMilliseconds < 1000)
-            ////{
-            ////   using (UMat image = this.captureWrapper.RetrieveFrame())
-            ////   {
-            ////      MCvScalar abc = CvInvoke.Sum(image);
-
-            ////      if (abc.V0 != 0)
-            ////      {
-            ////         blank = false;
-            ////      }
-            ////   }
-            ////}
-         }
       }
    }
 }

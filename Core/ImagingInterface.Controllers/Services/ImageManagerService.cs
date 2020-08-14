@@ -75,6 +75,22 @@ namespace ImagingInterface.Controllers.Services
          return this.ActiveImageIndex;
       }
 
+      public int RemoveImage(ImageService imageService)
+      {
+         this.imageServices.Remove(imageService);
+
+         if (this.ActiveImageIndex > 0)
+         {
+            this.ActiveImageIndex--;
+         }
+         else if (this.ImageCount == 0)
+         {
+            this.ActiveImageIndex = -1;
+         }
+
+         return this.ActiveImageIndex;
+      }
+
       public void RemoveActiveImage()
       {
          this.imageServices.RemoveAt(this.ActiveImageIndex);
@@ -87,8 +103,6 @@ namespace ImagingInterface.Controllers.Services
          {
             this.ActiveImageIndex = -1;
          }
-
-         Debug.Assert(this.ImageCount >= 0, "Invalid image count.");
       }
 
       public ImageService GetImageServiceFromIndex(int imageIndex)

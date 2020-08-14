@@ -22,8 +22,8 @@ namespace ImagingInterface.Views
       private bool firstPaint = true;
       private bool zoomMode = true;
       private bool openGLControlSizeUpdated = true;
-      private double translateX = 0.0;
-      private double translateY = 0.0;
+      private double translateX;
+      private double translateY;
       private ToolStripItem viewModeToolStripItem;
       private Point viewCenter;
 
@@ -127,6 +127,11 @@ namespace ImagingInterface.Views
          this.imageController.AssignToImageManager();
       }
 
+      public void UnAssignFromImageManager()
+      {
+         this.imageController.UnAssignFromImageManager();
+      }
+
       public void Close()
       {
          this.FreeTextures();
@@ -134,6 +139,34 @@ namespace ImagingInterface.Views
          this.imageController.Close();
 
          this.Dispose();
+      }
+
+      private static void InitializeTexture(int texture)
+      {
+         GL.BindTexture(TextureTarget.Texture2D, texture);
+
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBaseLevel, 0);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, 0);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
+         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
+      }
+
+      private static void UpdateScrollbarValueAndMaximum(int missingSize, ScrollBar scrollBar)
+      {
+         // Make sure the scrollbar ticker is always big enough
+         int largeChange = Math.Max(10, Convert.ToInt32(missingSize * 0.1));
+
+         scrollBar.LargeChange = largeChange;
+
+         // The maximum value of a scroll bar using user interaction is Maximum-LargeChange+1. (see http://msdn.microsoft.com/en-us/library/system.windows.forms.scrollbar.maximum.aspx)
+         scrollBar.Maximum = missingSize + scrollBar.LargeChange - 1;
+
+         if (scrollBar.Value > scrollBar.Maximum)
+         {
+            scrollBar.Value = scrollBar.Maximum;
+         }
       }
 
       private void ImageController_UpdateDisplay(object sender, EventArgs e)
@@ -281,7 +314,7 @@ namespace ImagingInterface.Views
          {
             int missingWidth = neededViewSize.Width - clientSize.Width;
 
-            this.UpdateScrollbarValueAndMaximum(missingWidth, this.horizontalScrollBar);
+            ImageView.UpdateScrollbarValueAndMaximum(missingWidth, this.horizontalScrollBar);
          }
          else
          {
@@ -292,7 +325,7 @@ namespace ImagingInterface.Views
          {
             int missingHeight = neededViewSize.Height - clientSize.Height;
 
-            this.UpdateScrollbarValueAndMaximum(missingHeight, this.verticalScrollBar);
+            ImageView.UpdateScrollbarValueAndMaximum(missingHeight, this.verticalScrollBar);
          }
          else
          {
@@ -300,22 +333,6 @@ namespace ImagingInterface.Views
          }
 
          this.glControl.Size = new Size(Math.Min(neededViewSize.Width, clientSize.Width), Math.Min(neededViewSize.Height, clientSize.Height));
-      }
-
-      private void UpdateScrollbarValueAndMaximum(int missingSize, ScrollBar scrollBar)
-      {
-         // Make sure the scrollbar ticker is always big enough
-         int largeChange = Math.Max(10, Convert.ToInt32(missingSize * 0.1));
-
-         scrollBar.LargeChange = largeChange;
-
-         // The maximum value of a scroll bar using user interaction is Maximum-LargeChange+1. (see http://msdn.microsoft.com/en-us/library/system.windows.forms.scrollbar.maximum.aspx)
-         scrollBar.Maximum = missingSize + scrollBar.LargeChange - 1;
-
-         if (scrollBar.Value > scrollBar.Maximum)
-         {
-            scrollBar.Value = scrollBar.Maximum;
-         }
       }
 
       private void AllocateTextures()
@@ -333,7 +350,7 @@ namespace ImagingInterface.Views
 
          this.textures.Add(Texture.Underlay, GL.GenTexture());
 
-         this.InitializeTexture(this.textures[Texture.Underlay]);
+         ImageView.InitializeTexture(this.textures[Texture.Underlay]);
 
          if (this.imageController.IsGrayscale)
          {
@@ -352,7 +369,7 @@ namespace ImagingInterface.Views
          {
             this.textures.Add(Texture.Overlay, GL.GenTexture());
 
-            this.InitializeTexture(this.textures[Texture.Overlay]);
+            ImageView.InitializeTexture(this.textures[Texture.Overlay]);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, this.imageController.Size.Width, this.imageController.Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, this.imageController.OverlayImageData);
 
@@ -373,18 +390,6 @@ namespace ImagingInterface.Views
          }
 
          this.textures.Clear();
-      }
-
-      private void InitializeTexture(int texture)
-      {
-         GL.BindTexture(TextureTarget.Texture2D, texture);
-
-         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBaseLevel, 0);
-         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, 0);
-         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
-         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
       }
 
       private void ForceGLControlPaint()

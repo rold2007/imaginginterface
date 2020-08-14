@@ -80,6 +80,8 @@ namespace ImagingInterface.Views
             this.imageViews.Remove(imageView);
             this.imageViewTabPage.Remove(imageView);
             this.imageViewToolTip.Remove(imageView);
+
+            imageView.UnAssignFromImageManager();
          }
       }
 
