@@ -11,7 +11,6 @@ namespace ImageProcessing.Controllers.Services
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.Utilities;
-   using Shouldly;
 
    public class TaggerService : IImageProcessingService
    {
@@ -30,8 +29,7 @@ namespace ImageProcessing.Controllers.Services
          this.savedDataPoints = new Dictionary<IImageSource, string>();
       }
 
-      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
-      public string DisplayName
+      public static string DisplayName
       {
          get
          {
@@ -100,7 +98,6 @@ namespace ImageProcessing.Controllers.Services
       public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
          int imageWidth = imageData.GetLength(1);
-         int imageHeight = imageData.GetLength(0);
 
          foreach (string tag in this.tagger.DataPoints.Keys)
          {

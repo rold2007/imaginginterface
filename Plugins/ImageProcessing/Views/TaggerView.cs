@@ -27,7 +27,7 @@ namespace ImageProcessing.Views
       {
          get
          {
-            return this.taggerController.DisplayName;
+            return TaggerController.DisplayName;
          }
       }
 

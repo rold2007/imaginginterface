@@ -26,11 +26,11 @@ namespace ImageProcessing.Views
 
       public event EventHandler Test;
 
-      public string DisplayName
+      public static string DisplayName
       {
          get
          {
-            return this.objectDetectionController.DisplayName;
+            return ObjectDetectionController.DisplayName;
          }
       }
 

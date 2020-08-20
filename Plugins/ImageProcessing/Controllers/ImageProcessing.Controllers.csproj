@@ -125,10 +125,6 @@
     <Compile Include="MemorySource.cs" />
     <Compile Include="Models\CudafyModel.cs" />
     <Compile Include="Models\ICudafyModel.cs" />
-    <Compile Include="Models\IObjectDetectionManagerModel.cs" />
-    <Compile Include="Models\IObjectDetectionModel.cs" />
-    <Compile Include="Models\ObjectDetectionManagerModel.cs" />
-    <Compile Include="Models\ObjectDetectionModel.cs" />
     <Compile Include="ObjectDetectionController.cs" />
     <Compile Include="ObjectDetectionManagerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

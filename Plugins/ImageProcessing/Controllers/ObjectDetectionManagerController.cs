@@ -5,76 +5,105 @@
 namespace ImageProcessing.Controllers
 {
    using System;
+   using System.Collections.Generic;
    using System.ComponentModel;
-   using ImageProcessing.Models;
+   using System.Drawing;
+   using ImageProcessing.Controllers.Services;
+   using ImageProcessing.ObjectDetection;
+   using ImagingInterface.Plugins;
+   using Shouldly;
 
    public class ObjectDetectionManagerController
-      {
+   {
       private const string ObjectDetectionDisplayName = "Object detection"; // ncrunch: no coverage
-      ////private IObjectDetectionManagerView objectDetectionManagerView;
-      private ObjectDetectionManagerModel objectDetectionManagerModel = new ObjectDetectionManagerModel();
-      private TaggerController taggerController;
-      private ObjectDetectionController objectDetectionController;
+      private TaggerService taggerService;
+      private ObjectDetector objectDetector;
 
-      public ObjectDetectionManagerController(TaggerController taggerController, ObjectDetectionController objectDetectionController)
-         {
-         this.taggerController = taggerController;
-         this.objectDetectionController = objectDetectionController;
-
-         this.objectDetectionManagerModel.DisplayName = ObjectDetectionDisplayName;
-         }
+      public ObjectDetectionManagerController(TaggerService taggerService, ObjectDetector objectDetection)
+      {
+         this.taggerService = taggerService;
+         this.objectDetector = objectDetection;
+      }
 
       public event CancelEventHandler Closing;
 
       public event EventHandler Closed;
 
-      ////public IRawPluginView RawPluginView
-      ////   {
-      ////   get
-      ////      {
-      ////      return this.objectDetectionManagerView;
-      ////      }
-      ////   }
-
-      public string DisplayName
+      public static string DisplayName
       {
          get
          {
-            return this.objectDetectionManagerModel.DisplayName;
+            return ObjectDetectionDisplayName;
          }
       }
 
-      public void Initialize()
+      public IEnumerable<string> Labels
+      {
+         get
          {
-         this.objectDetectionController.Initialize();
-
-         ////this.objectDetectionManagerView.AddView(this.taggerController.RawPluginView);
-         ////this.objectDetectionManagerView.AddView(this.objectDetectionController.RawPluginView);
-
-         this.objectDetectionController.SetTagger(this.taggerController);
-
-         // Must initialize the object detection controller first so that all points
-         // loaded by the tagger are sent to the object detection controller
-         ////this.taggerController.Initialize();
+            return this.taggerService.Labels;
          }
+      }
+
+      public string SelectedLabel
+      {
+         get;
+         private set;
+      }
 
       public void Close()
-         {
+      {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
          this.Closing?.Invoke(this, cancelEventArgs);
 
          if (!cancelEventArgs.Cancel)
-            {
-            ////this.objectDetectionManagerView.Hide();
-
-            ////this.objectDetectionManagerView.Close();
-
-            this.taggerController.Close();
-            this.objectDetectionController.Close();
-
+         {
             this.Closed?.Invoke(this, EventArgs.Empty);
          }
+      }
+
+      public void AddLabel(string label)
+      {
+         this.AddLabels(new[] { label });
+      }
+
+      public void AddLabels(IEnumerable<string> labels)
+      {
+         this.taggerService.AddLabels(labels);
+      }
+
+      public void RemoveLabels(IEnumerable<string> labels)
+      {
+         this.taggerService.RemoveLabels(labels);
+      }
+
+      public Color TagColor(string label)
+      {
+         return this.taggerService.LabelColors[label];
+      }
+
+      public void SelectLabel(string label)
+      {
+         if (label != null)
+         {
+            this.taggerService.Labels.ShouldContain(label);
+         }
+
+         this.SelectedLabel = label;
+      }
+
+      public void SelectPixel(IImageSource imageSource, Point pixelPosition)
+      {
+         if (this.SelectedLabel != null)
+         {
+            this.taggerService.SelectPixel(this.SelectedLabel, imageSource, pixelPosition);
          }
       }
+
+      public void TrainModel()
+      {
+         this.objectDetector.Add(string.Empty, new Point(0));
+      }
    }
+}

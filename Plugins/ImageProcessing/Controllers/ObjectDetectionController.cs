@@ -5,20 +5,16 @@
 namespace ImageProcessing.Controllers
 {
    using System;
-   using System.Collections.Generic;
    using System.ComponentModel;
    using System.Diagnostics.CodeAnalysis;
-   using System.Drawing;
    using ImageProcessing.Controllers.EventArguments;
-   using ImageProcessing.Models;
    using ImageProcessing.ObjectDetection;
    using ImagingInterface.Plugins;
 
    public class ObjectDetectionController : IImageProcessingService
    {
-      ////private IObjectDetectionView objectDetectionView;
-      private ObjectDetectionModel objectDetectionModel = new ObjectDetectionModel();
-      private TaggerController taggerController;
+      private const string ObjectDetectionDisplayName = "Object detection"; // ncrunch: no coverage
+
       private ObjectDetector objectDetector;
 
       public ObjectDetectionController(ObjectDetector objectDetection)
@@ -30,23 +26,14 @@ namespace ImageProcessing.Controllers
 
       public event EventHandler Closed;
 
-      public string DisplayName
+      public static string DisplayName
       {
          get
          {
-            return this.objectDetectionModel.DisplayName;
+            return ObjectDetectionDisplayName;
          }
       }
 
-      [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
-      public void Initialize()
-      {
-         ////this.objectDetectionView.Train += this.ObjectDetectionView_Train;
-
-         ////this.objectDetectionView.Test += this.ObjectDetectionView_Test;
-      }
-
-      [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Justification = "Not shown to end user.")]
       public void Close()
       {
          CancelEventArgs cancelEventArgs = new CancelEventArgs();
@@ -55,59 +42,15 @@ namespace ImageProcessing.Controllers
 
          if (!cancelEventArgs.Cancel)
          {
-            ////this.objectDetectionView.Train -= this.ObjectDetectionView_Train;
-            ////this.objectDetectionView.Test -= this.ObjectDetectionView_Test;
-
-            ////this.objectDetector.Dispose();
-            ////this.objectDetector = null;
-
-            ////this.objectDetectionView.Hide();
-
-            ////this.objectDetectionView.Close();
-
             this.Closed?.Invoke(this, EventArgs.Empty);
 
             throw new Exception("Need to review how to dispose this.objectDetector.");
          }
       }
 
-      public void SetTagger(TaggerController taggerController)
-      {
-         this.taggerController = taggerController;
-
-         this.taggerController.TagPointChanged += this.TaggerController_TagPointChanged;
-      }
-
       [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
       public void ProcessImageData(byte[,,] imageData, byte[] overlayData)
       {
-         Dictionary<string, List<Point>> predictions = this.objectDetector.Test(imageData);
-
-         int imageWidth = imageData.GetLength(1);
-
-         foreach (string prediction in predictions.Keys)
-         {
-            List<Point> predictedPoints = predictions[prediction];
-
-            Color tagColor = this.taggerController.TagColor(prediction);
-
-            foreach (Point predictedPoint in predictedPoints)
-            {
-               int pixelOffset = (predictedPoint.Y * imageWidth * 4) + (predictedPoint.X * 4);
-
-               // Red
-               overlayData[pixelOffset] = tagColor.R;
-
-               // Green
-               overlayData[pixelOffset + 1] = tagColor.G;
-
-               // Blue
-               overlayData[pixelOffset + 2] = tagColor.B;
-
-               // Alpha
-               overlayData[pixelOffset + 3] = 255;
-            }
-         }
       }
 
       private void TaggerController_TagPointChanged(object sender, TagPointChangedEventArgs e)
@@ -119,26 +62,6 @@ namespace ImageProcessing.Controllers
          else
          {
             this.objectDetector.Remove(e.Label, e.TagPoint);
-         }
-      }
-
-      private void ObjectDetectionView_Train(object sender, EventArgs e)
-      {
-         ////ImageController imageController = this.imageManagerController.GetActiveImage();
-
-         ////if (imageController != null)
-         {
-            ////this.objectDetector.Train(imageController.LastDisplayedImage);
-         }
-      }
-
-      private void ObjectDetectionView_Test(object sender, EventArgs e)
-      {
-         ////ImageController imageController = this.imageManagerController.GetActiveImage();
-
-         ////if (imageController != null)
-         {
-            ////imageController.AddImageProcessingController(this, this.objectDetectionModel.Clone() as IRawPluginModel);
          }
       }
    }

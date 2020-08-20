@@ -38,9 +38,9 @@ namespace ImageProcessing.Controllers.Tests
       {
          TaggerController taggerController = this.Container.GetInstance<TaggerController>();
 
-         taggerController.DisplayName.ShouldNotBeNullOrEmpty();
-         taggerController.DisplayName.ShouldNotBeNullOrWhiteSpace();
-         taggerController.DisplayName.ShouldBe("Tagger");
+         TaggerController.DisplayName.ShouldNotBeNullOrEmpty();
+         TaggerController.DisplayName.ShouldNotBeNullOrWhiteSpace();
+         TaggerController.DisplayName.ShouldBe("Tagger");
       }
 
       [Fact]

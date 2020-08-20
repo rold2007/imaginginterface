@@ -26,6 +26,14 @@ namespace ImageProcessing.Controllers
 
       public event EventHandler<TagPointChangedEventArgs> TagPointChanged;
 
+      public static string DisplayName
+      {
+         get
+         {
+            return TaggerService.DisplayName;
+         }
+      }
+
       public IEnumerable<string> Labels
       {
          get
@@ -38,14 +46,6 @@ namespace ImageProcessing.Controllers
       {
          get;
          private set;
-      }
-
-      public string DisplayName
-      {
-         get
-         {
-            return this.taggerService.DisplayName;
-         }
       }
 
       [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Will be fixed when done refactoring.")]
