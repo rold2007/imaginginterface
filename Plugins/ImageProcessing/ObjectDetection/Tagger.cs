@@ -15,8 +15,6 @@ namespace ImageProcessing.ObjectDetection
 
    public class Tagger
    {
-      ////private string tempFilename;
-      ////private bool dataPointsModified;
       private Dictionary<string, List<Point>> dataPoints;
 
       public Tagger()
@@ -49,8 +47,6 @@ namespace ImageProcessing.ObjectDetection
             {
                points.Add(newPoint);
 
-               ////this.dataPointsModified = true;
-
                return true;
             }
             else
@@ -66,8 +62,6 @@ namespace ImageProcessing.ObjectDetection
 
             points.Add(newPoint);
 
-            ////this.dataPointsModified = true;
-
             return true;
          }
       }
@@ -81,8 +75,6 @@ namespace ImageProcessing.ObjectDetection
             if (points.Contains(point))
             {
                points.Remove(point);
-
-               ////this.dataPointsModified = true;
 
                return true;
             }
@@ -197,8 +189,6 @@ namespace ImageProcessing.ObjectDetection
             }
          }
          */
-
-         ////this.dataPointsModified = false;
       }
 
       public void AddLabel(string label)

@@ -79,12 +79,6 @@
     <CodeAnalysisRuleSet>..\..\..\ImagingInterface.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.CV.Platform.NetFramework, Version=4.3.0.3890, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Emgu.CV.4.3.0.3890\lib\net461\Emgu.CV.Platform.NetFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.Platform.NetStandard, Version=4.3.0.3890, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Emgu.CV.4.3.0.3890\lib\net461\Emgu.CV.Platform.NetStandard.dll</HintPath>
-    </Reference>
     <Reference Include="Shouldly, Version=3.0.2.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Shouldly.3.0.2\lib\net451\Shouldly.dll</HintPath>
     </Reference>
@@ -96,9 +90,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaptureController.cs" />

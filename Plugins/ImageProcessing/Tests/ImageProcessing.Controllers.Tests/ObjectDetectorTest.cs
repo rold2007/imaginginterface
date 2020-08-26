@@ -21,8 +21,8 @@ namespace ImageProcessing.ObjectDetection.Tests
       {
          ObjectDetector objectDetector = new ObjectDetector();
 
-         objectDetector.Add("temp", new Point(0, 0));
-         objectDetector.Add("temp", new Point(1, 1));
+         objectDetector.Add("temp", null, new Point(0, 0));
+         objectDetector.Add("temp", null, new Point(1, 1));
       }
 
       [Fact]

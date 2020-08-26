@@ -6,9 +6,6 @@ namespace Video.Controllers.Tests.Mocks
 {
    using System;
    using System.Diagnostics.CodeAnalysis;
-   using Emgu.CV;
-   using Emgu.CV.CvEnum;
-   using Emgu.CV.Structure;
 
    public class CaptureWrapperMock : IDisposable
    {
@@ -80,26 +77,26 @@ namespace Video.Controllers.Tests.Mocks
          }
       }
 
-      public UMat QueryGrayFrame()
-      {
-         return this.RetrieveFrame();
-      }
+      ////public UMat QueryGrayFrame()
+      ////{
+      ////   return this.RetrieveFrame();
+      ////}
 
-      public UMat RetrieveFrame()
-      {
-         if (this.grabStarted)
-         {
-            UMat image = new UMat(1, 1, DepthType.Cv8U, 3);
+      ////public UMat RetrieveFrame()
+      ////{
+      ////   if (this.grabStarted)
+      ////   {
+      ////      UMat image = new UMat(1, 1, DepthType.Cv8U, 3);
 
-            image.SetTo(new MCvScalar(255.0));
+      ////      image.SetTo(new MCvScalar(255.0));
 
-            return image;
-         }
-         else
-         {
-            return null;
-         }
-      }
+      ////      return image;
+      ////   }
+      ////   else
+      ////   {
+      ////      return null;
+      ////   }
+      ////}
 
       protected virtual void Dispose(bool disposing)
       {

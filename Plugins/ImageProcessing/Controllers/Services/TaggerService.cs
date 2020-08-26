@@ -119,7 +119,7 @@ namespace ImageProcessing.Controllers.Services
          }
       }
 
-      public void SelectPixel(string label, IImageSource imageSource, Point pixelPosition)
+      public bool SelectPixel(string label, IImageSource imageSource, Point pixelPosition)
       {
          string savedDataPoints;
 
@@ -132,13 +132,15 @@ namespace ImageProcessing.Controllers.Services
             this.tagger.RemoveAllPoints();
          }
 
-         this.tagger.AddPoint(label, pixelPosition);
+         bool pointAdded = this.tagger.AddPoint(label, pixelPosition);
 
          savedDataPoints = this.tagger.SavePoints();
 
          this.savedDataPoints[imageSource] = savedDataPoints;
 
          this.imageProcessingService.AddOneShotImageProcessingToActiveImage(this);
+
+         return pointAdded;
       }
 
       private void AssignColors(IEnumerable<string> labels)

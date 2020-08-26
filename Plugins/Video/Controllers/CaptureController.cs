@@ -8,8 +8,6 @@ namespace Video.Controllers
    using System.ComponentModel;
    using System.Diagnostics;
    using System.Diagnostics.CodeAnalysis;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using Video.Models;
 
    public class CaptureController

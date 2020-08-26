@@ -5,8 +5,6 @@
 namespace ImageProcessing.Controllers.Services
 {
    using System.Diagnostics.CodeAnalysis;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.Utilities;
    using Shouldly;
@@ -47,19 +45,19 @@ namespace ImageProcessing.Controllers.Services
       {
          if (imageData.GetLength(2) == 1)
          {
-            using (Image<Gray, byte> convertedImage = new Image<Gray, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Gray(0.0)))
-            {
-               ArrayUtils.ArrayCopy(rotatedImage.Data, imageData);
-            }
+            ////using (Image<Gray, byte> convertedImage = new Image<Gray, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Gray(0.0)))
+            ////{
+            ////   ArrayUtils.ArrayCopy(rotatedImage.Data, imageData);
+            ////}
          }
          else
          {
             imageData.GetLength(2).ShouldBe(3, "For now only 3-bands images are supported.");
 
-            using (Image<Rgb, byte> convertedImage = new Image<Rgb, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Rgb(0.0, 0.0, 0.0)))
-            {
-               ArrayUtils.ArrayCopy(rotatedImage.Data, imageData);
-            }
+            ////using (Image<Rgb, byte> convertedImage = new Image<Rgb, byte>(imageData), rotatedImage = convertedImage.Rotate(this.Angle, new Rgb(0.0, 0.0, 0.0)))
+            ////{
+            ////   ArrayUtils.ArrayCopy(rotatedImage.Data, imageData);
+            ////}
          }
       }
    }

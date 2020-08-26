@@ -7,8 +7,6 @@ namespace ImageProcessing.ObjectDetection
    using System;
    using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using ImagingInterface.Plugins.Utilities;
 
    public class FeatureComputer
@@ -103,27 +101,27 @@ namespace ImageProcessing.ObjectDetection
       {
          int channels = imageData.GetLength(2);
 
-         if (channels == 1)
-         {
-            using (Image<Gray, byte> image = new Image<Gray, byte>(imageData))
-            {
-               using (Image<Gray, double> integral = image.Integral())
-               {
-                  return integral.Data;
-               }
-            }
-         }
-         else if (channels == 3)
-         {
-            using (Image<Rgb, byte> image = new Image<Rgb, byte>(imageData))
-            {
-               using (Image<Rgb, double> integral = image.Integral())
-               {
-                  return integral.Data;
-               }
-            }
-         }
-         else
+         ////if (channels == 1)
+         ////{
+         ////   using (Image<Gray, byte> image = new Image<Gray, byte>(imageData))
+         ////   {
+         ////      using (Image<Gray, double> integral = image.Integral())
+         ////      {
+         ////         return integral.Data;
+         ////      }
+         ////   }
+         ////}
+         ////else if (channels == 3)
+         ////{
+         ////   using (Image<Rgb, byte> image = new Image<Rgb, byte>(imageData))
+         ////   {
+         ////      using (Image<Rgb, double> integral = image.Integral())
+         ////      {
+         ////         return integral.Data;
+         ////      }
+         ////   }
+         ////}
+         ////else
          {
             return null;
          }

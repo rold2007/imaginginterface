@@ -6,8 +6,6 @@ namespace ImageProcessing.Controllers.Services
 {
    using System.Diagnostics;
    using System.Diagnostics.CodeAnalysis;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using ImagingInterface.Plugins;
    using ImagingInterface.Plugins.Utilities;
 
@@ -49,23 +47,23 @@ namespace ImageProcessing.Controllers.Services
          {
             if (imageData.GetLength(2) == 1)
             {
-               using (Image<Gray, byte> invertedImage = new Image<Gray, byte>(imageData))
-               {
-                  invertedImage._Not();
+               ////using (Image<Gray, byte> invertedImage = new Image<Gray, byte>(imageData))
+               ////{
+               ////   invertedImage._Not();
 
-                  ArrayUtils.ArrayCopy(invertedImage.Data, imageData);
-               }
+               ////   ArrayUtils.ArrayCopy(invertedImage.Data, imageData);
+               ////}
             }
             else
             {
                Debug.Assert(imageData.GetLength(2) == 3, "For now only 3-bands images are supported.");
 
-               using (Image<Bgr, byte> invertedImage = new Image<Bgr, byte>(imageData))
-               {
-                  invertedImage._Not();
+               ////using (Image<Bgr, byte> invertedImage = new Image<Bgr, byte>(imageData))
+               ////{
+               ////   invertedImage._Not();
 
-                  ArrayUtils.ArrayCopy(invertedImage.Data, imageData);
-               }
+               ////   ArrayUtils.ArrayCopy(invertedImage.Data, imageData);
+               ////}
             }
          }
       }

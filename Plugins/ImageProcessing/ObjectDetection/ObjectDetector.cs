@@ -4,15 +4,10 @@
 
 namespace ImageProcessing.ObjectDetection
 {
-   using System;
    using System.Collections.Generic;
    using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
-   using System.Globalization;
-   using System.Linq;
-   using Accord.MachineLearning.DecisionTrees;
-   using Accord.MachineLearning.DecisionTrees.Learning;
-   using Accord.Math;
+   using ImagingInterface.Plugins;
 
    public class ObjectDetector
    {
@@ -21,29 +16,20 @@ namespace ImageProcessing.ObjectDetection
       public ObjectDetector()
       {
          this.tagPoints = new Dictionary<string, List<Point>>();
-         this.Models = new Dictionary<string, DecisionTree>();
+         ////this.Models = new Dictionary<string, DecisionTree>();
       }
 
-      ////~ObjectDetector()
-      ////{ // ncrunch: no coverage
-      ////   this.Dispose(false); // ncrunch: no coverage
-      ////} // ncrunch: no coverage
-
-      private Dictionary<string, DecisionTree> Models
-      {
-         get;
-         set;
-      }
-
-      ////public void Dispose()
+      ////private Dictionary<string, DecisionTree> Models
       ////{
-      ////   this.Dispose(true);
-      ////   GC.SuppressFinalize(this);
+      ////   get;
+      ////   set;
       ////}
 
-      public void Add(string label, Point tagPoint)
+      public void Add(string label, IImageSource imageSource, Point tagPoint)
       {
          List<Point> tagPoints;
+
+         imageSource = null;
 
          if (this.tagPoints.ContainsKey(label))
          {
@@ -59,8 +45,10 @@ namespace ImageProcessing.ObjectDetection
          tagPoints.Add(tagPoint);
       }
 
-      public void Remove(string label, Point tagPoint)
+      public void Remove(string label, IImageSource imageSource, Point tagPoint)
       {
+         imageSource = null;
+
          if (this.tagPoints.ContainsKey(label))
          {
             List<Point> tagPoints = this.tagPoints[label];
@@ -80,127 +68,104 @@ namespace ImageProcessing.ObjectDetection
             trainSamples += currentTagPoints.Count;
          }
 
-         if (trainSamples > 0)
-         {
-            double[][] inputs = new double[trainSamples][];
-            int[] outputs = new int[trainSamples];
+         ////if (trainSamples > 0)
+         ////{
+         ////   double[][] inputs = new double[trainSamples][];
+         ////   int[] outputs = new int[trainSamples];
 
-            this.ClearModels();
+         ////   this.ClearModels();
 
-            List<string> trueResponses = new List<string>();
-            List<DecisionVariable> attributes = new List<DecisionVariable>(FeatureComputer.NumberOfFeatures);
+         ////   List<string> trueResponses = new List<string>();
+         ////   List<DecisionVariable> attributes = new List<DecisionVariable>(FeatureComputer.NumberOfFeatures);
 
-            for (int i = 0; i < FeatureComputer.NumberOfFeatures; i++)
-            {
-               string columnName = "Feature" + i.ToString(CultureInfo.InvariantCulture);
+         ////   for (int i = 0; i < FeatureComputer.NumberOfFeatures; i++)
+         ////   {
+         ////      string columnName = "Feature" + i.ToString(CultureInfo.InvariantCulture);
 
-               attributes.Add(new DecisionVariable(columnName, new Accord.DoubleRange(double.MinValue, double.MaxValue)));
-            }
+         ////      attributes.Add(new DecisionVariable(columnName, new Accord.DoubleRange(double.MinValue, double.MaxValue)));
+         ////   }
 
-            int trainSampleIndex = 0;
+         ////   int trainSampleIndex = 0;
 
-            // Fill the train matrix
-            foreach (string label in this.tagPoints.Keys)
-            {
-               foreach (Point tagPoint in this.tagPoints[label])
-               {
-                  float[] trainingData = featureComputer.ComputeFeatures(tagPoint);
+         ////   // Fill the train matrix
+         ////   foreach (string label in this.tagPoints.Keys)
+         ////   {
+         ////      foreach (Point tagPoint in this.tagPoints[label])
+         ////      {
+         ////         float[] trainingData = featureComputer.ComputeFeatures(tagPoint);
 
-                  inputs[trainSampleIndex] = new double[FeatureComputer.NumberOfFeatures];
-                  Array.Copy(trainingData, inputs[trainSampleIndex], FeatureComputer.NumberOfFeatures);
+         ////         inputs[trainSampleIndex] = new double[FeatureComputer.NumberOfFeatures];
+         ////         Array.Copy(trainingData, inputs[trainSampleIndex], FeatureComputer.NumberOfFeatures);
 
-                  trueResponses.Add(label);
+         ////         trueResponses.Add(label);
 
-                  trainSampleIndex++;
-               }
-            }
+         ////         trainSampleIndex++;
+         ////      }
+         ////   }
 
-            // Train the models
-            foreach (string label in this.tagPoints.Keys)
-            {
-               int responseIndex = 0;
+         ////   // Train the models
+         ////   foreach (string label in this.tagPoints.Keys)
+         ////   {
+         ////      int responseIndex = 0;
 
-               // Prepare the responses matrix
-               foreach (string responseLabel in trueResponses)
-               {
-                  outputs[responseIndex] = (responseLabel == label) ? 1 : 0;
+         ////      // Prepare the responses matrix
+         ////      foreach (string responseLabel in trueResponses)
+         ////      {
+         ////         outputs[responseIndex] = (responseLabel == label) ? 1 : 0;
 
-                  responseIndex++;
-               }
+         ////         responseIndex++;
+         ////      }
 
-               DecisionTree decisionTree = new DecisionTree(attributes, this.tagPoints.Count);
-               C45Learning c45Learning = new C45Learning(decisionTree);
+         ////      DecisionTree decisionTree = new DecisionTree(attributes, this.tagPoints.Count);
+         ////      C45Learning c45Learning = new C45Learning(decisionTree);
 
-               c45Learning.Learn(inputs, outputs);
+         ////      c45Learning.Learn(inputs, outputs);
 
-               this.Models.Add(label, decisionTree);
-            }
-         }
+         ////      this.Models.Add(label, decisionTree);
+         ////   }
+         ////}
       }
 
-      [SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
-      public Dictionary<string, List<Point>> Test(byte[,,] imageData)
-      {
-         Dictionary<string, List<Point>> predictions = new Dictionary<string, List<Point>>();
+      ////[SuppressMessage("Microsoft.Performance", "CA1814:PreferJaggedArraysOverMultidimensional", Justification = "Too much work for now.")]
+      ////public Dictionary<string, List<Point>> Test(byte[,,] imageData)
+      ////{
+      ////   Dictionary<string, List<Point>> predictions = new Dictionary<string, List<Point>>();
 
-         if (this.Models.Any())
-         {
-            FeatureComputer featureComputer = new FeatureComputer(imageData);
-            int imageWidth = imageData.GetLength(1);
-            int imageHeight = imageData.GetLength(0);
-            int imageSize = imageWidth * imageHeight;
+      ////   if (this.Models.Any())
+      ////   {
+      ////      FeatureComputer featureComputer = new FeatureComputer(imageData);
+      ////      int imageWidth = imageData.GetLength(1);
+      ////      int imageHeight = imageData.GetLength(0);
+      ////      int imageSize = imageWidth * imageHeight;
 
-            foreach (string model in this.Models.Keys)
-            {
-               predictions.Add(model, new List<Point>());
-            }
+      ////      foreach (string model in this.Models.Keys)
+      ////      {
+      ////         predictions.Add(model, new List<Point>());
+      ////      }
 
-            for (int y = 0; y < imageHeight; y++)
-            {
-               for (int x = 0; x < imageWidth; x++)
-               {
-                  float[] featuresData = featureComputer.ComputeFeatures(new Point(x, y));
-                  double[] input = new double[FeatureComputer.NumberOfFeatures];
+      ////      for (int y = 0; y < imageHeight; y++)
+      ////      {
+      ////         for (int x = 0; x < imageWidth; x++)
+      ////         {
+      ////            float[] featuresData = featureComputer.ComputeFeatures(new Point(x, y));
+      ////            double[] input = new double[FeatureComputer.NumberOfFeatures];
 
-                  Array.Copy(featuresData, input, FeatureComputer.NumberOfFeatures);
+      ////            Array.Copy(featuresData, input, FeatureComputer.NumberOfFeatures);
 
-                  foreach (string model in this.Models.Keys)
-                  {
-                     int prediction = this.Models[model].Decide(input);
+      ////            foreach (string model in this.Models.Keys)
+      ////            {
+      ////               int prediction = this.Models[model].Decide(input);
 
-                     if (prediction == 1)
-                     {
-                        predictions[model].Add(new Point(x, y));
-                     }
-                  }
-               }
-            }
-         }
+      ////               if (prediction == 1)
+      ////               {
+      ////                  predictions[model].Add(new Point(x, y));
+      ////               }
+      ////            }
+      ////         }
+      ////      }
+      ////   }
 
-         return predictions;
-      }
-
-      protected virtual void Dispose(bool disposing)
-      {
-         if (disposing)
-         {
-            this.ClearModels();
-         }
-      }
-
-      private void ClearModels()
-      {
-         foreach (string label in this.Models.Keys)
-         {
-            ////Boost boost = null;
-
-            ////if (this.Models.TryGetValue(label, out boost))
-            ////   {
-            ////   boost.Dispose();
-            ////   }
-         }
-
-         this.Models.Clear();
-      }
+      ////   return predictions;
+      ////}
    }
 }

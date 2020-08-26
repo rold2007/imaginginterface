@@ -14,8 +14,6 @@ namespace ImageProcessing.Controllers
    using Cudafy;
    using Cudafy.Host;
    using Cudafy.Translator;
-   using Emgu.CV;
-   using Emgu.CV.Structure;
    using ImageProcessing.Controllers.EventArguments;
    using ImageProcessing.Cudafied;
    using ImageProcessing.Models;

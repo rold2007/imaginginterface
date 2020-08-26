@@ -97,13 +97,20 @@ namespace ImageProcessing.Controllers
       {
          if (this.SelectedLabel != null)
          {
-            this.taggerService.SelectPixel(this.SelectedLabel, imageSource, pixelPosition);
+            if (this.taggerService.SelectPixel(this.SelectedLabel, imageSource, pixelPosition))
+            {
+               this.objectDetector.Add(this.SelectedLabel, imageSource, pixelPosition);
+            }
+            else
+            {
+               this.objectDetector.Remove(this.SelectedLabel, imageSource, pixelPosition);
+            }
          }
       }
 
       public void TrainModel()
       {
-         this.objectDetector.Add(string.Empty, new Point(0));
+         this.objectDetector.Train(null);
       }
    }
 }

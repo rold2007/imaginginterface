@@ -55,14 +55,14 @@ namespace ImageProcessing.Controllers
 
       private void TaggerController_TagPointChanged(object sender, TagPointChangedEventArgs e)
       {
-         if (e.Added)
-         {
-            this.objectDetector.Add(e.Label, e.TagPoint);
-         }
-         else
-         {
-            this.objectDetector.Remove(e.Label, e.TagPoint);
-         }
+         ////if (e.Added)
+         ////{
+         ////   this.objectDetector.Add(e.Label, e.TagPoint);
+         ////}
+         ////else
+         ////{
+         ////   this.objectDetector.Remove(e.Label, e.TagPoint);
+         ////}
       }
    }
 }
